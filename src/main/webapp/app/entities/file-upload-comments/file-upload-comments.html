@@ -1,0 +1,74 @@
+<div>
+    <h2>File Upload Comments</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="file-upload-comments.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create new File Upload Comments
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
+                    <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="id"><span>Id</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="fileComments"><span>File Comments</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="createdBy"><span>Created By</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="updatedBy"><span>Updated By</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="createdDate"><span>Created Date</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="updatedDate"><span>Updated Date</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="fileUploadId.id"><span>File Upload Id</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="addFileUploadID.id"><span>Add File Upload ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+                <tr ng-repeat="fileUploadComments in vm.fileUploadComments track by fileUploadComments.id">
+                    <td><a ui-sref="file-upload-comments-detail({id:fileUploadComments.id})">{{fileUploadComments.id}}</a></td>
+                    <td>{{fileUploadComments.id}}</td>
+                    <td>{{fileUploadComments.fileComments}}</td>
+                    <td>{{fileUploadComments.createdBy}}</td>
+                    <td>{{fileUploadComments.updatedBy}}</td>
+                        <td>{{fileUploadComments.createdDate | date:'mediumDate'}}</td>
+                    <td>{{fileUploadComments.updatedDate | date:'medium'}}</td>
+                    <td>
+                        <a ui-sref="file-upload-detail({id:fileUploadComments.fileUploadId.id})">{{fileUploadComments.fileUploadId.id}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="additional-file-upload-detail({id:fileUploadComments.addFileUploadID.id})">{{fileUploadComments.addFileUploadID.id}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="file-upload-comments-detail({id:fileUploadComments.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="file-upload-comments.edit({id:fileUploadComments.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="file-upload-comments.delete({id:fileUploadComments.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

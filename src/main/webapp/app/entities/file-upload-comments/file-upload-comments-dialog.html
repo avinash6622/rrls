@@ -1,0 +1,116 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myFileUploadCommentsLabel">Create or edit a File Upload Comments</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.fileUploadComments.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.fileUploadComments.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_id">Id</label>
+            <input type="number" class="form-control" name="id" id="field_id"
+                    ng-model="vm.fileUploadComments.id"
+                    ng-maxlength="20"/>
+            <div ng-show="editForm.id.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.id.$error.maxlength">
+                    This field cannot be longer than 20 characters.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.id.$error.number">
+                    This field should be a number.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_fileComments">File Comments</label>
+            <input type="text" class="form-control" name="fileComments" id="field_fileComments"
+                    ng-model="vm.fileUploadComments.fileComments"
+                    ng-maxlength="400"/>
+            <div ng-show="editForm.fileComments.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.fileComments.$error.maxlength">
+                    This field cannot be longer than 400 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_createdBy">Created By</label>
+            <input type="text" class="form-control" name="createdBy" id="field_createdBy"
+                    ng-model="vm.fileUploadComments.createdBy"
+                    ng-maxlength="100"/>
+            <div ng-show="editForm.createdBy.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.createdBy.$error.maxlength">
+                    This field cannot be longer than 100 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_updatedBy">Updated By</label>
+            <input type="text" class="form-control" name="updatedBy" id="field_updatedBy"
+                    ng-model="vm.fileUploadComments.updatedBy"
+                    ng-maxlength="100"/>
+            <div ng-show="editForm.updatedBy.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.updatedBy.$error.maxlength">
+                    This field cannot be longer than 100 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_createdDate">Created Date</label>
+                <div class="input-group">
+                    <input id="field_createdDate" type="text" class="form-control" name="createdDate" uib-datepicker-popup="{{dateformat}}" ng-model="vm.fileUploadComments.createdDate" is-open="vm.datePickerOpenStatus.createdDate"
+                    required/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('createdDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+            <div ng-show="editForm.createdDate.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.createdDate.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_updatedDate">Updated Date</label>
+                <div class="input-group">
+                    <input id="field_updatedDate" type="text" class="form-control" name="updatedDate" datetime-picker="{{dateformat}}" ng-model="vm.fileUploadComments.updatedDate" is-open="vm.datePickerOpenStatus.updatedDate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('updatedDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+
+        <div class="form-group">
+            <label for="field_fileUploadId">File Upload Id</label>
+            <select class="form-control" id="field_fileUploadId" name="fileUploadId" ng-model="vm.fileUploadComments.fileUploadId" ng-options="FileUpload as FileUpload.id for FileUpload in vm.fileuploads track by FileUpload.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_addFileUploadID">Add File Upload ID</label>
+            <select class="form-control" id="field_addFileUploadID" name="addFileUploadID" ng-model="vm.fileUploadComments.addFileUploadID" ng-options="AdditionalFileUpload as AdditionalFileUpload.id for AdditionalFileUpload in vm.additionalfileuploads track by AdditionalFileUpload.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,51 @@
+
+<div>
+    <h2><span>Additional File Upload</span> {{vm.additionalFileUpload.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Id</span></dt>
+        <dd>
+            <span>{{vm.additionalFileUpload.id}}</span>
+        </dd>
+        <dt><span>File Name</span></dt>
+        <dd>
+            <span>{{vm.additionalFileUpload.fileName}}</span>
+        </dd>
+        <dt><span>File Data</span></dt>
+        <dd>
+            <span>{{vm.additionalFileUpload.fileData}}</span>
+        </dd>
+        <dt><span>Created By</span></dt>
+        <dd>
+            <span>{{vm.additionalFileUpload.createdBy}}</span>
+        </dd>
+        <dt><span>Updated By</span></dt>
+        <dd>
+            <span>{{vm.additionalFileUpload.updatedBy}}</span>
+        </dd>
+        <dt><span>Created Date</span></dt>
+        <dd>
+            <span>{{vm.additionalFileUpload.createdDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span>Updated Date</span></dt>
+        <dd>
+            <span>{{vm.additionalFileUpload.updatedDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>File Upload ID</span></dt>
+        <dd>
+            <a ui-sref="file-upload-detail({id:vm.additionalFileUpload.fileUploadID.id})">{{vm.additionalFileUpload.fileUploadID.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="additional-file-upload-detail.edit({id:vm.additionalFileUpload.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down"> Edit</span>
+    </button>
+</div>

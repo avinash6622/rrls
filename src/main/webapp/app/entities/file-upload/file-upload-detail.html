@@ -1,0 +1,55 @@
+
+<div>
+    <h2><span>File Upload</span> {{vm.fileUpload.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Id</span></dt>
+        <dd>
+            <span>{{vm.fileUpload.id}}</span>
+        </dd>
+        <dt><span>File Name</span></dt>
+        <dd>
+            <span>{{vm.fileUpload.fileName}}</span>
+        </dd>
+        <dt><span>File Data</span></dt>
+        <dd>
+            <span>{{vm.fileUpload.fileData}}</span>
+        </dd>
+        <dt><span>Add File Flag</span></dt>
+        <dd>
+            <span>{{vm.fileUpload.addFileFlag}}</span>
+        </dd>
+        <dt><span>Created By</span></dt>
+        <dd>
+            <span>{{vm.fileUpload.createdBy}}</span>
+        </dd>
+        <dt><span>Updated By</span></dt>
+        <dd>
+            <span>{{vm.fileUpload.updatedBy}}</span>
+        </dd>
+        <dt><span>Created Date</span></dt>
+        <dd>
+            <span>{{vm.fileUpload.createdDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span>Updated Date</span></dt>
+        <dd>
+            <span>{{vm.fileUpload.updatedDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>Opportunity Master Id</span></dt>
+        <dd>
+            <a ui-sref="opportunity-master-detail({id:vm.fileUpload.opportunityMasterId.id})">{{vm.fileUpload.opportunityMasterId.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="file-upload-detail.edit({id:vm.fileUpload.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down"> Edit</span>
+    </button>
+</div>

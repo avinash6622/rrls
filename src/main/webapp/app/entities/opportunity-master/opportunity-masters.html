@@ -1,0 +1,73 @@
+<div>
+    <h2>Opportunity Master</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 no-padding-right">
+                <button class="btn btn-primary pull-right" ui-sref="opportunity-master.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create New Opportunity
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
+                 <!--    <th jh-sort-by="oppCode"><span>Opp Code</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+                 <th jh-sort-by="masterName.id"><span>Opportunity Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+                 
+                  	<th jh-sort-by="oppName"><span>Sector</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="oppDescription"><span>Opportunity Description</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="strategyMasterId.id"><span>Strategy</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    
+                   <!--  <th jh-sort-by="opportunityName.id"><span>Master Names</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+                <tr ng-repeat="opportunityMaster in vm.opportunityMasters track by opportunityMaster.id">
+                   <!--  <td><a ui-sref="opportunity-master-detail({id:opportunityMaster.id})">{{opportunityMaster.oppCode}}</a></td> -->
+                    <td><a ui-sref="opportunity-master-detail({id:opportunityMaster.id})">{{opportunityMaster.masterName.oppName}}
+                    </a></td>
+                    <!-- <td><a ui-sref="opportunity-master-detail({id:opportunityMaster.masterName.id})">{{opportunityMaster.masterName.strategyType}}</a></td> -->
+                     <td> {{opportunityMaster.masterName.sectorType}}</td>
+                    <td><a ui-sref="opportunity-master-detail({id:opportunityMaster.id})">{{opportunityMaster.oppDescription}}</a></td>
+                    <td>
+                      <!--  <a ui-sref="strategy-master-detail({id:opportunityMaster.strategyMasterId.id})">{{opportunityMaster.strategyMasterId.strategyName}}</a> -->
+                      <div ng-repeat="selectedStrategyMaster in opportunityMaster.selectedStrategyMaster">{{selectedStrategyMaster.strategyName}}</div>
+                    </td>
+                     
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="opportunity-master-detail({id:opportunityMaster.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="opportunity-master.edit({id:opportunityMaster.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            
+                             <button type="submit"
+                                    ui-sref="opportunity-master.delete({id:opportunityMaster.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button> 
+                            
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+
+<div>
+    <h2><span>{{vm.strategyMaster.strategyName}}</span></h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Strategy Code</span></dt>
+        <dd>
+            <span>{{vm.strategyMaster.strategyCode}}</span>
+        </dd>
+        <!-- <dt><span>Strategy Name</span></dt>
+        <dd>
+            <span>{{vm.strategyMaster.strategyName}}</span>
+        </dd> -->
+        <dt><span>Status</span></dt>
+        <dd>
+            <span>{{vm.strategyMaster.sStatus ? 'Active': 'Inactive'}}</span>
+        </dd>
+        <dt><span>Date Active</span></dt>
+        <dd>
+            <span>{{vm.strategyMaster.dateActive | date:'mediumDate'}}</span>
+        </dd>
+     <!--    <dt><span>Created By</span></dt>
+        <dd>
+            <span>{{vm.strategyMaster.createdBy}}</span>
+        </dd>
+        <dt><span>Updated By</span></dt>
+        <dd>
+            <span>{{vm.strategyMaster.updatedBy}}</span>
+        </dd>
+        <dt><span>Created Date</span></dt>
+        <dd>
+            <span>{{vm.strategyMaster.createdDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span>Updated Date</span></dt>
+        <dd>
+            <span>{{vm.strategyMaster.updatedDate | date:'medium'}}</span>
+        </dd> -->
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="strategy-master-detail.edit({id:vm.strategyMaster.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down"> Edit</span>
+    </button>
+</div>
