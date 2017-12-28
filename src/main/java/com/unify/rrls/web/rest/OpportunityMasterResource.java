@@ -47,6 +47,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.codahale.metrics.annotation.Timed;
+
+import com.unify.rrls.domain.DocumentCreationBean;
 import com.unify.rrls.domain.FileUpload;
 import com.unify.rrls.domain.FileUploadComments;
 import com.unify.rrls.domain.OpportunityMaster;
@@ -193,7 +195,7 @@ public class OpportunityMasterResource {
 	 * result.getId().toString())).body(result); }
 	 */
 	
-@PostMapping("/opportunity-masters")
+	@PostMapping("/opportunity-masters")
 	@Timed
 	public ResponseEntity<OpportunityMaster> createOpportunityMaster(@RequestBody OpportunityMaster opportunityMaster)
 			throws URISyntaxException, IOException, MissingServletRequestParameterException {
@@ -290,19 +292,25 @@ public class OpportunityMasterResource {
 				.body(result);
 	}
 	
-	/*@PostMapping("/opportunity-masters")
+	@PostMapping("/opportunity-masters/create-file")
 	@Timed
-	public ResponseEntity<OpportunityMaster> createWordOpportunityMaster(RequestParam inputPath) 
-			throws URISyntaxException, IOException {
+	public String createWordOpportunityMaster(@RequestBody DocumentCreationBean documentCreationBean) 
+			throws URISyntaxException, IOException{
+		/* JSONParser jsonParser = new JSONParser();
+		 JSONObject jsonObject = (JSONObject) jsonParser.parse(documentCreationBean.getFileContent());
+		 System.out.println(jsonObject);*/
 		String sFilesDirectory="";
-		sFilesDirectory = "src/main/resources/fileUpload"; 
+		//htmlContent="<p>this is test file</p>";
+		sFilesDirectory = "src/main/resources/fileUpload/";
+		String sFile="Sample.docx";
+		sFile=sFilesDirectory+sFile;
 		File dirFiles = new File(sFilesDirectory); 
 		dirFiles.mkdirs(); 
 		FileUpload fileUploaded = new FileUpload();
-		//convertHTMLToDoc(,sFilesDirectory, inputPath);
+		convertHTMLToDoc(documentCreationBean.getFileContent(),sFilesDirectory, sFile);
 		
 		return null;
-	}*/
+	}
 	/**
 	 * GET /opportunity-masters : get all the opportunityMasters.
 	 *
@@ -420,14 +428,23 @@ public class OpportunityMasterResource {
 	}
 
 	public String convertHTMLToDoc(String xhtml, String destinationPath, String fileName) {
-		log.info("HTML to DOC conversion\n--------------------------------------\nstarted....\n");
+		log.info("HTML to DOC conversion\n--------------------------------------\nstarted....\n" + xhtml);
 		try {
 		
 			WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.createPackage();
 
 			XHTMLImporterImpl XHTMLImporter = new XHTMLImporterImpl(wordMLPackage);
-
-			wordMLPackage.getMainDocumentPart().getContent().addAll(XHTMLImporter.convert(xhtml, null));
+			
+			/*xhtml=xhtml
+			.replace("&amp;", "&")
+			.replace("&lt;", "<")
+			.replace("&gt;", ">")
+			.replace("&#39;", "'")
+			.replace("&nbsp;", " ")
+			.replace("&#43;", "+")
+			.replace("\"", "\\\"");*/
+			
+						wordMLPackage.getMainDocumentPart().getContent().addAll(XHTMLImporter.convert(xhtml, null));
 
 			System.out.println(
 					XmlUtils.marshaltoString(wordMLPackage.getMainDocumentPart().getJaxbElement(), true, true));

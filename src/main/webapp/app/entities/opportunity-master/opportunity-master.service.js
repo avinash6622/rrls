@@ -67,6 +67,18 @@
                     }
                     return data;
                 }
+            },
+            'wordCreation': {
+            	url: 'api/opportunity-masters/create-file/',
+                method: 'POST',
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                        data.createdDate = DateUtils.convertLocalDateFromServer(data.createdDate);
+                        data.updatedDate = DateUtils.convertDateTimeFromServer(data.updatedDate);
+                    }
+                    return data;
+                }
             }
         });
     }

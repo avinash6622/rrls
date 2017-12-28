@@ -112,14 +112,20 @@
         </button></dt>
         <dd ng-show="myvar">
             <!--<iframe src='https://docs.google.com/gview?url=http://ieee802.org/secmail/docIZSEwEqHFr.doc&embedded=true' width='100%' height='400' frameborder='0'></iframe>-->
-            <div ckeditor="options" ng-model="newdoc" ready="onReady()" ng-change="changeCKeditor()" readonly=""></div>
+            <div ckeditor="options" ng-model="vm.newdoc" ready="onReady()" ng-change="changeCKeditor()" readonly=""></div>
         </dd>
         
         <dt>
         <button type="button" class="btn btn-primary" ng-click="showdocument(); vm.htmlContent = null;" ng-show="!myvar">
             <span class="hidden-sm-down">CreateDocument</span>
-        </button>      
+        </button>
+        <button type="button" class="btn btn-primary" ng-click="vm.createFile()" ng-show="myvar">Save Document</button>      
         </dt> <dd></dd>
+       <!--   <dt>
+        <button type="button" class="btn btn-primary" ng-click="" ng-show="myvar">
+            <span class="hidden-sm-down">Submit</span>
+        </button>      
+        </dt> <dd></dd> -->
         
      </dl>  
 </div>

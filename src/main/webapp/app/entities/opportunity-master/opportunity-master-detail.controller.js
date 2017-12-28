@@ -19,6 +19,7 @@
         vm.load = load;
         vm.loadFileContent = loadFileContent; 
         vm.fileId='';
+        vm.createFile = createFile;
 
         var unsubscribe = $rootScope.$on('researchRepositoryLearningSystemApp:opportunityMasterUpdate', function(event, result) {
             vm.opportunityMaster = result;
@@ -75,6 +76,13 @@
         }
         function selectFile (file) {
             vm.opportunityMaster.fileUpload = file;
+        }
+        
+        function createFile()
+        {
+        	console.log(vm.newdoc);
+        	OpportunityMaster.wordCreation({fileContent: "<body>"+vm.newdoc +"</body>"}, onSaveSuccess, onSaveError);
+        	
         }
 
         function saveComment() {

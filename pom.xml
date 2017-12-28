@@ -369,6 +369,20 @@
             <artifactId>jsoup</artifactId>
             <version>1.10.1</version>
         </dependency>
+                <dependency>
+        	<groupId>org.springframework.boot</groupId>
+        	<artifactId>spring-boot-starter-data-couchbase</artifactId>
+        </dependency>
+        <dependency>
+        	<groupId>org.glassfish.jersey.media</groupId>
+        	<artifactId>jersey-media-multipart</artifactId>
+        </dependency>
+        <dependency>
+    <groupId>com.googlecode.json-simple</groupId>
+    <artifactId>json-simple</artifactId>
+    <version>1.1</version>
+</dependency>
+        
     </dependencies>
     <build>
         <defaultGoal>spring-boot:run</defaultGoal>
