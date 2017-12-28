@@ -1,4 +1,4 @@
-package com.unify.rrls.web.rest;
+/*package com.unify.rrls.web.rest;
 
 import com.unify.rrls.ResearchRepositoryLearningSystemApp;
 
@@ -32,11 +32,11 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-/**
+*//**
  * Test class for the OpportunityMasterResource REST controller.
  *
  * @see OpportunityMasterResource
- */
+ *//*
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ResearchRepositoryLearningSystemApp.class)
 public class OpportunityMasterResourceIntTest {
@@ -94,12 +94,12 @@ public class OpportunityMasterResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
-    /**
+    *//**
      * Create an entity for this test.
      *
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
-     */
+     *//*
     public static OpportunityMaster createEntity(EntityManager em) {
         OpportunityMaster opportunityMaster = new OpportunityMaster()
             .oppCode(DEFAULT_OPP_CODE)
@@ -426,3 +426,4 @@ public class OpportunityMasterResourceIntTest {
         assertThat(opportunityMaster1).isNotEqualTo(opportunityMaster2);
     }
 }
+*/
