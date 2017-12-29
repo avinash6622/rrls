@@ -81,7 +81,8 @@
         function createFile()
         {
         	console.log(vm.newdoc);
-        	OpportunityMaster.wordCreation({fileContent: "<body>"+vm.newdoc +"</body>"}, onSaveSuccess, onSaveError);
+        	var doc = "<body>"+vm.newdoc+"</body>";
+        	OpportunityMaster.wordCreation({fileContent: doc}, onSaveSuccess, onSaveError);
         	
         }
 
