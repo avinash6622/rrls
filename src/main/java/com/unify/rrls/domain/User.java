@@ -62,6 +62,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private RoleMaster roleMaster;
+    
+    @ManyToOne
+    @JoinColumn(name = "mapped_user_id")
+    private User userId;
 
     public RoleMaster getRoleMaster() {
         return roleMaster;
@@ -210,7 +214,16 @@ public class User extends AbstractAuditingEntity implements Serializable {
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
     }
-
+    
+    public User getUserId() {
+		return userId;
+	}
+    
+    public void setUserId(User userId) {
+		this.userId = userId;
+	}
+   
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -240,6 +253,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
             ", activated='" + activated + '\'' +
             ", langKey='" + langKey + '\'' +
             ", activationKey='" + activationKey + '\'' +
+            ", roleMaster='" + roleMaster + '\'' +
+             ", userId='" + userId + '\'' +
             "}";
     }
 }

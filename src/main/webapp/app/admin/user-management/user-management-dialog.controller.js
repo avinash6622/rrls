@@ -12,7 +12,7 @@
 
         vm.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
         vm.roleMasters = RoleMaster.query();
-
+        vm.users=User.query();
         vm.clear = clear;
         vm.languages = null;
         vm.save = save;

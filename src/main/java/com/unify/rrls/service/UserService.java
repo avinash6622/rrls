@@ -88,7 +88,7 @@ public class UserService {
     }
 
     public User createUser(String login, String password, String firstName, String lastName, String email,
-        String imageUrl, String langKey) {
+        String imageUrl, String langKey,User userId) {
 
         User newUser = new User();
         Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
@@ -108,6 +108,7 @@ public class UserService {
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         authorities.add(authority);
         newUser.setAuthorities(authorities);
+        newUser.setUserId(userId);
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;
@@ -139,9 +140,10 @@ public class UserService {
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
         user.setActivated(true);
+        user.setUserId(userDTO.getUserId());
         authoritySet.add(authorityRepositoryOne);
         user.setAuthorities(authoritySet);
-        user.setRoleMaster(userDTO.getRoleMaster());
+        user.setRoleMaster(userDTO.getRoleMaster());      
         userRepository.save(user);
         log.debug("Created Information for User: {}", user);
         return user;
@@ -187,6 +189,7 @@ public class UserService {
                 user.setActivated(userDTO.isActivated());
                 user.setLangKey(userDTO.getLangKey());
                 user.setRoleMaster(userDTO.getRoleMaster());
+                user.setUserId(userDTO.getUserId());
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
                 userDTO.getAuthorities().stream()
