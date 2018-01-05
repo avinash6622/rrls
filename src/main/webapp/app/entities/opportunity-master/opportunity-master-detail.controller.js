@@ -81,9 +81,11 @@
         function createFile()
         {
         	console.log(vm.newdoc);
+        	console.log('File name......'+vm.fileName);
         	var doc = "<body>"+vm.newdoc+"</body>";
-        	OpportunityMaster.wordCreation({fileContent: doc}, onSaveSuccess, onSaveError);
-        	
+        	OpportunityMaster.wordCreation({fileContent: doc,fileName:vm.fileName,oppId:vm.opportunityMaster.id,
+        		oppName:vm.opportunityMaster.masterName.oppName,oppId:vm.opportunityMaster.id});
+        
         }
 
         function saveComment() {

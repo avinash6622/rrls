@@ -357,12 +357,20 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-data</artifactId>
         </dependency>
-        <!-- jhipster-needle-maven-add-dependency -->
-        <dependency>
+      <!-- jhipster-needle-maven-add-dependency -->
+          <!-- <dependency>
             <groupId>org.docx4j</groupId>
             <artifactId>docx4j-ImportXHTML</artifactId>
             <version>3.0.0</version>
-        </dependency>
+        </dependency> -->
+        <!-- https://mvnrepository.com/artifact/org.docx4j/docx4j -->
+<dependency>
+    <groupId>org.docx4j</groupId>
+    <artifactId>docx4j-ImportXHTML</artifactId>
+    <version>3.3.4</version>
+</dependency>
+        
+        
         <dependency>
             <!-- jsoup HTML parser library @ https://jsoup.org/ -->
             <groupId>org.jsoup</groupId>

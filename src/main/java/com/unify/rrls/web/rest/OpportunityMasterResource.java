@@ -8,9 +8,17 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
 import org.docx4j.Docx4J;
@@ -59,6 +67,7 @@ import com.unify.rrls.repository.FileUploadRepository;
 import com.unify.rrls.repository.OpportunityMasterRepository;
 import com.unify.rrls.repository.StrategyMappingRepository;
 import com.unify.rrls.repository.StrategyMasterRepository;
+import com.unify.rrls.security.SecurityUtils;
 import com.unify.rrls.web.rest.util.HeaderUtil;
 import com.unify.rrls.web.rest.util.PaginationUtil;
 
@@ -92,6 +101,8 @@ public class OpportunityMasterResource {
 	}
 	
 	StrategyMapping strategyMapping;
+	
+	final static Pattern PATTERN = Pattern.compile("(.*?)(?:\\((\\d+)\\))?(\\.[^.]*)?");
 
 	private final Logger log = LoggerFactory.getLogger(OpportunityMasterResource.class);
 
@@ -294,22 +305,42 @@ public class OpportunityMasterResource {
 	
 	@PostMapping("/opportunity-masters/create-file")
 	@Timed
-	public String createWordOpportunityMaster(@RequestBody DocumentCreationBean documentCreationBean) 
+	public ResponseEntity<FileUpload> createWordOpportunityMaster(@RequestBody DocumentCreationBean documentCreationBean) 
 			throws URISyntaxException, IOException{
-		/* JSONParser jsonParser = new JSONParser();
-		 JSONObject jsonObject = (JSONObject) jsonParser.parse(documentCreationBean.getFileContent());
-		 System.out.println(jsonObject);*/
-		String sFilesDirectory="";
-		//htmlContent="<p>this is test file</p>";
-		sFilesDirectory = "src/main/resources/fileUpload/";
-		String sFile="Sample.docx";
+		String sFilesDirectory="";			
+		String user=SecurityUtils.getCurrentUserLogin();		
+		sFilesDirectory = "src/main/resources/"+documentCreationBean.getOppName()+"/"+user+"/";
+		String sFile=documentCreationBean.getFileName()+".docx";		
+		String extension = "";
+		String name = "";
+
+		int idxOfDot =sFile.lastIndexOf('.');   //Get the last index of . to separate extension
+		extension = sFile.substring(idxOfDot + 1);
+		name = sFile.substring(0, idxOfDot);
+		File fPath=new File(sFilesDirectory+sFile);
+		Path path = Paths.get(sFile);
+		int counter = 1;	
+		while(fPath.exists()){
+			sFile = name+"("+counter+")."+extension;
+		    path = Paths.get(sFile);
+		    fPath=new File(sFilesDirectory+sFile);
+		    counter++;
+		}		
 		sFile=sFilesDirectory+sFile;
-		File dirFiles = new File(sFilesDirectory); 
-		dirFiles.mkdirs(); 
-		FileUpload fileUploaded = new FileUpload();
-		convertHTMLToDoc(documentCreationBean.getFileContent(),sFilesDirectory, sFile);
 		
-		return null;
+		File dirFiles = new File(sFilesDirectory);		
+		dirFiles.mkdirs(); 
+		
+		FileUpload result = new FileUpload();
+		convertHTMLToDoc(documentCreationBean.getFileContent(),sFilesDirectory, sFile);
+		OpportunityMaster opportunityMaster = opportunityMasterRepository.findOne(documentCreationBean.getOppId());
+		result.setFileName(fPath.getName());
+		result.setFileData(sFile);
+		result.setOpportunityMasterId(opportunityMaster);
+		result=fileUploadRepository.save(result);
+		 return ResponseEntity.created(new URI("/api/file-uploads/" + result.getId()))
+		            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+		            .body(result);
 	}
 	/**
 	 * GET /opportunity-masters : get all the opportunityMasters.
@@ -435,16 +466,16 @@ public class OpportunityMasterResource {
 
 			XHTMLImporterImpl XHTMLImporter = new XHTMLImporterImpl(wordMLPackage);
 			
-			/*xhtml=xhtml
-			.replace("&amp;", "&")
+			xhtml=xhtml
+			//.replace("&amp;", "&")
 			.replace("&lt;", "<")
 			.replace("&gt;", ">")
 			.replace("&#39;", "'")
 			.replace("&nbsp;", " ")
 			.replace("&#43;", "+")
-			.replace("\"", "\\\"");*/
-			
-						wordMLPackage.getMainDocumentPart().getContent().addAll(XHTMLImporter.convert(xhtml, null));
+			.replace("\"", "\'");			
+		
+			wordMLPackage.getMainDocumentPart().getContent().addAll(XHTMLImporter.convert(xhtml, null));
 
 			System.out.println(
 					XmlUtils.marshaltoString(wordMLPackage.getMainDocumentPart().getJaxbElement(), true, true));
