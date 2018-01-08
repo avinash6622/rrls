@@ -20,7 +20,7 @@
         vm.loadFileContent = loadFileContent; 
         vm.fileId='';
         vm.createFile = createFile;
-
+       
         var unsubscribe = $rootScope.$on('researchRepositoryLearningSystemApp:opportunityMasterUpdate', function(event, result) {
             vm.opportunityMaster = result;
         });
@@ -53,7 +53,13 @@
                }, function(err) {
                 console.log(err);
             });
-        }     
+        } 
+        
+        function clear () {
+        	vm.newdoc = "";
+        	$scope.myvar = false;
+        	vm.fileName="";
+        }
 
         function upload () {
         console.log('uploading....');
@@ -84,8 +90,14 @@
         	console.log('File name......'+vm.fileName);
         	var doc = "<body>"+vm.newdoc+"</body>";
         	OpportunityMaster.wordCreation({fileContent: doc,fileName:vm.fileName,oppId:vm.opportunityMaster.id,
-        		oppName:vm.opportunityMaster.masterName.oppName,oppId:vm.opportunityMaster.id});
-        
+        		oppName:vm.opportunityMaster.masterName.oppName,oppId:vm.opportunityMaster.id}, function(result){
+        			console.log('result',result);
+        			vm.opportunityMaster.fileUploads.push(result);
+        			console.log('opp',vm.opportunityMaster.fileUploads);
+        			clear();
+        		}, onSaveError);
+       
+       
         }
 
         function saveComment() {
@@ -114,12 +126,13 @@
                   }, function(err) {
                    console.log(err);
                });
-        }        
-       
+        }       
+      
 
         function onSaveSuccess (result) {
             vm.isSaving = false;
-            vm.fileUploadCommentList.push(result);           
+            vm.fileUploadCommentList.push(result);
+            
             vm.fileComments = "";
             //vm.load();
         }

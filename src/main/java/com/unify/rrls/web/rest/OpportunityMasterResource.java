@@ -338,9 +338,12 @@ public class OpportunityMasterResource {
 		result.setFileData(sFile);
 		result.setOpportunityMasterId(opportunityMaster);
 		result=fileUploadRepository.save(result);
-		 return ResponseEntity.created(new URI("/api/file-uploads/" + result.getId()))
-		            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-		            .body(result);
+		/*List<FileUpload> fileUploads = fileUploadRepository.findByOpportunityMasterId(opportunityMaster);
+		if (!fileUploads.isEmpty()) {
+		opportunityMaster.setFileUploads(fileUploads);			}
+		*/
+		return ResponseEntity.created(new URI("/api/opportunity-masters"))
+				.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);/*ResponseUtil.wrapOrNotFound(Optional.ofNullable(result));*/
 	}
 	/**
 	 * GET /opportunity-masters : get all the opportunityMasters.
