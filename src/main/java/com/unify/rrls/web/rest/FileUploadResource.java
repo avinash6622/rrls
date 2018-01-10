@@ -14,6 +14,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 
+import com.unify.rrls.security.SecurityUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,11 +58,11 @@ public class FileUploadResource {
     private final Logger log = LoggerFactory.getLogger(FileUploadResource.class);
 
     private static final String ENTITY_NAME = "fileUpload";
-    
+
     @Autowired
     private final FileUploadRepository fileUploadRepository;
     private final OpportunityMasterRepository opportunityMasterRepository;
-    
+
     private byte[] fileStream;
 	private String fileName;
 
@@ -93,9 +94,9 @@ public class FileUploadResource {
      * @param fileUpload the fileUpload to create
      * @return the ResponseEntity with status 201 (Created) and with body the new fileUpload, or with status 400 (Bad Request) if the fileUpload has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
-     * @throws IOException 
+     * @throws IOException
      */
-   // @PostMapping("/file-uploads")  
+   // @PostMapping("/file-uploads")
     @RequestMapping(value = "/file-uploads", method =RequestMethod.POST)
     @Timed
     public ResponseEntity<FileUpload> createFileUpload(@RequestParam(value="oppId")Long oppId,
@@ -106,13 +107,14 @@ public class FileUploadResource {
       /*  if (fileUpload.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new fileUpload cannot already have an ID")).body(null);
         }*/
-      String  sFilesDirectory = "src/main/resources/fileUpload";
-      File dirFiles = new File(sFilesDirectory); dirFiles.mkdirs();  
+        String user= SecurityUtils.getCurrentUserLogin();
+        String  sFilesDirectory =  "src/main/resources/"+opp.getMasterName().getOppName()+"/"+user+"/xlsx/";
+      File dirFiles = new File(sFilesDirectory); dirFiles.mkdirs();
       FileUpload fileUploaded=new FileUpload();
       FileUpload result =new FileUpload();
       for (MultipartFile sFile : fileUploads) {
-    	  
-    	 setFileName(sFile.getOriginalFilename());     
+
+    	 setFileName(sFile.getOriginalFilename());
     	fileStream = IOUtils.toByteArray(sFile.getInputStream()); File sFiles =
     	new File(dirFiles, fileName); writeFile(fileStream, sFiles);
     	fileUploaded.setFileData(sFiles.toString());

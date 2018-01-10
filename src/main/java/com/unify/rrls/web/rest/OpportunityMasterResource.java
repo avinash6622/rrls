@@ -8,17 +8,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
 import org.docx4j.Docx4J;
@@ -55,8 +47,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.codahale.metrics.annotation.Timed;
-
-import com.unify.rrls.domain.DocumentCreationBean;
 import com.unify.rrls.domain.FileUpload;
 import com.unify.rrls.domain.FileUploadComments;
 import com.unify.rrls.domain.OpportunityMaster;
@@ -67,7 +57,6 @@ import com.unify.rrls.repository.FileUploadRepository;
 import com.unify.rrls.repository.OpportunityMasterRepository;
 import com.unify.rrls.repository.StrategyMappingRepository;
 import com.unify.rrls.repository.StrategyMasterRepository;
-import com.unify.rrls.security.SecurityUtils;
 import com.unify.rrls.web.rest.util.HeaderUtil;
 import com.unify.rrls.web.rest.util.PaginationUtil;
 
@@ -99,10 +88,8 @@ public class OpportunityMasterResource {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	
+
 	StrategyMapping strategyMapping;
-	
-	final static Pattern PATTERN = Pattern.compile("(.*?)(?:\\((\\d+)\\))?(\\.[^.]*)?");
 
 	private final Logger log = LoggerFactory.getLogger(OpportunityMasterResource.class);
 
@@ -138,34 +125,34 @@ public class OpportunityMasterResource {
 	 */
 	/*
 	 * // @PostMapping("/opportunity-masters")
-	 * 
+	 *
 	 * @RequestMapping(value = "/opportunity-masters", method =
 	 * RequestMethod.POST)
-	 * 
+	 *
 	 * @Timed public ResponseEntity<OpportunityMaster>
 	 * createOpportunityMaster(@RequestParam(value = "oppCode") String oppCode,
-	 * 
+	 *
 	 * @RequestParam(value = "oppName") String oppName,
-	 * 
+	 *
 	 * @RequestParam(value = "oppDescription", required = false) String
 	 * oppDescription,
-	 * 
+	 *
 	 * @RequestParam(value = "strategyMasterId", required = false)
 	 * StrategyMaster strategyMasterId,
-	 * 
+	 *
 	 * @RequestParam(value = "htmlContent") String htmlContent,
-	 * 
+	 *
 	 * @RequestParam(value = "fileUpload", required = false) MultipartFile[]
 	 * fileUpload) throws URISyntaxException, IOException,
 	 * MissingServletRequestParameterException { // log.debug(
 	 * "REST request to save OpportunityMaster : {}", // opportunityMaster);
-	 * 
-	 * 
+	 *
+	 *
 	 * if (opportunityMaster.getId() != null) { return
 	 * ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(
 	 * ENTITY_NAME, "idexists",
 	 * "A new opportunityMaster cannot already have an ID")).body(null); }
-	 * 
+	 *
 	 * OpportunityMaster opportunityMasters = new OpportunityMaster();
 	 * opportunityMasters.setOppCode(oppCode);
 	 * opportunityMasters.setOppName(oppName);
@@ -174,20 +161,20 @@ public class OpportunityMasterResource {
 	 * sFilesDirectory = "src/main/resources/fileUpload"; File dirFiles = new
 	 * File(sFilesDirectory); dirFiles.mkdirs(); FileUpload fileUploaded = new
 	 * FileUpload();
-	 * 
+	 *
 	 * // System.out.println(sFile.getOriginalFilename());
-	 * 
-	 * 
+	 *
+	 *
 	 * opportunityMasters.setFileName(sFile.getOriginalFilename());
 	 * opportunityMasters.setData(sFile.getBytes());
-	 * 
+	 *
 	 * // }
-	 * 
+	 *
 	 * System.out.println("----------------------\n" + htmlContent +
 	 * "---------------------------------------\n");
 	 * convertHTMLToDoc(htmlContent, "", "test2.docx");
 	 * opportunityMasters.setHtmlContent(htmlContent);
-	 * 
+	 *
 	 * OpportunityMaster result =
 	 * opportunityMasterRepository.save(opportunityMasters); for (MultipartFile
 	 * sFile : fileUpload) { setFileName(sFile.getOriginalFilename());
@@ -197,26 +184,26 @@ public class OpportunityMasterResource {
 	 * fileUploaded.setFileName(sFile.getOriginalFilename());
 	 * fileUploaded.setOpportunityMasterId(result);
 	 * fileUploadRepository.save(fileUploaded);
-	 * 
+	 *
 	 * }
-	 * 
+	 *
 	 * return ResponseEntity.created(new URI("/api/opportunity-masters/" +
 	 * result.getId()))
 	 * .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME,
 	 * result.getId().toString())).body(result); }
 	 */
-	
-	@PostMapping("/opportunity-masters")
+
+@PostMapping("/opportunity-masters")
 	@Timed
 	public ResponseEntity<OpportunityMaster> createOpportunityMaster(@RequestBody OpportunityMaster opportunityMaster)
 			throws URISyntaxException, IOException, MissingServletRequestParameterException {
 		log.debug("REST request to save OpportunityMaster : {}", opportunityMaster);
-		System.out.println(opportunityMaster.getStrategyMasterId());		
-		
+		System.out.println(opportunityMaster.getStrategyMasterId());
+
 		if (opportunityMaster.getId() != null) {
 			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists",
 					"A new opportunityMaster cannot already have an ID")).body(null);
-		}		
+		}
 
 		OpportunityMaster result = opportunityMasterRepository.save(opportunityMaster);
 		for(StrategyMaster sm:opportunityMaster.getSelectedStrategyMaster())
@@ -225,7 +212,7 @@ public class OpportunityMasterResource {
 			strategyMapping.setOpportunityMaster(result);
 			strategyMapping.setStrategyMaster(sm);
 			strategyMappingRepository.save(strategyMapping);
-			
+
 		}
 
 		return ResponseEntity.created(new URI("/api/opportunity-masters/" + result.getId()))
@@ -251,17 +238,17 @@ public class OpportunityMasterResource {
 	public ResponseEntity<OpportunityMaster> updateOpportunityMaster(@RequestBody OpportunityMaster opportunityMasters)
 			throws URISyntaxException, IOException, MissingServletRequestParameterException {
 		log.debug("REST request to update OpportunityMaster : {}", opportunityMasters);
-		
+
 		List<StrategyMapping> strategyMappings = strategyMappingRepository.findByOpportunityMaster(opportunityMasters);
 		strategyMappingRepository.delete(strategyMappings);
-		
+
 		for(StrategyMaster sm:opportunityMasters.getSelectedStrategyMaster())
 		{
 			strategyMapping=new StrategyMapping();
 			strategyMapping.setOpportunityMaster(opportunityMasters);
 			strategyMapping.setStrategyMaster(sm);
 			strategyMappingRepository.save(strategyMapping);
-			
+
 		}
 		/*
 		 * if (strategyMasterId.getId() == null) { return
@@ -302,49 +289,20 @@ public class OpportunityMasterResource {
 				.headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, opportunityMaster.getId().toString()))
 				.body(result);
 	}
-	
-	@PostMapping("/opportunity-masters/create-file")
-	@Timed
-	public ResponseEntity<FileUpload> createWordOpportunityMaster(@RequestBody DocumentCreationBean documentCreationBean) 
-			throws URISyntaxException, IOException{
-		String sFilesDirectory="";			
-		String user=SecurityUtils.getCurrentUserLogin();		
-		sFilesDirectory = "src/main/resources/"+documentCreationBean.getOppName()+"/"+user+"/";
-		String sFile=documentCreationBean.getFileName()+".docx";		
-		String extension = "";
-		String name = "";
 
-		int idxOfDot =sFile.lastIndexOf('.');   //Get the last index of . to separate extension
-		extension = sFile.substring(idxOfDot + 1);
-		name = sFile.substring(0, idxOfDot);
-		File fPath=new File(sFilesDirectory+sFile);
-		Path path = Paths.get(sFile);
-		int counter = 1;	
-		while(fPath.exists()){
-			sFile = name+"("+counter+")."+extension;
-		    path = Paths.get(sFile);
-		    fPath=new File(sFilesDirectory+sFile);
-		    counter++;
-		}		
-		sFile=sFilesDirectory+sFile;
-		
-		File dirFiles = new File(sFilesDirectory);		
-		dirFiles.mkdirs(); 
-		
-		FileUpload result = new FileUpload();
-		convertHTMLToDoc(documentCreationBean.getFileContent(),sFilesDirectory, sFile);
-		OpportunityMaster opportunityMaster = opportunityMasterRepository.findOne(documentCreationBean.getOppId());
-		result.setFileName(fPath.getName());
-		result.setFileData(sFile);
-		result.setOpportunityMasterId(opportunityMaster);
-		result=fileUploadRepository.save(result);
-		/*List<FileUpload> fileUploads = fileUploadRepository.findByOpportunityMasterId(opportunityMaster);
-		if (!fileUploads.isEmpty()) {
-		opportunityMaster.setFileUploads(fileUploads);			}
-		*/
-		return ResponseEntity.created(new URI("/api/opportunity-masters"))
-				.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);/*ResponseUtil.wrapOrNotFound(Optional.ofNullable(result));*/
-	}
+	/*@PostMapping("/opportunity-masters")
+	@Timed
+	public ResponseEntity<OpportunityMaster> createWordOpportunityMaster(RequestParam inputPath)
+			throws URISyntaxException, IOException {
+		String sFilesDirectory="";
+		sFilesDirectory = "src/main/resources/fileUpload";
+		File dirFiles = new File(sFilesDirectory);
+		dirFiles.mkdirs();
+		FileUpload fileUploaded = new FileUpload();
+		//convertHTMLToDoc(,sFilesDirectory, inputPath);
+
+		return null;
+	}*/
 	/**
 	 * GET /opportunity-masters : get all the opportunityMasters.
 	 *
@@ -359,7 +317,7 @@ public class OpportunityMasterResource {
 		log.debug("REST request to get a page of OpportunityMasters");
 		List<OpportunityMaster> page = opportunityMasterRepository.findAll();
 		List<StrategyMaster> strategyMapMaster;
-	
+
 		for(OpportunityMaster opportunityMaster:page)
 		{
 			strategyMapMaster=new ArrayList<StrategyMaster>();
@@ -367,9 +325,9 @@ public class OpportunityMasterResource {
 			for(StrategyMapping sm:strategyMappings)
 			{
 				strategyMapMaster.add(sm.getStrategyMaster());
-			}	
+			}
 			opportunityMaster.setSelectedStrategyMaster(strategyMapMaster);
-			
+
 		}
 		System.out.println(page);
 		//HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
@@ -407,7 +365,7 @@ public class OpportunityMasterResource {
 
 				opportunityMaster.setHtmlContent(getHTMLContent(inputfilepath));
 				}
-				
+
 			} catch (Exception e) {
 				System.out.println("File not reading.....\n-------------------------\n" + e.getMessage());
 			}
@@ -426,23 +384,23 @@ public class OpportunityMasterResource {
 	@Timed
 	public ResponseEntity<OpportunityMaster> getOpportunityFile(@PathVariable Long id) {
 		log.debug("REST request to get OpportunityMaster : {}", id);
-		
-		FileUpload fileUploads =fileUploadRepository.findOne(id);		
+
+		FileUpload fileUploads =fileUploadRepository.findOne(id);
 		//OpportunityMaster opportunityMaster=opportunityMasterRepository.findOne(fileUploads.getOpportunityMasterId().getId());
 			try {
-				
+
 				List<FileUploadComments> fileComments = fileUploadCommentsRepository
 						.findByFileUploadId(fileUploads);
 				fileUploads.getOpportunityMasterId().setFileUploadCommentList(fileComments);
 				//opportunityMaster.setFileUploads((List<FileUpload>) fileUploads);
 				String inputfilepath = fileUploads.getFileData();
 
-				fileUploads.getOpportunityMasterId().setHtmlContent(getHTMLContent(inputfilepath));				
-				
+				fileUploads.getOpportunityMasterId().setHtmlContent(getHTMLContent(inputfilepath));
+
 			} catch (Exception e) {
 				System.out.println("File not reading.....\n-------------------------\n" + e.getMessage());
 			}
-		
+
 		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(fileUploads.getOpportunityMasterId()));
 	}
 
@@ -462,22 +420,13 @@ public class OpportunityMasterResource {
 	}
 
 	public String convertHTMLToDoc(String xhtml, String destinationPath, String fileName) {
-		log.info("HTML to DOC conversion\n--------------------------------------\nstarted....\n" + xhtml);
+		log.info("HTML to DOC conversion\n--------------------------------------\nstarted....\n");
 		try {
-		
+
 			WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.createPackage();
 
 			XHTMLImporterImpl XHTMLImporter = new XHTMLImporterImpl(wordMLPackage);
-			
-			xhtml=xhtml
-			//.replace("&amp;", "&")
-			.replace("&lt;", "<")
-			.replace("&gt;", ">")
-			.replace("&#39;", "'")
-			.replace("&nbsp;", " ")
-			.replace("&#43;", "+")
-			.replace("\"", "\'");			
-		
+
 			wordMLPackage.getMainDocumentPart().getContent().addAll(XHTMLImporter.convert(xhtml, null));
 
 			System.out.println(
@@ -490,20 +439,20 @@ public class OpportunityMasterResource {
 		/*
 		 * File dir = new File (destinationPath); File actualFile = new File
 		 * (fileName);
-		 * 
+		 *
 		 * WordprocessingMLPackage wordMLPackage = null; try { wordMLPackage =
 		 * WordprocessingMLPackage.createPackage(); } catch
 		 * (InvalidFormatException e) { e.printStackTrace(); }
-		 * 
-		 * 
+		 *
+		 *
 		 * XHTMLImporterImpl XHTMLImporter = new
 		 * XHTMLImporterImpl(wordMLPackage);
-		 * 
+		 *
 		 * OutputStream fos = null; try { fos = new ByteArrayOutputStream();
-		 * 
+		 *
 		 * System.out.println(XmlUtils.marshaltoString(wordMLPackage
 		 * .getMainDocumentPart().getJaxbElement(), true, true));
-		 * 
+		 *
 		 * HTMLSettings htmlSettings = Docx4J.createHTMLSettings();
 		 * htmlSettings.setWmlPackage(wordMLPackage);
 		 * Docx4jProperties.setProperty(
