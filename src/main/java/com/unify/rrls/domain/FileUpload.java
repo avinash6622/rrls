@@ -1,19 +1,24 @@
 package com.unify.rrls.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import java.io.Serializable;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Objects;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * A FileUpload.
  */
@@ -42,6 +47,9 @@ public class FileUpload extends AbstractAuditingEntity implements Serializable {
     @Column(name = "add_file_flag", length = 10)
     private Integer addFileFlag;
     
+    @Column(name = "file_status")
+    private String fileStatus;    
+  
     @Transient
     @JsonProperty
 	private List<FileUploadComments> fileUploadCommentList;	
@@ -62,8 +70,7 @@ public class FileUpload extends AbstractAuditingEntity implements Serializable {
     private Instant updatedDate;
 */
     @ManyToOne
-    @JoinColumn(name = "opportunity_master_id")
-    @JsonIgnore
+    @JoinColumn(name = "opportunity_master_id")   
     private OpportunityMaster opportunityMasterId;
   
 
@@ -205,9 +212,18 @@ public class FileUpload extends AbstractAuditingEntity implements Serializable {
     public void setOpportunityMasterId(OpportunityMaster OpportunityMaster) {
         this.opportunityMasterId = OpportunityMaster;
     }
+    
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
-    @Override
+    public String getFileStatus() {
+		return fileStatus;
+	}
+
+	public void setFileStatus(String fileStatus) {
+		this.fileStatus = fileStatus;
+	}	
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

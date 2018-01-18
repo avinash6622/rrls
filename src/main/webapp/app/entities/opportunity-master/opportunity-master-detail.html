@@ -1,155 +1,204 @@
 <!-- <form name="editForm" role="form" novalidate ng-submit="vm.saveWithUpload()" show-validation> -->
-    <html>
-        <head>
-        <style>
-        .actionBox {
-            border-top:1px dotted #bbb;
-            padding:10px;
-        }
-        .sub-text {
-            color:#aaa;
-            font-family:verdana;
-            font-size:11px;
-        }
-        
-        .commentText p {
-            margin:0;
-        }
-        .capitalize {
-            text-transform: capitalize;
-        }
-        </style>
-        </head>
-        </html>
-        <div>
-          <!--   <h2><span>Opportunity Master</span> {{vm.opportunityMaster.id}}</h2> -->
-           <h2>{{vm.opportunityMaster.masterName.oppName}}</h2>
-            <hr>
-            <jhi-alert-error></jhi-alert-error>
-            <dl class="dl-horizontal jh-entity-details">
-          <!--  <dt><span>Opportunity Name</span></dt>
-                <dd>
-                    <span>{{vm.opportunityMaster.masterName.oppName}}</a>
-                </dd> -->
-        
-                <dt><span>Sector</span></dt>
-                <dd>
-                    <span>{{vm.opportunityMaster.masterName.sectorType}}</span>
-                </dd>
-                <dt><span>Description</span></dt>
-                <dd>
-                    <span>{{vm.opportunityMaster.oppDescription}}</span>
-                </dd>
-                <dt><span>Strategy</span></dt>
-                <dd>
-                  <!--   <a ui-sref="strategy-master-detail({id:vm.opportunityMaster.strategyMasterId.id})">{{vm.opportunityMaster.strategyMasterId.strategyName}}</a> -->
-                    <div ng-repeat="strategyMapping in vm.opportunityMaster.strategyMapping">
-                   {{strategyMapping.strategyMaster.strategyName}}
-                           </div>
-        
-                </dd>
-        
-              <!--   <dt ng-show="vm.opportunityMaster.htmlContent"><span>Document</span></dt>
-                <dd ng-show="vm.opportunityMaster.htmlContent">
-                    <iframe src='https://docs.google.com/gview?url=http://ieee802.org/secmail/docIZSEwEqHFr.doc&embedded=true' width='100%' height='400' frameborder='0'></iframe>
-                    <div ckeditor="options" ng-model="vm.opportunityMaster.htmlContent" ready="onReady()" ng-change="changeCKeditor()" readonly=""></div>
-                </dd>
-                 -->
-              <!--   <dt ng-show="vm.fileDocSave"><span>Create Document</span></dt>
-                <dd ng-show="vm.fileDocSave">
-                    <iframe src='https://docs.google.com/gview?url=http://ieee802.org/secmail/docIZSEwEqHFr.doc&embedded=true' width='100%' height='400' frameborder='0'></iframe>
-                    <div ckeditor="options" ng-model="vm.fileDocSave" ready="onReady()" ng-change="changeCKeditor()" readonly=""></div>
-                </dd>  -->
-               <!--  <dt><span>File Upload</span> -->
-              <!--   <dd>
-                <div class="form-group">
-                    <input type="file" ngf-select="vm.selectFile($file)" name="file" id="file_upload" ngf-pattern=".doc,.docx" accept=".doc,.docx" required="">
-                    <br/><button type="button" class="btn btn-default" ng-click="vm.upload()">Upload</button>
-                </div>
-                </dd> -->
-             <!--   <dt><span>Comments</span></dt>
-                <dd>
-                 <div class="actionBox" ng-repeat="fileUploadComments in vm.opportunityMaster.fileUploadCommentList track by fileUploadComments.id">
-                     <div>
-                     <div class="capitalize"><b>{{fileUploadComments.createdBy}} </b></div>
-                      <div>{{fileUploadComments.fileComments}}</div>
-                    <div class="date sub-text"> on {{fileUploadComments.createdDate  | date :"MMM d, y h:mm:ss a"}}</div></div>
-        
-                 </div>
-                    <textarea ng-model="vm.fileComments" name="comments" id="field_comments" rows="4" cols="120"></textarea>
-                    <br><button class="btn btn-default" ng-click="vm.saveComment()" ng-disabled=""vm.isSaving>Submit Comment</button>
-                </dd>      -->
-        
-               <dt ng-show="vm.opportunityMaster.fileUploads"><span>File Created</span></dt>
-                <dd ng-show="vm.opportunityMaster.fileUploads">
-                   <!--  <iframe src='https://docs.google.com/gview?url=http://ieee802.org/secmail/docIZSEwEqHFr.doc&embedded=true' width='100%' height='400' frameborder='0'></iframe> -->
-                    <div ng-repeat="fileUploads in vm.opportunityMaster.fileUploads">
-                    <a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
-                           </div>
-        
-                </dd>
-        
-                  <dt ng-show="vm.htmlContent"><span>Document</span></dt>
-                <dd ng-show="vm.htmlContent">
-                    <div ckeditor="options" ng-model="vm.htmlContent" ready="onReady()" ng-change="changeCKeditor()" readonly=true></div>
-                </dd>
-        
-                 <dt  ng-show="vm.htmlContent"><span>Comments</span></dt>
-                <dd  ng-show="vm.htmlContent">
-                 <div class="actionBox" ng-repeat="fileUploadComments in vm.fileUploadCommentList">
-                     <div>
-                     <div class="capitalize"><b>{{fileUploadComments.createdBy}} </b></div>
-                      <div>{{fileUploadComments.fileComments}}</div>
-                    <div class="date sub-text"> on {{fileUploadComments.createdDate  | date :"MMM d, y h:mm:ss a"}}</div></div>
-        
-                 </div>
-                    <textarea ng-model="vm.fileComments" name="comments" id="field_comments" rows="4" cols="120"></textarea>
-                    <br><button class="btn btn-default" ng-click="vm.saveComment()" ng-disabled=""vm.isSaving>Submit Comment</button>
-                </dd>
-        
-                 <dt ng-show="myvar"><span>Document</span> <button type="button" class="btn btn-primary" ng-click="myvar = !myvar" ng-show="myvar">
-                    <span class="hidden-sm-down">Cancel</span>
-                </button></dt>
-                <dd ng-show="myvar">
-                    <!--<iframe src='https://docs.google.com/gview?url=http://ieee802.org/secmail/docIZSEwEqHFr.doc&embedded=true' width='100%' height='400' frameborder='0'></iframe>-->
-                    <div ckeditor="options" ng-model="newdoc" ready="onReady()" ng-change="changeCKeditor()" readonly=""></div>
-                </dd>
-        
-                <dt>
-                <button type="button" class="btn btn-primary" ng-click="showdocument(); vm.htmlContent = null;" ng-show="!myvar">
-                    <span class="hidden-sm-down">CreateDocument</span>
-                </button>
-                </dt> <dd></dd>
-        
-        
-                <dt><span>Upload Excel</span></dt>
-                  <dd>
-                  <div class="form-group">
-                      <input type="file" ngf-select="vm.selectFile($file)" name="file" id="file_upload" ngf-pattern=".xls,.xlsx" accept=".xls,.xlsx" required="">
-                      <br/><button type="button" class="btn btn-default" ng-click="vm.upload()">Upload</button>
-                  </div>
-                  </dd>
-        
-        
-        
-               <!-- <dt>
-                    <button type="button" class="btn btn-primary" ng-click="">
-                        <span class="hidden-sm-down">UploadExcel</span>
-                    </button>
-                </dt> <dd></dd>-->
-        
-             </dl>
+<html>
+<head>
+<style>
+.actionBox {
+	border-top: 1px dotted #bbb;
+	padding: 10px;
+}
+
+.sub-text {
+	color: #aaa;
+	font-family: verdana;
+	font-size: 11px;
+}
+
+.commentText p {
+	margin: 0;
+}
+
+.capitalize {
+	text-transform: capitalize;
+}
+</style>
+</head>
+</html>
+<div>
+	<!--   <h2><span>Opportunity Master</span> {{vm.opportunityMaster.id}}</h2> -->
+	<h2>{{vm.opportunityMaster.masterName.oppName}}</h2>
+	<hr>
+	<jhi-alert-error></jhi-alert-error>
+	<dl class="dl-horizontal jh-entity-details">
+		<!--  <dt><span>Opportunity Name</span></dt>
+        <dd>
+            <span>{{vm.opportunityMaster.masterName.oppName}}</a>
+        </dd> -->
+
+		<dt>
+			<span>Sector</span>
+		</dt>
+		<dd>
+			<span>{{vm.opportunityMaster.masterName.sectorType}}</span>
+		</dd>
+		<dt>
+			<span>Description</span>
+		</dt>
+		<dd>
+			<span>{{vm.opportunityMaster.oppDescription}}</span>
+		</dd>
+		<dt>
+			<span>Strategy</span>
+		</dt>
+		<dd>
+			<!--   <a ui-sref="strategy-master-detail({id:vm.opportunityMaster.strategyMasterId.id})">{{vm.opportunityMaster.strategyMasterId.strategyName}}</a> -->
+			<div
+				ng-repeat="strategyMapping in vm.opportunityMaster.strategyMapping">
+				{{strategyMapping.strategyMaster.strategyName}}</div>
+
+		</dd>
+
+		<!--   <dt ng-show="vm.opportunityMaster.htmlContent"><span>Document</span></dt>
+        <dd ng-show="vm.opportunityMaster.htmlContent">
+            <iframe src='https://docs.google.com/gview?url=http://ieee802.org/secmail/docIZSEwEqHFr.doc&embedded=true' width='100%' height='400' frameborder='0'></iframe>
+            <div ckeditor="options" ng-model="vm.opportunityMaster.htmlContent" ready="onReady()" ng-change="changeCKeditor()" readonly=""></div>
+        </dd> 
+         -->
+		<!--   <dt ng-show="vm.fileDocSave"><span>Create Document</span></dt>
+        <dd ng-show="vm.fileDocSave">
+            <iframe src='https://docs.google.com/gview?url=http://ieee802.org/secmail/docIZSEwEqHFr.doc&embedded=true' width='100%' height='400' frameborder='0'></iframe>
+            <div ckeditor="options" ng-model="vm.fileDocSave" ready="onReady()" ng-change="changeCKeditor()" readonly=""></div>
+        </dd>  -->
+		<!--  <dt><span>File Upload</span> -->
+		<!--   <dd>
+        <div class="form-group">
+            <input type="file" ngf-select="vm.selectFile($file)" name="file" id="file_upload" ngf-pattern=".doc,.docx" accept=".doc,.docx" required="">
+            <br/><button type="button" class="btn btn-default" ng-click="vm.upload()">Upload</button>
         </div>
-        
-            <button type="submit"
-                    ui-sref="{{ vm.previousState }}"
-                    class="btn btn-info">
-                <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
-            </button>
-        
-            <button type="button" ui-sref="opportunity-master.edit({id:vm.opportunityMaster.id})" class="btn btn-primary">
-                <span class="glyphicon glyphicon-pencil"></span>
-                <span class="hidden-sm-down"> Edit</span>
-            </button>
-        <!-- </form> -->
-        
+        </dd> -->
+		<!--   <dt><span>Comments</span></dt>
+        <dd>
+         <div class="actionBox" ng-repeat="fileUploadComments in vm.opportunityMaster.fileUploadCommentList track by fileUploadComments.id">      
+ 			<div>
+ 			<div class="capitalize"><b>{{fileUploadComments.createdBy}} </b></div>
+ 			 <div>{{fileUploadComments.fileComments}}</div> 
+			<div class="date sub-text"> on {{fileUploadComments.createdDate  | date :"MMM d, y h:mm:ss a"}}</div></div>
+    	 
+         </div>
+            <textarea ng-model="vm.fileComments" name="comments" id="field_comments" rows="4" cols="120"></textarea>
+            <br><button class="btn btn-default" ng-click="vm.saveComment()" ng-disabled=""vm.isSaving>Submit Comment</button>
+        </dd>      -->
+
+		<dt ng-show="vm.opportunityMaster.fileUploads">
+			<span>File Created</span>
+		</dt>
+		<dd ng-show="vm.opportunityMaster.fileUploads">
+			<!--  <iframe src='https://docs.google.com/gview?url=http://ieee802.org/secmail/docIZSEwEqHFr.doc&embedded=true' width='100%' height='400' frameborder='0'></iframe> -->
+			<div ng-repeat="fileUploads in vm.opportunityMaster.fileUploads">
+				<a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
+				<b> - {{fileUploads.createdBy}}</b> <span class="date sub-text">
+					on {{fileUploads.createdDate | date :"MMM d, y h:mm:ss a"}}</span>
+			</div>
+
+		</dd>
+
+		<dt ng-show="vm.htmlContent">
+			<span>Document</span>
+		</dt>
+		<dd ng-show="vm.htmlContent">
+			<div ckeditor="options" ng-model="vm.htmlContent" ready="onReady()"
+				ng-change="changeCKeditor()" readonly=true></div>
+		</dd>
+
+		<dt ng-show="vm.htmlContent">
+			<span>Comments</span>
+		</dt>
+		<dd ng-show="vm.htmlContent">
+			<div class="actionBox"
+				ng-repeat="fileUploadComments in vm.fileUploadCommentList">
+				<div>
+					<div class="capitalize">
+						<b>{{fileUploadComments.createdBy}} </b>
+					</div>
+					<div>{{fileUploadComments.fileComments}}</div>
+					<div class="date sub-text">on
+						{{fileUploadComments.createdDate | date :"MMM d, y h:mm:ss a"}}</div>
+				</div>
+
+			</div>
+			<textarea ng-model="vm.fileComments" name="comments"
+				id="field_comments" rows="4" cols="120"></textarea>
+			<br>
+			<button class="btn btn-primary" ng-click="vm.saveComment()"
+				ng-disabled="" vm.isSaving>Submit Comment</button>
+			<button class="btn btn-success" ng-click="vm.approveFile(1)"
+				ng-disabled="" vm.isSaving>Approve</button>
+			<button class="btn btn-warning" ng-click="vm.approveFile(2)"
+				ng-disabled="" vm.isSaving>Change Request</button>
+			<button class="btn btn-danger" ng-click="vm.approveFile(3)"
+				ng-disabled="" vm.isSaving>Reject</button>
+		</dd>
+
+		<dt ng-show="myvar">
+			<span>Document</span>
+			<button type="button" class="btn btn-primary"
+				ng-click="myvar = !myvar" ng-show="myvar">
+				<span class="hidden-sm-down">Cancel</span>
+			</button>
+		</dt>
+		<dd ng-show="myvar">
+			<!--<iframe src='https://docs.google.com/gview?url=http://ieee802.org/secmail/docIZSEwEqHFr.doc&embedded=true' width='100%' height='400' frameborder='0'></iframe>-->
+			<div ckeditor="options" ng-model="vm.newdoc" ready="onReady()"
+				ng-change="changeCKeditor()" readonly=""></div>
+		</dd>
+		<dt ng-show="myvar">
+			<span>File Name</span>
+		</dt>
+		<dd ng-show="myvar">
+			<input type="text" class="col-sm-4" id="id" name="id"
+				ng-model="vm.fileName" />
+		</dd>
+		<dt>
+			<button type="button" class="btn btn-primary"
+				ng-click="showdocument(); vm.htmlContent = null;" ng-show="!myvar">
+				<span class="hidden-sm-down">CreateDocument</span>
+			</button>
+			<button type="button" class="btn btn-primary"
+				ng-click="vm.createFile()" ng-show="myvar">Save Document</button>
+		</dt>
+		<dd></dd>
+
+		<dt>
+			<span>Upload Excel</span>
+		</dt>
+		<dd>
+			<div class="form-group">
+				<input type="file" ngf-select="vm.selectFile($file)" name="file"
+					id="file_upload" ngf-pattern=".xls,.xlsx" accept=".xls,.xlsx"
+					required=""> <br />
+				<button type="button" class="btn btn-default" ng-click="vm.upload()">Upload</button>
+			</div>
+		</dd>
+
+
+		<!--   <dt>
+        <button type="button" class="btn btn-primary" ng-click="" ng-show="myvar">
+            <span class="hidden-sm-down">Submit</span>
+        </button>      
+        </dt> <dd></dd> -->
+
+	</dl>
+</div>
+
+<button type="submit" ui-sref="{{ vm.previousState }}"
+	class="btn btn-info">
+	<span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span>
+		Back</span>
+</button>
+
+<button type="button"
+	ui-sref="opportunity-master.edit({id:vm.opportunityMaster.id})"
+	class="btn btn-primary">
+	<span class="glyphicon glyphicon-pencil"></span> <span
+		class="hidden-sm-down"> Edit</span>
+</button>
+<!-- </form> -->
