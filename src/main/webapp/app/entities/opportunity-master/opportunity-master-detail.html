@@ -131,10 +131,10 @@
 			<button class="btn btn-primary" ng-click="vm.saveComment()"
 				ng-disabled="" vm.isSaving>Submit Comment</button>
 			<button class="btn btn-success" ng-click="vm.approveFile(1)"
-				ng-disabled="" vm.isSaving>Approve</button>
+				ng-disabled="" has-authority="ROLE_CIO" vm.isSaving>Approve</button>
 			<button class="btn btn-warning" ng-click="vm.approveFile(2)"
-				ng-disabled="" vm.isSaving>Change Request</button>
-			<button class="btn btn-danger" ng-click="vm.approveFile(3)"
+				ng-disabled="" has-authority="ROLE_CIO" vm.isSaving>Change Request</button>
+			<button class="btn btn-danger" has-authority="ROLE_CIO" ng-click="vm.approveFile(3)"
 				ng-disabled="" vm.isSaving>Reject</button>
 		</dd>
 		
