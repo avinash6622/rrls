@@ -50,12 +50,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.codahale.metrics.annotation.Timed;
+import com.unify.rrls.domain.AdditionalFileUpload;
 import com.unify.rrls.domain.DocumentCreationBean;
 import com.unify.rrls.domain.FileUpload;
 import com.unify.rrls.domain.FileUploadComments;
 import com.unify.rrls.domain.OpportunityMaster;
 import com.unify.rrls.domain.StrategyMapping;
 import com.unify.rrls.domain.StrategyMaster;
+import com.unify.rrls.repository.AdditionalFileUploadRepository;
 import com.unify.rrls.repository.FileUploadCommentsRepository;
 import com.unify.rrls.repository.FileUploadRepository;
 import com.unify.rrls.repository.OpportunityMasterRepository;
@@ -107,15 +109,18 @@ public class OpportunityMasterResource {
 	private final FileUploadCommentsRepository fileUploadCommentsRepository;
 	private final StrategyMappingRepository strategyMappingRepository;
 	private final StrategyMasterRepository strategyMasterRepository;
+	private final AdditionalFileUploadRepository additionalFileUploadRepository;
 
 	public OpportunityMasterResource(OpportunityMasterRepository opportunityMasterRepository,
 			FileUploadRepository fileUploadRepository, FileUploadCommentsRepository fileUploadCommentsRepository,
-			StrategyMappingRepository strategyMappingRepository,StrategyMasterRepository strategyMasterRepository) {
+			StrategyMappingRepository strategyMappingRepository,StrategyMasterRepository strategyMasterRepository,
+			AdditionalFileUploadRepository additionalFileUploadRepository) {
 		this.opportunityMasterRepository = opportunityMasterRepository;
 		this.fileUploadRepository = fileUploadRepository;
 		this.fileUploadCommentsRepository = fileUploadCommentsRepository;
 		this.strategyMappingRepository=strategyMappingRepository;
 		this.strategyMasterRepository=strategyMasterRepository;
+		this.additionalFileUploadRepository=additionalFileUploadRepository;
 	}
 
 	/**
@@ -303,7 +308,7 @@ public class OpportunityMasterResource {
 			throws URISyntaxException, IOException{
 		String sFilesDirectory="";			
 		String user=SecurityUtils.getCurrentUserLogin();		
-		sFilesDirectory = "src/main/resources/"+documentCreationBean.getOppName()+"/"+user+"/";
+		sFilesDirectory = "src/main/resources/"+documentCreationBean.getOppName()+"/"+user+"/docx/";
 		String sFile=documentCreationBean.getFileName()+".docx";		
 		String extension = "";
 		String name = "";
@@ -336,6 +341,47 @@ public class OpportunityMasterResource {
 		if (!fileUploads.isEmpty()) {
 		opportunityMaster.setFileUploads(fileUploads);			}
 		*/
+		return ResponseEntity.created(new URI("/api/opportunity-masters"))
+				.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);/*ResponseUtil.wrapOrNotFound(Optional.ofNullable(result));*/
+	}
+	@PostMapping("/opportunity-masters/additional-word-file")
+	@Timed
+	public ResponseEntity<AdditionalFileUpload> createWordAdditionalFile(@RequestBody DocumentCreationBean documentCreationBean) 
+			throws URISyntaxException, IOException{
+		FileUpload fileUpload=fileUploadRepository.findOne(documentCreationBean.getFileId());
+		String sFilesDirectory="";			
+		String user=SecurityUtils.getCurrentUserLogin();
+		String sFile=fileUpload.getFileName();
+		sFile=sFile.substring(0, sFile.lastIndexOf('.'));
+		sFilesDirectory = "src/main/resources/"+fileUpload.getOpportunityMasterId().getMasterName().getOppName()+"/"+user+"/"+sFile+"/";
+		sFile=sFile+"-add.docx";		
+		String extension = "";
+		String name = "";
+
+		int idxOfDot =sFile.lastIndexOf('.');   //Get the last index of . to separate extension
+		extension = sFile.substring(idxOfDot + 1);
+		name = sFile.substring(0, idxOfDot);
+		File fPath=new File(sFilesDirectory+sFile);
+		Path path = Paths.get(sFile);
+		int counter = 1;	
+		while(fPath.exists()){
+			sFile = name+"("+counter+")."+extension;
+		    path = Paths.get(sFile);
+		    fPath=new File(sFilesDirectory+sFile);
+		    counter++;
+		}		
+		sFile=sFilesDirectory+sFile;
+		
+		File dirFiles = new File(sFilesDirectory);		
+		dirFiles.mkdirs(); 
+		
+		AdditionalFileUpload result = new AdditionalFileUpload();
+		convertHTMLToDoc(documentCreationBean.getFileContent(),sFilesDirectory, sFile);		
+		result.setFileName(fPath.getName());
+		result.setFileData(sFile);
+		result.setFileUploadID(fileUpload);
+		result=additionalFileUploadRepository.save(result);
+		
 		return ResponseEntity.created(new URI("/api/opportunity-masters"))
 				.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);/*ResponseUtil.wrapOrNotFound(Optional.ofNullable(result));*/
 	}
@@ -418,7 +464,7 @@ public class OpportunityMasterResource {
 	 */
 	@GetMapping("/opportunity-masters/get-file/{id}")
 	@Timed
-	public ResponseEntity<OpportunityMaster> getOpportunityFile(@PathVariable Long id) {
+	public ResponseEntity<FileUpload> getOpportunityFile(@PathVariable Long id) {
 		log.debug("REST request to get OpportunityMaster : {}", id);
 
 		FileUpload fileUploads =fileUploadRepository.findOne(id);		
@@ -427,17 +473,17 @@ public class OpportunityMasterResource {
 				
 				List<FileUploadComments> fileComments = fileUploadCommentsRepository
 						.findByFileUploadId(fileUploads);
-				fileUploads.getOpportunityMasterId().setFileUploadCommentList(fileComments);
+				fileUploads.setFileUploadCommentList(fileComments);
 				//opportunityMaster.setFileUploads((List<FileUpload>) fileUploads);
 				String inputfilepath = fileUploads.getFileData();
-
-				fileUploads.getOpportunityMasterId().setHtmlContent(getHTMLContent(inputfilepath));
+				
+				fileUploads.setHtmlContent(getHTMLContent(inputfilepath));
 
 			} catch (Exception e) {
 				System.out.println("File not reading.....\n-------------------------\n" + e.getMessage());
 			}
 
-		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(fileUploads.getOpportunityMasterId()));
+		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(fileUploads));
 	}
 
 	/**

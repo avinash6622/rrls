@@ -7,6 +7,7 @@ public class DocumentCreationBean {
 	private String fileContent;
 	private Long oppId;
 	private String oppName;
+	private Long fileId;
 	
 	public Integer getId() {
 		return id;
@@ -37,6 +38,12 @@ public class DocumentCreationBean {
 	}
 	public void setOppName(String oppName) {
 		this.oppName = oppName;
+	}
+	public Long getFileId() {
+		return fileId;
+	}
+	public void setFileId(Long fileId) {
+		this.fileId = fileId;
 	}
 
 }

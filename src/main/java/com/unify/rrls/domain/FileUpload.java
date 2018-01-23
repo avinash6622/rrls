@@ -53,6 +53,10 @@ public class FileUpload extends AbstractAuditingEntity implements Serializable {
     @Transient
     @JsonProperty
 	private List<FileUploadComments> fileUploadCommentList;	
+    
+    @Transient
+	@JsonProperty
+	private String htmlContent;	
 
    /* @Size(max = 100)
     @Column(name = "created_by", length = 100)
@@ -146,6 +150,13 @@ public class FileUpload extends AbstractAuditingEntity implements Serializable {
     
     public void setFileUploadCommentList(List<FileUploadComments> fileUploadCommentList) {
 		this.fileUploadCommentList = fileUploadCommentList;
+	}
+    
+    public String getHtmlContent() {
+		return htmlContent;
+	}
+    public void setHtmlContent(String htmlContent) {
+		this.htmlContent = htmlContent;
 	}
 
   /*  public String getCreatedBy() {

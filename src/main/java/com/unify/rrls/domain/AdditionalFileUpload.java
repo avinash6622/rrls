@@ -16,7 +16,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "add_file_upload")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class AdditionalFileUpload implements Serializable {
+public class AdditionalFileUpload extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,22 +35,8 @@ public class AdditionalFileUpload implements Serializable {
     @Column(name = "file_data_content_type")
     private String fileDataContentType;
 
-    @Size(max = 100)
-    @Column(name = "created_by", length = 100)
-    private String createdBy;
-
-    @Size(max = 100)
-    @Column(name = "updated_by", length = 100)
-    private String updatedBy;
-
-    @NotNull
-    @Column(name = "created_date", nullable = false)
-    private LocalDate createdDate;
-
-    @Column(name = "updated_date")
-    private Instant updatedDate;
-
     @ManyToOne
+    @JoinColumn(name="ra_file_upload_id")
     private FileUpload fileUploadID;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -106,58 +92,6 @@ public class AdditionalFileUpload implements Serializable {
         this.fileDataContentType = fileDataContentType;
     }
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public AdditionalFileUpload createdBy(String createdBy) {
-        this.createdBy = createdBy;
-        return this;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public AdditionalFileUpload updatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-        return this;
-    }
-
-    public void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-
-    public LocalDate getCreatedDate() {
-        return createdDate;
-    }
-
-    public AdditionalFileUpload createdDate(LocalDate createdDate) {
-        this.createdDate = createdDate;
-        return this;
-    }
-
-    public void setCreatedDate(LocalDate createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Instant getUpdatedDate() {
-        return updatedDate;
-    }
-
-    public AdditionalFileUpload updatedDate(Instant updatedDate) {
-        this.updatedDate = updatedDate;
-        return this;
-    }
-
-    public void setUpdatedDate(Instant updatedDate) {
-        this.updatedDate = updatedDate;
-    }
-
     public FileUpload getFileUploadID() {
         return fileUploadID;
     }
@@ -198,11 +132,6 @@ public class AdditionalFileUpload implements Serializable {
             "id=" + getId() +
             ", fileName='" + getFileName() + "'" +
             ", fileData='" + getFileData() + "'" +
-            ", fileDataContentType='" + fileDataContentType + "'" +
-            ", createdBy='" + getCreatedBy() + "'" +
-            ", updatedBy='" + getUpdatedBy() + "'" +
-            ", createdDate='" + getCreatedDate() + "'" +
-            ", updatedDate='" + getUpdatedDate() + "'" +
-            "}";
+            ", fileDataContentType='" + fileDataContentType + "'}";
     }
 }

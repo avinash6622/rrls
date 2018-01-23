@@ -79,6 +79,19 @@
                     }
                     return data;
                 }
+            },
+            'addWordCreation':{
+            	url: 'api/opportunity-masters/additional-word-file/',
+                method: 'POST',
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                        data.createdDate = DateUtils.convertLocalDateFromServer(data.createdDate);
+                        data.updatedDate = DateUtils.convertDateTimeFromServer(data.updatedDate);
+                    }
+                    return data;
+                }
+            	
             }
         });
     }
