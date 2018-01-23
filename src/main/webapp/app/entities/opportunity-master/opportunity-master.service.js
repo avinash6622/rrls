@@ -79,7 +79,7 @@
                     }
                     return data;
                 }
-            },
+            }/*,
             'addWordCreation':{
             	url: 'api/opportunity-masters/additional-word-file/',
                 method: 'POST',
@@ -92,7 +92,7 @@
                     return data;
                 }
             	
-            }
+            }*/
         });
     }
 })();

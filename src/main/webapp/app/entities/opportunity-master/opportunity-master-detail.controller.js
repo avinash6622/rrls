@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('OpportunityMasterDetailController', OpportunityMasterDetailController);
 
-    OpportunityMasterDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'OpportunityMaster', 'StrategyMaster', 'Upload', 'FileUploadComments','FileUpload','AdditionalFileUpload'];
+    OpportunityMasterDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'OpportunityMaster', 'StrategyMaster', 'Upload', 'FileUploadComments','FileUpload'];
 
-    function OpportunityMasterDetailController($scope, $rootScope, $stateParams, previousState, entity, OpportunityMaster, StrategyMaster, Upload, FileUploadComments,FileUpload,AdditionalFileUpload) {
+    function OpportunityMasterDetailController($scope, $rootScope, $stateParams, previousState, entity, OpportunityMaster, StrategyMaster, Upload, FileUploadComments,FileUpload) {
         var vm = this;
 
         vm.opportunityMaster = entity;
@@ -22,7 +22,7 @@
         vm.createFile = createFile;
         vm.approveFile=approveFile;
         vm.aStatus='';
-        vm.additionalFile=additionalFile;
+        /*vm.additionalFile=additionalFile;*/
         vm.addFileName='';
               
        
@@ -47,7 +47,7 @@
         $scope.showdocument = function()
         {
             $scope.myvar = !$scope.myvar;
-            $scope.addFile = !$scope.addFile;
+           /* $scope.addFile = !$scope.addFile;*/
 
         };
 
@@ -65,9 +65,9 @@
         	vm.newdoc = "";
         	$scope.myvar = false;
         	vm.fileName="";
-        	vm.addNewdoc="";
+        	/*vm.addNewdoc="";
         	$scope.addFile = false;
-        	vm.htmlContent="";
+        	vm.htmlContent="";*/
         }
 
         function upload () {
@@ -108,20 +108,20 @@
        
        
         }   
-        function additionalFile()
+       /* function additionalFile()
         {
         	console.log(vm.addNewdoc);        	
         	var doc = "<body>"+vm.addNewdoc+"</body>";
         	console.log(vm.fileId);
         	OpportunityMaster.addWordCreation({fileContent: doc,fileId:vm.fileId}, function(result){
         			console.log('result',result);
-        			/*vm.opportunityMaster.fileUploads.push(result);*/
+        			vm.opportunityMaster.fileUploads.push(result);
         			//console.log('opp',vm.opportunityMaster.fileUploads);
         			clear();
         		}, onSaveError);
        
        
-        }   
+        }   */
    
         
 
@@ -173,12 +173,12 @@
                /* console.log("my variable.. "+$scope.myvar);*/
                 vm.htmlContent = resp.htmlContent;
                 vm.fileUploadCommentList = resp.fileUploadCommentList; 
-                vm.addFileName=resp.fileName;
+               /* vm.addFileName=resp.fileName;
                if(resp.fileStatus=="RE")
             	   {
             	   $scope.addFile=true;
             	   console.log($scope.addFile);
-            	   }
+            	   }*/
                 $scope.myvar = false;
                   }, function(err) {
                    console.log(err);

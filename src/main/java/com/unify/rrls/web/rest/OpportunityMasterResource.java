@@ -344,7 +344,8 @@ public class OpportunityMasterResource {
 		return ResponseEntity.created(new URI("/api/opportunity-masters"))
 				.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);/*ResponseUtil.wrapOrNotFound(Optional.ofNullable(result));*/
 	}
-	@PostMapping("/opportunity-masters/additional-word-file")
+	
+	/*@PostMapping("/opportunity-masters/additional-word-file")
 	@Timed
 	public ResponseEntity<AdditionalFileUpload> createWordAdditionalFile(@RequestBody DocumentCreationBean documentCreationBean) 
 			throws URISyntaxException, IOException{
@@ -383,8 +384,9 @@ public class OpportunityMasterResource {
 		result=additionalFileUploadRepository.save(result);
 		
 		return ResponseEntity.created(new URI("/api/opportunity-masters"))
-				.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);/*ResponseUtil.wrapOrNotFound(Optional.ofNullable(result));*/
-	}
+				.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);ResponseUtil.wrapOrNotFound(Optional.ofNullable(result));
+	}*/
+	
 	/**
 	 * GET /opportunity-masters : get all the opportunityMasters.
 	 *

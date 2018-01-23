@@ -137,27 +137,7 @@
 			<button class="btn btn-danger" ng-click="vm.approveFile(3)"
 				ng-disabled="" vm.isSaving>Reject</button>
 		</dd>
-		<dt>
-			<button type="button" class="btn btn-primary"
-				ng-click="showdocument(); vm.htmlContent = null; adds" ng-show="addFile">
-				<span class="hidden-sm-down">Additional File</span>
-			</button>
-</dt><dd></dd>
-<dt ng-show="addFile">
-			<span>Document</span>
-			<button type="button" class="btn btn-primary"
-				ng-click="addFile = !addFile" ng-show="addFile">
-				<span class="hidden-sm-down">Cancel</span>
-			</button>
-		</dt>
-		<dd ng-show="addFile">
-			<!--<iframe src='https://docs.google.com/gview?url=http://ieee802.org/secmail/docIZSEwEqHFr.doc&embedded=true' width='100%' height='400' frameborder='0'></iframe>-->
-			<div ckeditor="options" ng-model="vm.addNewdoc" ready="onReady()"
-				ng-change="changeCKeditor()" readonly=""></div>
-		</dd>
-		<dt>
-		<button type="button" class="btn btn-primary"
-				ng-click="vm.additionalFile()" ng-show="addFile">Save Document</button></dt><dd></dd>
+		
 		<dt ng-show="myvar">
 			<span>Document</span>
 			<button type="button" class="btn btn-primary"
