@@ -134,6 +134,7 @@ public class UserService {
                 authority -> authorities.add(authorityRepository.findOne(authority))
             );
             user.setAuthorities(authorities);
+            authoritySet.addAll(authorities);
         }
         String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
         user.setPassword(encryptedPassword);
@@ -141,7 +142,7 @@ public class UserService {
         user.setResetDate(Instant.now());
         user.setActivated(true);
         user.setUserId(userDTO.getUserId());
-        authoritySet.add(authorityRepositoryOne);
+        authoritySet.add(authorityRepositoryOne);       
         user.setAuthorities(authoritySet);
         user.setRoleMaster(userDTO.getRoleMaster());      
         userRepository.save(user);
@@ -192,6 +193,8 @@ public class UserService {
                 user.setUserId(userDTO.getUserId());
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
+                Authority authorityRepositoryOne = authorityRepository.findOne(AuthoritiesConstants.USER);
+                managedAuthorities.add(authorityRepositoryOne);
                 userDTO.getAuthorities().stream()
                     .map(authorityRepository::findOne)
                     .forEach(managedAuthorities::add);
