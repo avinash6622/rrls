@@ -245,14 +245,18 @@ public class OpportunityMasterResource {
 	 * @throws IOException
 	 * @throws MissingServletRequestParameterException
 	 */
+	
 	@PutMapping("/opportunity-masters")
 	@Timed
 	public ResponseEntity<OpportunityMaster> updateOpportunityMaster(@RequestBody OpportunityMaster opportunityMasters)
 			throws URISyntaxException, IOException, MissingServletRequestParameterException {
 		log.debug("REST request to update OpportunityMaster : {}", opportunityMasters);
-
-		List<StrategyMapping> strategyMappings = strategyMappingRepository.findByOpportunityMaster(opportunityMasters);
-		strategyMappingRepository.delete(strategyMappings);
+		List<StrategyMapping> strategyMappings=new ArrayList<>();
+		strategyMappings = strategyMappingRepository.findByOpportunityMaster(opportunityMasters);
+		System.out.println(opportunityMasters.getSelectedStrategyMaster());
+		if(!opportunityMasters.getSelectedStrategyMaster().isEmpty()){
+		strategyMappingRepository.delete(strategyMappings);}
+		if(!opportunityMasters.getSelectedStrategyMaster().isEmpty()){
 
 		for(StrategyMaster sm:opportunityMasters.getSelectedStrategyMaster())
 		{
@@ -261,7 +265,7 @@ public class OpportunityMasterResource {
 			strategyMapping.setStrategyMaster(sm);
 			strategyMappingRepository.save(strategyMapping);
 
-		}
+		}}
 		/*
 		 * if (strategyMasterId.getId() == null) { return
 		 * createOpportunityMaster(oppCode, oppName, oppDescription,

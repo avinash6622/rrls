@@ -139,29 +139,26 @@
             FileUploadComments.save(inputData, onSaveSuccess, onSaveError);
         }
       /*  $scope.data='';*/
-       function approveFile(numeric){
-        	console.log(vm.fileId);         	
-        	console.log(numeric);
-        	var status = "";
-        	if(numeric == 1 ){        		
-        		status = "APP";
-        	}
+       function approveFile(status){
+        	console.log(vm.opportunityMaster.id);        	
         	
-        	if(numeric == 2 ){        	
-        		status = "CRR";
-        	}
-        	if(numeric == 3 ){
-        		console.log("RE");
-        		status = "RE";
-        	}
-        	console.log(status +'datas');
-        	FileUpload.get({id : vm.fileId}, function(resp)
-        			{        		
-        		console.log(resp.opportunityMasterId);
-        		console.log(resp.fileStatus);
-        		resp.fileStatus=status;
-        		FileUpload.update(resp, onSaveSuccess, onSaveError)
-        			});      	
+        	console.log('status..', status);
+        	
+        	vm.opportunityMaster.oppStatus = status;
+        	
+        	OpportunityMaster.update(vm.opportunityMaster, function(resp) {
+        		console.log(resp);
+        	}, function(err) {
+        		console.log(err);
+        	});
+        	
+        	/*OpportunityMaster.get({id : vm.opportunityMaster.id}, function(resp)
+        			{  */      		
+        		/*console.log(resp.opportunityMasterId);
+        		console.log(resp.fileStatus);*/
+        		/*resp.oppStatus=status;*/
+        		
+        			/*});   */   	
         }
         
         function loadFileContent(fileID) {

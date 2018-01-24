@@ -43,6 +43,9 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 
 	@Column(name = "opp_description")
 	private String oppDescription;
+	
+	@Column(name = "opp_status")
+	private String oppStatus;
 
 	@Transient
 	@JsonProperty
@@ -55,7 +58,7 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	
 	@Transient
 	@JsonProperty
-	private List<StrategyMaster> selectedStrategyMaster;
+	private List<StrategyMaster> selectedStrategyMaster=new ArrayList<StrategyMaster>();
 	
 	@ManyToOne
 	@JoinColumn(name = "strategy_master_id")
@@ -165,6 +168,12 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	}
 	// jhipster-needle-entity-add-getters-setters - JHipster will add getters
 	// and setters here, do not remove
+	public String getOppStatus() {
+		return oppStatus;
+	}
+	public void setOppStatus(String oppStatus) {
+		this.oppStatus = oppStatus;
+	}
 
 	@Override
 	public boolean equals(Object o) {

@@ -25,7 +25,7 @@
 </html>
 <div>
 	<!--   <h2><span>Opportunity Master</span> {{vm.opportunityMaster.id}}</h2> -->
-	<h2>{{vm.opportunityMaster.masterName.oppName}}</h2>
+	<h2>{{vm.opportunityMaster.masterName.oppName}}</h2> <div class="text-danger text-right ng-binding text-bold">{{vm.opportunityMaster.oppStatus}}</div>
 	<hr>
 	<jhi-alert-error></jhi-alert-error>
 	<dl class="dl-horizontal jh-entity-details">
@@ -130,12 +130,12 @@
 			<br>
 			<button class="btn btn-primary" ng-click="vm.saveComment()"
 				ng-disabled="" vm.isSaving>Submit Comment</button>
-			<button class="btn btn-success" ng-click="vm.approveFile(1)"
+			<!-- <button class="btn btn-success" ng-click="vm.approveFile(1)"
 				ng-disabled="" has-authority="ROLE_CIO" vm.isSaving>Approve</button>
 			<button class="btn btn-warning" ng-click="vm.approveFile(2)"
 				ng-disabled="" has-authority="ROLE_CIO" vm.isSaving>Change Request</button>
 			<button class="btn btn-danger" has-authority="ROLE_CIO" ng-click="vm.approveFile(3)"
-				ng-disabled="" vm.isSaving>Reject</button>
+				ng-disabled="" vm.isSaving>Reject</button> -->
 		</dd>
 		
 		<dt ng-show="myvar">
@@ -178,7 +178,13 @@
 				<button type="button" class="btn btn-default" ng-click="vm.upload()">Upload</button>
 			</div>
 		</dd>
-
+		<dt></dt><dd>
+			<button class="btn btn-success" ng-click="vm.approveFile('Approve')"
+				ng-disabled="" has-authority="ROLE_CIO" vm.isSaving>Approve</button>
+			<button class="btn btn-warning" ng-click="vm.approveFile('Change Request')"
+				ng-disabled="" has-authority="ROLE_CIO" vm.isSaving>Change Request</button>
+			<button class="btn btn-danger"  ng-click="vm.approveFile('Rejected')"
+				ng-disabled="" has-authority="ROLE_CIO" vm.isSaving>Reject</button></dd>
 
 		<!--   <dt>
         <button type="button" class="btn btn-primary" ng-click="" ng-show="myvar">
