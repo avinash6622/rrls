@@ -55,7 +55,7 @@ public class UserDTO {
     private Set<String> authorities;
 
     private RoleMaster roleMaster;
-    
+
     private User userId;
 
     public UserDTO() {
@@ -163,7 +163,7 @@ public class UserDTO {
     public Set<String> getAuthorities() {
         return authorities;
     }
-    
+
     public User getUserId() {
 		return userId;
 	}
