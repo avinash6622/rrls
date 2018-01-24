@@ -84,7 +84,7 @@
             <label for="file_upload">File Upload</label>
             <input type="file" ngf-select="vm.selectFile($file)" name="file" id="file_upload" ngf-pattern=".doc,.docx" accept=".doc,.docx" required="">
         </div> -->
-        <div ckeditor="options" ng-model="vm.opportunityMaster.htmlContent" ng-if="vm.opportunityMaster.htmlContent" ready="onReady()" ng-change="changeEditor()" readonly="vm.readOnly"></div>
+        <!-- <div ckeditor="options" ng-model="vm.opportunityMaster.htmlContent" ng-if="vm.opportunityMaster.htmlContent" ready="onReady()" ng-change="changeEditor()" readonly="vm.readOnly"></div> -->
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
