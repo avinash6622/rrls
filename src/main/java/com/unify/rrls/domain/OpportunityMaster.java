@@ -38,9 +38,6 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;	
 
-	/*@Column(name = "opp_name")
-	private String oppName;*/
-
 	@Column(name = "opp_description")
 	private String oppDescription;
 	
@@ -60,10 +57,6 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	@JsonProperty
 	private List<StrategyMaster> selectedStrategyMaster=new ArrayList<StrategyMaster>();
 	
-	@ManyToOne
-	@JoinColumn(name = "strategy_master_id")
-	private StrategyMaster strategyMasterId;
-
 	@OneToMany(mappedBy = "opportunityMasterId")
 	private List<FileUpload> fileUploads;
 	
@@ -83,19 +76,6 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 		this.id = id;
 	}
 
-	/*public String getOppName() {
-		return oppName;
-	}
-
-	public OpportunityMaster oppName(String oppName) {
-		this.oppName = oppName;
-		return this;
-	}
-
-	public void setOppName(String oppName) {
-		this.oppName = oppName;
-	}*/
-
 	public String getOppDescription() {
 		return oppDescription;
 	}
@@ -107,19 +87,6 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 
 	public void setOppDescription(String oppDescription) {
 		this.oppDescription = oppDescription;
-	}
-
-	public StrategyMaster getStrategyMasterId() {
-		return strategyMasterId;
-	}
-
-	public OpportunityMaster strategyMasterId(StrategyMaster strategyMasterId) {
-		this.strategyMasterId = strategyMasterId;
-		return this;
-	}
-
-	public void setStrategyMasterId(StrategyMaster strategyMasterId) {
-		this.strategyMasterId = strategyMasterId;
 	}
 
 	public String getHtmlContent() {

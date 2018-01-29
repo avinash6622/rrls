@@ -94,8 +94,7 @@
             },
             resolve: {
                 entity: function () {
-                    return {
-                        strategyId: null,                      
+                    return {                                           
                         oppDescription: null,
                         createdBy: null,
                         updatedBy: null,

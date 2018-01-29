@@ -70,8 +70,7 @@
 
             } else {
                 var inputData = vm.opportunityMaster;
-                console.log(inputData);
-                inputData.strategyMasterId = vm.opportunityMaster.strategyMasterId.id;
+                console.log(inputData);              
 
                 //OpportunityMaster.saveWithUpload({inputData: vm.opportunityMaster, fileUpload: vm.opportunityMaster.fileUpload}, onSaveSuccess, onSaveError);
                 Upload.upload({
@@ -103,5 +102,13 @@
         $scope.changeEditor = function () {
             //console.log(vm.opportunityMaster.htmlContent);
         };
+        
+        $scope.getStrategyMaster = function(strategyID) {
+        	var match = vm.strategymasters.filter(function(item) {
+        		return item.strategyMaster.id == strategyID;
+        	});
+        	console.log(match);
+        	return match;
+        }
     }
 })();

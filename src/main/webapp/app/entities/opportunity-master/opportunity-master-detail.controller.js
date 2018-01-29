@@ -150,15 +150,8 @@
         		console.log(resp);
         	}, function(err) {
         		console.log(err);
-        	});
-        	
-        	/*OpportunityMaster.get({id : vm.opportunityMaster.id}, function(resp)
-        			{  */      		
-        		/*console.log(resp.opportunityMasterId);
-        		console.log(resp.fileStatus);*/
-        		/*resp.oppStatus=status;*/
-        		
-        			/*});   */   	
+        	});        	
+        
         }
         
         function loadFileContent(fileID) {
@@ -170,12 +163,7 @@
                /* console.log("my variable.. "+$scope.myvar);*/
                 vm.htmlContent = resp.htmlContent;
                 vm.fileUploadCommentList = resp.fileUploadCommentList; 
-               /* vm.addFileName=resp.fileName;
-               if(resp.fileStatus=="RE")
-            	   {
-            	   $scope.addFile=true;
-            	   console.log($scope.addFile);
-            	   }*/
+              
                 $scope.myvar = false;
                   }, function(err) {
                    console.log(err);
