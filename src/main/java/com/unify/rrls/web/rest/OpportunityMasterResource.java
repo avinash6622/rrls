@@ -210,7 +210,7 @@ public class OpportunityMasterResource {
 	public ResponseEntity<OpportunityMaster> createOpportunityMaster(@RequestBody OpportunityMaster opportunityMaster)
 			throws URISyntaxException, IOException, MissingServletRequestParameterException {
 		log.debug("REST request to save OpportunityMaster : {}", opportunityMaster);
-		System.out.println(opportunityMaster.getStrategyMasterId());
+		//System.out.println(opportunityMaster.getStrategyMasterId());
 
 		if (opportunityMaster.getId() != null) {
 			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists",
