@@ -36,13 +36,16 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;	
+	private Long id;
 
 	@Column(name = "opp_description")
 	private String oppDescription;
-	
+
 	@Column(name = "opp_status")
 	private String oppStatus;
+
+	@Column(name = "description")
+    private String statusDes;
 
 	@Transient
 	@JsonProperty
@@ -50,21 +53,21 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 
 	@Transient
 	@JsonProperty
-	private List<FileUploadComments> fileUploadCommentList;	
-	
-	
+	private List<FileUploadComments> fileUploadCommentList;
+
+
 	@Transient
 	@JsonProperty
-	private List<StrategyMaster> selectedStrategyMaster=new ArrayList<StrategyMaster>();
-	
+	private List<StrategyMaster> selectedStrategyMaster;
+
 	@OneToMany(mappedBy = "opportunityMasterId")
 	private List<FileUpload> fileUploads;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "master_name")
 	private OpportunityName masterName;
-	
-	@OneToMany(mappedBy = "strategyMaster",cascade={CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)	
+
+	@OneToMany(mappedBy = "strategyMaster",cascade={CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
 	private List<StrategyMapping> strategyMapping;
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
@@ -112,21 +115,21 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	public void setFileUploadCommentList(List<FileUploadComments> fileUploadCommentList) {
 		this.fileUploadCommentList = fileUploadCommentList;
 	}
-	
+
 	public OpportunityName getMasterName() {
 		return masterName;
 	}
 	public void setMasterName(OpportunityName masterName) {
 		this.masterName = masterName;
 	}
-	
+
 	public List<StrategyMapping> getStrategyMapping() {
 		return strategyMapping;
 	}
 	public void setStrategyMapping(List<StrategyMapping> strategyMapping) {
 		this.strategyMapping = strategyMapping;
 	}
-	
+
 	public void setSelectedStrategyMaster(List<StrategyMaster> selectedStrategyMaster) {
 		this.selectedStrategyMaster = selectedStrategyMaster;
 	}
@@ -162,4 +165,11 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 		return Objects.hashCode(getId());
 	}
 
+    public String getStatusDes() {
+        return statusDes;
+    }
+
+    public void setStatusDes(String statusDes) {
+        this.statusDes = statusDes;
+    }
 }

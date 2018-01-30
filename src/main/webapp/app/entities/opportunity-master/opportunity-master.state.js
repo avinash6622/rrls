@@ -53,7 +53,7 @@
                     return currentStateData;
                 }]
             }
-        })         
+        })
         .state('opportunity-master-detail.edit', {
             parent: 'opportunity-master-detail',
             url: '/detail/edit',
@@ -94,7 +94,7 @@
             },
             resolve: {
                 entity: function () {
-                    return {                                           
+                    return {
                         oppDescription: null,
                         createdBy: null,
                         updatedBy: null,

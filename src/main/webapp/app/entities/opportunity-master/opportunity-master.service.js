@@ -79,7 +79,31 @@
                     }
                     return data;
                 }
-            }/*,
+            },
+
+            'description':{
+
+                url:'api/opportunity-masters/description',
+                method:'PUT',
+
+                transformResponse: function(data){
+
+                     console.log(data);
+
+
+               }
+
+
+            }
+
+
+
+
+
+
+
+
+            /*,
             'addWordCreation':{
             	url: 'api/opportunity-masters/additional-word-file/',
                 method: 'POST',
@@ -91,8 +115,11 @@
                     }
                     return data;
                 }
-            	
+
             }*/
         });
+
+
+
     }
 })();
