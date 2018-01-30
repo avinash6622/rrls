@@ -7,6 +7,8 @@
     OpportunityMaster.$inject = ['$resource', 'DateUtils'];
 
     function OpportunityMaster ($resource, DateUtils) {
+
+        // alert("hii");
         var resourceUrl =  'api/opportunity-masters/:id/:inputData';
 
         return $resource(resourceUrl, {}, {
@@ -79,7 +81,31 @@
                     }
                     return data;
                 }
-            }/*,
+            },
+
+            'description':{
+
+                url:'api/opportunity-masters/description',
+                method:'PUT',
+
+                transformResponse: function(data){
+
+                     console.log(data);
+
+
+               }
+
+
+            }
+
+
+
+
+
+
+
+
+            /*,
             'addWordCreation':{
             	url: 'api/opportunity-masters/additional-word-file/',
                 method: 'POST',
@@ -91,8 +117,11 @@
                     }
                     return data;
                 }
-            	
+
             }*/
         });
+
+
+
     }
 })();

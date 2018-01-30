@@ -28,7 +28,7 @@
 	<h2>{{vm.opportunityMaster.masterName.oppName}}</h2> <div class="text-danger text-right ng-binding text-bold">{{vm.opportunityMaster.oppStatus}}</div>
 	<hr>
 	<jhi-alert-error></jhi-alert-error>
-	<dl class="dl-horizontal jh-entity-details">		
+	<dl class="dl-horizontal jh-entity-details">
 		<dt>
 			<span>Sector</span>
 		</dt>
@@ -44,7 +44,7 @@
 		<dt>
 			<span>Strategy</span>
 		</dt>
-		<dd>			
+		<dd>
 			<div
 				ng-repeat="strategyMapping in vm.opportunityMaster.strategyMapping">
 				{{strategyMapping.strategyMaster.strategyName}}</div>
@@ -55,7 +55,7 @@
         <dd ng-show="vm.opportunityMaster.htmlContent">
             <iframe src='https://docs.google.com/gview?url=http://ieee802.org/secmail/docIZSEwEqHFr.doc&embedded=true' width='100%' height='400' frameborder='0'></iframe>
             <div ckeditor="options" ng-model="vm.opportunityMaster.htmlContent" ready="onReady()" ng-change="changeCKeditor()" readonly=""></div>
-        </dd> 
+        </dd>
          -->
 		<!--   <dt ng-show="vm.fileDocSave"><span>Create Document</span></dt>
         <dd ng-show="vm.fileDocSave">
@@ -71,12 +71,12 @@
         </dd> -->
 		<!--   <dt><span>Comments</span></dt>
         <dd>
-         <div class="actionBox" ng-repeat="fileUploadComments in vm.opportunityMaster.fileUploadCommentList track by fileUploadComments.id">      
+         <div class="actionBox" ng-repeat="fileUploadComments in vm.opportunityMaster.fileUploadCommentList track by fileUploadComments.id">
  			<div>
  			<div class="capitalize"><b>{{fileUploadComments.createdBy}} </b></div>
- 			 <div>{{fileUploadComments.fileComments}}</div> 
+ 			 <div>{{fileUploadComments.fileComments}}</div>
 			<div class="date sub-text"> on {{fileUploadComments.createdDate  | date :"MMM d, y h:mm:ss a"}}</div></div>
-    	 
+
          </div>
             <textarea ng-model="vm.fileComments" name="comments" id="field_comments" rows="4" cols="120"></textarea>
             <br><button class="btn btn-default" ng-click="vm.saveComment()" ng-disabled=""vm.isSaving>Submit Comment</button>
@@ -107,8 +107,8 @@
 			<span>Comments</span>
 		</dt>
 		<dd ng-show="vm.htmlContent">
-		
-			<div class="actionBox" 
+
+			<div class="actionBox"
 				ng-repeat="fileUploadComments in vm.fileUploadCommentList">
 				<div>
 					<div class="capitalize">
@@ -124,9 +124,9 @@
 				id="field_comments" rows="4" cols="120"></textarea>
 			<br>
 			<button class="btn btn-primary" ng-click="vm.saveComment()"
-				ng-disabled="" vm.isSaving>Submit Comment</button>		
+				ng-disabled="" vm.isSaving>Submit Comment</button>
 		</dd>
-		
+
 		<dt ng-show="myvar">
 			<span>Document</span>
 			<button type="button" class="btn btn-primary"
@@ -151,11 +151,11 @@
 				ng-click="showdocument(); vm.htmlContent = null;" ng-show="!myvar">
 				<span class="hidden-sm-down">CreateDocument</span>
 			</button>
-			
+
 			<button type="button" class="btn btn-primary"
 				ng-click="vm.createFile()" ng-show="myvar">Save Document</button>
 		</dt>
-		<dd><button class="btn btn-success" ng-click="vm.approveFile('Approve')"
+		<dd><button class="btn btn-success" ng-click="open('Approve')"
 				ng-disabled="" has-authority="ROLE_CIO" vm.isSaving>Approve</button>
 			<button class="btn btn-warning" ng-click="vm.approveFile('Change Request')"
 				ng-disabled="" has-authority="ROLE_CIO" vm.isSaving>Change Request</button>
@@ -172,10 +172,15 @@
 					required=""> <br />
 				<button type="button" class="btn btn-default" ng-click="vm.upload()">Upload</button>
 			</div>
-		</dd>		
+		</dd>
 
 	</dl>
+
+
 </div>
+
+
+
 
 <button type="submit" ui-sref="{{ vm.previousState }}"
 	class="btn btn-info">
