@@ -56,13 +56,18 @@
 
         <div class="form-group">
             <label for="field_opportunityMaster">Strategy</label>
-                
-             <!-- <select class="form-control" id="field_opportunityMaster" multiple name="selectedStrategyMaster" ng-model="vm.opportunityMaster.strategyMapping"
-                    ng-options="strategy as strategyMaster.strategyName for strategyMaster in vm.strategymasters track by strategyMaster.id">
-            </select> -->
-            <select class="form-control" id="field_opportunityMaster" multiple name="selectedStrategyMaster" ng-init="getStrategyMaster(2)" ng-model="vm.opportunityMaster.strategyMapping">
-            <option ng-repeat="strategy in vm.strategymasters" ng-value="strategy.id">{{strategy.strategyName}}</option>
+             <select class="form-control" id="field_opportunityMaster" multiple name="selectedStrategyMaster" ng-value="selectedStrategyMaster" ng-model="vm.opportunityMaster.selectedStrategyMaster"
+                    ng-options="strategyMaster as strategyMaster.strategyName for strategyMaster in vm.strategymasters track by strategyMaster.id">
+                 
+                 
             </select>
+                
+            <!--  <select class="form-control" id="field_opportunityMaster" multiple name="selectedStrategyMaster" ng-model="vm.opportunityMaster.strategyMapping"
+                    ng-options="selectedStrategyMaster as strategyMaster.strategyName for strategyMaster in vm.strategymasters track by strategyMaster.id">
+            </select> --> 
+           <!--  <select class="form-control" id="field_opportunityMaster" multiple name="selectedStrategyMaster" ng-init="getStrategyMaster(2)" ng-model="vm.opportunityMaster.strategyMapping">
+            <option ng-repeat="strategy in vm.strategymasters" ng-value="strategy.id">{{strategy.strategyName}}</option>
+            </select> -->
            
            
         </div>
