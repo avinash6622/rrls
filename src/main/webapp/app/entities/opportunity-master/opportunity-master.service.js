@@ -7,6 +7,8 @@
     OpportunityMaster.$inject = ['$resource', 'DateUtils'];
 
     function OpportunityMaster ($resource, DateUtils) {
+
+        // alert("hii");
         var resourceUrl =  'api/opportunity-masters/:id/:inputData';
 
         return $resource(resourceUrl, {}, {

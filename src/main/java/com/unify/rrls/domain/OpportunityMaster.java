@@ -60,6 +60,8 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	@JsonProperty
 	private List<StrategyMaster> selectedStrategyMaster;
 
+	//private List<StrategyMaster> selectedStrategyMaster=new ArrayList<StrategyMaster>();
+
 	@OneToMany(mappedBy = "opportunityMasterId")
 	private List<FileUpload> fileUploads;
 

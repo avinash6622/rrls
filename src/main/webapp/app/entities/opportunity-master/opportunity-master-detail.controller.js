@@ -196,16 +196,8 @@
         		//console.log(resp);
         	}, function(err) {
         		//console.log(err);
-        	});
-
-
-        	/*OpportunityMaster.get({id : vm.opportunityMaster.id}, function(resp)
-        			{  */
-        		/*console.log(resp.opportunityMasterId);
-        		console.log(resp.fileStatus);*/
-        		/*resp.oppStatus=status;*/
-
-        			/*});   */
+        	});        	
+        
         }
 
         function loadFileContent(fileID) {
