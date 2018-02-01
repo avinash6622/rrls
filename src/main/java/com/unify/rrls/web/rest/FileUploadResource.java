@@ -109,16 +109,53 @@ public class FileUploadResource {
         }*/
         String user= SecurityUtils.getCurrentUserLogin();
         String  sFilesDirectory =  "src/main/resources/"+opp.getMasterName().getOppName()+"/"+user+"/xlsx/";
-      File dirFiles = new File(sFilesDirectory); dirFiles.mkdirs();
+        String  sFilesDirectoryimg =  "src/main/resources/"+opp.getMasterName().getOppName()+"/"+user+"/image/";
+      File dirFiles = new File(sFilesDirectory);
+      dirFiles.mkdirs();
+      File dirFiles2 = new File(sFilesDirectoryimg);
+        dirFiles2.mkdirs();
       FileUpload fileUploaded=new FileUpload();
       FileUpload result =new FileUpload();
+
+
+        String extension = "";
+        String name = "";
+
+
+
       for (MultipartFile sFile : fileUploads) {
 
     	 setFileName(sFile.getOriginalFilename());
-    	fileStream = IOUtils.toByteArray(sFile.getInputStream()); File sFiles =
-    	new File(dirFiles, fileName); writeFile(fileStream, sFiles);
-    	fileUploaded.setFileData(sFiles.toString());
-    	fileUploaded.setFileName(sFile.getOriginalFilename());
+    	fileStream = IOUtils.toByteArray(sFile.getInputStream());
+
+          System.out.println("FILE NAME--->"+fileName);
+
+          if(fileName.contains("xls") || fileName.contains("xlsx"))
+          {
+              File sFiles = new File(dirFiles, fileName);
+              writeFile(fileStream, sFiles);
+              fileUploaded.setFileData(sFiles.toString());
+          }
+
+      else{
+              File sFiles1 = new File(dirFiles2,fileName);
+              writeFile(fileStream,sFiles1);
+              fileUploaded.setFileData(sFiles1.toString());
+          }
+
+
+    	// System.out.println("sfiletype---->"+sFiles1);
+
+
+
+          int idxOfDot =sFile.getOriginalFilename().lastIndexOf('.');   //Get the last index of . to separate extension
+          extension = sFile.getOriginalFilename().substring(idxOfDot + 1).toLowerCase();
+          name = sFile.getOriginalFilename().substring(0, idxOfDot);
+
+    	//System.out.println("Filename---->"+sFile.getOriginalFilename());
+
+    	fileUploaded.setFileName(name);
+    	fileUploaded.setFileDataContentType(extension);
     	fileUploaded.setOpportunityMasterId(opp);
     	result=fileUploadRepository.save(fileUploaded);
       }

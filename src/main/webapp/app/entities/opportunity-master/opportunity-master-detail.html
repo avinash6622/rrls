@@ -129,7 +129,7 @@
 
 		<dt ng-show="myvar">
 			<span>Document</span>
-			
+
 		</dt>
 		<dd ng-show="myvar">
 			<!--<iframe src='https://docs.google.com/gview?url=http://ieee802.org/secmail/docIZSEwEqHFr.doc&embedded=true' width='100%' height='400' frameborder='0'></iframe>-->
@@ -169,7 +169,7 @@
 		<dd>
 			<div class="form-group">
 				<input type="file" ngf-select="vm.selectFile($file)" name="file"
-					id="file_upload" ngf-pattern=".xls,.xlsx" accept=".xls,.xlsx"
+					id="file_upload" ngf-pattern=".xls,.xlsx,.png,.jpg,.jpeg,.gif" accept=".xls,.xlsx,.png,.jpg,.jpeg,.gif"
 					required=""> <br />
 				<button type="button" class="btn btn-default" ng-click="vm.upload()">Upload</button>
 			</div>

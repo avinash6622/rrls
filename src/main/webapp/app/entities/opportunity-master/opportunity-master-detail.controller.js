@@ -134,6 +134,7 @@
                 });
         }
         function selectFile (file) {
+            console.log("File",file);
             vm.opportunityMaster.fileUpload = file;
         }
 
@@ -145,8 +146,11 @@
         	OpportunityMaster.wordCreation({fileContent: doc,fileName:vm.fileName,oppId:vm.opportunityMaster.id,
         		oppName:vm.opportunityMaster.masterName.oppName,oppId:vm.opportunityMaster.id}, function(result){
         			console.log('result',result);
+
         			vm.opportunityMaster.fileUploads.push(result);
         			console.log('opp',vm.opportunityMaster.fileUploads);
+
+        			console.log("filename",result.fileName);
         			clear();
         		}, onSaveError);
 
@@ -196,8 +200,8 @@
         		//console.log(resp);
         	}, function(err) {
         		//console.log(err);
-        	});        	
-        
+        	});
+
         }
 
         function loadFileContent(fileID) {

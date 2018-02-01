@@ -341,6 +341,11 @@ public class OpportunityMasterResource {
 		name = sFile.substring(0, idxOfDot);
 		File fPath=new File(sFilesDirectory+sFile);
 		Path path = Paths.get(sFile);
+      //  System.out.println("fpath---->"+fPath);
+
+      //  System.out.println("ind---->"+idxOfDot+"extension"+extension+"name--->"+name);
+
+       // System.out.println("sFile----->"+sFile);
 		int counter = 1;
 		while(fPath.exists()){
 			sFile = name+"("+counter+")."+extension;
@@ -350,13 +355,17 @@ public class OpportunityMasterResource {
 		}
 		sFile=sFilesDirectory+sFile;
 
+     //   System.out.println("After sfile---->"+sFile);
+
 		File dirFiles = new File(sFilesDirectory);
 		dirFiles.mkdirs();
 
 		FileUpload result = new FileUpload();
 		convertHTMLToDoc(documentCreationBean.getFileContent(),sFilesDirectory, sFile);
 		OpportunityMaster opportunityMaster = opportunityMasterRepository.findOne(documentCreationBean.getOppId());
-		result.setFileName(fPath.getName());
+      //  System.out.println("Filename"+fPath.getName());
+		result.setFileName(name);
+		result.setFileDataContentType(extension);
 		result.setFileData(sFile);
 		result.setOpportunityMasterId(opportunityMaster);
 		result=fileUploadRepository.save(result);
