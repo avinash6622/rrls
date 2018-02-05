@@ -493,8 +493,8 @@ public class OpportunityMasterResource {
 	 *
 	 * @param id
 	 *            the id of the File Upload word and comments to retrieve
-	 * @return the ResponseEntity with status 200 (OK) and with body the
-	 *         opportunityMaster, or with status 404 (Not Found)
+     * @return the ResponseEntity with status 200 (OK) and with body the
+     *         opportunityMaster, or with status 404 (Not Found)
 	 */
 	@GetMapping("/opportunity-masters/get-file/{id}")
 	@Timed

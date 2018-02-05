@@ -101,8 +101,10 @@ public class FileUploadResource {
     @Timed
     public ResponseEntity<FileUpload> createFileUpload(@RequestParam(value="oppId")Long oppId,
     		@RequestParam(value="fileUploads")
-    		MultipartFile[] fileUploads) throws URISyntaxException, IOException, MissingServletRequestParameterException {
+    		MultipartFile[] fileUploads,@RequestParam(value="filetype") String filetype,@RequestParam(value="uploadfileName") String uploadfileName) throws URISyntaxException, IOException, MissingServletRequestParameterException {
         log.debug("REST request to save FileUpload : {}", fileUploads);
+        System.out.println("FILETYPE--->"+filetype);
+        System.out.println("UPLOADFILE"+uploadfileName);
         OpportunityMaster opp=opportunityMasterRepository.findOne(oppId);
       /*  if (fileUpload.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new fileUpload cannot already have an ID")).body(null);
@@ -154,9 +156,10 @@ public class FileUploadResource {
 
     	//System.out.println("Filename---->"+sFile.getOriginalFilename());
 
-    	fileUploaded.setFileName(name);
+    	fileUploaded.setFileName(uploadfileName);
     	fileUploaded.setFileDataContentType(extension);
     	fileUploaded.setOpportunityMasterId(opp);
+    	fileUploaded.setFiletype(filetype);
     	result=fileUploadRepository.save(fileUploaded);
       }
         //fileUploadRepository.save(fileUpload);

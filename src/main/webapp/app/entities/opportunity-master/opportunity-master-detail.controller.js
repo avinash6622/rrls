@@ -25,7 +25,7 @@
         /*vm.additionalFile=additionalFile;*/
         vm.addFileName='';
 
-
+         console.log("file---->",vm.opportunityMaster.fileUploads);
 
         var unsubscribe = $rootScope.$on('researchRepositoryLearningSystemApp:opportunityMasterUpdate', function(event, result) {
             vm.opportunityMaster = result;
@@ -52,7 +52,11 @@
 
         };
 
+        $scope.fileformat = ["Presentation", "Excel module", "Quarterly updates","Miscellaneous"];
 
+        $scope.getselectval = function () {
+           console.log('Name: ' + $scope.selitem);
+        };
 
 
 
@@ -116,13 +120,16 @@
 
         function upload () {
         console.log('uploading....');
+        console.log($scope.selitem);
+        console.log(vm.uploadfileName);
+        var selectitem = $scope.selitem;
             vm.isSaving = true;
 
                 //OpportunityMaster.saveWithUpload({inputData: vm.opportunityMaster, fileUpload: vm.opportunityMaster.fileUpload}, onSaveSuccess, onSaveError);
                 Upload.upload({
                     url: 'api/file-uploads',
                     data: {fileUploads: vm.opportunityMaster.fileUpload},
-                    params: {oppId: vm.opportunityMaster.id }// {oppCode: inputData.oppCode, oppName: inputData.oppName, oppDescription: inputData.oppDescription, strategyMasterId: inputData.strategyMasterId.id}
+                    params: {oppId: vm.opportunityMaster.id,filetype:selectitem,uploadfileName:vm.uploadfileName}// {oppCode: inputData.oppCode, oppName: inputData.oppName, oppDescription: inputData.oppDescription, strategyMasterId: inputData.strategyMasterId.id}
                 }).then(function (resp) {
                     console.log(resp);
                 }, function (resp) {

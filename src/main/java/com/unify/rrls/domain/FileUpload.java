@@ -46,17 +46,20 @@ public class FileUpload extends AbstractAuditingEntity implements Serializable {
 
     @Column(name = "add_file_flag", length = 10)
     private Integer addFileFlag;
-    
+
     @Column(name = "file_status")
-    private String fileStatus;    
-  
+    private String fileStatus;
+
+    @Column(name="file_format_type")
+    private String filetype;
+
     @Transient
     @JsonProperty
-	private List<FileUploadComments> fileUploadCommentList;	
-    
+	private List<FileUploadComments> fileUploadCommentList;
+
     @Transient
 	@JsonProperty
-	private String htmlContent;	
+	private String htmlContent;
 
    /* @Size(max = 100)
     @Column(name = "created_by", length = 100)
@@ -74,9 +77,9 @@ public class FileUpload extends AbstractAuditingEntity implements Serializable {
     private Instant updatedDate;
 */
     @ManyToOne
-    @JoinColumn(name = "opportunity_master_id")   
+    @JoinColumn(name = "opportunity_master_id")
     private OpportunityMaster opportunityMasterId;
-  
+
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -90,6 +93,14 @@ public class FileUpload extends AbstractAuditingEntity implements Serializable {
     public FileUpload id(Long id) {
         this.id = id;
         return this;
+    }
+
+    public String getFiletype() {
+        return filetype;
+    }
+
+    public void setFiletype(String filetype) {
+        this.filetype = filetype;
     }
 
     public String getFileName() {
@@ -147,11 +158,11 @@ public class FileUpload extends AbstractAuditingEntity implements Serializable {
     public List<FileUploadComments> getFileUploadCommentList() {
 		return fileUploadCommentList;
 	}
-    
+
     public void setFileUploadCommentList(List<FileUploadComments> fileUploadCommentList) {
 		this.fileUploadCommentList = fileUploadCommentList;
 	}
-    
+
     public String getHtmlContent() {
 		return htmlContent;
 	}
@@ -223,7 +234,7 @@ public class FileUpload extends AbstractAuditingEntity implements Serializable {
     public void setOpportunityMasterId(OpportunityMaster OpportunityMaster) {
         this.opportunityMasterId = OpportunityMaster;
     }
-    
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     public String getFileStatus() {
@@ -232,7 +243,7 @@ public class FileUpload extends AbstractAuditingEntity implements Serializable {
 
 	public void setFileStatus(String fileStatus) {
 		this.fileStatus = fileStatus;
-	}	
+	}
 
 	@Override
     public boolean equals(Object o) {
@@ -261,7 +272,7 @@ public class FileUpload extends AbstractAuditingEntity implements Serializable {
             ", fileName='" + getFileName() + "'" +
             ", fileData='" + getFileData() + "'" +
             ", fileDataContentType='" + fileDataContentType + "'" +
-            ", addFileFlag='" + getAddFileFlag() + "'" +          
+            ", addFileFlag='" + getAddFileFlag() + "'" +
             "}";
     }*/
 }
