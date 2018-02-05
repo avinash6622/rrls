@@ -82,20 +82,85 @@
             <br><button class="btn btn-default" ng-click="vm.saveComment()" ng-disabled=""vm.isSaving>Submit Comment</button>
         </dd>      -->
 
-		<dt ng-show="vm.opportunityMaster.fileUploads">
+	<!--	<dt ng-show="vm.opportunityMaster.fileUploads">
 			<span>File Created</span>
 		</dt>
 		<dd ng-show="vm.opportunityMaster.fileUploads" style="height:60px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
-			<!--  <iframe src='https://docs.google.com/gview?url=http://ieee802.org/secmail/docIZSEwEqHFr.doc&embedded=true' width='100%' height='400' frameborder='0'></iframe> -->
+			&lt;!&ndash;  <iframe src='https://docs.google.com/gview?url=http://ieee802.org/secmail/docIZSEwEqHFr.doc&embedded=true' width='100%' height='400' frameborder='0'></iframe> &ndash;&gt;
 			<div ng-repeat="fileUploads in vm.opportunityMaster.fileUploads">
 				<a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
 				<b> - {{fileUploads.createdBy | capitalize}}</b> <span class="date sub-text">
 					on {{fileUploads.createdDate | date :"MMM d, y h:mm:ss a"}}</span>
 			</div>
 
-		</dd>
+		</dd>-->
 
-		<dt ng-show="vm.htmlContent">
+        <div class="container">
+
+            <div class="row" ng-show="vm.opportunityMaster.fileUploads">
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                          Presentation
+                        </div>
+                        <div style="height:120px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
+                        <div class="panel-body" ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Presentation'}">
+                            <a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
+                            <b> - {{fileUploads.createdBy | capitalize}}</b> <span class="date sub-text">
+				   	          on {{fileUploads.createdDate | date :"MMM d, y h:mm:ss a"}}</span>
+                        </div></div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Excel Module
+                        </div>
+                        <div style="height:120px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
+                        <div class="panel-body"   ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Excel module'}">
+                            <view-more-less limit='3' show-more-text='Show More &#x25BC;' show-less-text='Show Less &#x25B2;' is-static=true></view-more-less>
+                            <a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
+                            <b> - {{fileUploads.createdBy | capitalize}}</b> <span class="date sub-text">
+				   	          on {{fileUploads.createdDate | date :"MMM d, y h:mm:ss a"}}</span>
+                        </div>
+                    </div></div>
+                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Quarterly Updates
+                        </div>
+                        <div style="height:120px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
+                        <div class="panel-body" ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Quarterly updates'}">
+                            <a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
+                            <b> - {{fileUploads.createdBy | capitalize}}</b> <span class="date sub-text">
+				   	          on {{fileUploads.createdDate | date :"MMM d, y h:mm:ss a"}}</span>
+                        </div></div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Miscellaneous
+                        </div>
+                        <div style="height:120px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
+                        <div class="panel-body" ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Miscellaneous'}">
+                            <a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
+                            <b> - {{fileUploads.createdBy | capitalize}}</b> <span class="date sub-text">
+				   	          on {{fileUploads.createdDate | date :"MMM d, y h:mm:ss a"}}</span>
+                        </div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+        <dt ng-show="vm.htmlContent">
 			<span>Document</span>
 		</dt>
 		<dd ng-show="vm.htmlContent">
@@ -163,13 +228,32 @@
 			<button class="btn btn-danger"  ng-click="vm.approveFile('Wait Listed')"
 				ng-disabled="" has-authority="ROLE_CIO" vm.isSaving>Wait Listed</button></dd></dd>
 
+        <dt>
+            <span>Select File Format</span>
+        </dt>
+
+
+        <dd>
+            <select ng-model="selitem" ng-change="getselectval()">
+                <option ng-repeat="x in fileformat">{{x}}</option>
+            </select>
+        </dd>
+
+        <dt>
+            <span>Description</span>
+        </dt>
+        <dd>
+            <input type="text" class="col-sm-6" id="fileid" name="fileid"
+                   ng-model="vm.uploadfileName" />
+        </dd>
+
 		<dt>
-			<span>Upload Excel</span>
+			<span>Upload</span>
 		</dt>
 		<dd>
 			<div class="form-group">
 				<input type="file" ngf-select="vm.selectFile($file)" name="file"
-					id="file_upload" ngf-pattern=".xls,.xlsx,.png,.jpg,.jpeg,.gif" accept=".xls,.xlsx,.png,.jpg,.jpeg,.gif"
+					id="file_upload" ngf-pattern=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx" accept=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx"
 					required=""> <br />
 				<button type="button" class="btn btn-default" ng-click="vm.upload()">Upload</button>
 			</div>
