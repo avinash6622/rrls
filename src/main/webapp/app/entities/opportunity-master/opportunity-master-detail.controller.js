@@ -101,12 +101,13 @@
 
         function load() {
 
-            vm.opportunityMaster.fileUploadCommentList = OpportunityMaster.get({id : $stateParams.id}, function(resp){
-             console.log(resp);
-            vm.opportunityMaster.fileUploadCommentList = resp.fileUploadCommentList;
-               }, function(err) {
+            /*vm.opportunityMaster.fileUploadCommentList = OpportunityMaster.get({id : $stateParams.id}, function(resp){
+             console.log(resp);*/
+            vm.opportunityMaster.fileUploadCommentList;
+            console.log(vm.opportunityMaster.fileUploadCommentList)
+              /* }, function(err) {
                 console.log(err);
-            });
+            });*/
         }
 
         function clear () {
@@ -185,15 +186,23 @@
         function saveComment() {
             vm.isSaving = true;
             var inputData = {};
-            angular.forEach(vm.opportunityMaster.fileUploads, function(oppKey, oppValue){
+            /*angular.forEach(vm.opportunityMaster.fileUploadCommentList, function(oppKey, oppValue){
             	if(vm.fileId == vm.opportunityMaster.fileUploads[oppValue].id){
             		inputData.fileUploadId = vm.opportunityMaster.fileUploads[oppValue];
             	}
-            });
+            });*/
 
             //inputData.fileUploadId = vm.fileId;
-            inputData.fileComments = vm.fileComments;
-            FileUploadComments.save(inputData, onSaveSuccess, onSaveError);
+            console.log( vm.fileComments, vm.opportunityMaster)
+            inputData.opportunityComments = vm.fileComments;
+            inputData.opportunityMaster=vm.opportunityMaster; 
+           
+          FileUploadComments.save(inputData, function(resp) {
+        	  vm.opportunityMaster.fileUploadCommentList.push(resp);
+        	  vm.fileComments = "";
+          }, onSaveError);
+           // console.log(result);
+           // vm.opportunityMaster.fileUploadCommentList = result;
         }
       /*  $scope.data='';*/
        function approveFile(status){
@@ -219,7 +228,7 @@
                 console.log(resp);
                /* console.log("my variable.. "+$scope.myvar);*/
                 vm.htmlContent = resp.htmlContent;
-                vm.fileUploadCommentList = resp.fileUploadCommentList;
+               // vm.fileUploadCommentList = resp.fileUploadCommentList;
 
                 $scope.myvar = false;
                   }, function(err) {
@@ -230,7 +239,7 @@
 
         function onSaveSuccess (result) {
             vm.isSaving = false;
-            vm.fileUploadCommentList.push(result);
+            vm.opportunityMaster.fileUploadCommentList.push(result);
             vm.fileComments = "";
             //vm.load();
         }

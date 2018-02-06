@@ -14,7 +14,7 @@ import java.util.Objects;
  * A FileUploadComments.
  */
 @Entity
-@Table(name = "file_upload_comments")
+@Table(name = "opportunity_master_comments")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class FileUploadComments extends AbstractAuditingEntity implements Serializable {
 
@@ -25,17 +25,14 @@ public class FileUploadComments extends AbstractAuditingEntity implements Serial
     private Long id;
 
     @Size(max = 400)
-    @Column(name = "file_comments", length = 400)
-    private String fileComments;  
+    @Column(name = "opportunity_comments", length = 400)
+    private String opportunityComments;  
 
     @ManyToOne
-    @JoinColumn(name="ra_file_upload_id")
-    private FileUpload fileUploadId;
+    @JoinColumn(name="opportunity_master_id")
+    private OpportunityMaster opportunityMaster;
 
-    @ManyToOne
-    @JoinColumn(name="add_file_upload_id")
-    private AdditionalFileUpload addFileUploadID;
-
+    
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -50,44 +47,32 @@ public class FileUploadComments extends AbstractAuditingEntity implements Serial
         return this;
     }
 
-    public String getFileComments() {
-        return fileComments;
+    public String getOpportunityComments() {
+        return opportunityComments;
     }
 
-    public FileUploadComments fileComments(String fileComments) {
-        this.fileComments = fileComments;
+    public FileUploadComments opportunityComments(String opportunityComments) {
+        this.opportunityComments = opportunityComments;
         return this;
     }
 
-    public void setFileComments(String fileComments) {
-        this.fileComments = fileComments;
+    public void setFileUploadComments(String opportunityComments) {
+        this.opportunityComments = opportunityComments;
     }
 
-    public FileUpload getFileUploadId() {
-        return fileUploadId;
+    public OpportunityMaster getOpportunityMaster() {
+        return opportunityMaster;
     }
 
-    public FileUploadComments fileUploadId(FileUpload FileUpload) {
-        this.fileUploadId = FileUpload;
+    public FileUploadComments opportunityMaster(OpportunityMaster opportunityMaster) {
+        this.opportunityMaster = opportunityMaster;
         return this;
     }
 
-    public void setFileUploadId(FileUpload FileUpload) {
-        this.fileUploadId = FileUpload;
+    public void setOpportunityMaster(OpportunityMaster opportunityMaster) {
+        this.opportunityMaster = opportunityMaster;
     }
 
-    public AdditionalFileUpload getAddFileUploadID() {
-        return addFileUploadID;
-    }
-
-    public FileUploadComments addFileUploadID(AdditionalFileUpload AdditionalFileUpload) {
-        this.addFileUploadID = AdditionalFileUpload;
-        return this;
-    }
-
-    public void setAddFileUploadID(AdditionalFileUpload AdditionalFileUpload) {
-        this.addFileUploadID = AdditionalFileUpload;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -114,7 +99,7 @@ public class FileUploadComments extends AbstractAuditingEntity implements Serial
     public String toString() {
         return "FileUploadComments{" +
             "id=" + getId() +
-            ", fileComments='" + getFileComments() + "'" +           
+            ", opportunityComments='" + getOpportunityComments() + "'" +           
             "}";
     }
 }

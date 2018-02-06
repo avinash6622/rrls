@@ -467,15 +467,13 @@ public class OpportunityMasterResource {
 		List<FileUpload> fileUploads = fileUploadRepository.findByOpportunityMasterId(opportunityMaster);
 		List<StrategyMapping> strategyMappings = strategyMappingRepository.findByOpportunityMaster(opportunityMaster);
 		opportunityMaster.setStrategyMapping(strategyMappings);
+		System.out.println(opportunityMaster);
+		List<FileUploadComments> fileComments = fileUploadCommentsRepository.findByOpportunityMaster(opportunityMaster);
+		opportunityMaster.setFileUploadCommentList(fileComments);		
 		if (!fileUploads.isEmpty()) {
 			try {
 				for(FileUpload fm:fileUploads)
-				{
-				List<FileUploadComments> fileComments = fileUploadCommentsRepository
-						.findByFileUploadId(fm);
-
-				opportunityMaster.setFileUploadCommentList(fileComments);
-
+				{				
 				opportunityMaster.setFileUploads(fileUploads);
 				String inputfilepath = fm.getFileData();
 
@@ -504,10 +502,7 @@ public class OpportunityMasterResource {
 		FileUpload fileUploads =fileUploadRepository.findOne(id);
 		//OpportunityMaster opportunityMaster=opportunityMasterRepository.findOne(fileUploads.getOpportunityMasterId().getId());
 			try {
-
-				List<FileUploadComments> fileComments = fileUploadCommentsRepository
-						.findByFileUploadId(fileUploads);
-				fileUploads.setFileUploadCommentList(fileComments);
+			
 				//opportunityMaster.setFileUploads((List<FileUpload>) fileUploads);
 				String inputfilepath = fileUploads.getFileData();
 

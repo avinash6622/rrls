@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.unify.rrls.domain.FileUpload;
 import com.unify.rrls.domain.FileUploadComments;
+import com.unify.rrls.domain.OpportunityMaster;
 
 
 /**
@@ -15,6 +16,6 @@ import com.unify.rrls.domain.FileUploadComments;
 @SuppressWarnings("unused")
 @Repository
 public interface FileUploadCommentsRepository extends JpaRepository<FileUploadComments, Long> {
-	 List<FileUploadComments> findByFileUploadId(FileUpload fileUpload);
+	 List<FileUploadComments> findByOpportunityMaster(OpportunityMaster opportunityMaster);
 
 }

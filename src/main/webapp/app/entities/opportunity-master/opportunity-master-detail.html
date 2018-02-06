@@ -167,31 +167,7 @@
 			<div ckeditor="options" ng-model="vm.htmlContent" ready="onReady()"
 				ng-change="changeCKeditor()" readonly=true></div>
 		</dd>
-
-		<dt ng-show="vm.htmlContent">
-			<span>Comments</span>
-		</dt>
-		<dd ng-show="vm.htmlContent">
-
-			<div class="actionBox"
-				ng-repeat="fileUploadComments in vm.fileUploadCommentList">
-				<div>
-					<div class="capitalize">
-						<b>{{fileUploadComments.createdBy}} </b>
-					</div>
-					<div>{{fileUploadComments.fileComments}}</div>
-					<div class="date sub-text">on
-						{{fileUploadComments.createdDate | date :"MMM d, y h:mm:ss a"}}</div>
-				</div>
-
-			</div>
-			<textarea ng-model="vm.fileComments" name="comments"
-				id="field_comments" rows="4" cols="120"></textarea>
-			<br>
-			<button class="btn btn-primary" ng-click="vm.saveComment()"
-				ng-disabled="" vm.isSaving>Submit Comment</button>
-		</dd>
-
+		
 		<dt ng-show="myvar">
 			<span>Document</span>
 
@@ -257,6 +233,31 @@
 					required=""> <br />
 				<button type="button" class="btn btn-default" ng-click="vm.upload()">Upload</button>
 			</div>
+		</dd>
+		
+		
+		<dt>
+			<span>Comments</span>
+		</dt>
+		<dd>
+
+			<div class="actionBox"
+				ng-repeat="fileUploadComments in vm.opportunityMaster.fileUploadCommentList">
+				<div>
+					<div class="capitalize">
+						<b>{{fileUploadComments.createdBy}} </b>
+					</div>
+					<div>{{fileUploadComments.opportunityComments}}</div>
+					<div class="date sub-text">on
+						{{fileUploadComments.createdDate | date :"MMM d, y h:mm:ss a"}}</div>
+				</div>
+
+			</div>
+			<textarea ng-model="vm.fileComments" name="comments"
+				id="field_comments" rows="4" cols="120"></textarea>
+			<br>
+			<button class="btn btn-primary" ng-click="vm.saveComment()"
+				ng-disabled="" vm.isSaving>Submit Comment</button>
 		</dd>
 
 	</dl>
