@@ -22,6 +22,11 @@
        /* vm.saveDoc=saveDoc;*/
         vm.readOnly = false;
 
+
+
+
+
+
         // Editor options.
         $scope.options = {
             language: 'en',
@@ -44,6 +49,9 @@
 
         function save () {
             vm.isSaving = true;
+
+
+            console.log("ndksjangkjshagn",vm.opportunityMaster);
             if (vm.opportunityMaster.id !== null) {
                 OpportunityMaster.update(vm.opportunityMaster, onSaveSuccess, onSaveError);
             } else {
@@ -51,8 +59,8 @@
             }
         }
        /* function saveDoc () {
-            vm.isSaving = true;            
-                OpportunityMaster.save(vm.fileDocSave, onSaveSuccess, onSaveError);             
+            vm.isSaving = true;
+                OpportunityMaster.save(vm.fileDocSave, onSaveSuccess, onSaveError);
         }*/
 
         function onSaveSuccess (result) {
@@ -70,7 +78,7 @@
 
             } else {
                 var inputData = vm.opportunityMaster;
-                console.log(inputData);              
+                console.log(inputData);
 
                 //OpportunityMaster.saveWithUpload({inputData: vm.opportunityMaster, fileUpload: vm.opportunityMaster.fileUpload}, onSaveSuccess, onSaveError);
                 Upload.upload({
@@ -102,7 +110,7 @@
         $scope.changeEditor = function () {
             //console.log(vm.opportunityMaster.htmlContent);
         };
-        
+
         $scope.getStrategyMaster = function(strategyID) {
         	var match = vm.strategymasters.filter(function(item) {
         		return item.strategyMaster.id == strategyID;

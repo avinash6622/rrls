@@ -1,11 +1,6 @@
 package com.unify.rrls.web.rest;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
@@ -15,7 +10,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import com.unify.rrls.domain.*;
+import com.unify.rrls.repository.*;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.docx4j.Docx4J;
 import org.docx4j.Docx4jProperties;
 import org.docx4j.XmlUtils;
@@ -31,11 +29,13 @@ import org.jsoup.parser.Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,25 +50,17 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.codahale.metrics.annotation.Timed;
-import com.unify.rrls.domain.AdditionalFileUpload;
-import com.unify.rrls.domain.DocumentCreationBean;
-import com.unify.rrls.domain.FileUpload;
-import com.unify.rrls.domain.FileUploadComments;
-import com.unify.rrls.domain.OpportunityMaster;
-import com.unify.rrls.domain.StrategyMapping;
-import com.unify.rrls.domain.StrategyMaster;
-import com.unify.rrls.repository.AdditionalFileUploadRepository;
-import com.unify.rrls.repository.FileUploadCommentsRepository;
-import com.unify.rrls.repository.FileUploadRepository;
-import com.unify.rrls.repository.OpportunityMasterRepository;
-import com.unify.rrls.repository.StrategyMappingRepository;
-import com.unify.rrls.repository.StrategyMasterRepository;
 import com.unify.rrls.security.SecurityUtils;
 import com.unify.rrls.web.rest.util.HeaderUtil;
 import com.unify.rrls.web.rest.util.PaginationUtil;
 
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * REST controller for managing OpportunityMaster.
@@ -97,6 +89,7 @@ public class OpportunityMasterResource {
 	}
 
 	StrategyMapping strategyMapping;
+    OpportunityMasterContact opportunityMasterContact= new OpportunityMasterContact();
 
 	final static Pattern PATTERN = Pattern.compile("(.*?)(?:\\((\\d+)\\))?(\\.[^.]*)?");
 
@@ -110,17 +103,19 @@ public class OpportunityMasterResource {
 	private final StrategyMappingRepository strategyMappingRepository;
 	private final StrategyMasterRepository strategyMasterRepository;
 	private final AdditionalFileUploadRepository additionalFileUploadRepository;
+	private final OpportunityMasterContactRepository opportunityMasterContactRepository;
 
 	public OpportunityMasterResource(OpportunityMasterRepository opportunityMasterRepository,
 			FileUploadRepository fileUploadRepository, FileUploadCommentsRepository fileUploadCommentsRepository,
 			StrategyMappingRepository strategyMappingRepository,StrategyMasterRepository strategyMasterRepository,
-			AdditionalFileUploadRepository additionalFileUploadRepository) {
+			AdditionalFileUploadRepository additionalFileUploadRepository,OpportunityMasterContactRepository opportunityMasterContactRepository) {
 		this.opportunityMasterRepository = opportunityMasterRepository;
 		this.fileUploadRepository = fileUploadRepository;
 		this.fileUploadCommentsRepository = fileUploadCommentsRepository;
 		this.strategyMappingRepository=strategyMappingRepository;
 		this.strategyMasterRepository=strategyMasterRepository;
 		this.additionalFileUploadRepository=additionalFileUploadRepository;
+		this.opportunityMasterContactRepository=opportunityMasterContactRepository;
 	}
 
 	/**
@@ -218,6 +213,15 @@ public class OpportunityMasterResource {
 		}
 
 		OpportunityMaster result = opportunityMasterRepository.save(opportunityMaster);
+
+		opportunityMasterContact.setName(opportunityMaster.getOpportunityMasterContact().getName());
+		opportunityMasterContact.setDesignation(opportunityMaster.getOpportunityMasterContact().getDesignation());
+        opportunityMasterContact.setEmail(opportunityMaster.getOpportunityMasterContact().getEmail());
+        opportunityMasterContact.setContactnum(opportunityMaster.getOpportunityMasterContact().getContactnum());
+        opportunityMasterContact.setOpportunityMaster(result);
+
+        opportunityMasterContactRepository.save(opportunityMasterContact);
+
 		for(StrategyMaster sm:opportunityMaster.getSelectedStrategyMaster())
 		{
 			strategyMapping=new StrategyMapping();
@@ -325,6 +329,66 @@ public class OpportunityMasterResource {
             .body(result);
     }
 
+ /*   @Autowired
+    private ResourceLoader resourceLoader;
+
+	@Autowired
+
+    Context context;
+*/
+
+   /* @PostMapping("/opportunity-masters/download-file")
+    @Timed
+*/
+    /*public void downloader(HttpServletRequest request, HttpServletResponse response,
+                         @RequestBody FileUpload fileUpload) {
+
+        System.out.println("Entering"+fileUpload.getFileName()+"path:"+fileUpload.getFileData());
+
+        String fileName = "ABAN OFFSHORE LTD/girija/image/Research SW.xlsx";
+        try {
+
+           *//* ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+            File file = new File(classLoader.getResource(fileName).getFile());*//*
+            File file = ResourceUtils.getFile("classpath:ABAN OFFSHORE LTD/girija/image/Research SW.xlsx");
+
+           // File file = new File(classLoader.getResource(fileName).getFile());
+         //   String downloadFolder = context.getRealPath("/resources/ABAN OFFSHORE LTD/girija/xlsx");
+         //   System.out.println("PATH----->"+downloadFolder);
+         //   File file = new File(downloadFolder + File.separator + filename);
+            System.out.println("FILE----->"+file);
+
+            System.out.println("File Found : " + file.exists());
+
+            if (file.exists()) {
+                String mimeType = context.getMimeType(file.getPath());
+
+                if (mimeType == null) {
+                    mimeType = "application/octet-stream";
+                }
+
+                response.setContentType(mimeType);
+               // response.addHeader("Content-Disposition", "attachment; filename=" + filename);
+                response.setContentLength((int) file.length());
+
+                OutputStream os = response.getOutputStream();
+                FileInputStream fis = new FileInputStream(file);
+                byte[] buffer = new byte[4096];
+                int b = -1;
+
+                while ((b = fis.read(buffer)) != -1) {
+                    os.write(buffer, 0, b);
+                }
+
+                fis.close();
+                os.close();
+            } else {
+                System.out.println("Requested " + fileName + " file not found!!");
+            }
+        } catch (IOException e) {
+            System.out.println("Error:- " + e.getMessage());
+        }
+    }*/
 	@PostMapping("/opportunity-masters/create-file")
 	@Timed
 	public ResponseEntity<FileUpload> createWordOpportunityMaster(@RequestBody DocumentCreationBean documentCreationBean)
@@ -467,13 +531,15 @@ public class OpportunityMasterResource {
 		List<FileUpload> fileUploads = fileUploadRepository.findByOpportunityMasterId(opportunityMaster);
 		List<StrategyMapping> strategyMappings = strategyMappingRepository.findByOpportunityMaster(opportunityMaster);
 		opportunityMaster.setStrategyMapping(strategyMappings);
-		System.out.println(opportunityMaster);
+		OpportunityMasterContact opportunityMasterContact = opportunityMasterContactRepository.findByOpportunityMaster(opportunityMaster);
+		opportunityMaster.setOpportunityMasterContact(opportunityMasterContact);
+        System.out.println("OPPPPPPPPP"+opportunityMaster);
 		List<FileUploadComments> fileComments = fileUploadCommentsRepository.findByOpportunityMaster(opportunityMaster);
-		opportunityMaster.setFileUploadCommentList(fileComments);		
+		opportunityMaster.setFileUploadCommentList(fileComments);
 		if (!fileUploads.isEmpty()) {
 			try {
 				for(FileUpload fm:fileUploads)
-				{				
+				{
 				opportunityMaster.setFileUploads(fileUploads);
 				String inputfilepath = fm.getFileData();
 
@@ -502,7 +568,7 @@ public class OpportunityMasterResource {
 		FileUpload fileUploads =fileUploadRepository.findOne(id);
 		//OpportunityMaster opportunityMaster=opportunityMasterRepository.findOne(fileUploads.getOpportunityMasterId().getId());
 			try {
-			
+
 				//opportunityMaster.setFileUploads((List<FileUpload>) fileUploads);
 				String inputfilepath = fileUploads.getFileData();
 

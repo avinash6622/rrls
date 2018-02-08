@@ -5,24 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import sun.plugin.util.UserProfile;
 
 /**
  * A OpportunityMaster.
@@ -60,6 +50,10 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	@JsonProperty
 	private List<StrategyMaster> selectedStrategyMaster;
 
+	@Transient
+    @JsonProperty
+    private OpportunityMasterContact opportunityMasterContact;
+
 	//private List<StrategyMaster> selectedStrategyMaster=new ArrayList<StrategyMaster>();
 
 	@OneToMany(mappedBy = "opportunityMasterId")
@@ -68,6 +62,12 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	@ManyToOne
 	@JoinColumn(name = "master_name")
 	private OpportunityName masterName;
+
+
+ /*   @OneToOne(fetch = FetchType.LAZY,
+        cascade =  CascadeType.ALL,
+        mappedBy = "OpportunityMasterID")
+    private OpportunityMasterContact opportunityMasterContact;*/
 
 	@OneToMany(mappedBy = "strategyMaster",cascade={CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
 	private List<StrategyMapping> strategyMapping;
@@ -147,7 +147,16 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 		this.oppStatus = oppStatus;
 	}
 
-	@Override
+
+    public OpportunityMasterContact getOpportunityMasterContact() {
+        return opportunityMasterContact;
+    }
+
+    public void setOpportunityMasterContact(OpportunityMasterContact opportunityMasterContact) {
+        this.opportunityMasterContact = opportunityMasterContact;
+    }
+
+    @Override
 	public boolean equals(Object o) {
 		if (this == o) {
 			return true;
@@ -162,7 +171,14 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 		return Objects.equals(getId(), opportunityMaster.getId());
 	}
 
-	@Override
+    @Override
+    public String toString() {
+        return "OpportunityMaster{" +
+            "opportunityMasterContact=" + opportunityMasterContact +
+            '}';
+    }
+
+    @Override
 	public int hashCode() {
 		return Objects.hashCode(getId());
 	}

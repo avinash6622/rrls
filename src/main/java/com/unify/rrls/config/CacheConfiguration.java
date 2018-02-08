@@ -49,6 +49,7 @@ public class CacheConfiguration {
             cm.createCache(com.unify.rrls.domain.FileUploadComments.class.getName(), jcacheConfiguration);
             cm.createCache(com.unify.rrls.domain.OpportunityName.class.getName(), jcacheConfiguration);
             cm.createCache(com.unify.rrls.domain.StrategyMapping.class.getName(), jcacheConfiguration);
+            cm.createCache(com.unify.rrls.domain.OpportunityMasterContact.class.getName(),jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

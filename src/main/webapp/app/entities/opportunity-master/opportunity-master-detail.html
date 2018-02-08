@@ -95,7 +95,7 @@
 
 		</dd>-->
 
-        <div class="container">
+
 
             <div class="row" ng-show="vm.opportunityMaster.fileUploads">
                 <div class="col-md-3">
@@ -118,8 +118,7 @@
                         </div>
                         <div style="height:120px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
                         <div class="panel-body"   ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Excel module'}">
-                            <view-more-less limit='3' show-more-text='Show More &#x25BC;' show-less-text='Show Less &#x25B2;' is-static=true></view-more-less>
-                            <a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
+                            <a ng-click="vm.loadFileContent(fileUploads)">{{fileUploads.fileName}}</a>
                             <b> - {{fileUploads.createdBy | capitalize}}</b> <span class="date sub-text">
 				   	          on {{fileUploads.createdDate | date :"MMM d, y h:mm:ss a"}}</span>
                         </div>
@@ -153,7 +152,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+
 
 
 
@@ -167,7 +166,7 @@
 			<div ckeditor="options" ng-model="vm.htmlContent" ready="onReady()"
 				ng-change="changeCKeditor()" readonly=true></div>
 		</dd>
-		
+
 		<dt ng-show="myvar">
 			<span>Document</span>
 
@@ -234,8 +233,8 @@
 				<button type="button" class="btn btn-default" ng-click="vm.upload()">Upload</button>
 			</div>
 		</dd>
-		
-		
+
+
 		<dt>
 			<span>Comments</span>
 		</dt>

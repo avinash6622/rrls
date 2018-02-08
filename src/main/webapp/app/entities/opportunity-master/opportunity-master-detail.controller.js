@@ -76,12 +76,20 @@
 
                         OpportunityMaster.description({statusDes : val,id: vm.opportunityMaster.id,oppStatus:status}, function(resp){
                             console.log(resp);
-
+                            vm.opportunityMaster.status.push(resp);
                         }, function(err) {
                             console.log(err);
                         });
+                        var inputData = {};
 
+                        inputData.opportunityComments = val +" - "+status;
+                        inputData.opportunityMaster=vm.opportunityMaster;
 
+                        FileUploadComments.save(inputData, function(resp) {
+                            vm.opportunityMaster.fileUploadCommentList.push(resp);},
+                            function(err) {
+                                console.log(err);
+                            });
                         modalInstance.close();
                     };
 
@@ -104,6 +112,7 @@
             /*vm.opportunityMaster.fileUploadCommentList = OpportunityMaster.get({id : $stateParams.id}, function(resp){
              console.log(resp);*/
             vm.opportunityMaster.fileUploadCommentList;
+            vm.opportunityMaster.status;
             console.log(vm.opportunityMaster.fileUploadCommentList)
               /* }, function(err) {
                 console.log(err);
@@ -195,8 +204,8 @@
             //inputData.fileUploadId = vm.fileId;
             console.log( vm.fileComments, vm.opportunityMaster)
             inputData.opportunityComments = vm.fileComments;
-            inputData.opportunityMaster=vm.opportunityMaster; 
-           
+            inputData.opportunityMaster=vm.opportunityMaster;
+
           FileUploadComments.save(inputData, function(resp) {
         	  vm.opportunityMaster.fileUploadCommentList.push(resp);
         	  vm.fileComments = "";
@@ -222,18 +231,34 @@
 
         function loadFileContent(fileID) {
         	console.log(fileID);
-        	vm.fileId=fileID;
+
+        	vm.fileId = fileID;
+            vm.fileUpload=fileID;
+
+        /*	vm.fileId=fileID;
 
         	OpportunityMaster.getFileContent({id : fileID}, function(resp){
                 console.log(resp);
-               /* console.log("my variable.. "+$scope.myvar);*/
+               /!* console.log("my variable.. "+$scope.myvar);*!/
                 vm.htmlContent = resp.htmlContent;
                // vm.fileUploadCommentList = resp.fileUploadCommentList;
 
                 $scope.myvar = false;
                   }, function(err) {
                    console.log(err);
-               });
+               });*/
+
+
+            OpportunityMaster.downloadfilecontent(fileID, function(resp){
+                console.log(resp);
+                /* console.log("my variable.. "+$scope.myvar);*/
+               /* vm.htmlContent = resp.htmlContent;
+                vm.fileUploadCommentList = resp.fileUploadCommentList;
+
+                $scope.myvar = false;*/
+            }, function(err) {
+                console.log(err);
+            });
         }
 
 

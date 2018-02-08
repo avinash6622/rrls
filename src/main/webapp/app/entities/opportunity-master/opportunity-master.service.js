@@ -35,8 +35,10 @@
             'save': {
                 method: 'POST',
                 transformRequest: function (data) {
+                    console.log("CONTACT----->",data);
                     var copy = angular.copy(data);
                     copy.createdDate = DateUtils.convertLocalDateToServer(copy.createdDate);
+                    console.log("ADSFFA",copy);
                     return angular.toJson(copy);
                 }
             },
@@ -94,6 +96,19 @@
 
 
                }
+
+
+            },
+
+            'downloadfilecontent':{
+                url:'api/opportunity-masters/download-file/',
+                method:'POST',
+                transformResponse: function(data){
+
+                    console.log(data);
+
+
+                }
 
 
             }

@@ -13,13 +13,13 @@
             <input type="text" class="form-control" id="id" name="id"
                     ng-model="vm.opportunityMaster.id" readonly />
         </div>
-     
+
          <div class="form-group">
            <label for="field_opportunityMasterName">Opportuntiy Name</label>
             <select class="form-control" name="masterName" id="field_opportunityMasterName" ng-model="vm.opportunityMaster.masterName" ng-options="opportunityName as opportunityName.oppName for opportunityName in vm.opportunityNames track by opportunityName.id">
                 <option value="">Select Name</option>
             </select>
-           
+
         </div>
         <div class="form-group">
             <label class="control-label" for="field_sectorType">Sector</label>
@@ -58,19 +58,53 @@
             <label for="field_opportunityMaster">Strategy</label>
              <select class="form-control" id="field_opportunityMaster" multiple name="selectedStrategyMaster" ng-value="selectedStrategyMaster" ng-model="vm.opportunityMaster.selectedStrategyMaster"
                     ng-options="strategyMaster as strategyMaster.strategyName for strategyMaster in vm.strategymasters track by strategyMaster.id">
-                 
-                 
+
+
             </select>
-                
+
             <!--  <select class="form-control" id="field_opportunityMaster" multiple name="selectedStrategyMaster" ng-model="vm.opportunityMaster.strategyMapping"
                     ng-options="selectedStrategyMaster as strategyMaster.strategyName for strategyMaster in vm.strategymasters track by strategyMaster.id">
-            </select> --> 
+            </select> -->
            <!--  <select class="form-control" id="field_opportunityMaster" multiple name="selectedStrategyMaster" ng-init="getStrategyMaster(2)" ng-model="vm.opportunityMaster.strategyMapping">
             <option ng-repeat="strategy in vm.strategymasters" ng-value="strategy.id">{{strategy.strategyName}}</option>
             </select> -->
-           
-           
+
+
         </div>
+
+
+        <div class="form-group row">
+            <div class="col-xs-4">
+                <label for="field_oppcontactName">Contact Details</label></br>
+                <label for="field_oppcontactName">Name</label>
+                <input class="form-control" name="field_oppcontactName" id="field_oppcontactName" type="text" placeholder="Name" ng-model="vm.opportunityMaster.opportunityMasterContact.name">
+            </div>
+
+            <div class="col-xs-4">
+                <label for="field_oppcontactName"></label></br>
+                <label for="field_oppcontactName">Designation</label>
+                <input class="form-control" name="field_oppcontactDes" id="field_oppcontactDes" type="text" placeholder="Designation" ng-model="vm.opportunityMaster.opportunityMasterContact.designation">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-xs-4">
+                <label for="field_oppcontactEmail">Email</label>
+                <input class="form-control" name="field_oppcontactEmail" id="field_oppcontactEmail" type="text" placeholder="Email" ng-model="vm.opportunityMaster.opportunityMasterContact.email">
+            </div>
+
+            <div class="col-xs-4">
+                <label for="field_oppcontactNo">Contact Number</label>
+                <input class="form-control" name="field_oppcontactNo" id="field_oppcontactNo" type="text" placeholder="Contact Number" ng-model="vm.opportunityMaster.opportunityMasterContact.contactnum">
+            </div>
+        </div>
+
+    <!--    <div class="form-group">
+            <label class="control-label" for="field_oppcontact">Contact Details</label>
+            <input type="text"  placeholder="Name" name="oppDescription" id="field_oppcontact"
+                   ng-model="vm.opportunityMaster.oppDescription"
+                   required max="250"/>
+        </div>-->
      <!--    <div class="form-group">
             <label for="file_upload">File Upload</label>
             <input type="file" ngf-select="vm.selectFile($file)" name="file" id="file_upload" ngf-pattern=".doc,.docx" accept=".doc,.docx" required="">
