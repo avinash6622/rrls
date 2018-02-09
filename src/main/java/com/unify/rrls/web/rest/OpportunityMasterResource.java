@@ -218,7 +218,7 @@ public class OpportunityMasterResource {
 		opportunityMasterContact.setDesignation(opportunityMaster.getOpportunityMasterContact().getDesignation());
         opportunityMasterContact.setEmail(opportunityMaster.getOpportunityMasterContact().getEmail());
         opportunityMasterContact.setContactnum(opportunityMaster.getOpportunityMasterContact().getContactnum());
-        opportunityMasterContact.setOpportunityMaster(result);
+        opportunityMasterContact.setOpportunityMasterId(result);
 
         opportunityMasterContactRepository.save(opportunityMasterContact);
 
@@ -531,7 +531,9 @@ public class OpportunityMasterResource {
 		List<FileUpload> fileUploads = fileUploadRepository.findByOpportunityMasterId(opportunityMaster);
 		List<StrategyMapping> strategyMappings = strategyMappingRepository.findByOpportunityMaster(opportunityMaster);
 		opportunityMaster.setStrategyMapping(strategyMappings);
-		OpportunityMasterContact opportunityMasterContact = opportunityMasterContactRepository.findByOpportunityMaster(opportunityMaster);
+        System.out.println("MASTER---->"+opportunityMaster);
+		OpportunityMasterContact opportunityMasterContact = opportunityMasterContactRepository.findByOpportunityMasterId(opportunityMaster);
+        System.out.println("CONTACT--->"+opportunityMasterContact);
 		opportunityMaster.setOpportunityMasterContact(opportunityMasterContact);
         System.out.println("OPPPPPPPPP"+opportunityMaster);
 		List<FileUploadComments> fileComments = fileUploadCommentsRepository.findByOpportunityMaster(opportunityMaster);

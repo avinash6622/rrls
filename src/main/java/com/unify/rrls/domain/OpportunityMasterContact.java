@@ -35,7 +35,7 @@ public class OpportunityMasterContact  extends AbstractAuditingEntity implements
 
     @ManyToOne
     @JoinColumn(name = "opportunity_master_id")
-    private OpportunityMaster opportunityMaster;
+    private OpportunityMaster opportunityMasterId;
 
 
 
@@ -81,12 +81,12 @@ public class OpportunityMasterContact  extends AbstractAuditingEntity implements
         this.contactnum = contactnum;
     }
 
-    public OpportunityMaster getOpportunityMaster() {
-        return opportunityMaster;
+    public OpportunityMaster getOpportunityMasterId() {
+        return opportunityMasterId;
     }
 
-    public void setOpportunityMaster(OpportunityMaster opportunityMaster) {
-        opportunityMaster = opportunityMaster;
+    public void setOpportunityMasterId(OpportunityMaster opportunityMasterId) {
+        this.opportunityMasterId = opportunityMasterId;
     }
 
     @Override
@@ -99,13 +99,13 @@ public class OpportunityMasterContact  extends AbstractAuditingEntity implements
             Objects.equals(designation, that.designation) &&
             Objects.equals(email, that.email) &&
             Objects.equals(contactnum, that.contactnum) &&
-            Objects.equals(opportunityMaster, that.opportunityMaster);
+            Objects.equals(opportunityMasterId, that.opportunityMasterId);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, name, designation, email, contactnum, opportunityMaster);
+        return Objects.hash(id, name, designation, email, contactnum, opportunityMasterId);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class OpportunityMasterContact  extends AbstractAuditingEntity implements
             ", designation='" + designation + '\'' +
             ", email='" + email + '\'' +
             ", contactnum='" + contactnum + '\'' +
-            ", opportunityMaster=" + opportunityMaster +
+            ", opportunityMaster=" + opportunityMasterId +
             '}';
     }
 }

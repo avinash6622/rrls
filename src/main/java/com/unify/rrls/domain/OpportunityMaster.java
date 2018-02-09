@@ -12,7 +12,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import sun.plugin.util.UserProfile;
+
 
 /**
  * A OpportunityMaster.
@@ -174,7 +174,16 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
     @Override
     public String toString() {
         return "OpportunityMaster{" +
-            "opportunityMasterContact=" + opportunityMasterContact +
+            "id=" + id +
+            ", oppDescription='" + oppDescription + '\'' +
+            ", oppStatus='" + oppStatus + '\'' +
+            ", statusDes='" + statusDes + '\'' +
+            ", htmlContent='" + htmlContent + '\'' +
+            ", fileUploadCommentList=" + fileUploadCommentList +
+            ", selectedStrategyMaster=" + selectedStrategyMaster +
+            ", opportunityMasterContact=" + opportunityMasterContact +
+            ", masterName=" + masterName +
+            ", strategyMapping=" + strategyMapping +
             '}';
     }
 
