@@ -76,7 +76,7 @@
 
                         OpportunityMaster.description({statusDes : val,id: vm.opportunityMaster.id,oppStatus:status}, function(resp){
                             console.log(resp);
-                            vm.opportunityMaster.status.push(resp);
+                            vm.opportunityMaster.oppStatus = resp.oppStatus;
                         }, function(err) {
                             console.log(err);
                         });
@@ -142,6 +142,9 @@
                     params: {oppId: vm.opportunityMaster.id,filetype:selectitem,uploadfileName:vm.uploadfileName}// {oppCode: inputData.oppCode, oppName: inputData.oppName, oppDescription: inputData.oppDescription, strategyMasterId: inputData.strategyMasterId.id}
                 }).then(function (resp) {
                     console.log(resp);
+                    if(resp.status == 201) {
+                    	vm.opportunityMaster.fileUploads.push(resp.data);
+                    }
                 }, function (resp) {
                     console.log(resp);
                 }, function (evt) {
