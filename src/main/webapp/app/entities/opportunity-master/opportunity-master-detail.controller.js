@@ -25,6 +25,7 @@
         /*vm.additionalFile=additionalFile;*/
         vm.addFileName='';
 
+
          console.log("file---->",vm.opportunityMaster.fileUploads);
 
         var unsubscribe = $rootScope.$on('researchRepositoryLearningSystemApp:opportunityMasterUpdate', function(event, result) {
@@ -58,7 +59,24 @@
            console.log('Name: ' + $scope.selitem);
         };
 
+      /*  $scope.submitEmployee = function(){
 
+            console.log("form submitted:"+angular.toJson($scope.empoyees ));
+        }*/
+
+        $scope.submitTable = function(tablevalues) {
+            // $http.post('/url', tablevalues)
+            //     .success(function(data, status) {
+
+            //     })
+            //     .error(function(data, status) {
+
+            //     });
+
+            console.log(summaryData);
+           /* $scope.tableval = tablevalues;
+            console.log($scope.tableval);*/
+        }
 
         $scope.open = function (status) {
 
