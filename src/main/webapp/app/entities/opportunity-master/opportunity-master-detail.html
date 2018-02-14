@@ -20,6 +20,11 @@
 .capitalize {
 	text-transform: capitalize;
 }
+div.scrollmenu {
+
+    overflow: auto;
+    white-space: nowrap;
+}
 </style>
 </head>
 </html>
@@ -258,6 +263,243 @@
 			<button class="btn btn-primary" ng-click="vm.saveComment()"
 				ng-disabled="" vm.isSaving>Submit Comment</button>
 		</dd>
+
+        <dt>
+            <span>Summary Data</span>
+        </dt>
+        <dd>
+        <!--    <form id="empform" ng-submit="submitEmployee()">
+            <div class="scrollmenu">
+            <table id="mytable" class="table table-bordered">
+                <thead>
+                <tr class="headborder">
+
+                    <th scope="col" colspan="3"></th>
+
+
+                    <th scope="col" colspan="2">RoE</th>
+                    <th scope="col">D/E</th>
+
+
+                    <th scope="col" colspan="2">Earnings Gr</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col" colspan="2">PEG - FY 18</th>
+                </tr>
+                <tr>
+                <th style="width:5%;">Weight</th>
+                <th style="width:10%;">CMP</th>
+                <th style="width:15%;">M Cap</th>
+                <th style="width:10%;">FY 2017</th>
+                <th style="width:10%;">FY 2018</th>
+                <th style="width:15%;">FY 2019</th>
+                <th style="width:15%;">FY 2017</th>
+                <th style="width:15%;">FY 2018</th>
+                <th style="width:15%;">FY 2019</th>
+                <th style="width:15%;">FY 2018</th>
+                <th style="width:15%;">FY 2019</th>
+                <th style="width:15%;">FY 18</th>
+                <th style="width:15%;">FY 2018</th>
+                <th style="width:15%;">FY 2019</th>
+                <th style="width:15%;">FY 2017</th>
+                <th style="width:15%;">FY 2018</th>
+                <th style="width:15%;">FY 2018</th>
+                <th style="width:15%;">FY 2019</th>
+                <th style="width:15%;">Wt. Avg Mcap</th>
+                <th style="width:15%;">RoE</th>
+                <th style="width:15%;">O / J</th>
+                <th style="width:15%;">PEG</th>
+                <th style="width:25%;">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    &lt;!&ndash;<td>{{$index+1}}</td>&ndash;&gt;
+                    <td><input name="val1" ng-model="val1"  ng-disabled=""/> </td>
+                    <td><input name="val1" ng-model="val2"  ng-disabled=""/> </td>
+                    <td><input name="val2" ng-model="val3" ng-disabled="" /> </td>
+                    <td><input name="val3" ng-model="val4" ng-disabled=""/></td>
+                    <td><input name="val4" ng-model="val5" ng-disabled=""/></td>
+                    <td><input name="val5" ng-model="val6" ng-disabled=""/></td>
+                    <td><input name="val6" ng-model="val7" ng-disabled=""/></td>
+                    <td><input name="val6" ng-model="val8" ng-disabled=""/></td>
+                    <td><input name="val6" ng-model="val9" ng-disabled=""/></td>
+                    <td><input name="val6" ng-model="val10" ng-disabled=""/></td>
+                    <td><input name="val6" ng-model="val11" ng-disabled=""/></td>
+                    <td><input name="val6" ng-model="val12" ng-disabled=""/></td>
+                    <td><input name="val6" ng-model="val13" ng-disabled=""/></td>
+                    <td><input name="val6" ng-model="val14" ng-disabled=""/></td>
+                    <td><input name="val6" ng-model="val15" ng-disabled=""/></td>
+                    <td><input name="val6" ng-model="val16" ng-disabled=""/></td>
+                    <td><input name="val6" ng-model="val17" ng-disabled=""/></td>
+                    <td><input name="val6" ng-model="val18" ng-disabled=""/></td>
+                    <td><input name="val6" ng-model="val19" ng-disabled=""/></td>
+                    <td><input name="val6" ng-model="val20" ng-disabled=""/></td>
+                    <td><input name="val6" ng-model="val21" ng-disabled=""/></td>
+                    <td><input name="val6" ng-model="val22" ng-disabled=""/></td>
+                    <td >
+                        <div class="buttons">
+                            <button class="btn btn-primary" ng-click="editEmployee($index)">Edit</button>
+                            <button class="btn btn-danger" ng-click="deleteEmployee($index)">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+                <br>
+           &lt;!&ndash; <input type="submit" class="btn btn-primary" value="Submit" ng-click="submitTable(table)" />&ndash;&gt;
+                <button  class="btn btn-primary" ng-click="submitTable(table)">Submit</button>
+            </form>-->
+
+
+            <table id="mytable" class="table table-bordered">
+
+                <tr>
+
+
+
+                </tr>
+                <tbody>
+                <tr>
+                    <td style="width:5%;">Weight</td>
+                    <td><input name="weight" ng-model="summaryData.weight"  ng-disabled=""/> </td>
+                </tr>
+                <tr>
+                    <td style="width:10%;">CMP</td>
+                    <td><input name="cmp" ng-model="summaryData.cmp" ng-disabled=""/> </td>
+                </tr>
+                <tr>
+                    <td style="width:15%;">M Cap</td>
+                    <td><input name="val3" ng-model="val4" ng-disabled=""/></td>
+                </tr>
+
+                <tr class="headborder">
+                    <th scope="col" colspan="3">PAT</th>
+                </tr>
+
+                <tr>
+                    <td style="width:10%;">FY 2017</td>
+                    <td><input name="val4" ng-model="val5" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <td style="width:10%;">FY 2018</td>
+                    <td><input name="val5" ng-model="val6" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <td style="width:15%;">FY 2019</td>
+                    <td><input name="val6" ng-model="val7" ng-disabled=""/></td>
+                </tr>
+
+                <tr class="headborder">
+                    <th scope="col" colspan="3">P/E</th>
+                </tr>
+
+                <tr>
+                    <td style="width:15%;">FY 2017</td>
+                    <td><input name="val6" ng-model="val8" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <td style="width:15%;">FY 2018</td>
+                    <td><input name="val6" ng-model="val9" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <td style="width:15%;">FY 2019</td>
+                    <td><input name="val6" ng-model="val10" ng-disabled=""/></td>
+                </tr>
+
+                <tr class="headborder">
+                    <th scope="col" colspan="3">RoE</th>
+                </tr>
+
+                <tr>
+                    <td style="width:15%;">FY 2018</td>
+                    <td><input name="val6" ng-model="val11" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <td style="width:15%;">FY 2019</td>
+                    <td><input name="val6" ng-model="val12" ng-disabled=""/></td>
+                </tr>
+
+                <tr class="headborder">
+                    <th scope="col" colspan="3">D/E</th>
+                </tr>
+
+                <tr>
+                    <td style="width:15%;">FY 18</td>
+                    <td><input name="val6" ng-model="val13" ng-disabled=""/></td>
+                </tr>
+
+                <tr class="headborder">
+                    <th scope="col" colspan="2">PAT Growth</th>
+                </tr>
+
+                <tr>
+                    <td style="width:15%;">FY 2018</td>
+                    <td><input name="val6" ng-model="val14" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <td style="width:15%;">FY 2019</td>
+                    <td><input name="val6" ng-model="val15" ng-disabled=""/></td>
+                </tr>
+
+
+                <tr class="headborder">
+                    <th scope="col" colspan="2">Portfolio P/E</th>
+                </tr>
+
+                <tr>
+                    <td style="width:15%;">FY 2017</td>
+                    <td><input name="val6" ng-model="val16" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <td style="width:15%;">FY 2018</td>
+                    <td><input name="val6" ng-model="val17" ng-disabled=""/></td>
+                </tr>
+
+                <tr class="headborder">
+                    <th scope="col" colspan="2">Earnings Gr</th>
+                </tr>
+
+
+                <tr>
+                    <td style="width:15%;">FY 2018</td>
+                    <td><input name="val6" ng-model="val18" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <td style="width:15%;">FY 2019</td>
+                    <td><input name="val6" ng-model="val19" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <td style="width:15%;">Wt. Avg Mcap</td>
+                    <td><input name="val6" ng-model="val20" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <td style="width:15%;">RoE</td>
+                    <td><input name="val6" ng-model="val21" ng-disabled=""/></td>
+                </tr>
+
+                <tr class="headborder">
+                    <th scope="col" colspan="2">PEG - FY 18</th>
+                </tr>
+
+
+                <tr>
+                    <td style="width:15%;">O / J</td>
+                    <td><input name="val6" ng-model="val22" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <th style="width:15%;">PEG</th>
+                    <td><input name="val6" ng-model="val22" ng-disabled=""/></td>
+                </tr>
+
+                </tbody>
+            </table>
+
+            <button  class="btn btn-primary" ng-click="submitTable(table)">Submit</button>
+
+        </dd>
+
 
 	</dl>
 
