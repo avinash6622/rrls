@@ -55,6 +55,17 @@ div.scrollmenu {
 				{{strategyMapping.strategyMaster.strategyName}}</div>
 
 		</dd>
+		<dt>
+			<span>Contact Details</span>
+		</dt>
+		<dd>
+			<span>
+				{{vm.opportunityMaster.opportunityMasterContact.name}}</br>
+				{{vm.opportunityMaster.opportunityMasterContact.designation}}</br>
+				{{vm.opportunityMaster.opportunityMasterContact.email}}</br>
+				{{vm.opportunityMaster.opportunityMasterContact.contactnum}}</span>
+
+		</dd>
 
 		<!--   <dt ng-show="vm.opportunityMaster.htmlContent"><span>Document</span></dt>
         <dd ng-show="vm.opportunityMaster.htmlContent">
@@ -208,29 +219,29 @@ div.scrollmenu {
 			<button class="btn btn-danger"  ng-click="vm.approveFile('Wait Listed')"
 				ng-disabled="" has-authority="ROLE_CIO" vm.isSaving>Wait Listed</button></dd></dd>
 	
-        <dt>
+        <dt has-authority="ROLE_RA">
             <span>Select File Format</span>
         </dt>
 
 
-        <dd>
+        <dd has-authority="ROLE_RA">
             <select ng-model="selitem" ng-change="getselectval()">
                 <option ng-repeat="x in fileformat">{{x}}</option>
             </select>
         </dd>
 
-        <dt>
+        <dt has-authority="ROLE_RA">
             <span>Description</span>
         </dt>
-        <dd>
+        <dd has-authority="ROLE_RA">
             <input type="text" class="col-sm-6" id="fileid" name="fileid"
                    ng-model="vm.uploadfileName" />
         </dd>
 
-		<dt>
+		<dt has-authority="ROLE_RA">
 			<span>Upload</span>
 		</dt>
-		<dd>
+		<dd has-authority="ROLE_RA">
 			<div class="form-group">
 				<input type="file" ngf-select="vm.selectFile($file)" name="file"
 					id="file_upload" ngf-pattern=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx" accept=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx"

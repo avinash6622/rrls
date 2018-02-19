@@ -260,6 +260,7 @@ public class OpportunityMasterResource {
 		System.out.println(opportunityMasters.getSelectedStrategyMaster());
 		if(!opportunityMasters.getSelectedStrategyMaster().isEmpty()){
 		strategyMappingRepository.delete(strategyMappings);}
+		//opportunityMasters.setStrategyMappings()
 		if(!opportunityMasters.getSelectedStrategyMaster().isEmpty()){
 
 		for(StrategyMaster sm:opportunityMasters.getSelectedStrategyMaster())
@@ -270,21 +271,8 @@ public class OpportunityMasterResource {
 			strategyMappingRepository.save(strategyMapping);
 
 		}}
-		/*
-		 * if (strategyMasterId.getId() == null) { return
-		 * createOpportunityMaster(oppCode, oppName, oppDescription,
-		 * strategyMasterId, null, fileUpload); }
-		 */
-		/*OpportunityMaster opportunityMasters = new OpportunityMaster();
-		//opportunityMasters.setOppCode(oppCode);
-		opportunityMasters.setOppName(oppName);
-		opportunityMasters.setOppDescription(oppDescription);
-		opportunityMasters.setStrategyMasterId(strategyMasterId);
-		opportunityMasters.setMasterName(masterName);*/
-		/*
-		 * opportunityMasters.setFileName(fileUpload.getOriginalFilename());
-		 * opportunityMasters.setData(fileUpload.getBytes());
-		 */
+		opportunityMasterContactRepository.save(opportunityMasters.getOpportunityMasterContact());
+		
 		OpportunityMaster result = opportunityMasterRepository.save(opportunityMasters);
 		return ResponseEntity.ok()
 				.headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, result.getId().toString()))
@@ -530,12 +518,9 @@ public class OpportunityMasterResource {
 		OpportunityMaster opportunityMaster = opportunityMasterRepository.findOne(id);
 		List<FileUpload> fileUploads = fileUploadRepository.findByOpportunityMasterId(opportunityMaster);
 		List<StrategyMapping> strategyMappings = strategyMappingRepository.findByOpportunityMaster(opportunityMaster);
-		opportunityMaster.setStrategyMapping(strategyMappings);
-        System.out.println("MASTER---->"+opportunityMaster);
-		OpportunityMasterContact opportunityMasterContact = opportunityMasterContactRepository.findByOpportunityMasterId(opportunityMaster);
-        System.out.println("CONTACT--->"+opportunityMasterContact);
-		opportunityMaster.setOpportunityMasterContact(opportunityMasterContact);
-        System.out.println("OPPPPPPPPP"+opportunityMaster);
+		opportunityMaster.setStrategyMapping(strategyMappings);       
+		OpportunityMasterContact opportunityMasterContact = opportunityMasterContactRepository.findByOpportunityMasterId(opportunityMaster);        
+		opportunityMaster.setOpportunityMasterContact(opportunityMasterContact);       
 		List<FileUploadComments> fileComments = fileUploadCommentsRepository.findByOpportunityMaster(opportunityMaster);
 		opportunityMaster.setFileUploadCommentList(fileComments);
 		if (!fileUploads.isEmpty()) {
@@ -545,7 +530,7 @@ public class OpportunityMasterResource {
 				opportunityMaster.setFileUploads(fileUploads);
 				String inputfilepath = fm.getFileData();
 
-				opportunityMaster.setHtmlContent(getHTMLContent(inputfilepath));
+				//opportunityMaster.setHtmlContent(getHTMLContent(inputfilepath));
 				}
 
 			} catch (Exception e) {
