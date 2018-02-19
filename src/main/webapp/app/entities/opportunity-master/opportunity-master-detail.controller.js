@@ -24,6 +24,8 @@
         vm.aStatus='';
         /*vm.additionalFile=additionalFile;*/
         vm.addFileName='';
+        vm.summaryData='';
+      //  vm.submiTable=submitTable;
 
 
          console.log("file---->",vm.opportunityMaster.fileUploads);
@@ -64,19 +66,25 @@
             console.log("form submitted:"+angular.toJson($scope.empoyees ));
         }*/
 
-        $scope.submitTable = function(tablevalues) {
-            // $http.post('/url', tablevalues)
-            //     .success(function(data, status) {
 
-            //     })
-            //     .error(function(data, status) {
 
-            //     });
 
-            console.log(summaryData);
-           /* $scope.tableval = tablevalues;
-            console.log($scope.tableval);*/
+        $scope.submitTable = function() {
+            console.log("fddfdfb", $scope.summaryData);
+
+            var tableValue = $scope.summaryData;
+
+            console.log("bdsfjhj"+tableValue);
+
+            OpportunityMaster.summarydatavalues(tableValue, function (resp) {
+                console.log(resp);
+            }, function (err) {
+                console.log(err);
+            });
+
         }
+
+
 
         $scope.open = function (status) {
 
@@ -123,7 +131,14 @@
 
         };
 
+    /*    function submitTable()
+        {
 
+
+          console.log(summaryData.bWeight);
+
+
+        }*/
 
         function load() {
 

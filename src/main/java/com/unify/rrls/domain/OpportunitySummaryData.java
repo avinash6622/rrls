@@ -19,9 +19,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Table(name = "opportunity_summary_data")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class OpportunitySummaryData  implements Serializable {
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -29,138 +29,146 @@ public class OpportunitySummaryData  implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private Long id;
-	
+
 	@Column(name = "b_weight")
 	private Double bWeight;
-	
+
 	@Column(name = "cmp")
 	private Double cmp;
-	
+
 	@Column(name = "m_cap")
 	private Double marketCap;
-	
+
 	@Column(name = "pat_first_year")
 	private Double patFirstYear;
-	
+
 	@Column(name = "pat_second_year")
 	private Double patSecondYear;
-	
+
 	@Column(name = "pat_third_year")
 	private Double patThirdYear;
-	
+
 	@Column(name = "pat_fourth_year")
 	private Double patFourthYear;
-	
+
 	@Column(name = "pat_fifth_year")
 	private Double patFifthYear;
-	
+
 	@Column(name = "pe_first_year")
 	private Double peFirstYear;
-	
+
 	@Column(name = "pe_second_year")
 	private Double peSecondYear;
-	
+
 	@Column(name = "pe_third_year")
 	private Double peThirdYear;
-	
+
 	@Column(name = "pe_fourth_year")
 	private Double peFourthYear;
-	
+
 	@Column(name = "pe_fifth_year")
 	private Double peFifthYear;
-	
+
 	@Column(name = "roe_first_year")
 	private Double roeFirstYear;
-	
+
 	@Column(name = "roe_second_year")
 	private Double roeSecondYear;
-	
+
 	@Column(name = "roe_third_year")
 	private Double roeThirdYear;
-	
+
 	@Column(name = "roe_fourth_year")
 	private Double roeFourthYear;
-	
+
 	@Column(name = "roe_fifth_year")
 	private Double roeFifthYear;
-	
+
 	@Column(name = "de_first_year")
 	private Double deFirstYear;
-	
+
 	@Column(name = "de_second_year")
 	private Double deSecondYear;
-	
+
 	@Column(name = "de_third_year")
 	private Double deThirdColour;
-	
+
 	@Column(name = "de_fourth_year")
 	private Double deFourthYear;
-	
+
 	@Column(name = "de_fifth_year")
 	private Double deFifthYear;
-	
+
 	@Column(name = "pat_growth_first")
 	private Double patGrowthFirst;
-	
+
 	@Column(name = "pat_growth_second")
 	private Double patGrowthSecond;
-	
+
 	@Column(name = "pat_growth_third")
 	private Double patGrowthThird;
-	
+
 	@Column(name = "pat_growth_fourth")
 	private Double patGrowthFourth;
-	
+
 	@Column(name = "pat_growth_fifth")
 	private Double patGrowthFifth;
-	
+
 	@Column(name = "port_pe_first")
 	private Double portPeFirst;
-	
+
 	@Column(name = "port_pe_second")
 	private Double portPeSecond;
-	
+
 	@Column(name = "port_pe_third")
 	private Double portPeThird;
-	
+
 	@Column(name = "port_pe_fourth")
 	private Double portPeFourth;
-	
+
 	@Column(name = "port_pe_fifth")
 	private Double portPeFifth;
-	
+
 	@Column(name = "earnings_first")
 	private Double earningsFirst;
-	
+
 	@Column(name = "earnings_second")
 	private Double earningsSecond;
-	
+
 	@Column(name = "earnings_third")
 	private Double earningsThird;
-	
+
 	@Column(name = "earnings_fourth")
 	private Double earningsFourth;
-	
+
 	@Column(name = "earnings_fifth")
 	private Double earningsFifth;
-	
+
 	@Column(name = "wt_avg_cap")
 	private Double wtAvgCap;
-	
+
 	@Column(name = "roe")
 	private Double roe;
-	
+
 	@Column(name = "peg_oj")
 	private Double pegOj;
-	
+
 	@Column(name = "peg_year_peg")
 	private Double pegYearPeg;
-	
-	/*@OneToOne
+
+	@OneToOne
 	@JoinColumn(name = "opp_master")
 	private OpportunityMaster opportunityMaster;
-*/
-	public Long getId() {
+
+    public OpportunityMaster getOpportunityMaster() {
+        return opportunityMaster;
+    }
+
+    public void setOpportunityMaster(OpportunityMaster opportunityMaster) {
+        this.opportunityMaster = opportunityMaster;
+    }
+
+    public Long getId() {
 		return id;
 	}
 
@@ -511,7 +519,7 @@ public class OpportunitySummaryData  implements Serializable {
 	public void setOpportunityMaster(OpportunityMaster opportunityMaster) {
 		this.opportunityMaster = opportunityMaster;
 	}*/
-	
+
 	 @Override
 	    public boolean equals(Object o) {
 	        if (this == o) {
@@ -532,5 +540,52 @@ public class OpportunitySummaryData  implements Serializable {
 	        return Objects.hashCode(getId());
 	    }
 
-	
+    @Override
+    public String toString() {
+        return "OpportunitySummaryData{" +
+            "id=" + id +
+            ", bWeight=" + bWeight +
+            ", cmp=" + cmp +
+            ", marketCap=" + marketCap +
+            ", patFirstYear=" + patFirstYear +
+            ", patSecondYear=" + patSecondYear +
+            ", patThirdYear=" + patThirdYear +
+            ", patFourthYear=" + patFourthYear +
+            ", patFifthYear=" + patFifthYear +
+            ", peFirstYear=" + peFirstYear +
+            ", peSecondYear=" + peSecondYear +
+            ", peThirdYear=" + peThirdYear +
+            ", peFourthYear=" + peFourthYear +
+            ", peFifthYear=" + peFifthYear +
+            ", roeFirstYear=" + roeFirstYear +
+            ", roeSecondYear=" + roeSecondYear +
+            ", roeThirdYear=" + roeThirdYear +
+            ", roeFourthYear=" + roeFourthYear +
+            ", roeFifthYear=" + roeFifthYear +
+            ", deFirstYear=" + deFirstYear +
+            ", deSecondYear=" + deSecondYear +
+            ", deThirdColour=" + deThirdColour +
+            ", deFourthYear=" + deFourthYear +
+            ", deFifthYear=" + deFifthYear +
+            ", patGrowthFirst=" + patGrowthFirst +
+            ", patGrowthSecond=" + patGrowthSecond +
+            ", patGrowthThird=" + patGrowthThird +
+            ", patGrowthFourth=" + patGrowthFourth +
+            ", patGrowthFifth=" + patGrowthFifth +
+            ", portPeFirst=" + portPeFirst +
+            ", portPeSecond=" + portPeSecond +
+            ", portPeThird=" + portPeThird +
+            ", portPeFourth=" + portPeFourth +
+            ", portPeFifth=" + portPeFifth +
+            ", earningsFirst=" + earningsFirst +
+            ", earningsSecond=" + earningsSecond +
+            ", earningsThird=" + earningsThird +
+            ", earningsFourth=" + earningsFourth +
+            ", earningsFifth=" + earningsFifth +
+            ", wtAvgCap=" + wtAvgCap +
+            ", roe=" + roe +
+            ", pegOj=" + pegOj +
+            ", pegYearPeg=" + pegYearPeg +
+            '}';
+    }
 }

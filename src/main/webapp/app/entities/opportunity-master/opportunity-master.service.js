@@ -111,9 +111,22 @@
                 }
 
 
+            },
+            'summarydatavalues':{
+                url:'api/opportunity-summary',
+                method:'POST',
+                transformResponse:function(data){
+                    console.log(data);
+                }
+            },
+
+            'getsummarydata':{
+                url:'api//opportunity-summary/getdata',
+                method:'GET',
+                transformResponse:function(data){
+                    console.log(data);
+                }
             }
-
-
 
 
 
