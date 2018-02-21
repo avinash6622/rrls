@@ -4,9 +4,9 @@
         .module('researchRepositoryLearningSystemApp')
         .factory('OpportunityMaster', OpportunityMaster);
 
-    OpportunityMaster.$inject = ['$resource', 'DateUtils'];
+    OpportunityMaster.$inject = ['$resource', 'DateUtils','$window'];
 
-    function OpportunityMaster ($resource, DateUtils) {
+    function OpportunityMaster ($resource, DateUtils,$window) {
 
         // alert("hii");
         var resourceUrl =  'api/opportunity-masters/:id/:inputData';
@@ -106,7 +106,7 @@
                 transformResponse: function(data){
 
                     console.log(data);
-
+                    return data;
 
                 }
 

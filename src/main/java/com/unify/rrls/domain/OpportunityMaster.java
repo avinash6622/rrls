@@ -63,7 +63,7 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	@JoinColumn(name = "master_name")
 	private OpportunityName masterName;
 
-
+	
  /*   @OneToOne(fetch = FetchType.LAZY,
         cascade =  CascadeType.ALL,
         mappedBy = "OpportunityMasterID")
@@ -155,7 +155,7 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
     public void setOpportunityMasterContact(OpportunityMasterContact opportunityMasterContact) {
         this.opportunityMasterContact = opportunityMasterContact;
     }
-
+    
     @Override
 	public boolean equals(Object o) {
 		if (this == o) {
