@@ -3,10 +3,10 @@
 
     angular
         .module('researchRepositoryLearningSystemApp')
-        .controller('HomeController', HomeController);    
- 
+        .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'OpportunityMaster','ParseLinks', 'paginationConstants', '$state']; 
+
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'OpportunityMaster','ParseLinks', 'paginationConstants', '$state'];
 
     function HomeController ($scope, Principal, LoginService, OpportunityMaster,ParseLinks,paginationConstants, $state) {
         var vm = this;

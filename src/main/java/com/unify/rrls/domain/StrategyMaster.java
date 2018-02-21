@@ -115,6 +115,7 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
     public void setDateActive(LocalDate dateActive) {
         this.dateActive = dateActive;
     }
+   
 
  /*public String getCreatedBy() {
         return createdBy;
