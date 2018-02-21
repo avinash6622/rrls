@@ -15,7 +15,7 @@
         vm.isAuthenticated = null;
         vm.login = LoginService.open;
         vm.register = register;
-        
+
         vm.opportunityMasters = [];
         vm.loadPage = loadPage;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
@@ -26,7 +26,7 @@
         vm.predicate = 'id';
         vm.reset = reset;
         vm.reverse = true;
-        
+
         $scope.$on('authenticationSuccess', function() {
             getAccount();
         });
@@ -42,7 +42,7 @@
         function register () {
             $state.go('register');
         }
-        
+
         loadAll();
 
         function loadAll () {
@@ -70,7 +70,21 @@
             function onError(error) {
                 AlertService.error(error.data.message);
             }
-            
+
+        OpportunityMaster.getsummarydata({
+
+        },onSuccess1,onError1)
+
+            function onSuccess1(data)
+            {
+                console.log("value---->",data);
+            }
+
+            function onError1()
+            {
+                alert("error");
+            }
+
         }
         function reset () {
             vm.page = 0;
@@ -91,7 +105,7 @@
     angular
         .module('researchRepositoryLearningSystemApp')
         .controller('OpportunityMasterController', OpportunityMasterController);
-    	
+
 
     OpportunityMasterController.$inject = ['$scope','OpportunityMaster', 'Principal', 'LoginService', 'ParseLinks', 'AlertService', 'paginationConstants'];
 
@@ -109,7 +123,7 @@
         vm.predicate = 'id';
         vm.reset = reset;
         vm.reverse = true;
-        
+
         vm.account = null;
         vm.isAuthenticated = null;
         vm.login = LoginService.open;
