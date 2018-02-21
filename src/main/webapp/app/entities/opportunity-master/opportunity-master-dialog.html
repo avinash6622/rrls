@@ -75,7 +75,7 @@
 
         <div class="form-group row">
             <div class="col-xs-4">
-                <label for="field_oppcontactName">Contact Details</label></br>
+                <label for="field_oppcontactName">Company Contact Details</label></br>
                 <label for="field_oppcontactName">Name</label>
                 <input class="form-control" name="field_oppcontactName" id="field_oppcontactName" type="text" placeholder="Name" ng-model="vm.opportunityMaster.opportunityMasterContact.name">
             </div>
@@ -98,6 +98,159 @@
                 <input class="form-control" name="field_oppcontactNo" id="field_oppcontactNo" type="text" placeholder="Contact Number" ng-model="vm.opportunityMaster.opportunityMasterContact.contactnum">
             </div>
         </div>
+
+
+        <div  class="form-group">
+
+            <label class="control-label">Summary Data</label>
+            <table id="mytable" class="table table-bordered">
+
+                <tr>
+
+
+
+                </tr>
+                <tbody>
+                <tr>
+                    <td style="width:5%;">Weight</td>
+                    <td><input name="weight" ng-model="summaryData.bWeight"  ng-disabled=""/> </td>
+                </tr>
+                <tr>
+                    <td style="width:10%;">CMP</td>
+                    <td><input name="cmp" ng-model="summaryData.cmp" ng-disabled=""/> </td>
+                </tr>
+                <tr>
+                    <td style="width:15%;">M Cap</td>
+                    <td><input name="marketCap" ng-model="summaryData.marketCap" ng-disabled=""/></td>
+                </tr>
+
+                <tr class="headborder">
+                    <th scope="col" colspan="3">PAT</th>
+                </tr>
+
+                <tr>
+                    <td style="width:10%;">FY 2017</td>
+                    <td><input name="patSecondYear" ng-model="summaryData.patSecondYear" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <td style="width:10%;">FY 2018</td>
+                    <td><input name="patThirdYear" ng-model="summaryData.patThirdYear" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <td style="width:15%;">FY 2019</td>
+                    <td><input name="patFourthYear" ng-model="summaryData.patFourthYear" ng-disabled=""/></td>
+                </tr>
+
+                <tr class="headborder">
+                    <th scope="col" colspan="3">P/E</th>
+                </tr>
+
+                <tr>
+                    <td style="width:15%;">FY 2017</td>
+                    <td><input name="peSecondYear" ng-model="summaryData.peSecondYear" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <td style="width:15%;">FY 2018</td>
+                    <td><input name="peThirdYear" ng-model="summaryData.peThirdYear" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <td style="width:15%;">FY 2019</td>
+                    <td><input name="peFourthYear" ng-model="summaryData.peFourthYear" ng-disabled=""/></td>
+                </tr>
+
+                <tr class="headborder">
+                    <th scope="col" colspan="3">RoE</th>
+                </tr>
+
+                <tr>
+                    <td style="width:15%;">FY 2018</td>
+                    <td><input name="roeThirdYear" ng-model="summaryData.roeThirdYear" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <td style="width:15%;">FY 2019</td>
+                    <td><input name="roeFourthYear" ng-model="summaryData.roeFourthYear" ng-disabled=""/></td>
+                </tr>
+
+                <tr class="headborder">
+                    <th scope="col" colspan="3">D/E</th>
+                </tr>
+
+                <tr>
+                    <td style="width:15%;">FY 18</td>
+                    <td><input name="deThirdColour" ng-model="summaryData.deThirdColour" ng-disabled=""/></td>
+                </tr>
+
+                <tr class="headborder">
+                    <th scope="col" colspan="2">PAT Growth</th>
+                </tr>
+
+                <tr>
+                    <td style="width:15%;">FY 2018</td>
+                    <td><input name="patGrowthThird" ng-model="summaryData.patGrowthThird" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <td style="width:15%;">FY 2019</td>
+                    <td><input name="patGrowthFourth" ng-model="summaryData.patGrowthFourth" ng-disabled=""/></td>
+                </tr>
+
+
+                <tr class="headborder">
+                    <th scope="col" colspan="2">Portfolio P/E</th>
+                </tr>
+
+                <tr>
+                    <td style="width:15%;">FY 2017</td>
+                    <td><input name="portPeSecond" ng-model="summaryData.portPeSecond" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <td style="width:15%;">FY 2018</td>
+                    <td><input name="portPeThird" ng-model="summaryData.portPeThird" ng-disabled=""/></td>
+                </tr>
+
+                <tr class="headborder">
+                    <th scope="col" colspan="2">Earnings Gr</th>
+                </tr>
+
+
+                <tr>
+                    <td style="width:15%;">FY 2018</td>
+                    <td><input name="earningsThird" ng-model="summaryData.earningsThird" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <td style="width:15%;">FY 2019</td>
+                    <td><input name="earningsFourth" ng-model="summaryData.earningsFourth" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <td style="width:15%;">Wt. Avg Mcap</td>
+                    <td><input name="wtAvgCap" ng-model="summaryData.wtAvgCap" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <td style="width:15%;">RoE</td>
+                    <td><input name="roe" ng-model="summaryData.roe" ng-disabled=""/></td>
+                </tr>
+
+                <tr class="headborder">
+                    <th scope="col" colspan="2">PEG - FY 18</th>
+                </tr>
+
+
+                <tr>
+                    <td style="width:15%;">O / J</td>
+                    <td><input name="pegOj" ng-model="summaryData.pegOj" ng-disabled=""/></td>
+                </tr>
+                <tr>
+                    <th style="width:15%;">PEG</th>
+                    <td><input name="pegYearPeg" ng-model="summaryData.pegYearPeg" ng-disabled=""/></td>
+                </tr>
+
+                </tbody>
+            </table>
+
+
+        </div>
+
+
+
 
     <!--    <div class="form-group">
             <label class="control-label" for="field_oppcontact">Contact Details</label>
