@@ -121,10 +121,18 @@
             },
 
             'getsummarydata':{
-                url:'api//opportunity-summary/getdata',
+                url:'api/opportunity-summary/getdata/',
                 method:'GET',
                 transformResponse:function(data){
-                    console.log(data);
+                    console.log("hfsjhhdw---->",data);
+
+
+                    var copy = angular.copy(data);
+
+                    return angular.toJson(copy);
+
+
+
                 }
             }
 

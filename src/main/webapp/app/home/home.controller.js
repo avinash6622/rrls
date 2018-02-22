@@ -51,40 +51,36 @@
                 size: vm.itemsPerPage,
                 sort: sort()
             }, onSuccess, onError);
-            function sort() {
-                var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
-                if (vm.predicate !== 'id') {
-                    result.push('id');
-                }
-                return result;
+
+
+
+        OpportunityMaster.getsummarydata(function (resp){
+            console.log(resp);
+
+         },function (err) {
+            console.log(err);
+        });
+
+        }
+
+        function sort() {
+            var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
+            if (vm.predicate !== 'id') {
+                result.push('id');
             }
+            return result;
+        }
 
-            function onSuccess(data, headers) {
-                vm.links = ParseLinks.parse(headers('link'));
-                vm.totalItems = headers('X-Total-Count');
-                for (var i = 0; i < data.length; i++) {
-                    vm.opportunityMasters.push(data[i]);
-                }
+        function onSuccess(data, headers) {
+            vm.links = ParseLinks.parse(headers('link'));
+            vm.totalItems = headers('X-Total-Count');
+            for (var i = 0; i < data.length; i++) {
+                vm.opportunityMasters.push(data[i]);
             }
+        }
 
-            function onError(error) {
-                AlertService.error(error.data.message);
-            }
-
-        OpportunityMaster.getsummarydata({
-
-        },onSuccess1,onError1)
-
-            function onSuccess1(data)
-            {
-                console.log("value---->",data);
-            }
-
-            function onError1()
-            {
-                alert("error");
-            }
-
+        function onError(error) {
+            AlertService.error(error.data.message);
         }
         function reset () {
             vm.page = 0;

@@ -156,17 +156,22 @@ public class OpportunitySummaryData  implements Serializable {
 	@Column(name = "peg_year_peg")
 	private Double pegYearPeg;
 
-	@OneToOne
+
+
+    @OneToOne
 	@JoinColumn(name = "opp_master")
-	private OpportunityMaster opportunityMaster;
+	private OpportunityMaster opportunityMasterid;
 
-    public OpportunityMaster getOpportunityMaster() {
-        return opportunityMaster;
+
+    public OpportunityMaster getOpportunityMasterid() {
+        return opportunityMasterid;
     }
 
-    public void setOpportunityMaster(OpportunityMaster opportunityMaster) {
-        this.opportunityMaster = opportunityMaster;
+    public void setOpportunityMasterid(OpportunityMaster opportunityMasterid) {
+        this.opportunityMasterid = opportunityMasterid;
     }
+
+
 
     public Long getId() {
 		return id;

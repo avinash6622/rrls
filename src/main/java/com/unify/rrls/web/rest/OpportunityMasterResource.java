@@ -104,11 +104,12 @@ public class OpportunityMasterResource {
 	private final StrategyMasterRepository strategyMasterRepository;
 	private final AdditionalFileUploadRepository additionalFileUploadRepository;
 	private final OpportunityMasterContactRepository opportunityMasterContactRepository;
+	private final OpportunitySummaryDataRepository opportunitySummaryDataRepository;
 
 	public OpportunityMasterResource(OpportunityMasterRepository opportunityMasterRepository,
 			FileUploadRepository fileUploadRepository, FileUploadCommentsRepository fileUploadCommentsRepository,
 			StrategyMappingRepository strategyMappingRepository,StrategyMasterRepository strategyMasterRepository,
-			AdditionalFileUploadRepository additionalFileUploadRepository,OpportunityMasterContactRepository opportunityMasterContactRepository) {
+			AdditionalFileUploadRepository additionalFileUploadRepository,OpportunityMasterContactRepository opportunityMasterContactRepository,OpportunitySummaryDataRepository opportunitySummaryDataRepository) {
 		this.opportunityMasterRepository = opportunityMasterRepository;
 		this.fileUploadRepository = fileUploadRepository;
 		this.fileUploadCommentsRepository = fileUploadCommentsRepository;
@@ -116,6 +117,7 @@ public class OpportunityMasterResource {
 		this.strategyMasterRepository=strategyMasterRepository;
 		this.additionalFileUploadRepository=additionalFileUploadRepository;
 		this.opportunityMasterContactRepository=opportunityMasterContactRepository;
+		this.opportunitySummaryDataRepository=opportunitySummaryDataRepository;
 	}
 
 	/**
@@ -214,13 +216,40 @@ public class OpportunityMasterResource {
 
 		OpportunityMaster result = opportunityMasterRepository.save(opportunityMaster);
 
+
 		opportunityMasterContact.setName(opportunityMaster.getOpportunityMasterContact().getName());
 		opportunityMasterContact.setDesignation(opportunityMaster.getOpportunityMasterContact().getDesignation());
         opportunityMasterContact.setEmail(opportunityMaster.getOpportunityMasterContact().getEmail());
         opportunityMasterContact.setContactnum(opportunityMaster.getOpportunityMasterContact().getContactnum());
         opportunityMasterContact.setOpportunityMasterId(result);
-
         opportunityMasterContactRepository.save(opportunityMasterContact);
+        OpportunitySummaryData opportunitySummaryData = new OpportunitySummaryData();
+        opportunitySummaryData.setbWeight(opportunityMaster.getOpportunitySummaryData().getbWeight());
+        opportunitySummaryData.setCmp(opportunityMaster.getOpportunitySummaryData().getCmp());
+        opportunitySummaryData.setMarketCap(opportunityMaster.getOpportunitySummaryData().getMarketCap());
+        opportunitySummaryData.setPatSecondYear(opportunityMaster.getOpportunitySummaryData().getPatSecondYear());
+        opportunitySummaryData.setPatThirdYear(opportunityMaster.getOpportunitySummaryData().getPatThirdYear());
+        opportunitySummaryData.setPatFourthYear(opportunityMaster.getOpportunitySummaryData().getPatFourthYear());
+        opportunitySummaryData.setPeSecondYear(opportunityMaster.getOpportunitySummaryData().getPeSecondYear());
+        opportunitySummaryData.setPeThirdYear(opportunityMaster.getOpportunitySummaryData().getPeThirdYear());
+        opportunitySummaryData.setPeFourthYear(opportunityMaster.getOpportunitySummaryData().getPeFourthYear());
+        opportunitySummaryData.setRoeThirdYear(opportunityMaster.getOpportunitySummaryData().getRoeThirdYear());
+        opportunitySummaryData.setRoeFourthYear(opportunityMaster.getOpportunitySummaryData().getRoeFourthYear());
+        opportunitySummaryData.setDeThirdColour(opportunityMaster.getOpportunitySummaryData().getDeThirdColour());
+        opportunitySummaryData.setPatGrowthThird(opportunityMaster.getOpportunitySummaryData().getPatGrowthThird());
+        opportunitySummaryData.setPatGrowthFourth(opportunityMaster.getOpportunitySummaryData().getPatGrowthFourth());
+        opportunitySummaryData.setPortPeSecond(opportunityMaster.getOpportunitySummaryData().getPortPeSecond());
+        opportunitySummaryData.setPortPeThird(opportunityMaster.getOpportunitySummaryData().getPortPeThird());
+        opportunitySummaryData.setEarningsThird(opportunityMaster.getOpportunitySummaryData().getEarningsThird());
+        opportunitySummaryData.setEarningsFourth(opportunityMaster.getOpportunitySummaryData().getEarningsFourth());
+        opportunitySummaryData.setWtAvgCap(opportunityMaster.getOpportunitySummaryData().getWtAvgCap());
+        opportunitySummaryData.setRoe(opportunityMaster.getOpportunitySummaryData().getRoe());
+        opportunitySummaryData.setPegOj(opportunityMaster.getOpportunitySummaryData().getPegOj());
+        opportunitySummaryData.setPegYearPeg(opportunityMaster.getOpportunitySummaryData().getPegYearPeg());
+        opportunitySummaryData.setOpportunityMasterid(result);
+        opportunitySummaryDataRepository.save(opportunitySummaryData);
+       /* result1.setOpportunityMaster(result);
+        opportunitySummaryDataRepository.save(result1);*/
 
 		for(StrategyMaster sm:opportunityMaster.getSelectedStrategyMaster())
 		{
@@ -272,7 +301,7 @@ public class OpportunityMasterResource {
 
 		}}
 		opportunityMasterContactRepository.save(opportunityMasters.getOpportunityMasterContact());
-		
+
 		OpportunityMaster result = opportunityMasterRepository.save(opportunityMasters);
 		return ResponseEntity.ok()
 				.headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, result.getId().toString()))
@@ -518,9 +547,11 @@ public class OpportunityMasterResource {
 		OpportunityMaster opportunityMaster = opportunityMasterRepository.findOne(id);
 		List<FileUpload> fileUploads = fileUploadRepository.findByOpportunityMasterId(opportunityMaster);
 		List<StrategyMapping> strategyMappings = strategyMappingRepository.findByOpportunityMaster(opportunityMaster);
-		opportunityMaster.setStrategyMapping(strategyMappings);       
-		OpportunityMasterContact opportunityMasterContact = opportunityMasterContactRepository.findByOpportunityMasterId(opportunityMaster);        
-		opportunityMaster.setOpportunityMasterContact(opportunityMasterContact);       
+		opportunityMaster.setStrategyMapping(strategyMappings);
+		OpportunityMasterContact opportunityMasterContact = opportunityMasterContactRepository.findByOpportunityMasterId(opportunityMaster);
+		opportunityMaster.setOpportunityMasterContact(opportunityMasterContact);
+		OpportunitySummaryData opportunitySummaryData = opportunitySummaryDataRepository.findByOpportunityMasterid(opportunityMaster);
+		opportunityMaster.setOpportunitySummaryData(opportunitySummaryData);
 		List<FileUploadComments> fileComments = fileUploadCommentsRepository.findByOpportunityMaster(opportunityMaster);
 		opportunityMaster.setFileUploadCommentList(fileComments);
 		if (!fileUploads.isEmpty()) {

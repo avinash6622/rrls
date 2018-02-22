@@ -38,13 +38,11 @@ public class OpportunitySummaryDataResource {
 
 	@PostMapping("/opportunity-summary")
 	@Timed
-	public ResponseEntity<OpportunitySummaryData> createOpportunitySummaryData(
+	public ResponseEntity<OpportunitySummaryData> updateOpportunitySummaryData(
 			@Valid @RequestBody OpportunitySummaryData opportunitySummaryData) throws URISyntaxException {
 		log.debug("REST request to save OpportunitySummaryData : {}", opportunitySummaryData);
-		if (opportunitySummaryData.getId() != null) {
-			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists",
-					"A new OpportunitySummaryData cannot already have an ID")).body(null);
-		}
+      //  System.out.println("opportunityMaster---->"+opportunityMaster);
+
 		OpportunitySummaryData result = opportunitySummaryDataRepository.save(opportunitySummaryData);
 		return ResponseEntity.created(new URI("/api/opportunity-summary/" + result.getId()))
 				.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
