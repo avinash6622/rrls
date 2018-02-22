@@ -25,6 +25,8 @@ div.scrollmenu {
     overflow: auto;
     white-space: nowrap;
 }
+
+
 </style>
 </head>
 </html>
@@ -119,8 +121,8 @@ div.scrollmenu {
                         <div class="panel-heading">
                           Presentation
                         </div>
-                        <div style="height:120px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
-                        <div class="panel-body" ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Presentation'}">
+                        <div style="height:200px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
+                        <div class="panel-body"  ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Presentation'}">
                             <a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
                             <b> - {{fileUploads.createdBy | capitalize}}</b> <span class="date sub-text">
 				   	          on {{fileUploads.createdDate | date :"MMM d, y h:mm:ss a"}}</span>
@@ -130,9 +132,9 @@ div.scrollmenu {
                 <div class="col-md-3">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Excel Module
+                            Excel Model
                         </div>
-                        <div style="height:120px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
+                        <div style="height:200px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
                         <div class="panel-body"   ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Excel module'}">
                             <a ng-click="vm.loadFileContent(fileUploads)">{{fileUploads.fileName}}</a>
                             <b> - {{fileUploads.createdBy | capitalize}}</b> <span class="date sub-text">
@@ -145,7 +147,7 @@ div.scrollmenu {
                         <div class="panel-heading">
                             Quarterly Updates
                         </div>
-                        <div style="height:120px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
+                        <div style="height:200px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
                         <div class="panel-body" ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Quarterly updates'}">
                             <a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
                             <b> - {{fileUploads.createdBy | capitalize}}</b> <span class="date sub-text">
@@ -159,7 +161,7 @@ div.scrollmenu {
                         <div class="panel-heading">
                             Miscellaneous
                         </div>
-                        <div style="height:120px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
+                        <div style="height:200px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
                         <div class="panel-body" ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Miscellaneous'}">
                             <a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
                             <b> - {{fileUploads.createdBy | capitalize}}</b> <span class="date sub-text">
@@ -212,11 +214,11 @@ div.scrollmenu {
 				<span class="hidden-sm-down">Cancel</span>
 			</button>
 		</dt>
-		<dd><button class="btn btn-success" ng-click="open('Approve')"
+		<dd><button class="btn btn-success" ng-click="open('Approved')"
 				ng-disabled="" has-authority="ROLE_CIO" vm.isSaving>Approve</button>
-			<button class="btn btn-warning" ng-click="vm.approveFile('Change Request')"
+			<button class="btn btn-warning" ng-click="open('Change Requested')"
 				ng-disabled="" has-authority="ROLE_CIO" vm.isSaving>Change Request</button>
-			<button class="btn btn-danger"  ng-click="vm.approveFile('Wait Listed')"
+			<button class="btn btn-danger"  ng-click="open('Wait Listed')"
 				ng-disabled="" has-authority="ROLE_CIO" vm.isSaving>Wait Listed</button></dd></dd>
 
         <dt has-authority="ROLE_RA">
@@ -255,9 +257,11 @@ div.scrollmenu {
 			<span>Comments</span>
 		</dt>
 		<dd>
+            <div style="height:250px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
 
 			<div class="actionBox"
 				ng-repeat="fileUploadComments in vm.opportunityMaster.fileUploadCommentList">
+
 				<div>
 					<div class="capitalize">
 						<b>{{fileUploadComments.createdBy}} </b>
@@ -266,13 +270,15 @@ div.scrollmenu {
 					<div class="date sub-text">on
 						{{fileUploadComments.createdDate | date :"MMM d, y h:mm:ss a"}}</div>
 				</div>
+                </div>
+            </div>
 
-			</div>
 			<textarea ng-model="vm.fileComments" name="comments"
 				id="field_comments" rows="4" cols="120"></textarea>
 			<br>
 			<button class="btn btn-primary" ng-click="vm.saveComment()"
 				ng-disabled="" vm.isSaving>Submit Comment</button>
+
 		</dd>
 
         <dt>
