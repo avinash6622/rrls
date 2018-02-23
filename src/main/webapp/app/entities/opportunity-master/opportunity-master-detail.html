@@ -25,6 +25,8 @@ div.scrollmenu {
     overflow: auto;
     white-space: nowrap;
 }
+
+
 </style>
 </head>
 </html>
@@ -119,8 +121,8 @@ div.scrollmenu {
                         <div class="panel-heading">
                           Presentation
                         </div>
-                        <div style="height:120px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
-                        <div class="panel-body" ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Presentation'}">
+                        <div style="height:200px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
+                        <div class="panel-body"  ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Presentation'}">
                             <a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
                             <b> - {{fileUploads.createdBy | capitalize}}</b> <span class="date sub-text">
 				   	          on {{fileUploads.createdDate | date :"MMM d, y h:mm:ss a"}}</span>
@@ -130,9 +132,9 @@ div.scrollmenu {
                 <div class="col-md-3">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Excel Module
+                            Excel Model
                         </div>
-                        <div style="height:120px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
+                        <div style="height:200px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
                         <div class="panel-body"   ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Excel module'}">
                             <a ng-click="vm.loadFileContent(fileUploads)">{{fileUploads.fileName}}</a>
                             <b> - {{fileUploads.createdBy | capitalize}}</b> <span class="date sub-text">
@@ -145,7 +147,7 @@ div.scrollmenu {
                         <div class="panel-heading">
                             Quarterly Updates
                         </div>
-                        <div style="height:120px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
+                        <div style="height:200px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
                         <div class="panel-body" ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Quarterly updates'}">
                             <a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
                             <b> - {{fileUploads.createdBy | capitalize}}</b> <span class="date sub-text">
@@ -159,7 +161,7 @@ div.scrollmenu {
                         <div class="panel-heading">
                             Miscellaneous
                         </div>
-                        <div style="height:120px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
+                        <div style="height:200px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
                         <div class="panel-body" ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Miscellaneous'}">
                             <a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
                             <b> - {{fileUploads.createdBy | capitalize}}</b> <span class="date sub-text">
@@ -212,11 +214,11 @@ div.scrollmenu {
 				<span class="hidden-sm-down">Cancel</span>
 			</button>
 		</dt>
-		<dd><button class="btn btn-success" ng-click="open('Approve')"
+		<dd><button class="btn btn-success" ng-click="open('Approved')"
 				ng-disabled="" has-authority="ROLE_CIO" vm.isSaving>Approve</button>
-			<button class="btn btn-warning" ng-click="vm.approveFile('Change Request')"
+			<button class="btn btn-warning" ng-click="open('Change Requested')"
 				ng-disabled="" has-authority="ROLE_CIO" vm.isSaving>Change Request</button>
-			<button class="btn btn-danger"  ng-click="vm.approveFile('Wait Listed')"
+			<button class="btn btn-danger"  ng-click="open('Wait Listed')"
 				ng-disabled="" has-authority="ROLE_CIO" vm.isSaving>Wait Listed</button></dd></dd>
 
         <dt has-authority="ROLE_RA">
@@ -255,9 +257,11 @@ div.scrollmenu {
 			<span>Comments</span>
 		</dt>
 		<dd>
+            <div style="height:250px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
 
 			<div class="actionBox"
 				ng-repeat="fileUploadComments in vm.opportunityMaster.fileUploadCommentList">
+
 				<div>
 					<div class="capitalize">
 						<b>{{fileUploadComments.createdBy}} </b>
@@ -266,17 +270,20 @@ div.scrollmenu {
 					<div class="date sub-text">on
 						{{fileUploadComments.createdDate | date :"MMM d, y h:mm:ss a"}}</div>
 				</div>
+                </div>
+            </div>
 
-			</div>
 			<textarea ng-model="vm.fileComments" name="comments"
 				id="field_comments" rows="4" cols="120"></textarea>
 			<br>
 			<button class="btn btn-primary" ng-click="vm.saveComment()"
 				ng-disabled="" vm.isSaving>Submit Comment</button>
+
 		</dd>
 
         <dt>
             <span>Summary Data</span>
+            <button class="btn btn-primary"  ng-click="ok()">Edit</button>
         </dt>
         <dd>
         <!--    <form id="empform" ng-submit="submitEmployee()">
@@ -374,15 +381,16 @@ div.scrollmenu {
                 <tbody>
                 <tr>
                     <td style="width:5%;">Weight</td>
-                    <td><input name="weight" ng-model="summaryData.bWeight"  ng-disabled=""/> </td>
+
+                    <td><input name="weight" ng-model="vm.opportunityMaster.opportunitySummaryData.bWeight" ng-disabled="isDisabled"/> </td>
                 </tr>
                 <tr>
                     <td style="width:10%;">CMP</td>
-                    <td><input name="cmp" ng-model="summaryData.cmp" ng-disabled=""/> </td>
+                    <td><input name="cmp" ng-model="vm.opportunityMaster.opportunitySummaryData.cmp" ng-disabled="isDisabled"/> </td>
                 </tr>
                 <tr>
                     <td style="width:15%;">M Cap</td>
-                    <td><input name="marketCap" ng-model="summaryData.marketCap" ng-disabled=""/></td>
+                    <td><input name="marketCap" ng-model="vm.opportunityMaster.opportunitySummaryData.marketCap" ng-disabled="isDisabled"/></td>
                 </tr>
 
                 <tr class="headborder">
@@ -391,15 +399,15 @@ div.scrollmenu {
 
                 <tr>
                     <td style="width:10%;">FY 2017</td>
-                    <td><input name="patSecondYear" ng-model="summaryData.patSecondYear" ng-disabled=""/></td>
+                    <td><input name="patSecondYear" ng-model="vm.opportunityMaster.opportunitySummaryData.patSecondYear" ng-disabled="isDisabled"/></td>
                 </tr>
                 <tr>
                     <td style="width:10%;">FY 2018</td>
-                    <td><input name="patThirdYear" ng-model="summaryData.patThirdYear" ng-disabled=""/></td>
+                    <td><input name="patThirdYear" ng-model="vm.opportunityMaster.opportunitySummaryData.patThirdYear" ng-disabled="isDisabled"></td>
                 </tr>
                 <tr>
                     <td style="width:15%;">FY 2019</td>
-                    <td><input name="patFourthYear" ng-model="summaryData.patFourthYear" ng-disabled=""/></td>
+                    <td><input name="patFourthYear" ng-model="vm.opportunityMaster.opportunitySummaryData.patFourthYear" ng-disabled="isDisabled"/></td>
                 </tr>
 
                 <tr class="headborder">
@@ -408,15 +416,15 @@ div.scrollmenu {
 
                 <tr>
                     <td style="width:15%;">FY 2017</td>
-                    <td><input name="peSecondYear" ng-model="summaryData.peSecondYear" ng-disabled=""/></td>
+                    <td><input name="peSecondYear" ng-model="vm.opportunityMaster.opportunitySummaryData.peSecondYear" ng-disabled="isDisabled"/></td>
                 </tr>
                 <tr>
                     <td style="width:15%;">FY 2018</td>
-                    <td><input name="peThirdYear" ng-model="summaryData.peThirdYear" ng-disabled=""/></td>
+                    <td><input name="peThirdYear" ng-model="vm.opportunityMaster.opportunitySummaryData.peThirdYear" ng-disabled="isDisabled"/></td>
                 </tr>
                 <tr>
                     <td style="width:15%;">FY 2019</td>
-                    <td><input name="peFourthYear" ng-model="summaryData.peFourthYear" ng-disabled=""/></td>
+                    <td><input name="peFourthYear" ng-model="vm.opportunityMaster.opportunitySummaryData.peFourthYear" ng-disabled="isDisabled"/></td>
                 </tr>
 
                 <tr class="headborder">
@@ -425,11 +433,11 @@ div.scrollmenu {
 
                 <tr>
                     <td style="width:15%;">FY 2018</td>
-                    <td><input name="roeThirdYear" ng-model="summaryData.roeThirdYear" ng-disabled=""/></td>
+                    <td><input name="roeThirdYear" ng-model="vm.opportunityMaster.opportunitySummaryData.roeThirdYear" ng-disabled="isDisabled"/></td>
                 </tr>
                 <tr>
                     <td style="width:15%;">FY 2019</td>
-                    <td><input name="roeFourthYear" ng-model="summaryData.roeFourthYear" ng-disabled=""/></td>
+                    <td><input name="roeFourthYear" ng-model="vm.opportunityMaster.opportunitySummaryData.roeFourthYear" ng-disabled="isDisabled"/></td>
                 </tr>
 
                 <tr class="headborder">
@@ -438,7 +446,7 @@ div.scrollmenu {
 
                 <tr>
                     <td style="width:15%;">FY 18</td>
-                    <td><input name="deThirdColour" ng-model="summaryData.deThirdColour" ng-disabled=""/></td>
+                    <td><input name="deThirdColour" ng-model="vm.opportunityMaster.opportunitySummaryData.deThirdColour" ng-disabled="isDisabled"/></td>
                 </tr>
 
                 <tr class="headborder">
@@ -447,11 +455,11 @@ div.scrollmenu {
 
                 <tr>
                     <td style="width:15%;">FY 2018</td>
-                    <td><input name="patGrowthThird" ng-model="summaryData.patGrowthThird" ng-disabled=""/></td>
+                    <td><input name="patGrowthThird" ng-model="vm.opportunityMaster.opportunitySummaryData.patGrowthThird" ng-disabled="isDisabled"/></td>
                 </tr>
                 <tr>
                     <td style="width:15%;">FY 2019</td>
-                    <td><input name="patGrowthFourth" ng-model="summaryData.patGrowthFourth" ng-disabled=""/></td>
+                    <td><input name="patGrowthFourth" ng-model="vm.opportunityMaster.opportunitySummaryData.patGrowthFourth" ng-disabled="isDisabled"/></td>
                 </tr>
 
 
@@ -461,11 +469,11 @@ div.scrollmenu {
 
                 <tr>
                     <td style="width:15%;">FY 2017</td>
-                    <td><input name="portPeSecond" ng-model="summaryData.portPeSecond" ng-disabled=""/></td>
+                    <td><input name="portPeSecond" ng-model="vm.opportunityMaster.opportunitySummaryData.portPeSecond" ng-disabled="isDisabled"/></td>
                 </tr>
                 <tr>
                     <td style="width:15%;">FY 2018</td>
-                    <td><input name="portPeThird" ng-model="summaryData.portPeThird" ng-disabled=""/></td>
+                    <td><input name="portPeThird" ng-model="vm.opportunityMaster.opportunitySummaryData.portPeThird" ng-disabled="isDisabled"/></td>
                 </tr>
 
                 <tr class="headborder">
@@ -475,19 +483,19 @@ div.scrollmenu {
 
                 <tr>
                     <td style="width:15%;">FY 2018</td>
-                    <td><input name="earningsThird" ng-model="summaryData.earningsThird" ng-disabled=""/></td>
+                    <td><input name="earningsThird" ng-model="vm.opportunityMaster.opportunitySummaryData.earningsThird" ng-disabled="isDisabled"/></td>
                 </tr>
                 <tr>
                     <td style="width:15%;">FY 2019</td>
-                    <td><input name="earningsFourth" ng-model="summaryData.earningsFourth" ng-disabled=""/></td>
+                    <td><input name="earningsFourth" ng-model="vm.opportunityMaster.opportunitySummaryData.earningsFourth" ng-disabled="isDisabled"/></td>
                 </tr>
                 <tr>
                     <td style="width:15%;">Wt. Avg Mcap</td>
-                    <td><input name="wtAvgCap" ng-model="summaryData.wtAvgCap" ng-disabled=""/></td>
+                    <td><input name="wtAvgCap" ng-model="vm.opportunityMaster.opportunitySummaryData.wtAvgCap" ng-disabled="isDisabled"/></td>
                 </tr>
                 <tr>
                     <td style="width:15%;">RoE</td>
-                    <td><input name="roe" ng-model="summaryData.roe" ng-disabled=""/></td>
+                    <td><input name="roe" ng-model="vm.opportunityMaster.opportunitySummaryData.roe" ng-disabled="isDisabled"/></td>
                 </tr>
 
                 <tr class="headborder">
@@ -497,11 +505,11 @@ div.scrollmenu {
 
                 <tr>
                     <td style="width:15%;">O / J</td>
-                    <td><input name="pegOj" ng-model="summaryData.pegOj" ng-disabled=""/></td>
+                    <td><input name="pegOj" ng-model="vm.opportunityMaster.opportunitySummaryData.pegOj" ng-disabled="isDisabled"/></td>
                 </tr>
                 <tr>
                     <th style="width:15%;">PEG</th>
-                    <td><input name="pegYearPeg" ng-model="summaryData.pegYearPeg" ng-disabled=""/></td>
+                    <td><input name="pegYearPeg" ng-model="vm.opportunityMaster.opportunitySummaryData.pegYearPeg" ng-disabled="isDisabled"/></td>
                 </tr>
 
                 </tbody>

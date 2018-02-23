@@ -525,7 +525,7 @@ public class OpportunityMasterResource {
 		OpportunityMaster opportunityMaster = opportunityMasterRepository.findOne(id);
 		List<FileUpload> fileUploads = fileUploadRepository.findByOpportunityMasterId(opportunityMaster);
 		List<StrategyMapping> strategyMappings = strategyMappingRepository.findByOpportunityMaster(opportunityMaster);
-		
+
 		List<StrategyMaster> strategyMasters =new ArrayList<StrategyMaster>();
 
         System.out.println("MAPPING----->"+strategyMappings);
