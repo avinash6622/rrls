@@ -54,6 +54,10 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
     @JsonProperty
     private OpportunityMasterContact opportunityMasterContact;
 
+	@Transient
+    @JsonProperty
+    private OpportunitySummaryData opportunitySummaryData;
+
 	//private List<StrategyMaster> selectedStrategyMaster=new ArrayList<StrategyMaster>();
 
 	@OneToMany(mappedBy = "opportunityMasterId")
@@ -63,7 +67,7 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	@JoinColumn(name = "master_name")
 	private OpportunityName masterName;
 
-	
+
  /*   @OneToOne(fetch = FetchType.LAZY,
         cascade =  CascadeType.ALL,
         mappedBy = "OpportunityMasterID")
@@ -155,7 +159,15 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
     public void setOpportunityMasterContact(OpportunityMasterContact opportunityMasterContact) {
         this.opportunityMasterContact = opportunityMasterContact;
     }
-    
+
+    public OpportunitySummaryData getOpportunitySummaryData() {
+        return opportunitySummaryData;
+    }
+
+    public void setOpportunitySummaryData(OpportunitySummaryData opportunitySummaryData) {
+        this.opportunitySummaryData = opportunitySummaryData;
+    }
+
     @Override
 	public boolean equals(Object o) {
 		if (this == o) {
@@ -174,6 +186,13 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
     @Override
     public String toString() {
         return "OpportunityMaster{" +
+            "selectedStrategyMaster=" + selectedStrategyMaster +
+            ", strategyMapping=" + strategyMapping +
+            '}';
+    }
+/*    @Override
+    public String toString() {
+        return "OpportunityMaster{" +
             "id=" + id +
             ", oppDescription='" + oppDescription + '\'' +
             ", oppStatus='" + oppStatus + '\'' +
@@ -182,10 +201,12 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
             ", fileUploadCommentList=" + fileUploadCommentList +
             ", selectedStrategyMaster=" + selectedStrategyMaster +
             ", opportunityMasterContact=" + opportunityMasterContact +
+            ", opportunitySummaryData=" + opportunitySummaryData +
+            ", fileUploads=" + fileUploads +
             ", masterName=" + masterName +
             ", strategyMapping=" + strategyMapping +
             '}';
-    }
+    }*/
 
     @Override
 	public int hashCode() {

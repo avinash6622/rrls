@@ -17,17 +17,17 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Table(name = "strategy_mapping")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class StrategyMapping  implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@ManyToOne
 	@JoinColumn(name="opp_master_id")
 	private OpportunityMaster opportunityMaster;
-	
+
 	@ManyToOne
 	@JoinColumn(name="strategy_master_id")
 	private StrategyMaster strategyMaster;
@@ -54,6 +54,14 @@ public class StrategyMapping  implements Serializable {
 
 	public void setStrategyMaster(StrategyMaster strategyMaster) {
 		this.strategyMaster = strategyMaster;
-	}	
-	
+	}
+
+   /* @Override
+    public String toString() {
+        return "StrategyMapping{" +
+            "id=" + id +
+            ", opportunityMaster=" + opportunityMaster +
+            ", strategyMaster=" + strategyMaster +
+            '}';
+    }*/
 }

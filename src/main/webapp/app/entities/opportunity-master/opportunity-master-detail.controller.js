@@ -55,7 +55,7 @@
 
         };
 
-        $scope.fileformat = ["Presentation", "Excel module", "Quarterly updates","Miscellaneous"];
+        $scope.fileformat = ["Presentation", "Excel model", "Quarterly updates","Miscellaneous"];
 
         $scope.getselectval = function () {
            console.log('Name: ' + $scope.selitem);
@@ -70,21 +70,30 @@
 
 
         $scope.submitTable = function() {
-            console.log("fddfdfb", $scope.summaryData);
 
-            var tableValue = $scope.summaryData;
+           console.log("DATA----->",vm.opportunityMaster.opportunitySummaryData);
 
-            console.log("bdsfjhj"+tableValue);
 
-            OpportunityMaster.summarydatavalues(tableValue, function (resp) {
-                console.log(resp);
+
+            //console.log("bdsfjhj",tableValue);
+
+            OpportunityMaster.summarydatavalues(vm.opportunityMaster.opportunitySummaryData, function (resp) {
+                console.log("safsdaf---->"+resp);
             }, function (err) {
                 console.log(err);
             });
 
         }
 
+        $scope.ok = function(){
 
+            $scope.isDisabled = false;
+
+        }
+
+
+
+        $scope.isDisabled = true;
 
         $scope.open = function (status) {
 
