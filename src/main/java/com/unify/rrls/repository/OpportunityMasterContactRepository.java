@@ -6,10 +6,12 @@ import com.unify.rrls.domain.OpportunityMasterContact;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @SuppressWarnings("unused")
 @Repository
 public interface OpportunityMasterContactRepository extends JpaRepository<OpportunityMasterContact, Long> {
-    OpportunityMasterContact  findByOpportunityMasterId(OpportunityMaster opportunityMaster);
+   List<OpportunityMasterContact> findByOpportunityMasterId(OpportunityMaster opportunityMaster);
 
 }

@@ -52,7 +52,7 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 
 	@Transient
     @JsonProperty
-    private OpportunityMasterContact opportunityMasterContact;
+    private List<OpportunityMasterContact> opportunityMasterContact;
 
 	@Transient
     @JsonProperty
@@ -152,11 +152,11 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	}
 
 
-    public OpportunityMasterContact getOpportunityMasterContact() {
+    public List<OpportunityMasterContact> getOpportunityMasterContact() {
         return opportunityMasterContact;
     }
 
-    public void setOpportunityMasterContact(OpportunityMasterContact opportunityMasterContact) {
+    public void setOpportunityMasterContact(List<OpportunityMasterContact> opportunityMasterContact) {
         this.opportunityMasterContact = opportunityMasterContact;
     }
 

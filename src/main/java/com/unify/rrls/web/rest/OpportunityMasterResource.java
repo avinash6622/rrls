@@ -220,13 +220,18 @@ public class OpportunityMasterResource {
 
 		OpportunityMaster result = opportunityMasterRepository.save(opportunityMaster);
 
+            for(OpportunityMasterContact opportunityMasterContact:opportunityMaster.getOpportunityMasterContact())
+             {
+                  opportunityMasterContact.setOpportunityMasterId(result);
+                  opportunityMasterContactRepository.save(opportunityMasterContact);
 
-		opportunityMasterContact.setName(opportunityMaster.getOpportunityMasterContact().getName());
+             }
+	/*	opportunityMasterContact.setName(opportunityMaster.getOpportunityMasterContact().getName());
 		opportunityMasterContact.setDesignation(opportunityMaster.getOpportunityMasterContact().getDesignation());
         opportunityMasterContact.setEmail(opportunityMaster.getOpportunityMasterContact().getEmail());
         opportunityMasterContact.setContactnum(opportunityMaster.getOpportunityMasterContact().getContactnum());
-        opportunityMasterContact.setOpportunityMasterId(result);
-        opportunityMasterContactRepository.save(opportunityMasterContact);
+        opportunityMasterContact.setOpportunityMasterId(result);*/
+
         OpportunitySummaryData opportunitySummaryData = new OpportunitySummaryData();
         opportunitySummaryData.setbWeight(opportunityMaster.getOpportunitySummaryData().getbWeight());
         opportunitySummaryData.setCmp(opportunityMaster.getOpportunitySummaryData().getCmp());
@@ -527,15 +532,16 @@ public class OpportunityMasterResource {
 		List<StrategyMapping> strategyMappings = strategyMappingRepository.findByOpportunityMaster(opportunityMaster);
 
 		List<StrategyMaster> strategyMasters =new ArrayList<StrategyMaster>();
-
+		List<OpportunityMasterContact> opportunityMasterContacts =  opportunityMasterContactRepository.findByOpportunityMasterId(opportunityMaster);
+        opportunityMaster.setOpportunityMasterContact(opportunityMasterContacts);
         System.out.println("MAPPING----->"+strategyMappings);
         for(StrategyMapping sms:strategyMappings){
             strategyMasters.add(sms.getStrategyMaster());
            opportunityMaster.setSelectedStrategyMaster(strategyMasters);
         }
 		opportunityMaster.setStrategyMapping(strategyMappings);
-		OpportunityMasterContact opportunityMasterContact = opportunityMasterContactRepository.findByOpportunityMasterId(opportunityMaster);
-		opportunityMaster.setOpportunityMasterContact(opportunityMasterContact);
+		//OpportunityMasterContact opportunityMasterContact = opportunityMasterContactRepository.findByOpportunityMasterId(opportunityMaster);
+		//opportunityMaster.setOpportunityMasterContact(opportunityMasterContact);
 		OpportunitySummaryData opportunitySummaryData = opportunitySummaryDataRepository.findByOpportunityMasterid(opportunityMaster);
 		opportunityMaster.setOpportunitySummaryData(opportunitySummaryData);
 		List<FileUploadComments> fileComments = fileUploadCommentsRepository.findByOpportunityMaster(opportunityMaster);

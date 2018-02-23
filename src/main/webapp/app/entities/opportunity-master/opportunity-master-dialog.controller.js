@@ -11,6 +11,7 @@
         var vm = this;
 
         vm.opportunityMaster = entity;
+        vm.opportunityMaster.opportunityMasterContact = [{}];
         vm.clear = clear;
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
@@ -26,6 +27,12 @@
         console.log("SELECTED------>",vm.opportunityMaster);
 
 
+
+        $scope.addContact = function() {
+
+           vm.opportunityMaster.opportunityMasterContact.push({
+            })
+        }
 
         // Editor options.
         $scope.options = {

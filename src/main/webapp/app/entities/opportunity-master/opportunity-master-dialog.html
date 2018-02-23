@@ -1,4 +1,17 @@
 
+
+
+
+<style>
+    fieldset{
+        background: #FCFCFC;
+        padding: 16px;
+        border: 1px solid #D5D5D5;
+    }
+    .addfields{
+        margin: 10px 0;
+    }
+</style>
 <form name="editForm" role="form" novalidate ng-submit="vm.save()">
 
     <div class="modal-header">
@@ -73,31 +86,35 @@
         </div>
 
 
-        <div class="form-group row">
-            <div class="col-xs-4">
-                <label for="field_oppcontactName">Company Contact Details</label></br>
-                <label for="field_oppcontactName">Name</label>
-                <input class="form-control" name="field_oppcontactName" id="field_oppcontactName" type="text" placeholder="Name" ng-model="vm.opportunityMaster.opportunityMasterContact.name">
+
+
+
+             <div class="form-group row">
+             <label for="field_oppcontactName">Company Contact Details</label>
+             <fieldset ng-repeat="contact in vm.opportunityMaster.opportunityMasterContact">
+              <div class="col-xs-3">
+                  <input class="form-control" name="field_oppcontactName" id="field_oppcontactName" type="text" placeholder="Name" ng-model="contact.name">
             </div>
 
-            <div class="col-xs-4">
-                <label for="field_oppcontactName"></label></br>
-                <label for="field_oppcontactName">Designation</label>
-                <input class="form-control" name="field_oppcontactDes" id="field_oppcontactDes" type="text" placeholder="Designation" ng-model="vm.opportunityMaster.opportunityMasterContact.designation">
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-xs-4">
-                <label for="field_oppcontactEmail">Email</label>
-                <input class="form-control" name="field_oppcontactEmail" id="field_oppcontactEmail" type="text" placeholder="Email" ng-model="vm.opportunityMaster.opportunityMasterContact.email">
+            <div class="col-xs-3">
+                <input class="form-control" name="field_oppcontactDes" id="field_oppcontactDes" type="text" placeholder="Designation" ng-model="contact.designation">
             </div>
 
-            <div class="col-xs-4">
-                <label for="field_oppcontactNo">Contact Number</label>
-                <input class="form-control" name="field_oppcontactNo" id="field_oppcontactNo" type="text" placeholder="Contact Number" ng-model="vm.opportunityMaster.opportunityMasterContact.contactnum">
+            <div class="col-xs-3">
+                <input class="form-control" name="field_oppcontactEmail" id="field_oppcontactEmail" type="text" placeholder="Email" ng-model="contact.email">
             </div>
-        </div>
+
+            <div class="col-xs-3">
+                <input class="form-control" name="field_oppcontactNo" id="field_oppcontactNo" type="text" placeholder="Contact Number" ng-model="contact.contactnum">
+            </div>
+
+             </fieldset>
+             </div>
+            <button type="button" ng-click="addContact()">add</button>
+
+
+
+
 
 
         <div  class="form-group">
