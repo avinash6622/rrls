@@ -183,6 +183,13 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 		return Objects.equals(getId(), opportunityMaster.getId());
 	}
 
+    @Override
+    public String toString() {
+        return "OpportunityMaster{" +
+            "selectedStrategyMaster=" + selectedStrategyMaster +
+            ", strategyMapping=" + strategyMapping +
+            '}';
+    }
 /*    @Override
     public String toString() {
         return "OpportunityMaster{" +

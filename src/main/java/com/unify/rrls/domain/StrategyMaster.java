@@ -24,7 +24,7 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-   
+
     @Size(max = 20)
     @Column(name = "strategy_code", length = 20, nullable = false)
     private String strategyCode;
@@ -48,7 +48,7 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
     @Column(name = "updated_by", length = 50)
     private String updatedBy;
 
-    
+
     @Column(name = "created_date", nullable = false)
     private LocalDate createdDate;
 
@@ -115,7 +115,7 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
     public void setDateActive(LocalDate dateActive) {
         this.dateActive = dateActive;
     }
-   
+
 
  /*public String getCreatedBy() {
         return createdBy;
@@ -168,7 +168,7 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
     public void setUpdatedDate(Instant updatedDate) {
         this.updatedDate = updatedDate;
     }*/
-    
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -191,7 +191,18 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
         return Objects.hashCode(getId());
     }
 
-   /* @Override
+    @Override
+    public String toString() {
+        return "StrategyMaster{" +
+            "id=" + id +
+            ", strategyCode='" + strategyCode + '\'' +
+            ", strategyName='" + strategyName + '\'' +
+            ", sStatus=" + sStatus +
+            ", dateActive=" + dateActive +
+            '}';
+    }
+
+/* @Override
     public String toString() {
         return "StrategyMaster{" +
             "id=" + getId() +

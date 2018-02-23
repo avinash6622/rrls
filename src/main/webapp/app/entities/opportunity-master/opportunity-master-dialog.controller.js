@@ -23,7 +23,7 @@
         vm.readOnly = false;
 
 
-
+        console.log("SELECTED------>",vm.opportunityMaster);
 
 
 

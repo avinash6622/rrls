@@ -547,6 +547,14 @@ public class OpportunityMasterResource {
 		OpportunityMaster opportunityMaster = opportunityMasterRepository.findOne(id);
 		List<FileUpload> fileUploads = fileUploadRepository.findByOpportunityMasterId(opportunityMaster);
 		List<StrategyMapping> strategyMappings = strategyMappingRepository.findByOpportunityMaster(opportunityMaster);
+
+		List<StrategyMaster> strategyMasters =new ArrayList<StrategyMaster>();
+
+        System.out.println("MAPPING----->"+strategyMappings);
+        for(StrategyMapping sms:strategyMappings){
+            strategyMasters.add(sms.getStrategyMaster());
+           opportunityMaster.setSelectedStrategyMaster(strategyMasters);
+        }
 		opportunityMaster.setStrategyMapping(strategyMappings);
 		OpportunityMasterContact opportunityMasterContact = opportunityMasterContactRepository.findByOpportunityMasterId(opportunityMaster);
 		opportunityMaster.setOpportunityMasterContact(opportunityMasterContact);
