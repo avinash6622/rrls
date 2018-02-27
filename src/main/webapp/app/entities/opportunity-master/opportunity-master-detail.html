@@ -61,13 +61,12 @@ div.scrollmenu {
 			<span>Contact Details</span>
 		</dt>
 		<dd>
-			<span>
-				{{vm.opportunityMaster.opportunityMasterContact.name}}</br>
-				{{vm.opportunityMaster.opportunityMasterContact.designation}}</br>
-				{{vm.opportunityMaster.opportunityMasterContact.email}}</br>
-				{{vm.opportunityMaster.opportunityMasterContact.contactnum}}</span>
-
-		</dd>
+			<span ng-repeat="contact in vm.opportunityMaster.opportunityMasterContact">
+			Name :	{{contact.name}}</br>
+			Designation:	{{contact.designation}}</br>
+			Email:	{{contact.email}}</br>
+            Contact No:    {{contact.contactnum}}</br></br></span>
+        </dd>
 
 		<!--   <dt ng-show="vm.opportunityMaster.htmlContent"><span>Document</span></dt>
         <dd ng-show="vm.opportunityMaster.htmlContent">

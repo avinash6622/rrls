@@ -232,7 +232,7 @@ public class OpportunityMasterResource {
         opportunityMasterContact.setContactnum(opportunityMaster.getOpportunityMasterContact().getContactnum());
         opportunityMasterContact.setOpportunityMasterId(result);*/
 
-        OpportunitySummaryData opportunitySummaryData = new OpportunitySummaryData();
+     /*   OpportunitySummaryData opportunitySummaryData = new OpportunitySummaryData();
         opportunitySummaryData.setbWeight(opportunityMaster.getOpportunitySummaryData().getbWeight());
         opportunitySummaryData.setCmp(opportunityMaster.getOpportunitySummaryData().getCmp());
         opportunitySummaryData.setMarketCap(opportunityMaster.getOpportunitySummaryData().getMarketCap());
@@ -256,7 +256,7 @@ public class OpportunityMasterResource {
         opportunitySummaryData.setPegOj(opportunityMaster.getOpportunitySummaryData().getPegOj());
         opportunitySummaryData.setPegYearPeg(opportunityMaster.getOpportunitySummaryData().getPegYearPeg());
         opportunitySummaryData.setOpportunityMasterid(result);
-        opportunitySummaryDataRepository.save(opportunitySummaryData);
+        opportunitySummaryDataRepository.save(opportunitySummaryData);*/
        /* result1.setOpportunityMaster(result);
         opportunitySummaryDataRepository.save(result1);*/
 
@@ -370,14 +370,14 @@ public class OpportunityMasterResource {
 
         System.out.println("Entering"+fileUpload.getFileName()+"path:"+fileUpload.getFileData());
 
-       
+
       /*  ResponseBuilder responses=Response.ok((Object)file);
               responses.header("Content-Disposition", "attachment; filename="+files);
     	    responses.setHeader("Content-Disposition", "attachment; filename="+fileUpload.getFileName());
     	    responses.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-*/ 
+*/
         FileInputStream inputStream = new FileInputStream(new File(fileUpload.getFileData()));
-        String fileNames=fileName;	    
+        String fileNames=fileName;
         response.setHeader("Content-Disposition", "attachment; filename="+fileUpload.getFileName());
         response.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 
@@ -386,7 +386,7 @@ public class OpportunityMasterResource {
 
         outputStream.close();
         inputStream.close();
-       
+
         return ResponseEntity.ok().build();
                  }
 	@PostMapping("/opportunity-masters/create-file")
@@ -533,6 +533,7 @@ public class OpportunityMasterResource {
 
 		List<StrategyMaster> strategyMasters =new ArrayList<StrategyMaster>();
 		List<OpportunityMasterContact> opportunityMasterContacts =  opportunityMasterContactRepository.findByOpportunityMasterId(opportunityMaster);
+        System.out.println("CONTACT---->"+opportunityMasterContacts);
         opportunityMaster.setOpportunityMasterContact(opportunityMasterContacts);
         System.out.println("MAPPING----->"+strategyMappings);
         for(StrategyMapping sms:strategyMappings){
@@ -542,8 +543,8 @@ public class OpportunityMasterResource {
 		opportunityMaster.setStrategyMapping(strategyMappings);
 		//OpportunityMasterContact opportunityMasterContact = opportunityMasterContactRepository.findByOpportunityMasterId(opportunityMaster);
 		//opportunityMaster.setOpportunityMasterContact(opportunityMasterContact);
-		OpportunitySummaryData opportunitySummaryData = opportunitySummaryDataRepository.findByOpportunityMasterid(opportunityMaster);
-		opportunityMaster.setOpportunitySummaryData(opportunitySummaryData);
+/*		OpportunitySummaryData opportunitySummaryData = opportunitySummaryDataRepository.findByOpportunityMasterid(opportunityMaster);
+		opportunityMaster.setOpportunitySummaryData(opportunitySummaryData);*/
 		List<FileUploadComments> fileComments = fileUploadCommentsRepository.findByOpportunityMaster(opportunityMaster);
 		opportunityMaster.setFileUploadCommentList(fileComments);
 		if (!fileUploads.isEmpty()) {

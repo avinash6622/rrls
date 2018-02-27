@@ -54,9 +54,13 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
     @JsonProperty
     private List<OpportunityMasterContact> opportunityMasterContact;
 
+	/*@Transient
+    @JsonProperty
+    private OpportunitySummaryData opportunitySummaryData;*/
+
 	@Transient
     @JsonProperty
-    private OpportunitySummaryData opportunitySummaryData;
+    private FinancialSummaryData financialSummaryData;
 
 	//private List<StrategyMaster> selectedStrategyMaster=new ArrayList<StrategyMaster>();
 
@@ -160,12 +164,20 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
         this.opportunityMasterContact = opportunityMasterContact;
     }
 
-    public OpportunitySummaryData getOpportunitySummaryData() {
+   /* public OpportunitySummaryData getOpportunitySummaryData() {
         return opportunitySummaryData;
     }
 
     public void setOpportunitySummaryData(OpportunitySummaryData opportunitySummaryData) {
         this.opportunitySummaryData = opportunitySummaryData;
+    }*/
+
+    public FinancialSummaryData getFinancialSummaryData() {
+        return financialSummaryData;
+    }
+
+    public void setFinancialSummaryData(FinancialSummaryData financialSummaryData) {
+        this.financialSummaryData = financialSummaryData;
     }
 
     @Override

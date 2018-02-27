@@ -11,7 +11,11 @@
         var vm = this;
 
         vm.opportunityMaster = entity;
-        vm.opportunityMaster.opportunityMasterContact = [{}];
+        vm.opportunityMaster.opportunityMasterContact = vm.opportunityMaster.opportunityMasterContact ? vm.opportunityMaster.opportunityMasterContact : [{}];
+     //   console.log(vm.opportunityMaster.opportunityMasterContact.length);
+
+
+      /*  vm.opportunityMaster.opportunityMasterContact = [{}];*/
         vm.clear = clear;
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
@@ -28,9 +32,8 @@
 
 
 
-        $scope.addContact = function() {
-
-           vm.opportunityMaster.opportunityMasterContact.push({
+      $scope.addContact = function() {
+          vm.opportunityMaster.opportunityMasterContact.push({
             })
         }
 
