@@ -92,8 +92,8 @@ public class OpportunityMasterResource {
 		this.fileName = fileName;
 	}
 
-	StrategyMapping strategyMapping;
-    OpportunityMasterContact opportunityMasterContact= new OpportunityMasterContact();
+	//StrategyMapping strategyMapping;
+    //OpportunityMasterContact opportunityMasterContact= new OpportunityMasterContact();
 
 	final static Pattern PATTERN = Pattern.compile("(.*?)(?:\\((\\d+)\\))?(\\.[^.]*)?");
 
@@ -220,12 +220,12 @@ public class OpportunityMasterResource {
 
 		OpportunityMaster result = opportunityMasterRepository.save(opportunityMaster);
 
-            for(OpportunityMasterContact opportunityMasterContact:opportunityMaster.getOpportunityMasterContact())
+            /*for(OpportunityMasterContact opportunityMasterContact:opportunityMaster.getOpportunityMasterContact())
              {
                   opportunityMasterContact.setOpportunityMasterId(result);
                   opportunityMasterContactRepository.save(opportunityMasterContact);
 
-             }
+             }*/
 	/*	opportunityMasterContact.setName(opportunityMaster.getOpportunityMasterContact().getName());
 		opportunityMasterContact.setDesignation(opportunityMaster.getOpportunityMasterContact().getDesignation());
         opportunityMasterContact.setEmail(opportunityMaster.getOpportunityMasterContact().getEmail());
@@ -262,7 +262,7 @@ public class OpportunityMasterResource {
 
 		for(StrategyMaster sm:opportunityMaster.getSelectedStrategyMaster())
 		{
-			strategyMapping=new StrategyMapping();
+			StrategyMapping strategyMapping=new StrategyMapping();
 			strategyMapping.setOpportunityMaster(result);
 			strategyMapping.setStrategyMaster(sm);
 			strategyMappingRepository.save(strategyMapping);
@@ -303,10 +303,10 @@ public class OpportunityMasterResource {
 
 		for(StrategyMaster sm:opportunityMasters.getSelectedStrategyMaster())
 		{
-			strategyMapping=new StrategyMapping();
-			strategyMapping.setOpportunityMaster(opportunityMasters);
-			strategyMapping.setStrategyMaster(sm);
-			strategyMappingRepository.save(strategyMapping);
+			StrategyMapping strategyMap=new StrategyMapping();
+			strategyMap.setOpportunityMaster(opportunityMasters);
+			strategyMap.setStrategyMaster(sm);
+			strategyMappingRepository.save(strategyMap);
 
 		}}
 		opportunityMasterContactRepository.save(opportunityMasters.getOpportunityMasterContact());
@@ -540,7 +540,7 @@ public class OpportunityMasterResource {
             strategyMasters.add(sms.getStrategyMaster());
            opportunityMaster.setSelectedStrategyMaster(strategyMasters);
         }
-		opportunityMaster.setStrategyMapping(strategyMappings);
+		//opportunityMaster.setStrategyMapping(strategyMappings);
 		//OpportunityMasterContact opportunityMasterContact = opportunityMasterContactRepository.findByOpportunityMasterId(opportunityMaster);
 		//opportunityMaster.setOpportunityMasterContact(opportunityMasterContact);
 /*		OpportunitySummaryData opportunitySummaryData = opportunitySummaryDataRepository.findByOpportunityMasterid(opportunityMaster);

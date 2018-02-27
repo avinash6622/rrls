@@ -77,8 +77,8 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
         mappedBy = "OpportunityMasterID")
     private OpportunityMasterContact opportunityMasterContact;*/
 
-	@OneToMany(mappedBy = "strategyMaster",cascade={CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
-	private List<StrategyMapping> strategyMapping;
+	/*@OneToMany(mappedBy = "strategyMaster",cascade={CascadeType.PERSIST},fetch = FetchType.EAGER)
+	private List<StrategyMapping> strategyMapping;*/
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
 	public Long getId() {
@@ -133,12 +133,12 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 		this.masterName = masterName;
 	}
 
-	public List<StrategyMapping> getStrategyMapping() {
+	/*public List<StrategyMapping> getStrategyMapping() {
 		return strategyMapping;
 	}
 	public void setStrategyMapping(List<StrategyMapping> strategyMapping) {
 		this.strategyMapping = strategyMapping;
-	}
+	}*/
 
 	public void setSelectedStrategyMaster(List<StrategyMaster> selectedStrategyMaster) {
 		this.selectedStrategyMaster = selectedStrategyMaster;
@@ -199,7 +199,7 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
     public String toString() {
         return "OpportunityMaster{" +
             "selectedStrategyMaster=" + selectedStrategyMaster +
-            ", strategyMapping=" + strategyMapping +
+            /*", strategyMapping=" + strategyMapping +*/
             '}';
     }
 /*    @Override
