@@ -286,11 +286,12 @@ div.scrollmenu {
         </dt>
         <dd>
 
+<div ng-show="vm.opportunityMaster.masterName.sectorType">
+        <div  class="form-group" ng-if="vm.opportunityMaster.masterName.sectorType == 'Finance (including NBFCs)'">
 
 
 
-
-      <!--      <table id="mytable" class="table table-bordered">
+         <table id="mytable" class="table table-bordered">
                 <thead>
 
                 <tr class="headborder">
@@ -432,9 +433,9 @@ div.scrollmenu {
                     <td><input name="peFive" ng-model="vm.opportunityMaster.financialSummaryData.peFive" ng-disabled="isDisabled"/></td>
                 </tr>
                 </tbody>
-            </table>-->
-
-            <table id="mytable" class="table table-bordered">
+            </table></div>
+ <div  class="form-group" ng-if="vm.opportunityMaster.masterName.sectorType != 'Finance (including NBFCs)'">
+            <table id="mytable1" class="table table-bordered">
                 <thead>
 
                 <tr class="headborder">
@@ -578,7 +579,7 @@ div.scrollmenu {
                 </tbody>
             </table>
 
-
+</div></div>
 
             <button  class="btn btn-primary" ng-click="submitTable()">Submit</button>
 

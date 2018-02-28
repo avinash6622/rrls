@@ -1,7 +1,4 @@
 
-
-
-
 <style>
     fieldset{
         background: #FCFCFC;
@@ -37,8 +34,7 @@
         <div class="form-group">
             <label class="control-label" for="field_sectorType">Sector</label>
             <input type="text" id="field_sectorType"class="form-control" placeholder="Sector"
-                    ng-model="vm.opportunityMaster.masterName.sectorType"
-                  />
+                   ng-model="vm.opportunityMaster.masterName.sectorType" />
         <div ng-show="editForm.oppName.$invalid">
                 <p class="help-block"
                     ng-show="editForm.oppName.$error.required">
@@ -116,8 +112,8 @@
 
 
 
-<!--
-        <div  class="form-group">
+<div ng-show="vm.opportunityMaster.masterName.sectorType">
+        <div  class="form-group" ng-if="vm.opportunityMaster.masterName.sectorType == 'Finance (including NBFCs)'">
 
             <label class="control-label">Summary Data</label>
             <table id="mytable" class="table table-bordered">
@@ -265,10 +261,10 @@
             </table>
 
 
-        </div>-->
+        </div>
 
 
-                <div  class="form-group">
+                <div class="form-group" ng-if="vm.opportunityMaster.masterName.sectorType != 'Finance (including NBFCs)'">
 
                     <label class="control-label">Summary Data</label>
                     <table id="mytable" class="table table-bordered">
@@ -419,7 +415,7 @@
                 </div>
 
 
-
+</div>
 
 
         <!--    </table>-->

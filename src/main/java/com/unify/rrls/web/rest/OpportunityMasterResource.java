@@ -235,16 +235,17 @@ public class OpportunityMasterResource {
                   opportunityMasterContactRepository.save(oC);
 
              }
+      if(opportunityMaster.getMasterName().getSectorType().equals("Finance (including NBFCs)")){
 
-      /*   FinancialSummaryData summaryData = opportunityMaster.getFinancialSummaryData();
+      	FinancialSummaryData summaryData = opportunityMaster.getFinancialSummaryData();
          summaryData.setOpportunityMasterId(result);
-         financialSummaryDataRepository.save(summaryData);*/
-
+         financialSummaryDataRepository.save(summaryData);}
+      else{
          NonFinancialSummaryData nonFinancialSummaryData=opportunityMaster.getNonFinancialSummaryData();
          nonFinancialSummaryData.setOpportunityMaster(result);
          nonFinancialSummaryDataRepository.save(nonFinancialSummaryData);
 
-
+      }
 
 
 		for(StrategyMaster sm:opportunityMaster.getSelectedStrategyMaster())

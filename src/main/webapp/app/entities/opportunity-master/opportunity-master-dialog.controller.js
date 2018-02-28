@@ -105,7 +105,8 @@
                 });
             }
         }
-
+        
+       
         function selectFile (file) {
             vm.opportunityMaster.fileUpload = file;
         }
