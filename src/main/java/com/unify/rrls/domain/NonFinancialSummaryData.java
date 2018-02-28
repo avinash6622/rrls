@@ -72,6 +72,26 @@ public class NonFinancialSummaryData implements Serializable{
 	private Double ebitdaGrowthFour;
 	@Column(name = "ebitda_growth_five")
 	private Double ebitdaGrowthFive;
+	@Column(name = "pat_one")
+	private Double patOne;
+	@Column(name = "pat_two")
+	private Double patTwo;
+	@Column(name = "pat_three")
+	private Double patthree;
+	@Column(name = "pat_four")
+	private Double patfour;
+	@Column(name = "pat_five")
+	private Double patFive;
+	@Column(name = "pat_growth_one")
+	private Double patGrowthOne;
+	@Column(name = "pat_growth_two")
+	private Double patGrowthTwo;
+	@Column(name = "pat_growth_three")
+	private Double patGrowthThree;
+	@Column(name = "pat_growth_four")
+	private Double patGrowthFour;
+	@Column(name = "pat_growth_five")
+	private Double patGrowthFive;
 	@Column(name = "market_cap_one")
 	private Double marketCapOne;
 	@Column(name = "market_cap_two")
@@ -82,6 +102,17 @@ public class NonFinancialSummaryData implements Serializable{
 	private Double marketCapFour;
 	@Column(name = "market_cap_five")
 	private Double marketCapFive;
+	@Column(name = "pe_one")
+	private Double peOne;
+	@Column(name = "pe_two")
+	private Double peTwo;
+	@Column(name = "pe_three")
+	private Double pethree;
+	@Column(name = "pe_four")
+	private Double peFour;
+	@Column(name = "pe_five")
+	private Double peFive;
+	
 	@Column(name = "networth_one")
 	private Double networthOne;
 	@Column(name = "networth_two")
@@ -470,6 +501,96 @@ public class NonFinancialSummaryData implements Serializable{
 	}
 	public void setDeFive(Double deFive) {
 		this.deFive = deFive;
+	}
+	public Double getPatOne() {
+		return patOne;
+	}
+	public void setPatOne(Double patOne) {
+		this.patOne = patOne;
+	}
+	public Double getPatTwo() {
+		return patTwo;
+	}
+	public void setPatTwo(Double patTwo) {
+		this.patTwo = patTwo;
+	}
+	public Double getPatthree() {
+		return patthree;
+	}
+	public void setPatthree(Double patthree) {
+		this.patthree = patthree;
+	}
+	public Double getPatfour() {
+		return patfour;
+	}
+	public void setPatfour(Double patfour) {
+		this.patfour = patfour;
+	}
+	public Double getPatFive() {
+		return patFive;
+	}
+	public void setPatFive(Double patFive) {
+		this.patFive = patFive;
+	}
+	public Double getPatGrowthOne() {
+		return patGrowthOne;
+	}
+	public void setPatGrowthOne(Double patGrowthOne) {
+		this.patGrowthOne = patGrowthOne;
+	}
+	public Double getPatGrowthTwo() {
+		return patGrowthTwo;
+	}
+	public void setPatGrowthTwo(Double patGrowthTwo) {
+		this.patGrowthTwo = patGrowthTwo;
+	}
+	public Double getPatGrowthThree() {
+		return patGrowthThree;
+	}
+	public void setPatGrowthThree(Double patGrowthThree) {
+		this.patGrowthThree = patGrowthThree;
+	}
+	public Double getPatGrowthFour() {
+		return patGrowthFour;
+	}
+	public void setPatGrowthFour(Double patGrowthFour) {
+		this.patGrowthFour = patGrowthFour;
+	}
+	public Double getPatGrowthFive() {
+		return patGrowthFive;
+	}
+	public void setPatGrowthFive(Double patGrowthFive) {
+		this.patGrowthFive = patGrowthFive;
+	}
+	public Double getPeOne() {
+		return peOne;
+	}
+	public void setPeOne(Double peOne) {
+		this.peOne = peOne;
+	}
+	public Double getPeTwo() {
+		return peTwo;
+	}
+	public void setPeTwo(Double peTwo) {
+		this.peTwo = peTwo;
+	}
+	public Double getPethree() {
+		return pethree;
+	}
+	public void setPethree(Double pethree) {
+		this.pethree = pethree;
+	}
+	public Double getPeFour() {
+		return peFour;
+	}
+	public void setPeFour(Double peFour) {
+		this.peFour = peFour;
+	}
+	public Double getPeFive() {
+		return peFive;
+	}
+	public void setPeFive(Double peFive) {
+		this.peFive = peFive;
 	}
 	public OpportunityMaster getOpportunityMaster() {
 		return opportunityMaster;
