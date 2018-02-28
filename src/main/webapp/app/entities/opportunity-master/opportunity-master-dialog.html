@@ -116,7 +116,7 @@
 
 
 
-
+<!--
         <div  class="form-group">
 
             <label class="control-label">Summary Data</label>
@@ -265,7 +265,158 @@
             </table>
 
 
+        </div>-->
 
+
+                <div  class="form-group">
+
+                    <label class="control-label">Summary Data</label>
+                    <table id="mytable" class="table table-bordered">
+                        <thead>
+
+                        <tr class="headborder">
+                            <th style="width:15%;"></th>
+                            <th style="width:15%;">FY15</th>
+                            <th style="width:15%;">FY 16</th>
+                            <th style="width:15%;">FY 17</th>
+                            <th style="width:15%;">FY 18E</th>
+                            <th style="width:15%;">FY 19E</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td scope="col">Revenues</td>
+                            <td><input name="netIntOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueOne"  ng-disabled=""/> </td>
+                            <td><input name="netIntTwo" ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueTwo" ng-disabled=""/> </td>
+                            <td><input name="netIntThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueThree" ng-disabled=""/></td>
+                            <td><input name="netIntFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueFour" ng-disabled=""/></td>
+                            <td><input name="netIntFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueFive" ng-disabled=""/></td>
+                        </tr>
+
+                        <tr>
+                            <td scope="col">Growth(%)</td>
+                            <td><input name="nonIntOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.revGrowthOne"  ng-disabled=""/> </td>
+                            <td><input name="nonIntTwo" ng-model="vm.opportunityMaster.nonFinancialSummaryData.revGrowthTwo" ng-disabled=""/> </td>
+                            <td><input name="nonIntThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.revGrowthThree" ng-disabled=""/></td>
+                            <td><input name="nonIntFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.revGrowthFour" ng-disabled=""/></td>
+                            <td><input name="nonIntFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.revGrowthFive" ng-disabled=""/></td>
+                        </tr>
+
+                        <tr>
+                            <td scope="col">EBITDA</td>
+                            <td><input name="totIncOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaOne"  ng-disabled=""/> </td>
+                            <td><input name="totIncTwo" ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaTwo" ng-disabled=""/> </td>
+                            <td><input name="totIncThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaThree" ng-disabled=""/></td>
+                            <td><input name="totIncFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaFour" ng-disabled=""/></td>
+                            <td><input name="totIncFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaFive" ng-disabled=""/></td>
+                        </tr>
+
+                        <tr>
+                            <td scope="col">Margin(%)</td>
+                            <td><input name="opExpOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.marginOne"  ng-disabled=""/> </td>
+                            <td><input name="opExpTwo" ng-model="vm.opportunityMaster.nonFinancialSummaryData.marginTwo" ng-disabled=""/> </td>
+                            <td><input name="opExpThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.marginThree" ng-disabled=""/></td>
+                            <td><input name="opExpFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.marginFour" ng-disabled=""/></td>
+                            <td><input name="opExpFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.marginFive" ng-disabled=""/></td>
+                        </tr>
+
+                        <tr>
+                            <td scope="col">Growth(%)</td>
+                            <td><input name="opProOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaGrowthOne"  ng-disabled=""/> </td>
+                            <td><input name="opProTwo" ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaGrowthTwo" ng-disabled=""/> </td>
+                            <td><input name="opProThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaGrowthThree" ng-disabled=""/></td>
+                            <td><input name="opProFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaGrowthFour" ng-disabled=""/></td>
+                            <td><input name="opProFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaGrowthFive" ng-disabled=""/></td>
+                        </tr>
+
+
+                        <tr>
+                            <td scope="col">PAT</td>
+                            <td><input name="provisionsOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.patOne"  ng-disabled=""/> </td>
+                            <td><input name="provisionsTwo" ng-model="vm.opportunityMaster.nonFinancialSummaryData.patTwo" ng-disabled=""/> </td>
+                            <td><input name="provisionsThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.patthree" ng-disabled=""/></td>
+                            <td><input name="provisionsFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.patfour" ng-disabled=""/></td>
+                            <td><input name="provisionsFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.patFive" ng-disabled=""/></td>
+                        </tr>
+
+                        <tr>
+                            <td scope="col">Growth(%)</td>
+                            <td><input name="patOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.patGrowthOne"  ng-disabled=""/> </td>
+                            <td><input name="patTwo" ng-model="vm.opportunityMaster.nonFinancialSummaryData.patGrowthTwo" ng-disabled=""/> </td>
+                            <td><input name="patThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.patGrowthThree" ng-disabled=""/></td>
+                            <td><input name="patFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.patGrowthFour" ng-disabled=""/></td>
+                            <td><input name="patFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.patGrowthFive" ng-disabled=""/></td>
+                        </tr>
+
+                        <tr>
+                            <td scope="col">Market Cap</td>
+                            <td><input name="epsOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapOne"  ng-disabled=""/> </td>
+                            <td><input name="epsTwo" ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapTwo" ng-disabled=""/> </td>
+                            <td><input name="epsThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapThree" ng-disabled=""/></td>
+                            <td><input name="epsFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapFour" ng-disabled=""/></td>
+                            <td><input name="epsFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapFive" ng-disabled=""/></td>
+                        </tr>
+
+                        <tr>
+                            <td scope="col">P/E</td>
+                            <td><input name="marCapOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.peOne"  ng-disabled=""/> </td>
+                            <td><input name="marCapTwo" ng-model="vm.opportunityMaster.nonFinancialSummaryData.peTwo" ng-disabled=""/> </td>
+                            <td><input name="marCapThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.pethree" ng-disabled=""/></td>
+                            <td><input name="marCapFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.peFour" ng-disabled=""/></td>
+                            <td><input name="marCapFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.peFive" ng-disabled=""/></td>
+                        </tr>
+
+                        <tr>
+                            <td scope="col">Networth</td>
+                            <td><input name="aumOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.networthOne"  ng-disabled=""/> </td>
+                            <td><input name="aumTwo" ng-model="vm.opportunityMaster.nonFinancialSummaryData.networthTwo" ng-disabled=""/> </td>
+                            <td><input name="aumThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.networthThree" ng-disabled=""/></td>
+                            <td><input name="aumFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.networthFour" ng-disabled=""/></td>
+                            <td><input name="aumFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.networthFive" ng-disabled=""/></td>
+                        </tr>
+
+                        <tr>
+                            <td scope="col">P/B</td>
+                            <td><input name="networthOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbOne"  ng-disabled=""/> </td>
+                            <td><input name="networthTwo" ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbTwo" ng-disabled=""/> </td>
+                            <td><input name="networthThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbThree" ng-disabled=""/></td>
+                            <td><input name="networthFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbFour" ng-disabled=""/></td>
+                            <td><input name="networthfive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbFive" ng-disabled=""/></td>
+                        </tr>
+
+                        <tr>
+                            <td scope="col">ROE(%)</td>
+                            <td><input name="roeOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.roeOne"  ng-disabled=""/> </td>
+                            <td><input name="roeTwo" ng-model="vm.opportunityMaster.nonFinancialSummaryData.roeTwo" ng-disabled=""/> </td>
+                            <td><input name="roeThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.roeThree" ng-disabled=""/></td>
+                            <td><input name="roeFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.roeFour" ng-disabled=""/></td>
+                            <td><input name="roeFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.roefive" ng-disabled=""/></td>
+                        </tr>
+
+                        <tr>
+                            <td scope="col">Total Debt</td>
+                            <td><input name="pbvOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.totDebOne"  ng-disabled=""/> </td>
+                            <td><input name="pbvTwo" ng-model="vm.opportunityMaster.nonFinancialSummaryData.totDebTwo" ng-disabled=""/> </td>
+                            <td><input name="pbvThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.totDebThree" ng-disabled=""/></td>
+                            <td><input name="pbvFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.totDebFour" ng-disabled=""/></td>
+                            <td><input name="pbvFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.totDebFive" ng-disabled=""/></td>
+                        </tr>
+
+
+                        <tr>
+                            <td scope="col">D/E</td>
+                            <td><input name="peOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.deOne"  ng-disabled=""/> </td>
+                            <td><input name="peTwo" ng-model="vm.opportunityMaster.nonFinancialSummaryData.deTwo" ng-disabled=""/> </td>
+                            <td><input name="peThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.deThree" ng-disabled=""/></td>
+                            <td><input name="peFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.deFour" ng-disabled=""/></td>
+                            <td><input name="peFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.deFive" ng-disabled=""/></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
 
 
 
@@ -274,7 +425,7 @@
         <!--    </table>-->
 
 
-        </div>
+
 
 
 

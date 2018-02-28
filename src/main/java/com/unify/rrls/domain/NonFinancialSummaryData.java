@@ -18,9 +18,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Table(name = "non_financial_summary")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class NonFinancialSummaryData implements Serializable{
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="int_id")
 	private Integer id;
 	@Column(name = "revenue_one")
 	private Double revenueOne;
@@ -52,9 +53,9 @@ public class NonFinancialSummaryData implements Serializable{
 	private Double ebitdaFour;
 	@Column(name = "ebitda_five")
 	private Double ebitdaFive;
-	@Column(name = "margin_one")	
+	@Column(name = "margin_one")
 	private Double marginOne;
-	@Column(name = "margin_two")	
+	@Column(name = "margin_two")
 	private Double marginTwo;
 	@Column(name = "margin_three")
 	private Double marginThree;
@@ -112,7 +113,7 @@ public class NonFinancialSummaryData implements Serializable{
 	private Double peFour;
 	@Column(name = "pe_five")
 	private Double peFive;
-	
+
 	@Column(name = "networth_one")
 	private Double networthOne;
 	@Column(name = "networth_two")
@@ -598,6 +599,6 @@ public class NonFinancialSummaryData implements Serializable{
 	public void setOpportunityMaster(OpportunityMaster opportunityMaster) {
 		this.opportunityMaster = opportunityMaster;
 	}
-	
-	
+
+
 }
