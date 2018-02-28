@@ -52,7 +52,7 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 
 	@Transient
     @JsonProperty
-    private List<OpportunityMasterContact> opportunityMasterContact;
+    private List<OpportunityMasterContact> selectedoppContanct;
 
 	/*@Transient
     @JsonProperty
@@ -155,16 +155,16 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 		this.oppStatus = oppStatus;
 	}
 
-
-    public List<OpportunityMasterContact> getOpportunityMasterContact() {
-        return opportunityMasterContact;
+    public List<OpportunityMasterContact> getSelectedoppContanct() {
+        return selectedoppContanct;
     }
 
-    public void setOpportunityMasterContact(List<OpportunityMasterContact> opportunityMasterContact) {
-        this.opportunityMasterContact = opportunityMasterContact;
+    public void setSelectedoppContanct(List<OpportunityMasterContact> selectedoppContanct) {
+        this.selectedoppContanct = selectedoppContanct;
     }
 
-   /* public OpportunitySummaryData getOpportunitySummaryData() {
+
+  /* public OpportunitySummaryData getOpportunitySummaryData() {
         return opportunitySummaryData;
     }
 
@@ -212,13 +212,16 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
             ", htmlContent='" + htmlContent + '\'' +
             ", fileUploadCommentList=" + fileUploadCommentList +
             ", selectedStrategyMaster=" + selectedStrategyMaster +
-            ", opportunityMasterContact=" + opportunityMasterContact +
-            ", opportunitySummaryData=" + opportunitySummaryData +
+            ", selectedoppContanct=" + selectedoppContanct +
+            ", financialSummaryData=" + financialSummaryData +
             ", fileUploads=" + fileUploads +
             ", masterName=" + masterName +
             ", strategyMapping=" + strategyMapping +
             '}';
     }*/
+
+
+
 
     @Override
 	public int hashCode() {

@@ -202,18 +202,5 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
             '}';
     }
 
-/* @Override
-    public String toString() {
-        return "StrategyMaster{" +
-            "id=" + getId() +
-            ", strategyCode='" + getStrategyCode() + "'" +
-            ", strategyName='" + getStrategyName() + "'" +
-            ", sStatus='" + getsStatus() + "'" +
-            ", dateActive='" + getDateActive() + "'" +
-            ", createdBy='" + getCreatedBy() + "'" +
-            ", updatedBy='" + getUpdatedBy() + "'" +
-            ", createdDate='" + getCreatedDate() + "'" +
-            ", updatedDate='" + getUpdatedDate() + "'" +
-            "}";
-    }*/
+
 }

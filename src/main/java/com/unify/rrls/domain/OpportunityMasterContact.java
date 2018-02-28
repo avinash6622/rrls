@@ -108,7 +108,7 @@ public class OpportunityMasterContact  extends AbstractAuditingEntity implements
         return Objects.hash(id, name, designation, email, contactnum, opportunityMasterId);
     }
 
-    @Override
+ /*   @Override
     public String toString() {
         return "OpportunityMasterContact{" +
             "id=" + id +
@@ -118,6 +118,6 @@ public class OpportunityMasterContact  extends AbstractAuditingEntity implements
             ", contactnum='" + contactnum + '\'' +
             ", opportunityMaster=" + opportunityMasterId +
             '}';
-    }
+    }*/
 }
 

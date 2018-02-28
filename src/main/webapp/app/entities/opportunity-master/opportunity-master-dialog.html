@@ -91,7 +91,7 @@
 
              <div class="form-group row">
              <label for="field_oppcontactName">Company Contact Details</label>
-             <fieldset ng-repeat="contact in vm.opportunityMaster.opportunityMasterContact">
+             <fieldset ng-repeat="contact in vm.opportunityMaster.selectedoppContanct">
               <div class="col-xs-3">
                   <input class="form-control" name="field_oppcontactName" id="field_oppcontactName" type="text" placeholder="Name" ng-model="contact.name">
             </div>

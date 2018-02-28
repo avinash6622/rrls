@@ -61,7 +61,7 @@ div.scrollmenu {
 			<span>Contact Details</span>
 		</dt>
 		<dd>
-			<span ng-repeat="contact in vm.opportunityMaster.opportunityMasterContact">
+			<span ng-repeat="contact in vm.opportunityMaster.selectedoppContanct">
 			Name :	{{contact.name}}</br>
 			Designation:	{{contact.designation}}</br>
 			Email:	{{contact.email}}</br>
@@ -369,7 +369,7 @@ div.scrollmenu {
                 <button  class="btn btn-primary" ng-click="submitTable(table)">Submit</button>
             </form>-->
 
-
+<!--
             <table id="mytable" class="table table-bordered">
 
                 <tr>
@@ -512,7 +512,153 @@ div.scrollmenu {
                 </tr>
 
                 </tbody>
+            </table>-->
+
+
+            <table id="mytable" class="table table-bordered">
+                <thead>
+
+                <tr class="headborder">
+                    <th style="width:5%;"></th>
+                    <th style="width:5%;">FY15</th>
+                    <th style="width:5%;">FY 16</th>
+                    <th style="width:5%;">FY 17</th>
+                    <th style="width:5%;">FY 18E</th>
+                    <th style="width:5%;">FY 19E</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td scope="col">Net Interest Income</td>
+                    <td><input name="netIntOne" ng-model="vm.opportunityMaster.financialSummaryData.netIntOne" ng-disabled="isDisabled"/> </td>
+                    <td><input name="netIntTwo" ng-model="vm.opportunityMaster.financialSummaryData.netIntTwo" ng-disabled="isDisabled"/> </td>
+                    <td><input name="netIntThree" ng-model="vm.opportunityMaster.financialSummaryData.netIntThree" ng-disabled="isDisabled"/></td>
+                    <td><input name="netIntFour" ng-model="vm.opportunityMaster.financialSummaryData.netIntFour" ng-disabled="isDisabled"/></td>
+                    <td><input name="netIntFive" ng-model="vm.opportunityMaster.financialSummaryData.netIntFive" ng-disabled="isDisabled"/></td>
+                </tr>
+
+                <tr>
+                    <td scope="col">Non Interest Income</td>
+                    <td><input name="nonIntOne" ng-model="vm.opportunityMaster.financialSummaryData.nonIntOne"  ng-disabled="isDisabled"/> </td>
+                    <td><input name="nonIntTwo" ng-model="vm.opportunityMaster.financialSummaryData.nonIntTwo" ng-disabled="isDisabled"/> </td>
+                    <td><input name="nonIntThree" ng-model="vm.opportunityMaster.financialSummaryData.nonIntThree" ng-disabled="isDisabled"/></td>
+                    <td><input name="nonIntFour" ng-model="vm.opportunityMaster.financialSummaryData.nonIntFour" ng-disabled="isDisabled"/></td>
+                    <td><input name="nonIntFive" ng-model="vm.opportunityMaster.financialSummaryData.nonIntFive" ng-disabled="isDisabled"/></td>
+                </tr>
+
+                <tr>
+                    <td scope="col">Total Income</td>
+                    <td><input name="totIncOne" ng-model="vm.opportunityMaster.financialSummaryData.totIncOne"  ng-disabled="isDisabled"/> </td>
+                    <td><input name="totIncTwo" ng-model="vm.opportunityMaster.financialSummaryData.totIncTwo" ng-disabled="isDisabled"/> </td>
+                    <td><input name="totIncThree" ng-model="vm.opportunityMaster.financialSummaryData.totIncThree" ng-disabled="isDisabled"/></td>
+                    <td><input name="totIncFour" ng-model="vm.opportunityMaster.financialSummaryData.totIncFour" ng-disabled="isDisabled"/></td>
+                    <td><input name="totIncFive" ng-model="vm.opportunityMaster.financialSummaryData.totIncFive" ng-disabled="isDisabled"/></td>
+                </tr>
+
+                <tr>
+                    <td scope="col">Operating Expenses</td>
+                    <td><input name="opExpOne" ng-model="vm.opportunityMaster.financialSummaryData.opExpOne"  ng-disabled="isDisabled"/> </td>
+                    <td><input name="opExpTwo" ng-model="vm.opportunityMaster.financialSummaryData.opExpTwo" ng-disabled="isDisabled"/> </td>
+                    <td><input name="opExpThree" ng-model="vm.opportunityMaster.financialSummaryData.opExpThree" ng-disabled="isDisabled"/></td>
+                    <td><input name="opExpFour" ng-model="vm.opportunityMaster.financialSummaryData.opExpFour" ng-disabled="isDisabled"/></td>
+                    <td><input name="opExpFive" ng-model="vm.opportunityMaster.financialSummaryData.opExpFive" ng-disabled="isDisabled"/></td>
+                </tr>
+
+                <tr>
+                    <td scope="col">Operating Profit</td>
+                    <td><input name="opProOne" ng-model="vm.opportunityMaster.financialSummaryData.opProOne"  ng-disabled="isDisabled"/> </td>
+                    <td><input name="opProTwo" ng-model="vm.opportunityMaster.financialSummaryData.opProTwo" ng-disabled="isDisabled"/> </td>
+                    <td><input name="opProThree" ng-model="vm.opportunityMaster.financialSummaryData.opProThree" ng-disabled="isDisabled"/></td>
+                    <td><input name="opProFour" ng-model="vm.opportunityMaster.financialSummaryData.opProFour" ng-disabled="isDisabled"/></td>
+                    <td><input name="opProFive" ng-model="vm.opportunityMaster.financialSummaryData.opProFive" ng-disabled="isDisabled"/></td>
+                </tr>
+
+
+                <tr>
+                    <td scope="col">Provisions</td>
+                    <td><input name="provisionsOne" ng-model="vm.opportunityMaster.financialSummaryData.provisionsOne"  ng-disabled="isDisabled"/> </td>
+                    <td><input name="provisionsTwo" ng-model="vm.opportunityMaster.financialSummaryData.provisionsTwo" ng-disabled="isDisabled"/> </td>
+                    <td><input name="provisionsThree" ng-model="vm.opportunityMaster.financialSummaryData.provisionsThree" ng-disabled="isDisabled"/></td>
+                    <td><input name="provisionsFour" ng-model="vm.opportunityMaster.financialSummaryData.provisionsFour" ng-disabled="isDisabled"/></td>
+                    <td><input name="provisionsFive" ng-model="vm.opportunityMaster.financialSummaryData.provisionsFive" ng-disabled="isDisabled"/></td>
+                </tr>
+
+                <tr>
+                    <td scope="col">PAT</td>
+                    <td><input name="patOne" ng-model="vm.opportunityMaster.financialSummaryData.patOne"  ng-disabled="isDisabled"/> </td>
+                    <td><input name="patTwo" ng-model="vm.opportunityMaster.financialSummaryData.patTwo" ng-disabled="isDisabled"/> </td>
+                    <td><input name="patThree" ng-model="vm.opportunityMaster.financialSummaryData.patThree" ng-disabled="isDisabled"/></td>
+                    <td><input name="patFour" ng-model="vm.opportunityMaster.financialSummaryData.patFour" ng-disabled="isDisabled"/></td>
+                    <td><input name="patFive" ng-model="vm.opportunityMaster.financialSummaryData.patFive" ng-disabled="isDisabled"/></td>
+                </tr>
+
+                <tr>
+                    <td scope="col">EPS</td>
+                    <td><input name="epsOne" ng-model="vm.opportunityMaster.financialSummaryData.epsOne"  ng-disabled="isDisabled"/> </td>
+                    <td><input name="epsTwo" ng-model="vm.opportunityMaster.financialSummaryData.epsTwo" ng-disabled="isDisabled"/> </td>
+                    <td><input name="epsThree" ng-model="vm.opportunityMaster.financialSummaryData.epsThree" ng-disabled="isDisabled"/></td>
+                    <td><input name="epsFour" ng-model="vm.opportunityMaster.financialSummaryData.epsFour" ng-disabled="isDisabled"/></td>
+                    <td><input name="epsFive" ng-model="vm.opportunityMaster.financialSummaryData.epsFive" ng-disabled="isDisabled"/></td>
+                </tr>
+
+                <tr>
+                    <td scope="col">Market Cap</td>
+                    <td><input name="marCapOne" ng-model="vm.opportunityMaster.financialSummaryData.marCapOne"  ng-disabled="isDisabled"/> </td>
+                    <td><input name="marCapTwo" ng-model="vm.opportunityMaster.financialSummaryData.marCapTwo" ng-disabled="isDisabled"/> </td>
+                    <td><input name="marCapThree" ng-model="vm.opportunityMaster.financialSummaryData.marCapThree" ng-disabled="isDisabled"/></td>
+                    <td><input name="marCapFour" ng-model="vm.opportunityMaster.financialSummaryData.marCapFour" ng-disabled="isDisabled"/></td>
+                    <td><input name="marCapFive" ng-model="vm.opportunityMaster.financialSummaryData.marCapFive" ng-disabled="isDisabled"/></td>
+                </tr>
+
+                <tr>
+                    <td scope="col">AUM</td>
+                    <td><input name="aumOne" ng-model="vm.opportunityMaster.financialSummaryData.aumOne"  ng-disabled="isDisabled"/> </td>
+                    <td><input name="aumTwo" ng-model="vm.opportunityMaster.financialSummaryData.aumTwo" ng-disabled="isDisabled"/> </td>
+                    <td><input name="aumThree" ng-model="vm.opportunityMaster.financialSummaryData.aumThree" ng-disabled="isDisabled"/></td>
+                    <td><input name="aumFour" ng-model="vm.opportunityMaster.financialSummaryData.aumFour" ng-disabled="isDisabled"/></td>
+                    <td><input name="aumFive" ng-model="vm.opportunityMaster.financialSummaryData.aumFive" ng-disabled="isDisabled"/></td>
+                </tr>
+
+                <tr>
+                    <td scope="col">Networth</td>
+                    <td><input name="networthOne" ng-model="vm.opportunityMaster.financialSummaryData.networthOne"  ng-disabled="isDisabled"/> </td>
+                    <td><input name="networthTwo" ng-model="vm.opportunityMaster.financialSummaryData.networthTwo"ng-disabled="isDisabled"/> </td>
+                    <td><input name="networthThree" ng-model="vm.opportunityMaster.financialSummaryData.networthThree" ng-disabled="isDisabled"/></td>
+                    <td><input name="networthFour" ng-model="vm.opportunityMaster.financialSummaryData.networthFour" ng-disabled="isDisabled"/></td>
+                    <td><input name="networthfive" ng-model="vm.opportunityMaster.financialSummaryData.networthfive" ng-disabled="isDisabled"/></td>
+                </tr>
+
+                <tr>
+                    <td scope="col">ROE</td>
+                    <td><input name="roeOne" ng-model="vm.opportunityMaster.financialSummaryData.roeOne"  ng-disabled="isDisabled"/> </td>
+                    <td><input name="roeTwo" ng-model="vm.opportunityMaster.financialSummaryData.roeTwo" ng-disabled="isDisabled"/> </td>
+                    <td><input name="roeThree" ng-model="vm.opportunityMaster.financialSummaryData.roeThree" ng-disabled="isDisabled"/></td>
+                    <td><input name="roeFour" ng-model="vm.opportunityMaster.financialSummaryData.roeFour" ng-disabled="isDisabled"/></td>
+                    <td><input name="roeFive" ng-model="vm.opportunityMaster.financialSummaryData.roeFive" ng-disabled="isDisabled"/></td>
+                </tr>
+
+                <tr>
+                    <td scope="col">P/BV</td>
+                    <td><input name="pbvOne" ng-model="vm.opportunityMaster.financialSummaryData.pbvOne"  ng-disabled="isDisabled"/> </td>
+                    <td><input name="pbvTwo" ng-model="vm.opportunityMaster.financialSummaryData.pbvTwo" ng-disabled="isDisabled"/> </td>
+                    <td><input name="pbvThree" ng-model="vm.opportunityMaster.financialSummaryData.pbvThree" ng-disabled="isDisabled"/></td>
+                    <td><input name="pbvFour" ng-model="vm.opportunityMaster.financialSummaryData.pbvFour" ng-disabled="isDisabled"/></td>
+                    <td><input name="pbvFive" ng-model="vm.opportunityMaster.financialSummaryData.pbvFive" ng-disabled="isDisabled"/></td>
+                </tr>
+
+
+                <tr>
+                    <td scope="col">P/E</td>
+                    <td><input name="peOne" ng-model="vm.opportunityMaster.financialSummaryData.peOne"  ng-disabled="isDisabled"/> </td>
+                    <td><input name="peTwo" ng-model="vm.opportunityMaster.financialSummaryData.peTwo" ng-disabled="isDisabled"/> </td>
+                    <td><input name="peThree" ng-model="vm.opportunityMaster.financialSummaryData.peThree" ng-disabled="isDisabled"/></td>
+                    <td><input name="peFour" ng-model="vm.opportunityMaster.financialSummaryData.peFour" ng-disabled="isDisabled"/></td>
+                    <td><input name="peFive" ng-model="vm.opportunityMaster.financialSummaryData.peFive" ng-disabled="isDisabled"/></td>
+                </tr>
+                </tbody>
             </table>
+
 
             <button  class="btn btn-primary" ng-click="submitTable()">Submit</button>
 

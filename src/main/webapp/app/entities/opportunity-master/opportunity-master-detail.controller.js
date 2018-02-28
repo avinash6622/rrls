@@ -71,13 +71,13 @@
 
         $scope.submitTable = function() {
 
-           console.log("DATA----->",vm.opportunityMaster.opportunitySummaryData);
+           console.log("DATA----->",vm.opportunityMaster.financialSummaryData);
 
 
 
             //console.log("bdsfjhj",tableValue);
 
-            OpportunityMaster.summarydatavalues(vm.opportunityMaster.opportunitySummaryData, function (resp) {
+            OpportunityMaster.summarydatavalues(vm.opportunityMaster.financialSummaryData, function (resp) {
                 console.log("safsdaf---->"+resp);
             }, function (err) {
                 console.log(err);

@@ -166,7 +166,7 @@ public class FinancialSummaryData implements Serializable{
 	private Double peFive;
 	@OneToOne
 	@JoinColumn(name = "opp_master_id")
-	private OpportunityMaster opportunityMaster;
+	private OpportunityMaster opportunityMasterId;
 	public Integer getId() {
 		return id;
 	}
@@ -593,14 +593,16 @@ public class FinancialSummaryData implements Serializable{
 	public void setPeFive(Double peFive) {
 		this.peFive = peFive;
 	}
-	public OpportunityMaster getOpportunityMaster() {
-		return opportunityMaster;
-	}
-	public void setOpportunityMaster(OpportunityMaster opportunityMaster) {
-		this.opportunityMaster = opportunityMaster;
-	}
-	
-	 @Override
+
+    public OpportunityMaster getOpportunityMasterId() {
+        return opportunityMasterId;
+    }
+
+    public void setOpportunityMasterId(OpportunityMaster opportunityMasterId) {
+        this.opportunityMasterId = opportunityMasterId;
+    }
+
+    @Override
 	    public boolean equals(Object o) {
 	        if (this == o) {
 	            return true;

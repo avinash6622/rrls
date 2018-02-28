@@ -108,12 +108,13 @@ public class OpportunityMasterResource {
 	private final StrategyMasterRepository strategyMasterRepository;
 	private final AdditionalFileUploadRepository additionalFileUploadRepository;
 	private final OpportunityMasterContactRepository opportunityMasterContactRepository;
-	private final OpportunitySummaryDataRepository opportunitySummaryDataRepository;
+	private final FinancialSummaryDataRepository financialSummaryDataRepository;
+
 
 	public OpportunityMasterResource(OpportunityMasterRepository opportunityMasterRepository,
 			FileUploadRepository fileUploadRepository, FileUploadCommentsRepository fileUploadCommentsRepository,
 			StrategyMappingRepository strategyMappingRepository,StrategyMasterRepository strategyMasterRepository,
-			AdditionalFileUploadRepository additionalFileUploadRepository,OpportunityMasterContactRepository opportunityMasterContactRepository,OpportunitySummaryDataRepository opportunitySummaryDataRepository) {
+			AdditionalFileUploadRepository additionalFileUploadRepository,OpportunityMasterContactRepository opportunityMasterContactRepository,FinancialSummaryDataRepository financialSummaryDataRepository) {
 		this.opportunityMasterRepository = opportunityMasterRepository;
 		this.fileUploadRepository = fileUploadRepository;
 		this.fileUploadCommentsRepository = fileUploadCommentsRepository;
@@ -121,7 +122,7 @@ public class OpportunityMasterResource {
 		this.strategyMasterRepository=strategyMasterRepository;
 		this.additionalFileUploadRepository=additionalFileUploadRepository;
 		this.opportunityMasterContactRepository=opportunityMasterContactRepository;
-		this.opportunitySummaryDataRepository=opportunitySummaryDataRepository;
+		this.financialSummaryDataRepository=financialSummaryDataRepository;
 	}
 
 	/**
@@ -219,46 +220,25 @@ public class OpportunityMasterResource {
 		}
 
 		OpportunityMaster result = opportunityMasterRepository.save(opportunityMaster);
+        System.out.println("sdfsdfsd--->"+result);
+
 
             /*for(OpportunityMasterContact opportunityMasterContact:opportunityMaster.getOpportunityMasterContact())
+
+     /*   for(OpportunityMasterContact oC:opportunityMaster.getSelectedoppContanct())
              {
-                  opportunityMasterContact.setOpportunityMasterId(result);
-                  opportunityMasterContactRepository.save(opportunityMasterContact);
+                 oC.setOpportunityMasterId(result);
+                 System.out.println(oC);
+                  opportunityMasterContactRepository.save(oC);
 
              }*/
-	/*	opportunityMasterContact.setName(opportunityMaster.getOpportunityMasterContact().getName());
-		opportunityMasterContact.setDesignation(opportunityMaster.getOpportunityMasterContact().getDesignation());
-        opportunityMasterContact.setEmail(opportunityMaster.getOpportunityMasterContact().getEmail());
-        opportunityMasterContact.setContactnum(opportunityMaster.getOpportunityMasterContact().getContactnum());
-        opportunityMasterContact.setOpportunityMasterId(result);*/
 
-     /*   OpportunitySummaryData opportunitySummaryData = new OpportunitySummaryData();
-        opportunitySummaryData.setbWeight(opportunityMaster.getOpportunitySummaryData().getbWeight());
-        opportunitySummaryData.setCmp(opportunityMaster.getOpportunitySummaryData().getCmp());
-        opportunitySummaryData.setMarketCap(opportunityMaster.getOpportunitySummaryData().getMarketCap());
-        opportunitySummaryData.setPatSecondYear(opportunityMaster.getOpportunitySummaryData().getPatSecondYear());
-        opportunitySummaryData.setPatThirdYear(opportunityMaster.getOpportunitySummaryData().getPatThirdYear());
-        opportunitySummaryData.setPatFourthYear(opportunityMaster.getOpportunitySummaryData().getPatFourthYear());
-        opportunitySummaryData.setPeSecondYear(opportunityMaster.getOpportunitySummaryData().getPeSecondYear());
-        opportunitySummaryData.setPeThirdYear(opportunityMaster.getOpportunitySummaryData().getPeThirdYear());
-        opportunitySummaryData.setPeFourthYear(opportunityMaster.getOpportunitySummaryData().getPeFourthYear());
-        opportunitySummaryData.setRoeThirdYear(opportunityMaster.getOpportunitySummaryData().getRoeThirdYear());
-        opportunitySummaryData.setRoeFourthYear(opportunityMaster.getOpportunitySummaryData().getRoeFourthYear());
-        opportunitySummaryData.setDeThirdColour(opportunityMaster.getOpportunitySummaryData().getDeThirdColour());
-        opportunitySummaryData.setPatGrowthThird(opportunityMaster.getOpportunitySummaryData().getPatGrowthThird());
-        opportunitySummaryData.setPatGrowthFourth(opportunityMaster.getOpportunitySummaryData().getPatGrowthFourth());
-        opportunitySummaryData.setPortPeSecond(opportunityMaster.getOpportunitySummaryData().getPortPeSecond());
-        opportunitySummaryData.setPortPeThird(opportunityMaster.getOpportunitySummaryData().getPortPeThird());
-        opportunitySummaryData.setEarningsThird(opportunityMaster.getOpportunitySummaryData().getEarningsThird());
-        opportunitySummaryData.setEarningsFourth(opportunityMaster.getOpportunitySummaryData().getEarningsFourth());
-        opportunitySummaryData.setWtAvgCap(opportunityMaster.getOpportunitySummaryData().getWtAvgCap());
-        opportunitySummaryData.setRoe(opportunityMaster.getOpportunitySummaryData().getRoe());
-        opportunitySummaryData.setPegOj(opportunityMaster.getOpportunitySummaryData().getPegOj());
-        opportunitySummaryData.setPegYearPeg(opportunityMaster.getOpportunitySummaryData().getPegYearPeg());
-        opportunitySummaryData.setOpportunityMasterid(result);
-        opportunitySummaryDataRepository.save(opportunitySummaryData);*/
-       /* result1.setOpportunityMaster(result);
-        opportunitySummaryDataRepository.save(result1);*/
+         FinancialSummaryData summaryData = opportunityMaster.getFinancialSummaryData();
+         summaryData.setOpportunityMasterId(result);
+         financialSummaryDataRepository.save(summaryData);
+
+
+
 
 		for(StrategyMaster sm:opportunityMaster.getSelectedStrategyMaster())
 		{
@@ -273,7 +253,9 @@ public class OpportunityMasterResource {
 				.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
 	}
 
-	/**
+
+
+    /**
 	 * PUT /opportunity-masters : Updates an existing opportunityMaster.
 	 *
 	 * @param opportunityMaster
@@ -309,7 +291,7 @@ public class OpportunityMasterResource {
 			strategyMappingRepository.save(strategyMap);
 
 		}}
-		opportunityMasterContactRepository.save(opportunityMasters.getOpportunityMasterContact());
+		opportunityMasterContactRepository.save(opportunityMasters.getSelectedoppContanct());
 
 		OpportunityMaster result = opportunityMasterRepository.save(opportunityMasters);
 		return ResponseEntity.ok()
@@ -534,7 +516,7 @@ public class OpportunityMasterResource {
 		List<StrategyMaster> strategyMasters =new ArrayList<StrategyMaster>();
 		List<OpportunityMasterContact> opportunityMasterContacts =  opportunityMasterContactRepository.findByOpportunityMasterId(opportunityMaster);
         System.out.println("CONTACT---->"+opportunityMasterContacts);
-        opportunityMaster.setOpportunityMasterContact(opportunityMasterContacts);
+        opportunityMaster.setSelectedoppContanct(opportunityMasterContacts);
         System.out.println("MAPPING----->"+strategyMappings);
         for(StrategyMapping sms:strategyMappings){
             strategyMasters.add(sms.getStrategyMaster());
@@ -543,8 +525,8 @@ public class OpportunityMasterResource {
 		//opportunityMaster.setStrategyMapping(strategyMappings);
 		//OpportunityMasterContact opportunityMasterContact = opportunityMasterContactRepository.findByOpportunityMasterId(opportunityMaster);
 		//opportunityMaster.setOpportunityMasterContact(opportunityMasterContact);
-/*		OpportunitySummaryData opportunitySummaryData = opportunitySummaryDataRepository.findByOpportunityMasterid(opportunityMaster);
-		opportunityMaster.setOpportunitySummaryData(opportunitySummaryData);*/
+		FinancialSummaryData summaryData = financialSummaryDataRepository.findByOpportunityMasterId(opportunityMaster);
+		opportunityMaster.setFinancialSummaryData(summaryData);
 		List<FileUploadComments> fileComments = fileUploadCommentsRepository.findByOpportunityMaster(opportunityMaster);
 		opportunityMaster.setFileUploadCommentList(fileComments);
 		if (!fileUploads.isEmpty()) {

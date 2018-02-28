@@ -11,7 +11,7 @@
         var vm = this;
 
         vm.opportunityMaster = entity;
-        vm.opportunityMaster.opportunityMasterContact = vm.opportunityMaster.opportunityMasterContact ? vm.opportunityMaster.opportunityMasterContact : [{}];
+        vm.opportunityMaster.selectedoppContanct = vm.opportunityMaster.selectedoppContanct ? vm.opportunityMaster.selectedoppContanct : [{}];
      //   console.log(vm.opportunityMaster.opportunityMasterContact.length);
 
 
@@ -33,7 +33,7 @@
 
 
       $scope.addContact = function() {
-          vm.opportunityMaster.opportunityMasterContact.push({
+          vm.opportunityMaster.selectedoppContanct.push({
             })
         }
 
