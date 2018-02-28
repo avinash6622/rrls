@@ -109,12 +109,14 @@ public class OpportunityMasterResource {
 	private final AdditionalFileUploadRepository additionalFileUploadRepository;
 	private final OpportunityMasterContactRepository opportunityMasterContactRepository;
 	private final FinancialSummaryDataRepository financialSummaryDataRepository;
+	private final NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository;
 
 
 	public OpportunityMasterResource(OpportunityMasterRepository opportunityMasterRepository,
 			FileUploadRepository fileUploadRepository, FileUploadCommentsRepository fileUploadCommentsRepository,
 			StrategyMappingRepository strategyMappingRepository,StrategyMasterRepository strategyMasterRepository,
-			AdditionalFileUploadRepository additionalFileUploadRepository,OpportunityMasterContactRepository opportunityMasterContactRepository,FinancialSummaryDataRepository financialSummaryDataRepository) {
+			AdditionalFileUploadRepository additionalFileUploadRepository,OpportunityMasterContactRepository opportunityMasterContactRepository,FinancialSummaryDataRepository financialSummaryDataRepository
+    ,NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository) {
 		this.opportunityMasterRepository = opportunityMasterRepository;
 		this.fileUploadRepository = fileUploadRepository;
 		this.fileUploadCommentsRepository = fileUploadCommentsRepository;
@@ -123,6 +125,7 @@ public class OpportunityMasterResource {
 		this.additionalFileUploadRepository=additionalFileUploadRepository;
 		this.opportunityMasterContactRepository=opportunityMasterContactRepository;
 		this.financialSummaryDataRepository=financialSummaryDataRepository;
+		this.nonFinancialSummaryDataRepository=nonFinancialSummaryDataRepository;
 	}
 
 	/**
@@ -223,19 +226,23 @@ public class OpportunityMasterResource {
         System.out.println("sdfsdfsd--->"+result);
 
 
-            /*for(OpportunityMasterContact opportunityMasterContact:opportunityMaster.getOpportunityMasterContact())
+            /*for(OpportunityMasterContact opportunityMasterContact:opportunityMaster.getOpportunityMasterContact())*/
 
-     /*   for(OpportunityMasterContact oC:opportunityMaster.getSelectedoppContanct())
+      for(OpportunityMasterContact oC:opportunityMaster.getSelectedoppContanct())
              {
                  oC.setOpportunityMasterId(result);
                  System.out.println(oC);
                   opportunityMasterContactRepository.save(oC);
 
-             }*/
+             }
 
-         FinancialSummaryData summaryData = opportunityMaster.getFinancialSummaryData();
+      /*   FinancialSummaryData summaryData = opportunityMaster.getFinancialSummaryData();
          summaryData.setOpportunityMasterId(result);
-         financialSummaryDataRepository.save(summaryData);
+         financialSummaryDataRepository.save(summaryData);*/
+
+         NonFinancialSummaryData nonFinancialSummaryData=opportunityMaster.getNonFinancialSummaryData();
+         nonFinancialSummaryData.setOpportunityMaster(result);
+         nonFinancialSummaryDataRepository.save(nonFinancialSummaryData);
 
 
 
@@ -527,6 +534,8 @@ public class OpportunityMasterResource {
 		//opportunityMaster.setOpportunityMasterContact(opportunityMasterContact);
 		FinancialSummaryData summaryData = financialSummaryDataRepository.findByOpportunityMasterId(opportunityMaster);
 		opportunityMaster.setFinancialSummaryData(summaryData);
+		NonFinancialSummaryData nonFinancialSummaryData=nonFinancialSummaryDataRepository.findByOpportunityMaster(opportunityMaster);
+		opportunityMaster.setNonFinancialSummaryData(nonFinancialSummaryData);
 		List<FileUploadComments> fileComments = fileUploadCommentsRepository.findByOpportunityMaster(opportunityMaster);
 		opportunityMaster.setFileUploadCommentList(fileComments);
 		if (!fileUploads.isEmpty()) {
