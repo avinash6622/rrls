@@ -36,7 +36,10 @@
           vm.opportunityMaster.selectedoppContanct.push({
             })
         }
-
+      $scope.removeContact = function(contactToRemove) {
+    	  var index = this.vm.opportunityMaster.selectedoppContanct.indexOf(contactToRemove);
+    	  this.vm.opportunityMaster.selectedoppContanct.splice(index, 1);
+        }
         // Editor options.
         $scope.options = {
             language: 'en',
