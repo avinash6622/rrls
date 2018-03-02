@@ -20,6 +20,7 @@
     <!-- endbuild -->
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="manifest" href="mianifest.webapp" />
+    <link href="bower_components/angular-auto-complete/angular-auto-complete.css" rel="stylesheet" type="text/css"/>
 </head>
 <body ng-app="researchRepositoryLearningSystemApp" ng-strict-di>
     <!--[if lt IE 9]>
@@ -77,12 +78,19 @@
     <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
     <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
     <script src="bower_components/angular-ckeditor/angular-ckeditor.min.js"></script>
+    <script src="bower_components/underscore/underscore-min.js"></script>
+    <script src="bower_components/angular-auto-complete/angular-auto-complete.js"></script>
     <script src="content/lib/ckeditor/ckeditor.js"></script>
     <script src="content/lib/ckeditor/plugins/ajax/ajax.js"></script>
     <script src="content/lib/excel-library/Blob.js"></script>
     <script src="content/lib/excel-library/canvas-datagrid.js"></script>
     <script src="content/lib/excel-library/FileSaver.js"></script>
     <script src="content/lib/excel-library/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+
+
+
+
     <!-- endinject -->
     <!-- endbuild -->
 
@@ -204,6 +212,8 @@
     <script src="app/account/activate/activate.controller.js"></script>
     <script src="app/account/account.state.js"></script>
     <script src="app/components/autocomplete/autocomplete.directive.js"></script>
+
+
     <!-- endinject -->
     <!-- endbuild -->
 

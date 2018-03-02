@@ -72,7 +72,7 @@
         }
 
         function onSuccess(data, headers) {
-            vm.links = ParseLinks.parse(headers('link'));
+            vm.links = headers('link') ? ParseLinks.parse(headers('link')) : vm.links;
             vm.totalItems = headers('X-Total-Count');
             for (var i = 0; i < data.length; i++) {
                 vm.opportunityMasters.push(data[i]);

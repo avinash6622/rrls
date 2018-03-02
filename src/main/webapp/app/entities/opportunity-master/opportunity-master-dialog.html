@@ -26,11 +26,21 @@
 
          <div class="form-group">
            <label for="field_opportunityMasterName">Opportuntiy Name</label>
-            <select class="form-control" name="masterName" id="field_opportunityMasterName" ng-model="vm.opportunityMaster.masterName" ng-options="opportunityName as opportunityName.oppName for opportunityName in vm.opportunityNames track by opportunityName.id">
+            <select class="form-control"  name="masterName" id="field_opportunityMasterName" auto-complete="autoCompleteOptions"   ng-model="vm.opportunityMaster.masterName" ng-options="opportunityName as opportunityName.oppName for opportunityName in vm.opportunityNames track by opportunityName.id">
                 <option value="">Select Name</option>
             </select>
+         </div>
 
+        <div class="form-group">
+            <label for="field_opportunityMasterName">Opportuntiy Name</label>
+            <input type="text"
+                   ng-model="vm.opportunityMaster.masterName"
+                   placeholder="USA State Name. Try 'a' or 'n'"
+                   auto-complete="vm.autoCompleteOptions"/>
         </div>
+
+
+
         <div class="form-group">
             <label class="control-label" for="field_sectorType">Sector</label>
             <input type="text" id="field_sectorType"class="form-control" placeholder="Sector"
@@ -268,7 +278,7 @@
                 <div class="form-group" ng-if="vm.opportunityMaster.masterName.sectorType != 'Finance (including NBFCs)'">
 
                     <label class="control-label">Summary Data</label>
-                    <table id="mytable" class="table table-bordered">
+                    <table id="mytable1" class="table table-bordered">
                         <thead>
 
                         <tr class="headborder">

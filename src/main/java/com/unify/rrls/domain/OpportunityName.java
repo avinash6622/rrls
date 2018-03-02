@@ -29,11 +29,17 @@ public class OpportunityName implements Serializable {
 
     @Column(name = "opp_name")
     private String oppName;
-    
+
     @Column(name = "sector_type")
     private String sectorType;
 
-   
+    @Column(name="security_code")
+    private String securityCode;
+
+    @Column(name="segment")
+    private String segment;
+
+
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -60,15 +66,30 @@ public class OpportunityName implements Serializable {
     public String getSectorType() {
 		return sectorType;
 	}
-    
+
     public void setSectorType(String sectorType) {
 		this.sectorType = sectorType;
 	}
-  
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    public String getSecurityCode() {
+        return securityCode;
+    }
 
-    @Override
+    public void setSecurityCode(String securityCode) {
+        this.securityCode = securityCode;
+    }
+
+    public String getSegment() {
+        return segment;
+    }
+
+    public void setSegment(String segment) {
+        this.segment = segment;
+    }
+
+// jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+/*    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -86,6 +107,23 @@ public class OpportunityName implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());
+    }*/
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OpportunityName that = (OpportunityName) o;
+        return Objects.equals(id, that.id) &&
+            Objects.equals(oppName, that.oppName) &&
+            Objects.equals(sectorType, that.sectorType) &&
+            Objects.equals(securityCode, that.securityCode) &&
+            Objects.equals(segment, that.segment);
     }
 
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, oppName, sectorType, securityCode, segment);
+    }
 }
