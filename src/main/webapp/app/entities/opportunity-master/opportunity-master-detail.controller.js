@@ -55,7 +55,7 @@
 
         };
 
-        $scope.fileformat = ["Presentation", "Excel model", "Quarterly updates","Miscellaneous"];
+        $scope.fileformat = ["Presentation", "Excel Model", "Quarterly Updates","Miscellaneous"];
 
         $scope.getselectval = function () {
            console.log('Name: ' + $scope.selitem);
@@ -90,8 +90,15 @@
             $scope.isDisabled = false;
 
         }
+        
+        $scope.updateSum = function() {
+            $scope.sumVal = ($scope.vm.opportunityMaster.financialSummaryData.netIntOne * 1) + ($scope.vm.opportunityMaster.financialSummaryData.nonIntOne * 1);
+          }
 
-
+        $scope.getTotal = function(val1, val2) {
+        	var result = parseFloat(val1) + parseFloat(val2);
+        	return result;
+        };
 
         $scope.isDisabled = true;
 

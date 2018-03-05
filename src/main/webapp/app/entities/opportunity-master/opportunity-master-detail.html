@@ -1,6 +1,5 @@
 <!-- <form name="editForm" role="form" novalidate ng-submit="vm.saveWithUpload()" show-validation> -->
-<html>
-<head>
+
 <style>
 .actionBox {
 	border-top: 1px dotted #bbb;
@@ -38,8 +37,7 @@ div.scrollmenu {
 
 
 </style>
-</head>
-</html>
+
 <div>
 	<!--   <h2><span>Opportunity Master</span> {{vm.opportunityMaster.id}}</h2> -->
 	<h2>{{vm.opportunityMaster.masterName.oppName}}</h2> <div class="text-danger text-right ng-binding text-bold">{{vm.opportunityMaster.oppStatus}}</div>
@@ -180,12 +178,6 @@ div.scrollmenu {
                 </div>
             </div>
 
-
-
-
-
-
-
         <dt ng-show="vm.htmlContent">
 			<span>Document</span>
 		</dt>
@@ -292,9 +284,10 @@ div.scrollmenu {
 
         <dt>
             <span>Summary Data</span>
-            <button class="btn btn-primary"  ng-click="ok()">Edit</button>
+            <button class="btn btn-primary" ng-if="isDisabled" ng-click="ok()">Edit</button>
+            <button class="btn btn-warning" ng-if="!isDisabled" ng-click="isDisabled = true">Cancel</button>
         </dt>
-        <dd>
+        <div>
 
 <div ng-show="vm.opportunityMaster.masterName.sectorType">
         <div  class="form-group" ng-if="vm.opportunityMaster.masterName.sectorType == 'Finance (including NBFCs)'">
@@ -317,7 +310,7 @@ div.scrollmenu {
                 <tbody>
                 <tr>
                     <td scope="col">Net Interest Income</td>
-                    <td><input name="netIntOne" ng-model="vm.opportunityMaster.financialSummaryData.netIntOne" ng-disabled="isDisabled"/> </td>
+                    <td><input name="netIntOne" ng-model="vm.opportunityMaster.financialSummaryData.netIntOne" ng-change="updateSum()" ng-disabled="isDisabled"/> </td>
                     <td><input name="netIntTwo" ng-model="vm.opportunityMaster.financialSummaryData.netIntTwo" ng-disabled="isDisabled"/> </td>
                     <td><input name="netIntThree" ng-model="vm.opportunityMaster.financialSummaryData.netIntThree" ng-disabled="isDisabled"/></td>
                     <td><input name="netIntFour" ng-model="vm.opportunityMaster.financialSummaryData.netIntFour" ng-disabled="isDisabled"/></td>
@@ -335,11 +328,11 @@ div.scrollmenu {
 
                 <tr>
                     <td scope="col">Total Income</td>
-                    <td><input name="totIncOne" ng-model="vm.opportunityMaster.financialSummaryData.totIncOne"  ng-disabled="isDisabled"/> </td>
+                    <td><input name="totIncOne" ng-model="vm.opportunityMaster.financialSummaryData.totIncOne" ng-disabled="isDisabled"/> </td>
                     <td><input name="totIncTwo" ng-model="vm.opportunityMaster.financialSummaryData.totIncTwo" ng-disabled="isDisabled"/> </td>
                     <td><input name="totIncThree" ng-model="vm.opportunityMaster.financialSummaryData.totIncThree" ng-disabled="isDisabled"/></td>
                     <td><input name="totIncFour" ng-model="vm.opportunityMaster.financialSummaryData.totIncFour" ng-disabled="isDisabled"/></td>
-                    <td><input name="totIncFive" ng-model="vm.opportunityMaster.financialSummaryData.totIncFive" ng-disabled="isDisabled"/></td>
+                    <td><input name="totIncFive" ng-model="vm.opportunityMaster.financialSummaryData.totIncFive" ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntOne, vm.opportunityMaster.financialSummaryData.nonIntOne)" ng-disabled="true"/></td>
                 </tr>
 
                 <tr>
@@ -450,7 +443,7 @@ div.scrollmenu {
 
                 <tr>
                     <th style="width:15%;"></th>
-                    <th style="width:15%;">FY15</th>
+                    <th style="width:15%;">FY 15</th>
                     <th style="width:15%;">FY 16</th>
                     <th style="width:15%;">FY 17</th>
                     <th style="width:15%;">FY 18E</th>
@@ -593,7 +586,7 @@ div.scrollmenu {
 
             <button  class="btn btn-primary" ng-click="submitTable()">Submit</button>
 
-        </dd>
+        </div>
 
 
 	</dl>
