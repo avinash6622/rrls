@@ -72,10 +72,9 @@
     	  this.vm.opportunityMaster.selectedoppContanct.splice(index, 1);
         }
       $scope.getTotal = function(val1, val2) {
-      	var result = parseFloat(val1) + parseFloat(val2);
-      	console.log(result);
-      	result = (isNaN(result)) ?  (result) : '';
-      	console.log(result);
+      	var result = parseFloat(val1) + parseFloat(val2);      	
+      	/*result = (isNaN(result)) ?  (result) : '';*/
+      	
       	return result;
       };
         // Editor options.
