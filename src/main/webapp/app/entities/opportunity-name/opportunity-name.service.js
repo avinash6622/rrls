@@ -15,11 +15,31 @@
                 method: 'GET',
                 transformResponse: function (data) {
                     if (data) {
-                        data = angular.fromJson(data);                       
+                        data = angular.fromJson(data);
                     }
+                    console.log("DATA----->"+data);
                     return data;
                 }
-            }
+            },
+            'update': {
+                method: 'PUT',
+                transformRequest: function (data) {
+               /*     var copy = angular.copy(data);
+                    copy.createdDate = DateUtils.convertLocalDateToServer(copy.createdDate);*/
+                    return angular.toJson(data);
+                }
+            },
+            'save': {
+                method: 'POST',
+                transformRequest: function (data) {
+
+                   /* var copy = angular.copy(data);
+                    copy.createdDate = DateUtils.convertLocalDateToServer(copy.createdDate);*/
+
+                    return angular.toJson(data);
+                }
+            },
+
         });
     }
 })();

@@ -5,61 +5,48 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('OpportunityNameController', OpportunityNameController);
 
-    OpportunityNameController.$inject = ['OpportunityName', 'ParseLinks', 'AlertService', 'paginationConstants'];
+    OpportunityNameController.$inject = ['OpportunityName', 'ParseLinks', 'AlertService', 'paginationConstants','entity'];
 
-    function OpportunityNameController(OpportunityName, ParseLinks, AlertService, paginationConstants) {
+    function OpportunityNameController(OpportunityName, ParseLinks, AlertService, paginationConstants,entity) {
 
         var vm = this;
 
-        vm.opportunityNames = [];
-        vm.loadPage = loadPage;
+        vm.opportunityNames = entity;
+
+        vm.save = save;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
         vm.page = 0;
         vm.links = {
             last: 0
         };
         vm.predicate = 'id';
-        vm.reset = reset;
         vm.reverse = true;
 
-        loadAll();
 
-        function loadAll () {
-        	OpportunityName.query({
-                page: vm.page,
-                size: vm.itemsPerPage,
-                sort: sort()
-            }, onSuccess, onError);
-            function sort() {
-                var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
-                if (vm.predicate !== 'id') {
-                    result.push('id');
-                }
-                return result;
-            }
+        function save () {
+            vm.isSaving = true;
 
-            function onSuccess(data, headers) {
-                vm.links = ParseLinks.parse(headers('link'));
-                vm.totalItems = headers('X-Total-Count');
-                for (var i = 0; i < data.length; i++) {
-                    vm.opportunityNames.push(data[i]);
-                }
-            }
 
-            function onError(error) {
-                AlertService.error(error.data.message);
+            console.log("ndksjangkjshagn",vm.opportunityNames);
+            if (vm.opportunityNames.id !== null) {
+                OpportunityName.update(vm.opportunityMaster, onSaveSuccess, onSaveError);
+            } else {
+                OpportunityName.save(vm.opportunityNames, onSaveSuccess, onSaveError);
             }
         }
 
-        function reset () {
-            vm.page = 0;
-            vm.opportunityNames = [];
-            loadAll();
+
+        function onSaveSuccess (result) {
+           //$scope.$emit('researchRepositoryLearningSystemApp:opportunityMasterUpdate', result);
+            vm.isSaving = false;
         }
 
-        function loadPage(page) {
-            vm.page = page;
-            loadAll();
+        function onSaveError () {
+            vm.isSaving = false;
         }
+
+
+
+
     }
 })();

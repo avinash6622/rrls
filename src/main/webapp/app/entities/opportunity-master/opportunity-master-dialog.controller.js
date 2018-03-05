@@ -5,17 +5,14 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('OpportunityMasterDialogController', OpportunityMasterDialogController);
 
-    OpportunityMasterDialogController.$inject = ['$timeout', '$scope', '$state', '$stateParams', 'entity', 'Upload', 'OpportunityMaster', 'StrategyMaster', 'OpportunityName'];
+    OpportunityMasterDialogController.$inject = ['$timeout', '$scope', '$state', '$stateParams', '$http', 'entity', 'Upload', 'OpportunityMaster', 'StrategyMaster', 'OpportunityName'];
 
-    function OpportunityMasterDialogController ($timeout, $scope, $state, $stateParams, entity, Upload, OpportunityMaster, StrategyMaster, OpportunityName) {
+    function OpportunityMasterDialogController ($timeout, $scope, $state, $stateParams,$http, entity, Upload,  OpportunityMaster, StrategyMaster, OpportunityName) {
         var vm = this;
 
         vm.opportunityMaster = entity;
         vm.opportunityMaster.selectedoppContanct = vm.opportunityMaster.selectedoppContanct ? vm.opportunityMaster.selectedoppContanct : [{}];
-     //   console.log(vm.opportunityMaster.opportunityMasterContact.length);
 
-
-      /*  vm.opportunityMaster.opportunityMasterContact = [{}];*/
         vm.clear = clear;
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
@@ -28,7 +25,41 @@
         vm.readOnly = false;
 
 
-        console.log("SELECTED------>",vm.opportunityMaster);
+        console.log("SELECTED------>",vm.opportunityNames);
+
+     // var name= vm.opportunityNames;
+        vm.autoCompleteOptions = {
+            minimumChars: 1,
+            data: function (searchText) {
+                return $http.get('api/opportunity-names')
+                    .then(function (response) {
+                        searchText = searchText.toUpperCase();
+
+                        // ideally filtering should be done on the server
+                        var states = _.filter(response.data, function (state) {
+                            return state.oppName.startsWith(searchText);
+
+                        });
+
+                        return _.pluck(states, 'oppName');
+                    });
+            },
+         /*   renderItem: function (item) {
+                console.log(item);
+
+            },*/
+
+            itemSelected: function (e) {
+                console.log(e);
+
+
+              //  state.airport = e.item;
+            }
+        }
+
+
+
+
 
 
 
@@ -40,6 +71,13 @@
     	  var index = this.vm.opportunityMaster.selectedoppContanct.indexOf(contactToRemove);
     	  this.vm.opportunityMaster.selectedoppContanct.splice(index, 1);
         }
+      $scope.getTotal = function(val1, val2) {
+      	var result = parseFloat(val1) + parseFloat(val2);
+      	console.log(result);
+      	result = (isNaN(result)) ?  (result) : '';
+      	console.log(result);
+      	return result;
+      };
         // Editor options.
         $scope.options = {
             language: 'en',
@@ -108,8 +146,8 @@
                 });
             }
         }
-        
-       
+
+
         function selectFile (file) {
             vm.opportunityMaster.fileUpload = file;
         }
