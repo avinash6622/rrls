@@ -1,8 +1,11 @@
 package com.unify.rrls.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.unify.rrls.domain.OpportunityMaster;
+import com.unify.rrls.domain.OpportunitySummaryData;
 import com.unify.rrls.domain.StrategyMaster;
 
+import com.unify.rrls.repository.OpportunitySummaryDataRepository;
 import com.unify.rrls.repository.StrategyMasterRepository;
 import com.unify.rrls.web.rest.util.HeaderUtil;
 import com.unify.rrls.web.rest.util.PaginationUtil;
@@ -36,9 +39,11 @@ public class StrategyMasterResource {
     private static final String ENTITY_NAME = "strategyMaster";
 
     private final StrategyMasterRepository strategyMasterRepository;
+    private final OpportunitySummaryDataRepository opportunitySummaryDataRepository;
 
-    public StrategyMasterResource(StrategyMasterRepository strategyMasterRepository) {
+    public StrategyMasterResource(StrategyMasterRepository strategyMasterRepository,OpportunitySummaryDataRepository opportunitySummaryDataRepository) {
         this.strategyMasterRepository = strategyMasterRepository;
+        this.opportunitySummaryDataRepository=opportunitySummaryDataRepository;
     }
 
     /**
@@ -109,6 +114,10 @@ public class StrategyMasterResource {
     public ResponseEntity<StrategyMaster> getStrategyMaster(@PathVariable Long id) {
         log.debug("REST request to get StrategyMaster : {}", id);
         StrategyMaster strategyMaster = strategyMasterRepository.findOne(id);
+
+        List<OpportunitySummaryData> opportunitySummaryData = opportunitySummaryDataRepository.findByStrategyMasterId(strategyMaster);
+        strategyMaster.setOpportunitySummaryData(opportunitySummaryData);
+
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(strategyMaster));
     }
 

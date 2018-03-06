@@ -13,6 +13,8 @@
         vm.strategyMaster = entity;
         vm.previousState = previousState.name;
 
+        console.log("Strategy----->",vm.strategyMaster);
+
         var unsubscribe = $rootScope.$on('researchRepositoryLearningSystemApp:strategyMasterUpdate', function(event, result) {
             vm.strategyMaster = result;
         });

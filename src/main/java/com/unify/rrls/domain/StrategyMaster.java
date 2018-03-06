@@ -1,5 +1,6 @@
 package com.unify.rrls.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -39,6 +41,10 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
 
     @Column(name = "date_active")
     private LocalDate dateActive;
+
+    @Transient
+    @JsonProperty
+    private List<OpportunitySummaryData> opportunitySummaryData;
 /*
    @Size(max = 50)
     @Column(name = "created_by", length = 50)
@@ -116,7 +122,13 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
         this.dateActive = dateActive;
     }
 
+    public List<OpportunitySummaryData> getOpportunitySummaryData() {
+        return opportunitySummaryData;
+    }
 
+    public void setOpportunitySummaryData(List<OpportunitySummaryData> opportunitySummaryData) {
+        this.opportunitySummaryData = opportunitySummaryData;
+    }
  /*public String getCreatedBy() {
         return createdBy;
     }

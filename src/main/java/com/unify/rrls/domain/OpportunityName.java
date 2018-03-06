@@ -39,6 +39,9 @@ public class OpportunityName implements Serializable {
     @Column(name="segment")
     private String segment;
 
+    @Column(name="security_id")
+    private String securityId;
+
 
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -87,6 +90,13 @@ public class OpportunityName implements Serializable {
         this.segment = segment;
     }
 
+    public String getSecurityId() {
+        return securityId;
+    }
+
+    public void setSecurityId(String securityId) {
+        this.securityId = securityId;
+    }
 // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
 /*    @Override
@@ -118,12 +128,13 @@ public class OpportunityName implements Serializable {
             Objects.equals(oppName, that.oppName) &&
             Objects.equals(sectorType, that.sectorType) &&
             Objects.equals(securityCode, that.securityCode) &&
-            Objects.equals(segment, that.segment);
+            Objects.equals(segment, that.segment) &&
+            Objects.equals(securityId, that.securityId);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, oppName, sectorType, securityCode, segment);
+        return Objects.hash(id, oppName, sectorType, securityCode, segment, securityId);
     }
 }
