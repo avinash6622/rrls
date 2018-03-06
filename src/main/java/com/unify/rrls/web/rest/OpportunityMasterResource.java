@@ -242,10 +242,33 @@ public class OpportunityMasterResource {
       	FinancialSummaryData summaryData = opportunityMaster.getFinancialSummaryData();
          summaryData.setOpportunityMasterId(result);
          financialSummaryDataRepository.save(summaryData);
+          for(StrategyMaster sm:opportunityMaster.getSelectedStrategyMaster())
+          {
+            OpportunitySummaryData opportunitySummaryData=new OpportunitySummaryData();
+            opportunitySummaryData.setPatFirstYear(summaryData.getPatOne());
+            opportunitySummaryData.setPatSecondYear(summaryData.getPatTwo());
+            opportunitySummaryData.setPatThirdYear(summaryData.getPatThree());
+            opportunitySummaryData.setPatFourthYear(summaryData.getPatFour());
+            opportunitySummaryData.setPatFifthYear(summaryData.getPatFive());
+            opportunitySummaryData.setMarketCap(summaryData.getMarCapThree());
+            opportunitySummaryData.setRoeFirstYear(summaryData.getRoeOne());
+            opportunitySummaryData.setRoeSecondYear(summaryData.getRoeTwo());
+            opportunitySummaryData.setRoeThirdYear(summaryData.getRoeThree());
+            opportunitySummaryData.setRoeFourthYear(summaryData.getRoeFour());
+            opportunitySummaryData.setRoeFifthYear(summaryData.getRoeFive());
+            opportunitySummaryData.setPeFirstYear(summaryData.getPeOne());
+            opportunitySummaryData.setPeSecondYear(summaryData.getPeTwo());
+            opportunitySummaryData.setPeThirdYear(summaryData.getPeThree());
+            opportunitySummaryData.setPeFourthYear(summaryData.getPeFour());
+            opportunitySummaryData.setPeFifthYear(summaryData.getPeFive());
+            opportunitySummaryData.setOpportunityMasterid(result);
+            opportunitySummaryData.setStrategyMasterId(sm);
+            opportunitySummaryDataRepository.save(opportunitySummaryData);
 
+            }
 
-         }
-      else{
+      }
+       else{
          NonFinancialSummaryData nonFinancialSummaryData=opportunityMaster.getNonFinancialSummaryData();
          nonFinancialSummaryData.setOpportunityMaster(result);
          nonFinancialSummaryDataRepository.save(nonFinancialSummaryData);
@@ -280,7 +303,8 @@ public class OpportunityMasterResource {
           opportunitySummaryData.setPatGrowthFifth(nonFinancialSummaryData.getPatGrowthFive());
           opportunitySummaryData.setOpportunityMasterid(result);
           opportunitySummaryData.setStrategyMasterId(sm);
-          opportunitySummaryDataRepository.save(opportunitySummaryData);}
+          opportunitySummaryDataRepository.save(opportunitySummaryData);
+          }
       }
 
 
@@ -340,7 +364,76 @@ public class OpportunityMasterResource {
 		}}
 		opportunityMasterContactRepository.save(opportunityMasters.getSelectedoppContanct());
 
+
 		OpportunityMaster result = opportunityMasterRepository.save(opportunityMasters);
+        if(opportunityMasters.getMasterName().getSectorType().equals("Finance (including NBFCs)")) {
+
+            financialSummaryDataRepository.save(opportunityMasters.getFinancialSummaryData());
+            for (StrategyMaster sm : opportunityMasters.getSelectedStrategyMaster()) {
+                OpportunitySummaryData opportunitySummaryData = new OpportunitySummaryData();
+                opportunitySummaryData.setPatFirstYear(opportunityMasters.getFinancialSummaryData().getPatOne());
+                opportunitySummaryData.setPatSecondYear(opportunityMasters.getFinancialSummaryData().getPatTwo());
+                opportunitySummaryData.setPatThirdYear(opportunityMasters.getFinancialSummaryData().getPatThree());
+                opportunitySummaryData.setPatFourthYear(opportunityMasters.getFinancialSummaryData().getPatFour());
+                opportunitySummaryData.setPatFifthYear(opportunityMasters.getFinancialSummaryData().getPatFive());
+                opportunitySummaryData.setMarketCap(opportunityMasters.getFinancialSummaryData().getMarCapThree());
+                opportunitySummaryData.setRoeFirstYear(opportunityMasters.getFinancialSummaryData().getRoeOne());
+                opportunitySummaryData.setRoeSecondYear(opportunityMasters.getFinancialSummaryData().getRoeTwo());
+                opportunitySummaryData.setRoeThirdYear(opportunityMasters.getFinancialSummaryData().getRoeThree());
+                opportunitySummaryData.setRoeFourthYear(opportunityMasters.getFinancialSummaryData().getRoeFour());
+                opportunitySummaryData.setRoeFifthYear(opportunityMasters.getFinancialSummaryData().getRoeFive());
+                opportunitySummaryData.setPeFirstYear(opportunityMasters.getFinancialSummaryData().getPeOne());
+                opportunitySummaryData.setPeSecondYear(opportunityMasters.getFinancialSummaryData().getPeTwo());
+                opportunitySummaryData.setPeThirdYear(opportunityMasters.getFinancialSummaryData().getPeThree());
+                opportunitySummaryData.setPeFourthYear(opportunityMasters.getFinancialSummaryData().getPeFour());
+                opportunitySummaryData.setPeFifthYear(opportunityMasters.getFinancialSummaryData().getPeFive());
+                opportunitySummaryData.setOpportunityMasterid(result);
+                opportunitySummaryData.setStrategyMasterId(sm);
+                opportunitySummaryDataRepository.save(opportunitySummaryData);
+
+            }
+
+        }
+        else {
+
+            nonFinancialSummaryDataRepository.save(opportunityMasters.getNonFinancialSummaryData());
+
+            for (StrategyMaster sm : opportunityMasters.getSelectedStrategyMaster()) {
+                OpportunitySummaryData opportunitySummaryData = new OpportunitySummaryData();
+                opportunitySummaryData.setMarketCap(opportunityMasters.getNonFinancialSummaryData().getMarketCapThree());
+                opportunitySummaryData.setPatFirstYear(opportunityMasters.getNonFinancialSummaryData().getPatOne());
+                opportunitySummaryData.setPatSecondYear(opportunityMasters.getNonFinancialSummaryData().getPatTwo());
+                opportunitySummaryData.setPatThirdYear(opportunityMasters.getNonFinancialSummaryData().getPatthree());
+                opportunitySummaryData.setPatFourthYear(opportunityMasters.getNonFinancialSummaryData().getPatfour());
+                opportunitySummaryData.setPatFifthYear(opportunityMasters.getNonFinancialSummaryData().getPatFive());
+                opportunitySummaryData.setPeFirstYear(opportunityMasters.getNonFinancialSummaryData().getPeOne());
+                opportunitySummaryData.setPeSecondYear(opportunityMasters.getNonFinancialSummaryData().getPeTwo());
+                opportunitySummaryData.setPeThirdYear(opportunityMasters.getNonFinancialSummaryData().getPethree());
+                opportunitySummaryData.setPeFourthYear(opportunityMasters.getNonFinancialSummaryData().getPeFour());
+                opportunitySummaryData.setPeFifthYear(opportunityMasters.getNonFinancialSummaryData().getPeFive());
+                opportunitySummaryData.setRoeFirstYear(opportunityMasters.getNonFinancialSummaryData().getRoeOne());
+                opportunitySummaryData.setRoeSecondYear(opportunityMasters.getNonFinancialSummaryData().getRoeTwo());
+                opportunitySummaryData.setRoeThirdYear(opportunityMasters.getNonFinancialSummaryData().getRoeThree());
+                opportunitySummaryData.setRoeFourthYear(opportunityMasters.getNonFinancialSummaryData().getRoeFour());
+                opportunitySummaryData.setRoeFifthYear(opportunityMasters.getNonFinancialSummaryData().getRoefive());
+                opportunitySummaryData.setDeFirstYear(opportunityMasters.getNonFinancialSummaryData().getDeOne());
+                opportunitySummaryData.setDeSecondYear(opportunityMasters.getNonFinancialSummaryData().getDeTwo());
+                opportunitySummaryData.setDeThirdColour(opportunityMasters.getNonFinancialSummaryData().getDeThree());
+                opportunitySummaryData.setDeFourthYear(opportunityMasters.getNonFinancialSummaryData().getDeFour());
+                opportunitySummaryData.setDeFifthYear(opportunityMasters.getNonFinancialSummaryData().getDeFive());
+                opportunitySummaryData.setPatGrowthFirst(opportunityMasters.getNonFinancialSummaryData().getPatGrowthOne());
+                opportunitySummaryData.setPatGrowthSecond(opportunityMasters.getNonFinancialSummaryData().getPatGrowthTwo());
+                opportunitySummaryData.setPatGrowthThird(opportunityMasters.getNonFinancialSummaryData().getPatGrowthThree());
+                opportunitySummaryData.setPatGrowthFourth(opportunityMasters.getNonFinancialSummaryData().getPatGrowthFour());
+                opportunitySummaryData.setPatGrowthFifth(opportunityMasters.getNonFinancialSummaryData().getPatGrowthFive());
+                opportunitySummaryData.setOpportunityMasterid(result);
+                opportunitySummaryData.setStrategyMasterId(sm);
+                opportunitySummaryDataRepository.save(opportunitySummaryData);
+            }
+
+
+        }
+
 		return ResponseEntity.ok()
 				.headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, result.getId().toString()))
 				.body(result);
