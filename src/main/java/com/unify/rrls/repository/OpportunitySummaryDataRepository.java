@@ -12,6 +12,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface OpportunitySummaryDataRepository extends JpaRepository<OpportunitySummaryData, Long> {
-    OpportunitySummaryData  findByOpportunityMasterid(OpportunityMaster opportunityMaster);
+    List<OpportunitySummaryData>  findByOpportunityMasterid(OpportunityMaster opportunityMaster);
     List<OpportunitySummaryData> findByStrategyMasterId(StrategyMaster strategyMaster);
+
 }

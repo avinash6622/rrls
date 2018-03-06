@@ -10,6 +10,7 @@
     function stateConfig($stateProvider) {
         $stateProvider
         .state('opportunity-name', {
+            parent: 'entity',
             url: '/opportunity-name',
             data: {
                 authorities: ['ROLE_USER'],

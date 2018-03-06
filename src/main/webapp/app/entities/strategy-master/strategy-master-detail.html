@@ -121,7 +121,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="value in vm.strategyMaster.opportunitySummaryData">
-                <td scope="col">{{value.createdBy}}</td>
+                <td scope="col"><a ui-sref="opportunity-master-detail({id:value.opportunityMasterid.id})">{{value.opportunityMasterid.masterName.oppName}}</a></td>
                       <td>{{value.bWeight}}</td>
                       <td>{{value.cmp}}</td>
                       <td>{{value.marketCap}}</td>
