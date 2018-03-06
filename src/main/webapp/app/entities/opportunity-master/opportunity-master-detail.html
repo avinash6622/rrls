@@ -421,11 +421,11 @@ div.scrollmenu {
 
                 <tr>
                     <td scope="col">P/BV</td>
-                    <td><input name="pbvOne" ng-model="vm.opportunityMaster.financialSummaryData.pbvOne"  ng-disabled="isDisabled"/> </td>
-                    <td><input name="pbvTwo" ng-model="vm.opportunityMaster.financialSummaryData.pbvTwo" ng-disabled="isDisabled"/> </td>
-                    <td><input name="pbvThree" ng-model="vm.opportunityMaster.financialSummaryData.pbvThree" ng-disabled="isDisabled"/></td>
-                    <td><input name="pbvFour" ng-model="vm.opportunityMaster.financialSummaryData.pbvFour" ng-disabled="isDisabled"/></td>
-                    <td><input name="pbvFive" ng-model="vm.opportunityMaster.financialSummaryData.pbvFive" ng-disabled="isDisabled"/></td>
+                    <td><input name="pbvOne" ng-model="vm.opportunityMaster.financialSummaryData.pbvOne" ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapFour, vm.opportunityMaster.financialSummaryData.networthOne)" ng-disabled="true"/> </td>
+                    <td><input name="pbvTwo" ng-model="vm.opportunityMaster.financialSummaryData.pbvTwo" ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapFour, vm.opportunityMaster.financialSummaryData.networthTwo)" ng-disabled="true"/> </td>
+                    <td><input name="pbvThree" ng-model="vm.opportunityMaster.financialSummaryData.pbvThree" ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapFour, vm.opportunityMaster.financialSummaryData.networthThree)" ng-disabled="true"/></td>
+                    <td><input name="pbvFour" ng-model="vm.opportunityMaster.financialSummaryData.pbvFour" ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapFour, vm.opportunityMaster.financialSummaryData.networthFour)" ng-disabled="true"/></td>
+                    <td><input name="pbvFive" ng-model="vm.opportunityMaster.financialSummaryData.pbvFive" ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapFour, vm.opportunityMaster.financialSummaryData.networthFive)" ng-disabled="true"/></td>
                 </tr>
 
 

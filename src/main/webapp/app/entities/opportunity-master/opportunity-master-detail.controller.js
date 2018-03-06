@@ -99,6 +99,11 @@
         	var result = parseFloat(val1) + parseFloat(val2);
         	return result;
         };
+        
+        $scope.getFinPbv = function(val1, val2) {
+        	var result = parseFloat(val1) / parseFloat(val2);
+        	return result;
+        };
 
         $scope.isDisabled = true;
 
