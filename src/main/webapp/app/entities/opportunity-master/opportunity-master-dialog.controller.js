@@ -30,6 +30,7 @@
      // var name= vm.opportunityNames;
         vm.autoCompleteOptions = {
             minimumChars: 1,
+            dropdownHeight: '200px',
             data: function (searchText) {
                 return $http.get('api/opportunity-names')
                     .then(function (response) {
@@ -44,10 +45,12 @@
                         return _.pluck(states, 'oppName');
                     });
             },
-         /*   renderItem: function (item) {
-                console.log(item);
-
-            },*/
+            renderItem: function (item) {
+                return {
+                    value: item,
+                    label: item
+                };
+            },
 
             itemSelected: function (e) {
                 console.log(e);

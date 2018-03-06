@@ -1,4 +1,12 @@
+<style>
 
+    div.scrollmenu {
+
+        overflow: auto;
+        white-space: nowrap;
+    }
+
+</style>
 <div>
     <h2><span>{{vm.strategyMaster.strategyName}}</span></h2>
     <hr>
@@ -20,22 +28,153 @@
         <dd>
             <span>{{vm.strategyMaster.dateActive | date:'mediumDate'}}</span>
         </dd>
-     <!--    <dt><span>Created By</span></dt>
+
+
+        <dt>
+            <span>Summary Data</span></br>
+
+        </dt>
+
         <dd>
-            <span>{{vm.strategyMaster.createdBy}}</span>
+
         </dd>
-        <dt><span>Updated By</span></dt>
-        <dd>
-            <span>{{vm.strategyMaster.updatedBy}}</span>
-        </dd>
-        <dt><span>Created Date</span></dt>
-        <dd>
-            <span>{{vm.strategyMaster.createdDate | date:'mediumDate'}}</span>
-        </dd>
-        <dt><span>Updated Date</span></dt>
-        <dd>
-            <span>{{vm.strategyMaster.updatedDate | date:'medium'}}</span>
-        </dd> -->
+        <div class="scrollmenu" ng-show="vm.strategyMaster">
+        <table id="mytable" class="table table-bordered">
+            <thead>
+
+            <tr class="headborder">
+
+                <th scope="col"></th>
+                <th scope="col" colspan="3"></th>
+                <th scope="col" colspan="5">PAT</th>
+                <th scope="col" colspan="5">P/E</th>
+                <th scope="col" colspan="5">RoE</th>
+                <th scope="col" colspan="5">D/E</th>
+                <th scope="col" colspan="5">PAT Growth</th>
+                <th scope="col" colspan="5">Portfolio P/E</th>
+                <th scope="col" colspan="5">Earnings Gr</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col" colspan="2">PEG - FY 18</th>
+
+            </tr>
+
+            <tr>
+
+                <th scope="col"></th>
+                <th scope="col">Weight</th>
+                <th scope="col">CMP</th>
+                <th scope="col">M Cap</th>
+<!--pat-->
+                <th scope="col">FY 2016</th>
+                <th scope="col">FY 2017</th>
+                <th scope="col">FY 2018</th>
+                <th scope="col">FY 2019</th>
+                <th scope="col">FY 2020</th>
+<!-- p/E-->
+                <th scope="col">FY 2016</th>
+                <th scope="col">FY 2017</th>
+                <th scope="col">FY 2018</th>
+                <th scope="col">FY 2019</th>
+                <th scope="col">FY 2020</th>
+<!--ROE-->
+                <th scope="col">FY 2016</th>
+                <th scope="col">FY 2017</th>
+                <th scope="col">FY 2018</th>
+                <th scope="col">FY 2019</th>
+                <th scope="col">FY 2020</th>
+<!--D/E-->
+                <th scope="col">FY 2016</th>
+                <th scope="col">FY 2017</th>
+                <th scope="col">FY 2018</th>
+                <th scope="col">FY 2019</th>
+                <th scope="col">FY 2020</th>
+<!--PAT growth-->
+
+                <th scope="col">FY 2016</th>
+                <th scope="col">FY 2017</th>
+                <th scope="col">FY 2018</th>
+                <th scope="col">FY 2019</th>
+                <th scope="col">FY 2020</th>
+<!-- Portfolio P/E-->
+
+                <th scope="col">FY 2016</th>
+                <th scope="col">FY 2017</th>
+                <th scope="col">FY 2018</th>
+                <th scope="col">FY 2019</th>
+                <th scope="col">FY 2020</th>
+
+<!--Earnings Gr-->
+
+                <th scope="col">FY 2016</th>
+                <th scope="col">FY 2017</th>
+                <th scope="col">FY 2018</th>
+                <th scope="col">FY 2019</th>
+                <th scope="col">FY 2020</th>
+
+
+                <th scope="col">Wt. Avg Mcap</th>
+                <th scope="col">RoE</th>
+                <th scope="col">O / J</th>
+                <th scope="col">PEG</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="value in vm.strategyMaster.opportunitySummaryData">
+                <td scope="col">{{value.createdBy}}</td>
+                      <td>{{value.bWeight}}</td>
+                      <td>{{value.cmp}}</td>
+                      <td>{{value.marketCap}}</td>
+                      <td>{{value.patFirstYear}}</td>
+                      <td>{{value.patSecondYear}}</td>
+                      <td>{{value.patThirdYear}}</td>
+                      <td>{{value.patFourthYear}}</td>
+                      <td>{{value.patFifthYear}}</td>
+                      <td>{{value.peFirstYear}}</td>
+                      <td>{{value.peSecondYear}}</td>
+                      <td>{{value.peThirdYear}}</td>
+                      <td>{{value.peFourthYear}}</td>
+                      <td>{{value.peFifthYear}}</td>
+                      <td>{{value.roeFirstYear}}</td>
+                      <td>{{value.roeSecondYear}}</td>
+                      <td>{{value.roeThirdYear}}</td>
+                      <td>{{value.roeFourthYear}}</td>
+                      <td>{{value.roeFifthYear}}</td>
+                      <td>{{value.deFirstYear}}</td>
+                      <td>{{value.deSecondYear}}</td>
+                      <td>{{value.deThirdColour}}</td>
+                      <td>{{value.deFourthYear}}</td>
+                      <td>{{value.deFifthYear}}</td>
+                      <td>{{value.patGrowthFirst}}</td>
+                      <td>{{value.patGrowthSecond}}</td>
+                      <td>{{value.patGrowthThird}}</td>
+                      <td>{{value.patGrowthFourth}}</td>
+                      <td>{{value.patGrowthFifth}}</td>
+                      <td>{{value.portPeFirst}}</td>
+                      <td>{{value.portPeSecond}}</td>
+                      <td>{{value.portPeThird}}</td>
+                      <td>{{value.portPeFourth}}</td>
+                      <td>{{value.portPeFifth}}</td>
+                      <td>{{value.earningsFirst}}</td>
+                      <td>{{value.earningsSecond}}</td>
+                      <td>{{value.earningsThird}}</td>
+                      <td>{{value.earningsFourth}}</td>
+                      <td>{{value.earningsFifth}}</td>
+                      <td>{{value.wtAvgCap}}</td>
+                      <td>{{value.roe}}</td>
+                      <td>{{value.pegOj}}</td>
+                      <td>{{value.pegYearPeg}}</td>
+
+
+            </tr>
+            </tbody>
+        </table>
+        </div>
+
+
+
+
     </dl>
 
     <button type="submit"

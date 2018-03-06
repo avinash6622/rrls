@@ -50,6 +50,10 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	@JsonProperty
 	private List<StrategyMaster> selectedStrategyMaster;
 
+	@Transient
+    @JsonProperty
+    private StrategyMapping strategyMapping;
+
 	/*@OneToMany(mappedBy = "opportunityMasterId",cascade={CascadeType.PERSIST},fetch = FetchType.EAGER)*/
 	@Transient
     @JsonProperty

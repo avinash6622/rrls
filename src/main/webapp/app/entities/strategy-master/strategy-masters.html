@@ -19,7 +19,7 @@
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
                     <!-- <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th> -->
-                    <th jh-sort-by="strategyCode"><span>Strategy Code</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <!--<th jh-sort-by="strategyCode"><span>Strategy Code</span> <span class="glyphicon glyphicon-sort"></span></th>-->
                     <th jh-sort-by="strategyName"><span>Strategy Name</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="sStatus"><span>Status</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="dateActive"><span>Date Active</span> <span class="glyphicon glyphicon-sort"></span></th>
@@ -33,8 +33,8 @@
             <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
                 <tr ng-repeat="strategyMaster in vm.strategyMasters track by strategyMaster.id">
                    <!--  <td><a ui-sref="strategy-master-detail({id:strategyMaster.id})">{{strategyMaster.id}}</a></td> -->
-                    <td><a ui-sref="strategy-master-detail({id:strategyMaster.id})">{{strategyMaster.strategyCode}}</a></td>
-                    <td>{{strategyMaster.strategyName}}</td>
+                    <!--<td><a ui-sref="strategy-master-detail({id:strategyMaster.id})">{{strategyMaster.strategyCode}}</a></td>-->
+                    <td><a ui-sref="strategy-master-detail({id:strategyMaster.id})">{{strategyMaster.strategyName}}</a></td>
                     <td>{{strategyMaster.sStatus ? 'Active': 'Inactive'}}</td>
                         <td>{{strategyMaster.dateActive | date:'mediumDate'}}</td>
                 <!--     <td>{{strategyMaster.createdBy}}</td>

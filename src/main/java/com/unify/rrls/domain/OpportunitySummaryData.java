@@ -3,14 +3,7 @@ package com.unify.rrls.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -161,6 +154,10 @@ public class OpportunitySummaryData  implements Serializable {
     @OneToOne
 	@JoinColumn(name = "opp_master")
 	private OpportunityMaster opportunityMasterid;
+
+    @ManyToOne
+    @JoinColumn(name="strategy_mas_id")
+    private StrategyMaster strategyMasterId;
 
 
     public OpportunityMaster getOpportunityMasterid() {
@@ -517,15 +514,15 @@ public class OpportunitySummaryData  implements Serializable {
 		this.pegYearPeg = pegYearPeg;
 	}
 
-	/*public OpportunityMaster getOpportunityMaster() {
-		return opportunityMaster;
-	}
+    public StrategyMaster getStrategyMasterId() {
+        return strategyMasterId;
+    }
 
-	public void setOpportunityMaster(OpportunityMaster opportunityMaster) {
-		this.opportunityMaster = opportunityMaster;
-	}*/
+    public void setStrategyMasterId(StrategyMaster strategyMasterId) {
+        this.strategyMasterId = strategyMasterId;
+    }
 
-	 @Override
+    @Override
 	    public boolean equals(Object o) {
 	        if (this == o) {
 	            return true;
