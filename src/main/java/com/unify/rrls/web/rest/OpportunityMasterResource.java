@@ -638,6 +638,8 @@ public class OpportunityMasterResource {
 		return new ResponseEntity<>(page, headers,HttpStatus.OK);
 	}
 
+
+
 	/**
 	 * GET /opportunity-masters/:id : get the "id" opportunityMaster.
 	 *

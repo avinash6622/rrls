@@ -6,9 +6,9 @@
         .controller('HomeController', HomeController);
 
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'OpportunityMaster','ParseLinks', 'paginationConstants', '$state'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'OpportunityMaster','ParseLinks', 'paginationConstants', '$state','$http'];
 
-    function HomeController ($scope, Principal, LoginService, OpportunityMaster,ParseLinks,paginationConstants, $state) {
+    function HomeController ($scope, Principal, LoginService, OpportunityMaster,ParseLinks,paginationConstants, $state,$http) {
         var vm = this;
 
         vm.account = null;
@@ -26,6 +26,7 @@
         vm.predicate = 'id';
         vm.reset = reset;
         vm.reverse = true;
+        vm.dashboardvalues = [];
 
         $scope.$on('authenticationSuccess', function() {
             getAccount();
@@ -53,13 +54,31 @@
             }, onSuccess, onError);
 
 
+    // console.log("DATA------>"+vm.opportunityMasters);
+            $http.get('api/opportunity-summary/getdata/')
+                .then(function(response) {
+                    console.log("RESPONSE",response);
+                    var len = response.data;
+                   // vm.dashboardvalues =  response.data;
+                    for (var i = 0; i < len.length; i++) {
+                        vm.dashboardvalues.push(len[i]);
+                    }
+                });
 
-        OpportunityMaster.getsummarydata(function (resp){
-            console.log(resp);
+               console.log("DASHBOARD VALUE",vm.dashboardvalues);
 
-         },function (err) {
-            console.log(err);
-        });
+       /*     OpportunityMaster.getsummarydata({}, function (data, headers){
+                console.log(data);
+                console.log(headers);
+
+                for (var i = 0; i < data.length; i++) {
+                    vm.dashboardvalues.push(data[i]);
+                }
+                console.log(  vm.dashboardvalues)
+            },function (err) {
+                console.log(err);
+            });*/
+
 
         }
 
@@ -77,6 +96,8 @@
             for (var i = 0; i < data.length; i++) {
                 vm.opportunityMasters.push(data[i]);
             }
+
+
         }
 
         function onError(error) {

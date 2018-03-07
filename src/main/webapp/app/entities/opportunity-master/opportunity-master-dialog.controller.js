@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('OpportunityMasterDialogController', OpportunityMasterDialogController);
 
-    OpportunityMasterDialogController.$inject = ['$timeout', '$scope', '$state', '$stateParams', '$http', 'entity', 'Upload', 'OpportunityMaster', 'StrategyMaster', 'OpportunityName'];
+    OpportunityMasterDialogController.$inject = ['$timeout', '$scope', '$sce', '$state', '$stateParams', '$http', 'entity', 'Upload', 'OpportunityMaster', 'StrategyMaster', 'OpportunityName'];
 
-    function OpportunityMasterDialogController ($timeout, $scope, $state, $stateParams,$http, entity, Upload,  OpportunityMaster, StrategyMaster, OpportunityName) {
+    function OpportunityMasterDialogController ($timeout, $scope, $sce, $state, $stateParams,$http, entity, Upload,  OpportunityMaster, StrategyMaster, OpportunityName) {
         var vm = this;
 
         vm.opportunityMaster = entity;
@@ -23,6 +23,8 @@
         vm.selectFile = selectFile;
        /* vm.saveDoc=saveDoc;*/
         vm.readOnly = false;
+
+        vm.selectedOpportunity = null;
 
 
         console.log("SELECTED------>",vm.opportunityNames);
@@ -42,20 +44,25 @@
 
                         });
 
-                        return _.pluck(states, 'oppName');
+                        /*return _.pluck(states, 'oppName');*/
+                        return states;
                     });
             },
             renderItem: function (item) {
                 return {
                     value: item,
-                    label: item
+                    label: $sce.trustAsHtml(
+                        "<p class='auto-complete'>"
+                        + item.oppName +
+                        "</p>")
                 };
             },
 
             itemSelected: function (e) {
                 console.log(e);
 
-
+                vm.selectedOpportunity = e;
+                vm.opportunityMaster.masterName=e.item;
               //  state.airport = e.item;
             }
         }
@@ -75,13 +82,13 @@
     	  this.vm.opportunityMaster.selectedoppContanct.splice(index, 1);
         }
       $scope.getTotal = function(val1, val2) {
-      	var result = parseFloat(val1) + parseFloat(val2);      	
+      	var result = parseFloat(val1) + parseFloat(val2);
       	/*result = (isNaN(result)) ?  (result) : '';*/
-      	
+
       	return result;
       };
       $scope.getFinPbv = function(val1, val2) {
-      	var result = (parseFloat(val1) / parseFloat(val2)).toFixed(2);      	
+      	var result = (parseFloat(val1) / parseFloat(val2)).toFixed(2);
       	return result;
       };
         // Editor options.
