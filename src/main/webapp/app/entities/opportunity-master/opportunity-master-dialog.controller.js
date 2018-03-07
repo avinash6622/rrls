@@ -162,12 +162,12 @@
 
             console.log("ndksjangkjshagn",vm.opportunityMaster);
             console.log("Computation",vm.opportunityMaster.financialSummaryData);
-            if (vm.opportunityMaster.id !== null) {
+            /*if (vm.opportunityMaster.id !== null) {
                 OpportunityMaster.update(vm.opportunityMaster, onSaveSuccess, onSaveError);
                 
             } else {
                 OpportunityMaster.save(vm.opportunityMaster, onSaveSuccess, onSaveError);
-            }
+            }*/
         }
        /* function saveDoc () {
             vm.isSaving = true;

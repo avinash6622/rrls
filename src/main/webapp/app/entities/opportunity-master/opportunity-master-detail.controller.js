@@ -89,7 +89,13 @@
 
             $scope.isDisabled = false;
 
-        }
+        };
+        
+        $scope.cancel = function(){
+
+            $scope.isDisabled = true;
+
+        };
         
         $scope.updateSum = function() {
             $scope.sumVal = ($scope.vm.opportunityMaster.financialSummaryData.netIntOne * 1) + ($scope.vm.opportunityMaster.financialSummaryData.nonIntOne * 1);
