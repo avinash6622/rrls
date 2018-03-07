@@ -85,13 +85,13 @@
   
       var	result = parseFloat(val1) + parseFloat(val2);
       result=(isNaN(result)) ? '':result;    
-      
-      	return result;
+      return result;
       };
       $scope.getFinPbv = function(val1, val2) {
+
       	var result = (parseFloat(val1) / parseFloat(val2)).toFixed(2); 
       	result=(isNaN(result)) ? '':result;
-      	return result;
+    	return result;
       };
       $scope.getFinRoe = function(val1, val2,val3) {
     	  if(val2==0)

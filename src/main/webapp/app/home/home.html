@@ -105,194 +105,45 @@ border:none !important;
 
                                  <th scope="col">PEG</th>
 
-    <tr>
-      <th scope="row">1</th>
-      <td> <a ui-sref="opportunity-master-detail({id:7})">VIJAYA BANK</a></td>
-      <td>7.5%</td>
-      <td>129</td>
-      <td>5,397</td>
-      <td>95</td>
-      <td>210</td>
-      <td>240</td>
-      <td>56.8</td>
-      <td>25.7</td>
-      <td>22.5</td>
-      <td>15%</td>
-      <td>15%</td>
-      <td>0.53</td>
-      <td>121%</td>
-      <td>14%</td>
-      <td>4.26</td>
-      <td>1.93</td>
-      <td>9.08%</td>
-      <td>1.07%</td>
-      <td>405</td>
-      <td>1%</td>
-       <td>0.21</td>
-        <td>0.02</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td> <a ui-sref="opportunity-master-detail({id:9})">DHRUV ESTATES LTD</a></td>
-      <td>10%</td>
-      <td>202</td>
-      <td>4,568</td>
-      <td>150</td>
-      <td>198</td>
-      <td>240</td>
-      <td>30.5</td>
-      <td>23.1</td>
-      <td>19.0</td>
-      <td>15%</td>
-      <td>15%</td>
-      <td>0.50</td>
-      <td>32%</td>
-      <td>21%</td>
-      <td>3.05</td>
-      <td>2.31</td>
-      <td>3.20%</td>
-      <td>2.12%</td>
-      <td>457</td>
-      <td>2%</td>
-       <td>0.72</td>
-        <td>0.07</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td> <a ui-sref="opportunity-master-detail({id:12})">ABAN OFFSHORE LTD</a></td>
-      <td>10%</td>
-      <td>260</td>
-      <td>1,049</td>
-      <td>45</td>
-      <td>60</td>
-      <td>75</td>
-      <td>23.3</td>
-      <td>17.5</td>
-      <td>14.0</td>
-      <td>18%</td>
-      <td>19%</td>
-      <td>0.10</td>
-      <td>33%</td>
-      <td>25%</td>
-      <td>2.33</td>
-      <td>1.75</td>
-      <td>3.33%</td>
-      <td>2.50%</td>
-      <td>105</td>
-      <td>2%</td>
-       <td>0.52</td>
-        <td>0.05</td>
-    </tr>
-     <tr>
-      <th scope="row">4</th>
-       <td> <a ui-sref="opportunity-master-detail({id:13})">Polaris Consulting & Services Limited</a></td>
-      <td>7.5%</td>
-      <td>331</td>
-      <td>1,316</td>
-      <td>140</td>
-      <td>170</td>
-      <td>199</td>
-      <td>9.4</td>
-      <td>7.7</td>
-      <td>6.6</td>
-      <td>19%</td>
-      <td>19%</td>
-      <td>0.30</td>
-      <td>21%</td>
-      <td>17%</td>
-      <td>0.71</td>
-      <td>0.58</td>
-      <td>1.61%</td>
-      <td>1.28%</td>
-      <td>99</td>
-      <td>1%</td>
-       <td>0.36</td>
-        <td>0.03</td>
-    </tr>
-   <tr><th colspan="24" class="noborder"></th></tr>
-     <tr class="bordercolor">
-    <!--   <th colspan="1" class="noborder"></th>
-       <th colspan="2">Active Buying List</th>
-      <th>87.5%</th>
-      <th></th>
-       <th></th>
-       <th></th>
-       <th></th>
-       <th></th>
-      <th></th>
-       <th></th>
-      <th></th>
-      <th></th>
-       <th></th>
-       <th></th>
-       <th></th>
-       <th></th>
-      <th>22.19</th>
-      <th>16.36</th>
-      <th>28%</th>
-      <th>17%</th>
-       <th></th>
-       <th></th>
-       <th></th>
-      <th>0.66</th>
-    </tr>  -->
-   <!--  <tr class="bordercolor">
-      <th colspan="1" class="noborder"></th>
-       <th colspan="2">Average</th>
-      <th></th>
-      <th></th>
-       <th></th>
-       <th></th>
-       <th></th>
-       <th></th>
-      <th>24.7</th>
-       <th>17.9</th>
-      <th>15.0</th>
-      <th>20%</th>
-       <th>20%</th>
-       <th></th>
-       <th>32%</th>
-       <th>20%</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-       <th></th>
-       <th></th>
-       <th></th>
-      <th></th>
-    </tr> -->
+                             </tr>
+                             </thead>
+                        <tbody>
+                             <tr ng-repeat="value in vm.dashboardvalues">
+                                 <td scope="col"><a ui-sref="opportunity-master-detail({id:value.opportunityMasterid.id})">{{value.opportunityMasterid.masterName.oppName}}</a></td>
+                                 <td>{{value.strategyMasterId.strategyName}}</td>
+                                 <td>{{value.cmp}}</td>
+                                 <td>{{value.marketCap}}</td>
+                                 <td>{{value.patFirstYear}}</td>
+                                 <td>{{value.patSecondYear}}</td>
+                                 <td>{{value.patThirdYear}}</td>
+                                 <td>{{value.patFourthYear}}</td>
+                                 <td>{{value.patFifthYear}}</td>
+                                 <td>{{value.peFirstYear}}</td>
+                                 <td>{{value.peSecondYear}}</td>
+                                 <td>{{value.peThirdYear}}</td>
+                                 <td>{{value.peFourthYear}}</td>
+                                 <td>{{value.peFifthYear}}</td>
+                                 <td>{{value.roeFirstYear}}</td>
+                                 <td>{{value.roeSecondYear}}</td>
+                                 <td>{{value.roeThirdYear}}</td>
+                                 <td>{{value.roeFourthYear}}</td>
+                                 <td>{{value.roeFifthYear}}</td>
+                                 <td>{{value.deFirstYear}}</td>
+                                 <td>{{value.deSecondYear}}</td>
+                                 <td>{{value.deThirdColour}}</td>
+                                 <td>{{value.deFourthYear}}</td>
+                                 <td>{{value.deFifthYear}}</td>
+                                 <td>{{value.patGrowthFirst}}</td>
+                                 <td>{{value.patGrowthSecond}}</td>
+                                 <td>{{value.patGrowthThird}}</td>
+                                 <td>{{value.patGrowthFourth}}</td>
+                                 <td>{{value.patGrowthFifth}}</td>
+                                 <td>{{value.pegYearPeg}}</td>
 
-   <!--   <tr class="bordercolor">
-      <th colspan="1" class="noborder"></th>
-       <th colspan="2">Median</th>
-      <th></th>
-      <th></th>
-       <th>1,891</th>
-       <th></th>
-       <th></th>
-       <th></th>
-      <th>23.0</th>
-       <th>18.7</th>
-      <th>15.4</th>
-      <th>19%</th>
-       <th>19%</th>
-       <th></th>
-       <th>23%</th>
-       <th>18%</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-       <th></th>
-       <th></th>
-       <th></th>
-      <th></th>
-    </tr> -->
-     </tr>
 
-  </tbody>
-</table>
+                             </tr>
+                             </tbody>
+                         </table>
 
 
 
