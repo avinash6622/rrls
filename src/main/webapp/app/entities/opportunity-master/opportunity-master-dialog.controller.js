@@ -82,60 +82,61 @@
     	  this.vm.opportunityMaster.selectedoppContanct.splice(index, 1);
         }
       $scope.getTotal = function(val1, val2) {
-  
+
       var	result = parseFloat(val1) + parseFloat(val2);
-      result=(isNaN(result)) ? '':result;    
+      result=(isNaN(result)) ? '':result;
+
       return result;
       };
       $scope.getFinPbv = function(val1, val2) {
 
-      	var result = (parseFloat(val1) / parseFloat(val2)).toFixed(2); 
+      	var result = (parseFloat(val1) / parseFloat(val2)).toFixed(2);
       	result=(isNaN(result)) ? '':result;
     	return result;
       };
       $scope.getFinRoe = function(val1, val2,val3) {
     	  if(val2==0)
-        	 {	var result = parseFloat(val1) / parseFloat(val3); 
+        	 {	var result = parseFloat(val1) / parseFloat(val3);
          	result=(result*100).toFixed(2);  }
        	 else{
-        		var result = parseFloat(val1) / ((parseFloat(val2)+parseFloat(val3))/2); 
+        		var result = parseFloat(val1) / ((parseFloat(val2)+parseFloat(val3))/2);
          	result=(result*100).toFixed(2);
-       	 } 
+       	 }
     		result=(isNaN(result)) ? '':result;
         	return result;
-        };        
+        };
       $scope.getNonGrowth = function(val1, val2) {
-    	 
-        	var result = (parseFloat(val2) / parseFloat(val1))-1; 
-        	result=(result*100).toFixed(2);  
+
+        	var result = (parseFloat(val2) / parseFloat(val1))-1;
+        	result=(result*100).toFixed(2);
         	result=(isNaN(result)) ? '':result;
         	return result;
         };
         $scope.getNonMargin = function(val1, val2) {
-       	 
-        	var result = parseFloat(val1) / parseFloat(val2); 
-        	result=(result*100).toFixed(2); 
+
+        	var result = parseFloat(val1) / parseFloat(val2);
+        	result=(result*100).toFixed(2);
         	result=(isNaN(result)) ? '':result;
         	return result;
         };
         $scope.getNonPe = function(val1, val2) {
-          	 
-        	var result = (parseFloat(val1) / parseFloat(val2)).toFixed(2);  
+
+        	var result = (parseFloat(val1) / parseFloat(val2)).toFixed(2);
         	result=(isNaN(result)) ? '':result;
         	return result;
         };
         $scope.getNonRoe = function(val1, val2,val3) {
-        	
+
       	 if(val2==0)
-       	 {	var result = parseFloat(val1) / parseFloat(val3); 
+       	 {	var result = parseFloat(val1) / parseFloat(val3);
         	result=(result*100).toFixed(2);  }
       	 else{
-       		var result = parseFloat(val1) / ((parseFloat(val2)+parseFloat(val3))/2); 
+       		var result = parseFloat(val1) / ((parseFloat(val2)+parseFloat(val3))/2);
         	result=(result*100).toFixed(2);
       	 }
      	result=(isNaN(result)) ? '':result;
         	return result;
-        };  
+        };
         // Editor options.
         $scope.options = {
             language: 'en',
@@ -164,7 +165,7 @@
             console.log("Computation",vm.opportunityMaster.financialSummaryData);
             /*if (vm.opportunityMaster.id !== null) {
                 OpportunityMaster.update(vm.opportunityMaster, onSaveSuccess, onSaveError);
-                
+
             } else {
                 OpportunityMaster.save(vm.opportunityMaster, onSaveSuccess, onSaveError);
             }*/

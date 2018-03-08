@@ -76,52 +76,6 @@ div.scrollmenu {
             Contact No:    {{contact.contactnum}}</br></br></span>
         </dd>
 
-		<!--   <dt ng-show="vm.opportunityMaster.htmlContent"><span>Document</span></dt>
-        <dd ng-show="vm.opportunityMaster.htmlContent">
-            <iframe src='https://docs.google.com/gview?url=http://ieee802.org/secmail/docIZSEwEqHFr.doc&embedded=true' width='100%' height='400' frameborder='0'></iframe>
-            <div ckeditor="options" ng-model="vm.opportunityMaster.htmlContent" ready="onReady()" ng-change="changeCKeditor()" readonly=""></div>
-        </dd>
-         -->
-		<!--   <dt ng-show="vm.fileDocSave"><span>Create Document</span></dt>
-        <dd ng-show="vm.fileDocSave">
-            <iframe src='https://docs.google.com/gview?url=http://ieee802.org/secmail/docIZSEwEqHFr.doc&embedded=true' width='100%' height='400' frameborder='0'></iframe>
-            <div ckeditor="options" ng-model="vm.fileDocSave" ready="onReady()" ng-change="changeCKeditor()" readonly=""></div>
-        </dd>  -->
-		<!--  <dt><span>File Upload</span> -->
-		<!--   <dd>
-        <div class="form-group">
-            <input type="file" ngf-select="vm.selectFile($file)" name="file" id="file_upload" ngf-pattern=".doc,.docx" accept=".doc,.docx" required="">
-            <br/><button type="button" class="btn btn-default" ng-click="vm.upload()">Upload</button>
-        </div>
-        </dd> -->
-		<!--   <dt><span>Comments</span></dt>
-        <dd>
-         <div class="actionBox" ng-repeat="fileUploadComments in vm.opportunityMaster.fileUploadCommentList track by fileUploadComments.id">
- 			<div>
- 			<div class="capitalize"><b>{{fileUploadComments.createdBy}} </b></div>
- 			 <div>{{fileUploadComments.fileComments}}</div>
-			<div class="date sub-text"> on {{fileUploadComments.createdDate  | date :"MMM d, y h:mm:ss a"}}</div></div>
-
-         </div>
-            <textarea ng-model="vm.fileComments" name="comments" id="field_comments" rows="4" cols="120"></textarea>
-            <br><button class="btn btn-default" ng-click="vm.saveComment()" ng-disabled=""vm.isSaving>Submit Comment</button>
-        </dd>      -->
-
-	<!--	<dt ng-show="vm.opportunityMaster.fileUploads">
-			<span>File Created</span>
-		</dt>
-		<dd ng-show="vm.opportunityMaster.fileUploads" style="height:60px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
-			&lt;!&ndash;  <iframe src='https://docs.google.com/gview?url=http://ieee802.org/secmail/docIZSEwEqHFr.doc&embedded=true' width='100%' height='400' frameborder='0'></iframe> &ndash;&gt;
-			<div ng-repeat="fileUploads in vm.opportunityMaster.fileUploads">
-				<a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
-				<b> - {{fileUploads.createdBy | capitalize}}</b> <span class="date sub-text">
-					on {{fileUploads.createdDate | date :"MMM d, y h:mm:ss a"}}</span>
-			</div>
-
-		</dd>-->
-
-
-
             <div class="row" ng-show="vm.opportunityMaster.fileUploads">
                 <div class="col-md-3">
                     <div class="panel panel-default">
@@ -136,6 +90,8 @@ div.scrollmenu {
                         </div></div>
                     </div>
                 </div>
+
+
                 <div class="col-md-3">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -290,17 +246,12 @@ div.scrollmenu {
             <button class="btn btn-primary" ng-if="isDisabled" ng-click="ok()">Edit</button>
             <button class="btn btn-warning" ng-if="!isDisabled" ng-click="cancel()">Cancel</button>
 		</dd>
-        
+
         <div>
 
 
 <div ng-show="vm.opportunityMaster.masterName.sectorType">
         <div  class="form-group" ng-if="vm.opportunityMaster.masterName.sectorType == 'Finance (including NBFCs)'">
-
-
-
-           <!--  <label class="control-label">Summary Data</label> -->
-
 
             <table id="mytable" class="table table-bordered">
                 <thead>
@@ -336,7 +287,7 @@ div.scrollmenu {
 
                 <tr>
                     <td scope="col">Total Income</td>
-                    <td><input name="totIncOne" ng-model="vm.opportunityMaster.financialSummaryData.totIncOne" ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntOne, vm.opportunityMaster.financialSummaryData.nonIntOne)" ng-disabled="true"/> </td>
+                    <td><input name="totIncOne" ng-model="vm.opportunityMaster.financialSummaryData.totIncOne" ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntOne, vm.opportunityMaster.financialSummaryData.nonIntOne, vm.opportunityMaster.financialSummaryData.totIncOne)" ng-disabled="true"/> </td>
                     <td><input name="totIncTwo" ng-model="vm.opportunityMaster.financialSummaryData.totIncTwo" ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntTwo, vm.opportunityMaster.financialSummaryData.nonIntTwo)" ng-disabled="true"/> </td>
                     <td><input name="totIncThree" ng-model="vm.opportunityMaster.financialSummaryData.totIncThree" ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntThree, vm.opportunityMaster.financialSummaryData.nonIntThree)" ng-disabled="true"/></td>
                     <td><input name="totIncFour" ng-model="vm.opportunityMaster.financialSummaryData.totIncFour" ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntFour, vm.opportunityMaster.financialSummaryData.nonIntFour)" ng-disabled="true"/></td>

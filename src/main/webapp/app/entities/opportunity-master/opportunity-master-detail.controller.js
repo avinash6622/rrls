@@ -90,72 +90,74 @@
             $scope.isDisabled = false;
 
         };
-        
+
         $scope.cancel = function(){
 
             $scope.isDisabled = true;
 
         };
-        
+
         $scope.updateSum = function() {
             $scope.sumVal = ($scope.vm.opportunityMaster.financialSummaryData.netIntOne * 1) + ($scope.vm.opportunityMaster.financialSummaryData.nonIntOne * 1);
           }
 
-        $scope.getTotal = function(val1, val2) {
-        	  
+        $scope.getTotal = function(val1, val2, val3) {
+
             var	result = parseFloat(val1) + parseFloat(val2);
-            result=(isNaN(result)) ? '':result;    
-            
+            result=(isNaN(result)) ? '':result;
+
+            val3 = result;
+
             	return result;
             };
             $scope.getFinPbv = function(val1, val2) {
-            	var result = (parseFloat(val1) / parseFloat(val2)).toFixed(2); 
+            	var result = (parseFloat(val1) / parseFloat(val2)).toFixed(2);
             	result=(isNaN(result)) ? '':result;
             	return result;
             };
             $scope.getFinRoe = function(val1, val2,val3) {
           	  if(val2==0)
-              	 {	var result = parseFloat(val1) / parseFloat(val3); 
+              	 {	var result = parseFloat(val1) / parseFloat(val3);
                	result=(result*100).toFixed(2);  }
              	 else{
-              		var result = parseFloat(val1) / ((parseFloat(val2)+parseFloat(val3))/2); 
+              		var result = parseFloat(val1) / ((parseFloat(val2)+parseFloat(val3))/2);
                	result=(result*100).toFixed(2);
-             	 } 
+             	 }
           		result=(isNaN(result)) ? '':result;
               	return result;
-              };        
+              };
             $scope.getNonGrowth = function(val1, val2) {
-          	 
-              	var result = (parseFloat(val2) / parseFloat(val1))-1; 
-              	result=(result*100).toFixed(2);  
+
+              	var result = (parseFloat(val2) / parseFloat(val1))-1;
+              	result=(result*100).toFixed(2);
               	result=(isNaN(result)) ? '':result;
               	return result;
               };
               $scope.getNonMargin = function(val1, val2) {
-             	 
-              	var result = parseFloat(val1) / parseFloat(val2); 
-              	result=(result*100).toFixed(2); 
+
+              	var result = parseFloat(val1) / parseFloat(val2);
+              	result=(result*100).toFixed(2);
               	result=(isNaN(result)) ? '':result;
               	return result;
               };
               $scope.getNonPe = function(val1, val2) {
-                	 
-              	var result = (parseFloat(val1) / parseFloat(val2)).toFixed(2);  
+
+              	var result = (parseFloat(val1) / parseFloat(val2)).toFixed(2);
               	result=(isNaN(result)) ? '':result;
               	return result;
               };
               $scope.getNonRoe = function(val1, val2,val3) {
-              	
+
             	 if(val2==0)
-             	 {	var result = parseFloat(val1) / parseFloat(val3); 
+             	 {	var result = parseFloat(val1) / parseFloat(val3);
               	result=(result*100).toFixed(2);  }
             	 else{
-             		var result = parseFloat(val1) / ((parseFloat(val2)+parseFloat(val3))/2); 
+             		var result = parseFloat(val1) / ((parseFloat(val2)+parseFloat(val3))/2);
               	result=(result*100).toFixed(2);
             	 }
            	result=(isNaN(result)) ? '':result;
               	return result;
-              }; 
+              };
         $scope.isDisabled = true;
 
         $scope.open = function (status) {

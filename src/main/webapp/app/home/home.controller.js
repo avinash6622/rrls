@@ -6,9 +6,9 @@
         .controller('HomeController', HomeController);
 
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'OpportunityMaster','ParseLinks', 'paginationConstants', '$state','$http'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'AlertService', 'OpportunityMaster','ParseLinks', 'paginationConstants', '$state','$http'];
 
-    function HomeController ($scope, Principal, LoginService, OpportunityMaster,ParseLinks,paginationConstants, $state,$http) {
+    function HomeController ($scope, Principal, LoginService, AlertService, OpportunityMaster,ParseLinks,paginationConstants, $state,$http) {
         var vm = this;
 
         vm.account = null;
@@ -47,11 +47,11 @@
         loadAll();
 
         function loadAll () {
-            OpportunityMaster.query({
+            /*OpportunityMaster.query({
                 page: vm.page,
                 size: vm.itemsPerPage,
                 sort: sort()
-            }, onSuccess, onError);
+            }, onSuccess, onError);*/
 
 
     // console.log("DATA------>"+vm.opportunityMasters);
