@@ -287,11 +287,11 @@ div.scrollmenu {
 
                 <tr>
                     <td scope="col">Total Income</td>
-                    <td><input name="totIncOne" ng-model="vm.opportunityMaster.financialSummaryData.totIncOne" ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntOne, vm.opportunityMaster.financialSummaryData.nonIntOne, vm.opportunityMaster.financialSummaryData.totIncOne)" ng-disabled="true"/> </td>
-                    <td><input name="totIncTwo" ng-model="vm.opportunityMaster.financialSummaryData.totIncTwo" ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntTwo, vm.opportunityMaster.financialSummaryData.nonIntTwo)" ng-disabled="true"/> </td>
-                    <td><input name="totIncThree" ng-model="vm.opportunityMaster.financialSummaryData.totIncThree" ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntThree, vm.opportunityMaster.financialSummaryData.nonIntThree)" ng-disabled="true"/></td>
-                    <td><input name="totIncFour" ng-model="vm.opportunityMaster.financialSummaryData.totIncFour" ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntFour, vm.opportunityMaster.financialSummaryData.nonIntFour)" ng-disabled="true"/></td>
-                    <td><input name="totIncFive" ng-model="vm.opportunityMaster.financialSummaryData.totIncFive" ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntFive, vm.opportunityMaster.financialSummaryData.nonIntFive)" ng-disabled="true"/></td>
+                    <td><input name="totIncOne" ng-model="vm.opportunityMaster.financialSummaryData.totIncOne" ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntOne, vm.opportunityMaster.financialSummaryData.nonIntOne,1)" ng-disabled="true"/> </td>
+                    <td><input name="totIncTwo" ng-model="vm.opportunityMaster.financialSummaryData.totIncTwo" ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntTwo, vm.opportunityMaster.financialSummaryData.nonIntTwo,2)" ng-disabled="true"/> </td>
+                    <td><input name="totIncThree" ng-model="vm.opportunityMaster.financialSummaryData.totIncThree" ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntThree, vm.opportunityMaster.financialSummaryData.nonIntThree,3)" ng-disabled="true"/></td>
+                    <td><input name="totIncFour" ng-model="vm.opportunityMaster.financialSummaryData.totIncFour" ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntFour, vm.opportunityMaster.financialSummaryData.nonIntFour,4)" ng-disabled="true"/></td>
+                    <td><input name="totIncFive" ng-model="vm.opportunityMaster.financialSummaryData.totIncFive" ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntFive, vm.opportunityMaster.financialSummaryData.nonIntFive,5)" ng-disabled="true"/></td>
                 </tr>
 
                 <tr>
@@ -369,20 +369,20 @@ div.scrollmenu {
 
                 <tr>
                     <td scope="col">ROE</td>
-                    <td><input name="roeOne" ng-model="vm.opportunityMaster.financialSummaryData.roeOne" ng-value="getFinRoe(vm.opportunityMaster.financialSummaryData.patOne,0,vm.opportunityMaster.financialSummaryData.networthOne)" ng-disabled="true"/> </td>
-                    <td><input name="roeTwo" ng-model="vm.opportunityMaster.financialSummaryData.roeTwo"  ng-value="getFinRoe(vm.opportunityMaster.financialSummaryData.patTwo,vm.opportunityMaster.financialSummaryData.networthOne,vm.opportunityMaster.financialSummaryData.networthTwo)" ng-disabled="true"/> </td>
-                    <td><input name="roeThree" ng-model="vm.opportunityMaster.financialSummaryData.roeThree" ng-value="getFinRoe(vm.opportunityMaster.financialSummaryData.patThree,vm.opportunityMaster.financialSummaryData.networthTwo,vm.opportunityMaster.financialSummaryData.networthThree)" ng-disabled="true"/></td>
-                    <td><input name="roeFour" ng-model="vm.opportunityMaster.financialSummaryData.roeFour"  ng-value="getFinRoe(vm.opportunityMaster.financialSummaryData.patFour,vm.opportunityMaster.financialSummaryData.networthThree,vm.opportunityMaster.financialSummaryData.networthFour)" ng-disabled="true"/></td>
-                    <td><input name="roeFive" ng-model="vm.opportunityMaster.financialSummaryData.roeFive" ng-value="getFinRoe(vm.opportunityMaster.financialSummaryData.patFive,vm.opportunityMaster.financialSummaryData.networthFour,vm.opportunityMaster.financialSummaryData.networthfive)" ng-disabled="true"/></td>
+                    <td><input name="roeOne" ng-model="vm.opportunityMaster.financialSummaryData.roeOne" ng-value="getFinRoe(vm.opportunityMaster.financialSummaryData.patOne,0,vm.opportunityMaster.financialSummaryData.networthOne,1)" ng-disabled="true"/> </td>
+                    <td><input name="roeTwo" ng-model="vm.opportunityMaster.financialSummaryData.roeTwo"  ng-value="getFinRoe(vm.opportunityMaster.financialSummaryData.patTwo,vm.opportunityMaster.financialSummaryData.networthOne,vm.opportunityMaster.financialSummaryData.networthTwo,2)" ng-disabled="true"/> </td>
+                    <td><input name="roeThree" ng-model="vm.opportunityMaster.financialSummaryData.roeThree" ng-value="getFinRoe(vm.opportunityMaster.financialSummaryData.patThree,vm.opportunityMaster.financialSummaryData.networthTwo,vm.opportunityMaster.financialSummaryData.networthThree,3)" ng-disabled="true"/></td>
+                    <td><input name="roeFour" ng-model="vm.opportunityMaster.financialSummaryData.roeFour"  ng-value="getFinRoe(vm.opportunityMaster.financialSummaryData.patFour,vm.opportunityMaster.financialSummaryData.networthThree,vm.opportunityMaster.financialSummaryData.networthFour,4)" ng-disabled="true"/></td>
+                    <td><input name="roeFive" ng-model="vm.opportunityMaster.financialSummaryData.roeFive" ng-value="getFinRoe(vm.opportunityMaster.financialSummaryData.patFive,vm.opportunityMaster.financialSummaryData.networthFour,vm.opportunityMaster.financialSummaryData.networthfive,5)" ng-disabled="true"/></td>
                 </tr>
 
                 <tr>
                     <td scope="col">P/BV</td>
-                    <td><input name="pbvOne" ng-model="vm.opportunityMaster.financialSummaryData.pbvOne" ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.networthOne)" ng-disabled="true"/> </td>
-                    <td><input name="pbvTwo" ng-model="vm.opportunityMaster.financialSummaryData.pbvTwo" ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.networthTwo)" ng-disabled="true"/> </td>
-                    <td><input name="pbvThree" ng-model="vm.opportunityMaster.financialSummaryData.pbvThree" ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.networthThree)" ng-disabled="true"/></td>
-                    <td><input name="pbvFour" ng-model="vm.opportunityMaster.financialSummaryData.pbvFour" ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.networthFour)" ng-disabled="true"/></td>
-                    <td><input name="pbvFive" ng-model="vm.opportunityMaster.financialSummaryData.pbvFive" ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.networthfive)" ng-disabled="true"/></td>
+                    <td><input name="pbvOne" ng-model="vm.opportunityMaster.financialSummaryData.pbvOne" ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.networthOne,6)" ng-disabled="true"/> </td>
+                    <td><input name="pbvTwo" ng-model="vm.opportunityMaster.financialSummaryData.pbvTwo" ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.networthTwo,7)" ng-disabled="true"/> </td>
+                    <td><input name="pbvThree" ng-model="vm.opportunityMaster.financialSummaryData.pbvThree" ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.networthThree,8)" ng-disabled="true"/></td>
+                    <td><input name="pbvFour" ng-model="vm.opportunityMaster.financialSummaryData.pbvFour" ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.networthFour,9)" ng-disabled="true"/></td>
+                    <td><input name="pbvFive" ng-model="vm.opportunityMaster.financialSummaryData.pbvFive" ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.networthfive,10)" ng-disabled="true"/></td>
                 </tr>
 
 
