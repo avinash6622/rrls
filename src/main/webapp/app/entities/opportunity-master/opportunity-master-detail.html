@@ -34,8 +34,53 @@ div.scrollmenu {
     overflow: auto;
     white-space: nowrap;
 }
+/*.brdb{
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(233, 233, 233);
+}
+.PA5{
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+}
 
+ .FL{
+     float:left;
+ }
+ .PR15{
+     padding-right: 15px;
+ }
+.PL15
+{
+    padding-left: 15px;
+}
+.brdr{
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: rgb(213, 213, 213);
+}
+ .PT3{
+     padding-top: 3px;
+ }
+.PB3{
+    padding-bottom: 3px;
+}
+.UC{
+    text-transform: uppercase;
+}
+    .gL_10{
 
+    }
+    .PB3{
+        padding-bottom: 3px;
+    }*/
+
+.padding-0{
+    padding-right:0;
+    padding-left:0;
+}
 </style>
 
 <div>
@@ -47,9 +92,96 @@ div.scrollmenu {
 		<dt>
 			<span>Sector</span>
 		</dt>
-		<dd>
-			<span>{{vm.opportunityMaster.masterName.sectorType}}</span>
+        <dd>
+            <span>{{vm.opportunityMaster.masterName.sectorType}}</span>
+
+
+            <div class="row" ng-if="vm.opportunityMaster.nonFinancialSummaryData == null">
+                <div class="pull-right">
+                <div class="col-md-1 pr-md-1">
+                    <div>CMP</div>
+                    <div></div>
+                </div>
+                <div class="col-sm-offset-1 col-md-1 pl-md-1">
+                    <div>MCAP</div>
+                    <div>{{vm.opportunityMaster.financialSummaryData.marCapThree}}</div>
+                </div>
+                    <div class="col-sm-offset-1 col-md-1 pl-md-1">
+                        <div>P/E</div>
+                        <div>{{vm.opportunityMaster.financialSummaryData.peThree}}</div>
+                    </div>
+                    <div class="col-sm-offset-1 col-md-1 pl-md-1">
+                        <div>ROE</div>
+                        <div>{{vm.opportunityMaster.financialSummaryData.roeThree}}</div>
+                    </div>
+                    <div class="col-sm-offset-1 col-md-1 pl-md-1">
+                        <div>P/BV</div>
+                        <div>{{vm.opportunityMaster.financialSummaryData.pbvThree}}</div>
+                    </div>
+                    <div class="col-sm-offset-1 col-md-1 pl-md-1">
+                        <div>D/E</div>
+                        <div></div>
+                    </div>
+                </div>
+                </div>
+
+            <div class="row" ng-if="vm.opportunityMaster.financialSummaryData == null">
+                <div class="pull-right">
+                    <div class="col-md-1 pr-md-1">
+                        <div>CMP</div>
+                        <div></div>
+                    </div>
+                    <div class="col-sm-offset-1 col-md-1 pl-md-1">
+                        <div>MCAP</div>
+                        <div>{{vm.opportunityMaster.nonFinancialSummaryData.marketCapThree}}</div>
+                    </div>
+                    <div class="col-sm-offset-1 col-md-1 pl-md-1">
+                        <div>P/E</div>
+                        <div>{{vm.opportunityMaster.nonFinancialSummaryData.pethree}}</div>
+                    </div>
+                    <div class="col-sm-offset-1 col-md-1 pl-md-1">
+                        <div>ROE</div>
+                        <div>{{vm.opportunityMaster.nonFinancialSummaryData.roeThree}}</div>
+                    </div>
+                    <div class="col-sm-offset-1 col-md-1 pl-md-1">
+                        <div>P/BV</div>
+                        <div></div>
+                    </div>
+                    <div class="col-sm-offset-1 col-md-1 pl-md-1">
+                        <div>D/E</div>
+                        <div>{{vm.opportunityMaster.nonFinancialSummaryData.deThree}}</div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        <!--    <div>
+            <div class="brdb PA5">
+                <div class="FL PR15 brdr">
+                    <div class="PT3 PB3 UC gL_10">Prev.close</div>
+                    <div class="gD_12 PB3">
+                        <strong>
+                            54.60
+                        </strong>
+                    </div>
+                </div>
+            </div>
+            &lt;!&ndash;<span>
+                CMP : </br>
+                MCAP :</br>
+                P/E  :</br>
+                ROE  :</br>
+                P/BV :</br>
+                D/E  :</br>
+            </span>
+&ndash;&gt;
+
+            </div>-->
 		</dd>
+
 		<dt>
 			<span>Description</span>
 		</dt>

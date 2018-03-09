@@ -486,7 +486,7 @@ public class OpportunityMasterResource {
     Context context;
 */
 
-    @PostMapping("/opportunity-masters/download-file")
+ /*   @PostMapping("/opportunity-masters/download-file")
     @Timed
     public ResponseEntity<FileUpload> downloader(HttpServletRequest request, HttpServletResponse response,
                          @RequestBody FileUpload fileUpload) throws URISyntaxException, IOException{
@@ -494,11 +494,11 @@ public class OpportunityMasterResource {
         System.out.println("Entering"+fileUpload.getFileName()+"path:"+fileUpload.getFileData());
 
 
-      /*  ResponseBuilder responses=Response.ok((Object)file);
+      *//*  ResponseBuilder responses=Response.ok((Object)file);
               responses.header("Content-Disposition", "attachment; filename="+files);
     	    responses.setHeader("Content-Disposition", "attachment; filename="+fileUpload.getFileName());
     	    responses.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-*/
+*//*
         FileInputStream inputStream = new FileInputStream(new File(fileUpload.getFileData()));
         String fileNames=fileName;
         response.setHeader("Content-Disposition", "attachment; filename="+fileUpload.getFileName());
@@ -511,7 +511,68 @@ public class OpportunityMasterResource {
         inputStream.close();
 
         return ResponseEntity.ok().build();
-                 }
+
+
+                 }*/
+
+    @Autowired
+    ServletContext context;
+     @GetMapping("/opportunity-masters/download-file")
+     public void downloader(HttpServletRequest request, HttpServletResponse response) {
+     try {
+         System.out.println("entering");
+         String fileName ="Formattingsah.xlsx";
+         String downloadFolder = context.getRealPath("/resources/BOMBAY DYEING &amp; MFG.CO.LTD/girija");
+         File file = new File(downloadFolder + File.separator + fileName);
+         System.out.println("Filename---->"+file);
+         System.out.println(file.exists());
+
+
+
+
+         if (file.exists()) {
+             System.out.println(file.getName());
+             //String mimeType = context.getMimeType(file.getPath());
+            String mimeType ="application/vnd.ms-excel";
+             System.out.println(mimeType);
+
+             if (mimeType == null) {
+                 mimeType = "application/octet-stream";
+             }
+
+             response.setContentType(mimeType);
+             response.addHeader("Content-Disposition", "attachment; filename=" + fileName);
+             response.setContentLength((int) file.length());
+
+             OutputStream os = response.getOutputStream();
+             FileInputStream fis = new FileInputStream(file);
+             byte[] buffer = new byte[4096];
+             int b = -1;
+
+             while ((b = fis.read(buffer)) != -1) {
+                 os.write(buffer, 0, b);
+             }
+
+             fis.close();
+             os.close();
+
+
+         } else {
+             System.out.println("Requested " + fileName + " file not found!!");
+         }
+     } catch (IOException e) {
+         System.out.println("Error:- " + e.getMessage());
+     }
+
+
+
+ }
+
+
+
+
+
+
 	@PostMapping("/opportunity-masters/create-file")
 	@Timed
 	public ResponseEntity<FileUpload> createWordOpportunityMaster(@RequestBody DocumentCreationBean documentCreationBean)

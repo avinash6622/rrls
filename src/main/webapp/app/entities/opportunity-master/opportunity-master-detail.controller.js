@@ -12,7 +12,7 @@
 
         vm.opportunityMaster = entity;
         vm.previousState = previousState.name;
-        vm.opportunityMaster.financialSummaryData = vm.opportunityMaster.financialSummaryData ? vm.opportunityMaster.financialSummaryData : {};
+        vm.opportunityMaster.financialSummaryData = vm.opportunityMaster.financialSummaryData ? vm.opportunityMaster.financialSummaryData : null;
        // vm.opportunityMaster.financialSummaryData = {};
         vm.readOnly = true;
         vm.upload = upload;
@@ -30,7 +30,7 @@
       //  vm.submiTable=submitTable;
 
 
-         console.log("file---->",vm.opportunityMaster.fileUploads);
+         console.log("file---->",vm.opportunityMaster);
 
         var unsubscribe = $rootScope.$on('researchRepositoryLearningSystemApp:opportunityMasterUpdate', function(event, result) {
             vm.opportunityMaster = result;
@@ -63,10 +63,7 @@
            console.log('Name: ' + $scope.selitem);
         };
 
-      /*  $scope.submitEmployee = function(){
 
-            console.log("form submitted:"+angular.toJson($scope.empoyees ));
-        }*/
 
 
 
@@ -79,7 +76,7 @@
 
             //console.log("bdsfjhj",tableValue);
 
-            OpportunityMaster.summarydatavalues(vm.opportunityMaster.financialSummaryData, function (resp) {
+            OpportunityMaster.summarydatavalues(vm.opportunityMaster, function (resp) {
                 console.log("safsdaf---->"+resp);
             }, function (err) {
                 console.log(err);
@@ -103,8 +100,8 @@
             $scope.sumVal = ($scope.vm.opportunityMaster.financialSummaryData.netIntOne * 1) + ($scope.vm.opportunityMaster.financialSummaryData.nonIntOne * 1);
           }
 
-        $scope.getTotal = function(val1, val2, val3) {      	  
-      	  
+        $scope.getTotal = function(val1, val2, val3) {
+
             var	result = parseFloat(val1) + parseFloat(val2);
             result=(isNaN(result)) ? '':result;
             console.log("val3 ",val3);
@@ -435,13 +432,9 @@
                });*/
 
 
-            OpportunityMaster.downloadfilecontent(fileID, function(resp){
+            OpportunityMaster.downloadfilecontent(function(resp){
                 console.log(resp);
-                /* console.log("my variable.. "+$scope.myvar);*/
-               /* vm.htmlContent = resp.htmlContent;
-                vm.fileUploadCommentList = resp.fileUploadCommentList;
 
-                $scope.myvar = false;*/
             }, function(err) {
                 console.log(err);
             });

@@ -110,12 +110,12 @@ public class FileUploadResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new fileUpload cannot already have an ID")).body(null);
         }*/
         String user= SecurityUtils.getCurrentUserLogin();
-        String  sFilesDirectory =  "src/main/resources/"+opp.getMasterName().getOppName()+"/"+user+"/xlsx/";
-        String  sFilesDirectoryimg =  "src/main/resources/"+opp.getMasterName().getOppName()+"/"+user+"/image/";
+        String  sFilesDirectory =  "src/main/resources/"+opp.getMasterName().getOppName()+"/"+user;
+       // String  sFilesDirectoryimg =  "src/main/resources/"+opp.getMasterName().getOppName()+"/"+user+"/image/";
       File dirFiles = new File(sFilesDirectory);
       dirFiles.mkdirs();
-      File dirFiles2 = new File(sFilesDirectoryimg);
-        dirFiles2.mkdirs();
+     /* File dirFiles2 = new File(sFilesDirectoryimg);
+        dirFiles2.mkdirs();*/
       FileUpload fileUploaded=new FileUpload();
       FileUpload result =new FileUpload();
 
@@ -132,20 +132,20 @@ public class FileUploadResource {
 
           System.out.println("FILE NAME--->"+fileName);
 
-          if(fileName.contains("xls") || fileName.contains("xlsx"))
-          {
+          /*if(fileName.contains("xls") || fileName.contains("xlsx"))
+          {*/
               File sFiles = new File(dirFiles, fileName);
               writeFile(fileStream, sFiles);
               fileUploaded.setFileData(sFiles.toString());
-          }
+      //    }
 
-      else{
+    /*  else{
               File sFiles1 = new File(dirFiles2,fileName);
               writeFile(fileStream,sFiles1);
               fileUploaded.setFileData(sFiles1.toString());
           }
 
-
+*/
     	// System.out.println("sfiletype---->"+sFiles1);
 
 
@@ -157,7 +157,7 @@ public class FileUploadResource {
     	//System.out.println("Filename---->"+sFile.getOriginalFilename());
 
     	fileUploaded.setFileName(uploadfileName);
-    	fileUploaded.setFileDataContentType(extension);
+    	//fileUploaded.setFileDataContentType(extension);
     	fileUploaded.setOpportunityMasterId(opp);
     	fileUploaded.setFiletype(filetype);
     	result=fileUploadRepository.save(fileUploaded);

@@ -102,11 +102,11 @@
 
             'downloadfilecontent':{
                 url:'api/opportunity-masters/download-file/',
-                method:'POST',
+                method:'GET',
                 transformResponse: function(data){
 
-                    console.log(data);
-                    return data;
+                    /*console.log(data);
+                    return data;*/
 
                 }
 
