@@ -349,7 +349,7 @@ div.scrollmenu {
             <div style="height:250px;overflow:scroll;overflow-x:hidden;overflow-y:scroll;">
 
 			<div class="actionBox"
-				ng-repeat="fileUploadComments in vm.opportunityMaster.fileUploadCommentList">
+				ng-repeat="fileUploadComments in vm.opportunityMaster.fileUploadCommentList |orderBy: '-createdDate'">
 
 				<div>
 					<div class="capitalize">

@@ -1,3 +1,14 @@
+<style>
+
+    .success-text {
+        color: #00C851; }
+
+    .primary-text {
+        color: #4285F4; }
+
+</style>
+
+
 <nav class="navbar navbar-default" role="navigation">
     <div class="container">
         <div class="navbar-header">
@@ -179,6 +190,14 @@
                                 <span>Sign out</span>
                             </a>
                         </li>
+
+                <li ui-sref-active="active" ng-switch="vm.isAuthenticated()" ng-switch-when="true">
+                    <a href=""  id="logout1">
+                        <span class="glyphicon glyphicon-user"></span>&nbsp;
+                        <span class ="primary-text">{{vm.account.login |capitalize}}</span>
+                    </a>
+
+                </li>
             </ul>
         </div>
     </div>

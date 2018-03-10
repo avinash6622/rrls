@@ -1,10 +1,12 @@
 package com.unify.rrls.domain;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -148,6 +150,11 @@ public class OpportunitySummaryData  implements Serializable {
 
 	@Column(name = "peg_year_peg")
 	private Double pegYearPeg;
+
+
+	@Transient
+    @JsonProperty
+	List<StrategyMaster> strategyMasterList;
 
 
 
@@ -522,6 +529,14 @@ public class OpportunitySummaryData  implements Serializable {
         this.strategyMasterId = strategyMasterId;
     }
 
+    public List<StrategyMaster> getStrategyMasterList() {
+        return strategyMasterList;
+    }
+
+    public void setStrategyMasterList(List<StrategyMaster> strategyMasterList) {
+        this.strategyMasterList = strategyMasterList;
+    }
+
     @Override
 	    public boolean equals(Object o) {
 	        if (this == o) {
@@ -541,6 +556,55 @@ public class OpportunitySummaryData  implements Serializable {
 	    public int hashCode() {
 	        return Objects.hashCode(getId());
 	    }
+
+  /*  @Override
+    public String toString() {
+        return "OpportunitySummaryData{" +
+            "id=" + id +
+            ", bWeight=" + bWeight +
+            ", cmp=" + cmp +
+            ", marketCap=" + marketCap +
+            ", patFirstYear=" + patFirstYear +
+            ", patSecondYear=" + patSecondYear +
+            ", patThirdYear=" + patThirdYear +
+            ", patFourthYear=" + patFourthYear +
+            ", patFifthYear=" + patFifthYear +
+            ", peFirstYear=" + peFirstYear +
+            ", peSecondYear=" + peSecondYear +
+            ", peThirdYear=" + peThirdYear +
+            ", peFourthYear=" + peFourthYear +
+            ", peFifthYear=" + peFifthYear +
+            ", roeFirstYear=" + roeFirstYear +
+            ", roeSecondYear=" + roeSecondYear +
+            ", roeThirdYear=" + roeThirdYear +
+            ", roeFourthYear=" + roeFourthYear +
+            ", roeFifthYear=" + roeFifthYear +
+            ", deFirstYear=" + deFirstYear +
+            ", deSecondYear=" + deSecondYear +
+            ", deThirdColour=" + deThirdColour +
+            ", deFourthYear=" + deFourthYear +
+            ", deFifthYear=" + deFifthYear +
+            ", patGrowthFirst=" + patGrowthFirst +
+            ", patGrowthSecond=" + patGrowthSecond +
+            ", patGrowthThird=" + patGrowthThird +
+            ", patGrowthFourth=" + patGrowthFourth +
+            ", patGrowthFifth=" + patGrowthFifth +
+            ", portPeFirst=" + portPeFirst +
+            ", portPeSecond=" + portPeSecond +
+            ", portPeThird=" + portPeThird +
+            ", portPeFourth=" + portPeFourth +
+            ", portPeFifth=" + portPeFifth +
+            ", earningsFirst=" + earningsFirst +
+            ", earningsSecond=" + earningsSecond +
+            ", earningsThird=" + earningsThird +
+            ", earningsFourth=" + earningsFourth +
+            ", earningsFifth=" + earningsFifth +
+            ", wtAvgCap=" + wtAvgCap +
+            ", roe=" + roe +
+            ", pegOj=" + pegOj +
+            ", pegYearPeg=" + pegYearPeg +
+            '}';
+    }*/
 
     @Override
     public String toString() {
@@ -588,6 +652,9 @@ public class OpportunitySummaryData  implements Serializable {
             ", roe=" + roe +
             ", pegOj=" + pegOj +
             ", pegYearPeg=" + pegYearPeg +
+            ", strategyMasterList=" + strategyMasterList +
+            ", opportunityMasterid=" + opportunityMasterid +
+            ", strategyMasterId=" + strategyMasterId +
             '}';
     }
 }

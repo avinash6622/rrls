@@ -14,6 +14,7 @@ import java.util.List;
 public interface OpportunitySummaryDataRepository extends JpaRepository<OpportunitySummaryData, Long> {
     List<OpportunitySummaryData>  findByOpportunityMasterid(OpportunityMaster opportunityMaster);
     List<OpportunitySummaryData> findByStrategyMasterId(StrategyMaster strategyMaster);
+
 /*    List<OpportunitySummaryData> findAllGroupByOpportunityMasterid();*/
 }
 

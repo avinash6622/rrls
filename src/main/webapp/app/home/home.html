@@ -39,14 +39,14 @@ border:none !important;
  <div ng-cloak>
     <div class="row">
         <div class="col-md-12">
-            <h1>Welcome!</h1>
+         <!--   <h1>Welcome!</h1>-->
 
             <div ng-switch="vm.isAuthenticated()">
             <div ng-switch-when="true">
-            	<div class="alert alert-success">
+            	<!--<div class="alert alert-success">
                     You are logged in as user "{{vm.account.login |capitalize}}".
                     <br>
-                    </div>
+                    </div>-->
                      <div class="scrollmenu">
                          <table id="mytable" class="table table-bordered">
                              <thead>
@@ -110,7 +110,7 @@ border:none !important;
                         <tbody>
                              <tr ng-repeat="value in vm.dashboardvalues">
                                  <td scope="col"><a ui-sref="opportunity-master-detail({id:value.opportunityMasterid.id})">{{value.opportunityMasterid.masterName.oppName}}</a></td>
-                                 <td><a ui-sref="strategy-master-detail({id:value.strategyMasterId.id})">{{value.strategyMasterId.strategyName}}</a></td>
+                                 <td><a ui-sref="strategy-master-detail({id:value.strategyMasterId.id})">{{value.strategyMasterList.strategyName}}</a></td>
                                  <td>{{value.cmp}}</td>
                                  <td>{{value.marketCap}}</td>
                                  <td>{{value.patFirstYear}}</td>

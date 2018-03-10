@@ -5,6 +5,9 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.validation.Valid;
 
 import com.unify.rrls.domain.*;
@@ -67,21 +70,62 @@ public class OpportunitySummaryDataResource {
 		return null;
 	}
 
+    @PersistenceContext
+    EntityManager em;
 
 
     @GetMapping("/opportunity-summary/getdata")
     @Timed
     public ResponseEntity<List<OpportunitySummaryData>> getAllOpportunitySummaryData() {
         log.debug("REST request to get a page of OpportunityMasters");
-        List<OpportunitySummaryData> page = opportunitySummaryDataRepository.findAll();
+
+        Query q = em.createNativeQuery("select * from opportunity_summary_data group by opp_master",OpportunitySummaryData.class);
+
+
+
+        List<OpportunitySummaryData> page =  q.getResultList();
+
+        List<OpportunitySummaryData> summaryData = new ArrayList<OpportunitySummaryData>();
+
+        for (OpportunitySummaryData opportunitySummaryData:page) {
+            System.out.println("kjhdsfhisdj----->"+opportunitySummaryData);
+            List <StrategyMaster> strategyMasterList=getStrategyList(opportunitySummaryData.getOpportunityMasterid().getId());
+            opportunitySummaryData.setStrategyMasterList(strategyMasterList);
+            summaryData.add(opportunitySummaryData);
+        }
 
         System.out.println(page);
         //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
         HttpHeaders headers=new HttpHeaders();
-        return new ResponseEntity<>(page, headers, HttpStatus.OK);
+        return new ResponseEntity<>(summaryData, headers, HttpStatus.OK);
     }
 
+    private List<StrategyMaster> getStrategyList(Long id) {
+        System.out.println("vjahsdjhsajj"+id);
+
+        Query q = em.createNativeQuery("select strategy_mas_id from opportunity_summary_data where opp_master = "+id+"");
+        List<StrategyMaster> strategyMasters = new ArrayList<>();
 
 
 
+        List<OpportunitySummaryData> results = q.getResultList();
+
+        System.out.println("LIST VAL----->"+results);
+        Query q1 =null;
+
+        for (int i = 0; i < results.size(); i++) {
+
+
+            q1 = em.createNativeQuery("select strategy_name from strategy_master where id = "+results.get(i)+"");
+          //  System.out.println("jdhsfjs---->"+q1.getSingleResult());
+           // strategyMasters.add();
+
+            }
+        strategyMasters=q1.getResultList();
+
+        System.out.println("hdsjhfkjsd--->"+strategyMasters);
+
+        return strategyMasters;
+
+        }
 }

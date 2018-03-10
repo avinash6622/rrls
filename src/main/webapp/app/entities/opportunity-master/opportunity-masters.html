@@ -11,6 +11,9 @@
                     </span>
                 </button>
             </div>
+            <div class="col-xs-6">Search<input class="form-control ng-pristine ng-valid" ng-model="searchKeyword" type="text"> </div>
+
+
         </div>
     </div>
     <br/>
@@ -20,7 +23,7 @@
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
                  <!--    <th jh-sort-by="oppCode"><span>Opp Code</span> <span class="glyphicon glyphicon-sort"></span></th> -->
                  <th jh-sort-by="masterName.id"><span>Opportunity Name</span> <span class="glyphicon glyphicon-sort"></span></th>
-                 
+
                   	<th jh-sort-by="masterName.oppName"><span>Sector</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="oppDescription"><span>Opportunity Description</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="selectedStrategyMaster.strategyName"><span>Strategy</span> <span class="glyphicon glyphicon-sort"></span></th>
@@ -29,18 +32,18 @@
                 </tr>
             </thead>
             <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
-                <tr ng-repeat="opportunityMaster in vm.opportunityMasters track by opportunityMaster.id">
-                  
+                <tr ng-repeat="opportunityMaster in vm.opportunityMasters | filter: searchKeyword">
+
                     <td><a ui-sref="opportunity-master-detail({id:opportunityMaster.id})">{{opportunityMaster.masterName.oppName}}
                     </a></td>
                      <td> {{opportunityMaster.masterName.sectorType}}</td>
                     <td><a ui-sref="opportunity-master-detail({id:opportunityMaster.id})">{{opportunityMaster.oppDescription}}</a></td>
-                    <td>                     
+                    <td>
                       <div ng-repeat="selectedStrategyMaster in opportunityMaster.selectedStrategyMaster">{{selectedStrategyMaster.strategyName}}</div>
                     </td>
                      <td>{{opportunityMaster.createdBy |capitalize}}
                     </td>
-                     
+
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
@@ -55,14 +58,14 @@
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 <span class="hidden-sm-down"></span>
                             </button>
-                            
+
                              <button type="submit"
                                     ui-sref="opportunity-master.delete({id:opportunityMaster.id})"
                                     class="btn btn-danger btn-sm">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                 <span class="hidden-sm-down"></span>
-                            </button> 
-                            
+                            </button>
+
                         </div>
                     </td>
                 </tr>
