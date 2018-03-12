@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import com.unify.rrls.domain.*;
 import com.unify.rrls.repository.FinancialSummaryDataRepository;
 import com.unify.rrls.repository.NonFinancialSummaryDataRepository;
+import com.unify.rrls.repository.StrategyMasterRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -38,11 +39,14 @@ public class OpportunitySummaryDataResource {
 
 	private final NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository;
 
+	private final StrategyMasterRepository strategyMasterRepository;
+
 	public OpportunitySummaryDataResource(OpportunitySummaryDataRepository opportunitySummaryDataRepository,FinancialSummaryDataRepository financialSummaryDataRepository,
-                                          NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository) {
+                                          NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository,StrategyMasterRepository strategyMasterRepository) {
 		this.opportunitySummaryDataRepository = opportunitySummaryDataRepository;
 		this.financialSummaryDataRepository = financialSummaryDataRepository;
 		this.nonFinancialSummaryDataRepository = nonFinancialSummaryDataRepository;
+		this.strategyMasterRepository = strategyMasterRepository;
 	}
 
 	@PostMapping("/opportunity-summary")
@@ -54,7 +58,7 @@ public class OpportunitySummaryDataResource {
 		log.debug("REST request to save OpportunitySummaryData : {}", opportunityMaster.getFinancialSummaryData()+""+opportunityMaster.getNonFinancialSummaryData()+""+opportunityMaster.getOpportunitySummaryData());
       //  System.out.println("opportunityMaster---->"+opportunityMaster);
 
-		/* OpportunitySummaryData result = opportunitySummaryDataRepository.save(opportunityMaster.getOpportunitySummaryData());
+		 /*OpportunitySummaryData result = opportunitySummaryDataRepository.save(opportunityMaster.getOpportunitySummaryData());
 		 FinancialSummaryData financialSummaryData =financialSummaryDataRepository.save(opportunityMaster.getFinancialSummaryData());
 		 NonFinancialSummaryData nonFinancialSummaryData = nonFinancialSummaryDataRepository.save(opportunityMaster.getNonFinancialSummaryData());*/
 		/*if(opportunitySummaryData.getOpportunityMasterid().getFinancialSummaryData() != null)
@@ -102,13 +106,21 @@ public class OpportunitySummaryDataResource {
 
     private List<StrategyMaster> getStrategyList(Long id) {
         System.out.println("vjahsdjhsajj"+id);
-
+        StrategyMaster strategyMaster = new StrategyMaster();
+        List<StrategyMaster> strategyMasters =new ArrayList<>();
         Query q = em.createNativeQuery("select strategy_mas_id from opportunity_summary_data where opp_master = "+id+"");
-        List<StrategyMaster> strategyMasters = new ArrayList<>();
+        List<Object[]> result = q.getResultList();
+        if(!result.isEmpty()) {
+            for (Object[] object : result) {
+                strategyMaster = strategyMasterRepository.findOne((Long) object[0]);
+                strategyMasters.add(strategyMaster);
+            }
+        }
+        System.out.println("LIST VAL---->"+strategyMasters);
 
 
 
-        List<OpportunitySummaryData> results = q.getResultList();
+       /* List<OpportunitySummaryData> results = q.getResultList();
 
         System.out.println("LIST VAL----->"+results);
         Query q1 =null;
@@ -117,13 +129,14 @@ public class OpportunitySummaryDataResource {
 
 
             q1 = em.createNativeQuery("select strategy_name from strategy_master where id = "+results.get(i)+"");
-          //  System.out.println("jdhsfjs---->"+q1.getSingleResult());
-           // strategyMasters.add();
+            strategyMasters.addAll(q1.getResultList());
+
+            //System.out.println("jdhsfjs---->"+q1.getResultList());
+            // strategyMasters.add();
 
             }
-        strategyMasters=q1.getResultList();
-
-        System.out.println("hdsjhfkjsd--->"+strategyMasters);
+      
+        System.out.println("hdsjhfkjsd--->"+strategyMasters);*/
 
         return strategyMasters;
 
