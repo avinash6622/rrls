@@ -107,6 +107,7 @@ public class OpportunitySummaryDataResource {
     private List<StrategyMaster> getStrategyList(Long id) {
         System.out.println("vjahsdjhsajj"+id);
         StrategyMaster strategyMaster = new StrategyMaster();
+
         List<Integer> strategyids =new ArrayList<>();
         List<StrategyMaster> strategyMasters =new ArrayList<>();
         StrategyMaster object;
@@ -116,8 +117,8 @@ public class OpportunitySummaryDataResource {
         {
         	object=strategyMasterRepository.findOne(sm.longValue());
         	strategyMasters.add(object);
-        }
-        
+        }        
+
         System.out.println("LIST VAL---->"+strategyMasters);
 
 
@@ -133,12 +134,9 @@ public class OpportunitySummaryDataResource {
             q1 = em.createNativeQuery("select strategy_name from strategy_master where id = "+results.get(i)+"");
             strategyMasters.addAll(q1.getResultList());
 
-            //System.out.println("jdhsfjs---->"+q1.getResultList());
-            // strategyMasters.add();
 
             }
-      
-        System.out.println("hdsjhfkjsd--->"+strategyMasters);*/
+*/
 
         return strategyMasters;
 
