@@ -107,15 +107,17 @@ public class OpportunitySummaryDataResource {
     private List<StrategyMaster> getStrategyList(Long id) {
         System.out.println("vjahsdjhsajj"+id);
         StrategyMaster strategyMaster = new StrategyMaster();
+        List<Integer> strategyids =new ArrayList<>();
         List<StrategyMaster> strategyMasters =new ArrayList<>();
-        Query q = em.createNativeQuery("select strategy_mas_id from opportunity_summary_data where opp_master = "+id+"");
-        List<Object[]> result = q.getResultList();
-        if(!result.isEmpty()) {
-            for (Object[] object : result) {
-                strategyMaster = strategyMasterRepository.findOne((Long) object[0]);
-                strategyMasters.add(strategyMaster);
-            }
+        StrategyMaster object;
+        Query q = em.createNativeQuery("select strategy_mas_id from opportunity_summary_data where opp_master = "+id+"");        
+        strategyids=q.getResultList();
+        for(Integer sm:strategyids)
+        {
+        	object=strategyMasterRepository.findOne(sm.longValue());
+        	strategyMasters.add(object);
         }
+        
         System.out.println("LIST VAL---->"+strategyMasters);
 
 
