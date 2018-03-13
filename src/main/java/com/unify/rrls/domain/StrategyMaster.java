@@ -42,6 +42,16 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
     @Column(name = "date_active")
     private LocalDate dateActive;
 
+
+    @Column(name="AUM")
+    private String aum;
+
+    @Column(name="Total_AUM")
+    private String totalAum;
+
+    @Column(name="Total_stocks")
+    private String totalStocks;
+
     @Transient
     @JsonProperty
     private List<OpportunitySummaryData> opportunitySummaryData;
@@ -129,7 +139,33 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
     public void setOpportunitySummaryData(List<OpportunitySummaryData> opportunitySummaryData) {
         this.opportunitySummaryData = opportunitySummaryData;
     }
- /*public String getCreatedBy() {
+
+    public String getAum() {
+        return aum;
+    }
+
+    public void setAum(String aum) {
+        this.aum = aum;
+    }
+
+    public String getTotalAum() {
+        return totalAum;
+    }
+
+    public void setTotalAum(String totalAum) {
+        this.totalAum = totalAum;
+    }
+
+    public String getTotalStocks() {
+        return totalStocks;
+    }
+
+    public void setTotalStocks(String totalStocks) {
+        this.totalStocks = totalStocks;
+    }
+
+
+/*public String getCreatedBy() {
         return createdBy;
     }
 
@@ -203,7 +239,7 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
         return Objects.hashCode(getId());
     }
 
-    @Override
+  /*  @Override
     public String toString() {
         return "StrategyMaster{" +
             "id=" + id +
@@ -213,6 +249,6 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
             ", dateActive=" + dateActive +
             '}';
     }
-
+*/
 
 }

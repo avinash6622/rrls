@@ -21,12 +21,10 @@
                     <!-- <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th> -->
                     <!--<th jh-sort-by="strategyCode"><span>Strategy Code</span> <span class="glyphicon glyphicon-sort"></span></th>-->
                     <th jh-sort-by="strategyName"><span>Strategy Name</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="sStatus"><span>Status</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="dateActive"><span>Date Active</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <!-- <th jh-sort-by="createdBy"><span>Created By</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="updatedBy"><span>Updated By</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="createdDate"><span>Created Date</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="updatedDate"><span>Updated Date</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+                    <th jh-sort-by="aum"><span>AUM</span> <span class="glyphicon glyphicon-sort"></span></th>
+                  <!--  <th jh-sort-by="totalAum"><span>Total AUM</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <th jh-sort-by="totalStocks"><span>Total Stocks</span> <span class="glyphicon glyphicon-sort"></span></th>
+
                     <th></th>
                 </tr>
             </thead>
@@ -35,8 +33,9 @@
                    <!--  <td><a ui-sref="strategy-master-detail({id:strategyMaster.id})">{{strategyMaster.id}}</a></td> -->
                     <!--<td><a ui-sref="strategy-master-detail({id:strategyMaster.id})">{{strategyMaster.strategyCode}}</a></td>-->
                     <td><a ui-sref="strategy-master-detail({id:strategyMaster.id})">{{strategyMaster.strategyName}}</a></td>
-                    <td>{{strategyMaster.sStatus ? 'Active': 'Inactive'}}</td>
-                        <td>{{strategyMaster.dateActive | date:'mediumDate'}}</td>
+                    <td>{{strategyMaster.aum}}</td>
+                       <!-- <td>{{strategyMaster.totalAum}}</td>-->
+                    <td>{{strategyMaster.totalStocks}}</td>
                 <!--     <td>{{strategyMaster.createdBy}}</td>
                     <td>{{strategyMaster.updatedBy}}</td>
                         <td>{{strategyMaster.createdDate | date:'mediumDate'}}</td>

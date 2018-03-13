@@ -13,7 +13,7 @@
             <input type="text" class="form-control" id="id" name="id"
                     ng-model="vm.strategyMaster.id" readonly />
         </div>
-        <div class="form-group">
+   <!--     <div class="form-group">
             <label class="control-label" for="field_strategyCode">Strategy Code</label>
             <input type="text" class="form-control" name="strategyCode" id="field_strategyCode"
                     ng-model="vm.strategyMaster.strategyCode"
@@ -28,7 +28,7 @@
                     This field cannot be longer than 20 characters.
                 </p>
             </div>
-        </div>
+        </div>-->
         <div class="form-group">
             <label class="control-label" for="field_strategyName">Strategy Name</label>
             <input type="text" class="form-control" name="strategyName" id="field_strategyName"
@@ -45,17 +45,70 @@
                 </p>
             </div>
         </div>
+
         <div class="form-group">
-            <label class="control-label" for="field_sStatus">Status</label>
-            <!--<input type="number" class="form-control" name="sStatus" id="field_sStatus"
-                    ng-model="vm.strategyMaster.sStatus"
-                    />-->
-            <select class="form-control" name="sStatus" id="field_sStatus" ng-model="vm.strategyMaster.sStatus">
-                <option value="1" ng-selected="vm.strategyMaster.sStatus == 1">Active</option>
-                <option value="0" ng-selected="vm.strategyMaster.sStatus == 0">Inactive</option>
-            </select>
+            <label class="control-label" for="field_strategyName">AUM</label>
+            <input type="text" class="form-control" name="Aum" id="field_strategyAum"
+                   ng-model="vm.strategyMaster.aum"
+                   required ng-maxlength="40"/>
+            <div ng-show="editForm.Aum.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.Aum.$error.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                   ng-show="editForm.Aum.$error.maxlength">
+                    This field cannot be longer than 40 characters.
+                </p>
+            </div>
         </div>
+
+      <!--  <div class="form-group">
+            <label class="control-label" for="field_strategyName">Total AUM</label>
+            <input type="text" class="form-control" name="TotalAum" id="field_strategyTotalAum"
+                   ng-model="vm.strategyMaster.totalAum"
+                   required ng-maxlength="40"/>
+            <div ng-show="editForm.TotalAum.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.TotalAum.$error.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                   ng-show="editForm.TotalAum.$error.maxlength">
+                    This field cannot be longer than 40 characters.
+                </p>
+            </div>
+        </div>-->
+
         <div class="form-group">
+            <label class="control-label" for="field_strategyName">Total Stocks</label>
+            <input type="text" class="form-control" name="TotalStocks" id="field_strategyTotalStocks"
+                   ng-model="vm.strategyMaster.totalStocks"
+                   required ng-maxlength="40"/>
+            <div ng-show="editForm.TotalStocks.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.TotalStocks.$error.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                   ng-show="editForm.TotalStocks.$error.maxlength">
+                    This field cannot be longer than 40 characters.
+                </p>
+            </div>
+        </div>
+
+
+        <!-- <div class="form-group">
+             <label class="control-label" for="field_sStatus">Status</label>
+             &lt;!&ndash;<input type="number" class="form-control" name="sStatus" id="field_sStatus"
+                     ng-model="vm.strategyMaster.sStatus"
+                     />&ndash;&gt;
+             <select class="form-control" name="sStatus" id="field_sStatus" ng-model="vm.strategyMaster.sStatus">
+                 <option value="1" ng-selected="vm.strategyMaster.sStatus == 1">Active</option>
+                 <option value="0" ng-selected="vm.strategyMaster.sStatus == 0">Inactive</option>
+             </select>
+         </div>-->
+      <!--  <div class="form-group">
             <label class="control-label" for="field_dateActive">Date Active</label>
                 <div class="input-group">
                     <input id="field_dateActive" type="text" class="form-control" name="dateActive" uib-datepicker-popup="{{dateformat}}" ng-model="vm.strategyMaster.dateActive" is-open="vm.datePickerOpenStatus.dateActive"
@@ -64,7 +117,7 @@
                         <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dateActive')"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                 </div>
-        </div>
+        </div>-->
        <!--   <div class="form-group">
             <label class="control-label" for="field_createdBy">Created By</label>
             <input type="text" class="form-control" name="createdBy" id="field_createdBy"
