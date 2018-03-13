@@ -402,9 +402,9 @@ div.scrollmenu {
 		<div>
 
 
-			<div ng-show="vm.opportunityMaster.masterName.sectorType">
+			<div ng-show="vm.opportunityMaster.masterName.segment">
 				<div class="form-group"
-					ng-if="vm.opportunityMaster.masterName.sectorType == 'Finance (including NBFCs)'">
+					ng-if="vm.opportunityMaster.masterName.segment == 'Finance'">
 
 					<table id="mytable" class="table table-bordered">
 						<thead>
@@ -715,7 +715,7 @@ div.scrollmenu {
 
 
 				<div class="form-group"
-					ng-if="vm.opportunityMaster.masterName.sectorType != 'Finance (including NBFCs)'">
+					ng-if="vm.opportunityMaster.masterName.segment != 'Finance'">
 
 					<!--  <label class="control-label">Summary Data</label> -->
 					<table id="mytable1" class="table table-bordered">
