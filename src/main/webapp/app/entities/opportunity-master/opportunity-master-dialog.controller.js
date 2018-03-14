@@ -7,11 +7,11 @@
 
 	OpportunityMasterDialogController.$inject = [ '$timeout', '$scope', '$sce',
 			'$state', '$stateParams', '$http', 'entity', 'Upload',
-			'OpportunityMaster', 'StrategyMaster', 'OpportunityName' ];
+			'OpportunityMaster', 'StrategyMaster', 'OpportunityName','$filter' ];
 
 	function OpportunityMasterDialogController($timeout, $scope, $sce, $state,
 			$stateParams, $http, entity, Upload, OpportunityMaster,
-			StrategyMaster, OpportunityName) {
+			StrategyMaster, OpportunityName, $filter) {
 		var vm = this;
 
 		vm.opportunityMaster = entity;
@@ -46,7 +46,7 @@
 			data : function(searchText) {
 				return $http.get('api/opportunity-names').then(
 						function(response) {
-                            searchText = searchText.toUpperCase();
+                            searchText = searchText.toLowerCase();
                             console.log(searchText);
 
 
@@ -62,7 +62,7 @@
 							// ideally filtering should be done on the server
 							var states = _.filter(response.data,
 									function(state) {
-										return state.oppName
+										return (state.oppName).toLowerCase()
 												.startsWith(searchText);
 
 									});
@@ -89,7 +89,45 @@
 		}
 		var myDate = new Date();
 
-		$scope.addContact = function() {
+
+        var myDate = new Date();
+
+
+
+        var previousYear = new Date(myDate);
+
+        previousYear.setYear(myDate.getFullYear()-1);
+
+        var previousYearBefore = new Date(previousYear);
+        previousYearBefore.setYear(previousYear.getFullYear()-1);
+
+
+
+        var nextYear = new Date(myDate);
+
+        nextYear.setYear(myDate.getFullYear()+1);
+
+
+        var nextYearNext = new Date(nextYear);
+
+        nextYearNext.setYear(nextYear.getFullYear()+1);
+
+
+
+        $scope.currentYear = $filter('date')(myDate,'yyyy');
+
+        $scope.nextYear = $filter('date')(nextYear,'yyyy');
+
+        $scope.prevYear = $filter('date')(previousYear,'yyyy');
+
+        $scope.prevYearBefore = $filter('date')(previousYearBefore,'yyyy');
+
+        $scope.neYearNext = $filter('date')(nextYearNext,'yyyy');
+
+
+
+
+        $scope.addContact = function() {
 			vm.opportunityMaster.selectedoppContanct.push({})
 		}
 		$scope.removeContact = function(contactToRemove) {

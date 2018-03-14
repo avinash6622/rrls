@@ -11,12 +11,12 @@
 </style>
 <form name="editForm" role="form" novalidate ng-submit="vm.save()">
 
-    <div class="modal-header">
+    <div class="form-group">
         <button type="button" class="btn btn-default pull-right"
                 ng-click="vm.clear()">Go Back</button>
         <h4 class="modal-title" id="myOpportunityMasterLabel">Create Opportunity</h4>
     </div>
-    <div class="modal-body">
+    <div>
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" ng-show="vm.opportunityMaster.id">
             <label for="id">ID</label>
@@ -95,7 +95,7 @@
 
 
 
-             <div class="form-group row">
+             <div class="form-group">
              <label for="field_oppcontactName">Company Contact Details</label>
              <fieldset ng-repeat="contact in vm.opportunityMaster.selectedoppContanct">
               <div class="col-xs-3">
@@ -117,9 +117,10 @@
 			<button ng-click="removeContact(contact)" aria-label="Remove" class="btn btn-warning">Delete</button></div>
              </fieldset>
              </div>
-            <button type="button" ng-click="addContact()" class="btn btn-primary">Add Contact</button>
 
-        <div>
+        <div class="form-group"><button type="button" ng-click="addContact()" class="btn btn-primary">Add Contact</button></div>
+
+        <div class="form-group">
 
             <input type="radio" ng-model="myVar" value="Excel">Excel Upload
             <input type="radio" ng-model="myVar" value="data">Entry
@@ -153,11 +154,11 @@
 
                 <tr class="headborder">
                     <th style="width:15%;"></th>
-                    <th style="width:15%;">FY16</th>
-                    <th style="width:15%;">FY 17</th>
-                    <th style="width:15%;">FY 18</th>
-                    <th style="width:15%;">FY 19E</th>
-                    <th style="width:15%;">FY 20E</th>
+                    <th style="width:15%;">FY {{prevYearBefore}}</th>
+                    <th style="width:15%;">FY {{prevYear}}</th>
+                    <th style="width:15%;">FY {{currentYear}}</th>
+                    <th style="width:15%;">FY {{nextYear}}</th>
+                    <th style="width:15%;">FY {{neYearNext}}</th>
 
                 </tr>
                 </thead>
@@ -304,11 +305,11 @@
 
                         <tr class="headborder">
                             <th style="width:15%;"></th>
-                            <th style="width:15%;">FY16</th>
-                            <th style="width:15%;">FY 17</th>
-                            <th style="width:15%;">FY 18</th>
-                            <th style="width:15%;">FY 19E</th>
-                            <th style="width:15%;">FY 20E</th>
+                            <th style="width:15%;">FY {{prevYearBefore}}</th>
+                            <th style="width:15%;">FY {{prevYear}}</th>
+                            <th style="width:15%;">FY {{currentYear}}</th>
+                            <th style="width:15%;">FY {{nextYear}}</th>
+                            <th style="width:15%;">FY {{neYearNext}}</th>
 
                         </tr>
                         </thead>

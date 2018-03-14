@@ -37,6 +37,23 @@ border:none !important;
 
 </style>
  <div ng-cloak>
+     <div class="row">
+         <div class="col-md-3 col-sm-6 col-xs-12">
+
+         </div>
+         <div class="col-md-3 col-sm-6 col-xs-12">
+
+         </div>
+
+         <div class="clearfix visible-sm-block"></div>
+
+         <div class="col-md-3 col-sm-6 col-xs-12">
+
+         </div>
+         <div class="col-md-3 col-sm-6 col-xs-12">
+
+         </div>
+     </div>
     <div class="row">
         <div class="col-md-12">
          <!--   <h1>Welcome!</h1>-->
@@ -69,48 +86,54 @@ border:none !important;
 
                                  <th scope="col"></th>
                                  <th scope="col"></th>
-                                 <th scope="col">CMP</th>
+                                 <th scope="col">Prev. close</th>
                                  <th scope="col">M Cap</th>
                                  <!--pat-->
-                                 <th scope="col">FY 2016</th>
-                                 <th scope="col">FY 2017</th>
-                                 <th scope="col">FY 2018</th>
-                                 <th scope="col">FY 2019</th>
-                                 <th scope="col">FY 2020</th>
+                                 <th scope="col">FY {{prevYearBefore}}</th>
+                                 <th scope="col">FY {{prevYear}}</th>
+                                 <th scope="col">FY {{currentYear}}</th>
+                                 <th scope="col">FY {{nextYear}}</th>
+                                 <th scope="col">FY {{neYearNext}}</th>
+
+
                                  <!-- p/E-->
-                                 <th scope="col">FY 2016</th>
-                                 <th scope="col">FY 2017</th>
-                                 <th scope="col">FY 2018</th>
-                                 <th scope="col">FY 2019</th>
-                                 <th scope="col">FY 2020</th>
+                                 <th scope="col">FY {{prevYearBefore}}</th>
+                                 <th scope="col">FY {{prevYear}}</th>
+                                 <th scope="col">FY {{currentYear}}</th>
+                                 <th scope="col">FY {{nextYear}}</th>
+                                 <th scope="col">FY {{neYearNext}}</th>
                                  <!--ROE-->
-                                 <th scope="col">FY 2016</th>
-                                 <th scope="col">FY 2017</th>
-                                 <th scope="col">FY 2018</th>
-                                 <th scope="col">FY 2019</th>
-                                 <th scope="col">FY 2020</th>
+                                 <th scope="col">FY {{prevYearBefore}}</th>
+                                 <th scope="col">FY {{prevYear}}</th>
+                                 <th scope="col">FY {{currentYear}}</th>
+                                 <th scope="col">FY {{nextYear}}</th>
+                                 <th scope="col">FY {{neYearNext}}</th>
                                  <!--D/E-->
-                                 <th scope="col">FY 2016</th>
-                                 <th scope="col">FY 2017</th>
-                                 <th scope="col">FY 2018</th>
-                                 <th scope="col">FY 2019</th>
-                                 <th scope="col">FY 2020</th>
+                                 <th scope="col">FY {{prevYearBefore}}</th>
+                                 <th scope="col">FY {{prevYear}}</th>
+                                 <th scope="col">FY {{currentYear}}</th>
+                                 <th scope="col">FY {{nextYear}}</th>
+                                 <th scope="col">FY {{neYearNext}}</th>
                                  <!--PAT growth-->
 
-                                 <th scope="col">FY 2016</th>
-                                 <th scope="col">FY 2017</th>
-                                 <th scope="col">FY 2018</th>
-                                 <th scope="col">FY 2019</th>
-                                 <th scope="col">FY 2020</th>
+                                 <th scope="col">FY {{prevYearBefore}}</th>
+                                 <th scope="col">FY {{prevYear}}</th>
+                                 <th scope="col">FY {{currentYear}}</th>
+                                 <th scope="col">FY {{nextYear}}</th>
+                                 <th scope="col">FY {{neYearNext}}</th>
 
                                  <th scope="col">PEG</th>
 
                              </tr>
                              </thead>
                         <tbody>
-                             <tr ng-repeat="value in vm.dashboardvalues">
+                             <tr ng-repeat="value in vm.dashboardvalues | filter: { opportunityMasterid: {oppStatus: 'Approved' }}">
                                  <td scope="col"><a ui-sref="opportunity-master-detail({id:value.opportunityMasterid.id})">{{value.opportunityMasterid.masterName.oppName}}</a></td>
-                                 <td ng-repeat="strategy in value.strategyMasterList.strategyName">{{strategy}}</td>
+                                 <td>
+                                     <span ng-repeat="strategy in value.strategyMasterList">
+                                         <a ui-sref="strategy-master-detail({id:strategy.id})">{{strategy.strategyName}}</br></a>
+                                     </span>
+                                 </td>
                                  <td>{{value.cmp}}</td>
                                  <td>{{value.marketCap}}</td>
                                  <td>{{value.patFirstYear}}</td>
