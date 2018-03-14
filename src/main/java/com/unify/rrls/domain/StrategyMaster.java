@@ -46,8 +46,8 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
     @Column(name="AUM")
     private String aum;
 
-    @Column(name="Total_AUM")
-    private String totalAum;
+  /*  @Column(name="Total_AUM")
+    private String totalAum;*/
 
     @Column(name="Total_stocks")
     private String totalStocks;
@@ -55,21 +55,6 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
     @Transient
     @JsonProperty
     private List<OpportunitySummaryData> opportunitySummaryData;
-/*
-   @Size(max = 50)
-    @Column(name = "created_by", length = 50)
-    private String createdBy;
-
-    @Size(max = 50)
-    @Column(name = "updated_by", length = 50)
-    private String updatedBy;
-
-
-    @Column(name = "created_date", nullable = false)
-    private LocalDate createdDate;
-
-    @Column(name = "updated_date")
-    private Instant updatedDate;*/
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -148,13 +133,13 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
         this.aum = aum;
     }
 
-    public String getTotalAum() {
+ /*   public String getTotalAum() {
         return totalAum;
     }
 
     public void setTotalAum(String totalAum) {
         this.totalAum = totalAum;
-    }
+    }*/
 
     public String getTotalStocks() {
         return totalStocks;
@@ -163,59 +148,6 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
     public void setTotalStocks(String totalStocks) {
         this.totalStocks = totalStocks;
     }
-
-
-/*public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public StrategyMaster createdBy(String createdBy) {
-        this.createdBy = createdBy;
-        return this;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public StrategyMaster updatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-        return this;
-    }
-
-    public void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-
-    public LocalDate getCreatedDate() {
-        return createdDate;
-    }
-
-    public StrategyMaster createdDate(LocalDate createdDate) {
-        this.createdDate = createdDate;
-        return this;
-    }
-
-    public void setCreatedDate(LocalDate createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Instant getUpdatedDate() {
-        return updatedDate;
-    }
-
-    public StrategyMaster updatedDate(Instant updatedDate) {
-        this.updatedDate = updatedDate;
-        return this;
-    }
-
-    public void setUpdatedDate(Instant updatedDate) {
-        this.updatedDate = updatedDate;
-    }*/
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

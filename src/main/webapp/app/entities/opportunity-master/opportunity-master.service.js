@@ -134,9 +134,22 @@
 
 
                 }
-            }
+            },
+
+            'upload':{
+
+                url:'api/file-upload-data',
+                method:'POST',
+
+                transformResponse: function(data){
+
+                    console.log(data);
 
 
+                }
+
+
+            },
 
 
 

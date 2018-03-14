@@ -119,12 +119,33 @@
              </div>
             <button type="button" ng-click="addContact()" class="btn btn-primary">Add Contact</button>
 
+        <div>
+
+            <input type="radio" ng-model="myVar" value="Excel">Excel Upload
+            <input type="radio" ng-model="myVar" value="data">Entry
+      </div>
+
+        <div ng-switch="myVar">
+            <div ng-switch-when="Excel">
+                <span>Upload</span>
+                <div class="form-group">
+                    <input type="file" ngf-select="vm.selectFileData($file)" name="file"
+                           id="file_upload"
+                           ngf-pattern=".xlsx"
+                           accept=".xlsx" required="">
+                    <br />
+                    <button type="button" class="btn btn-default" ng-click="vm.uploadfile()">Upload</button>
+                </div>
+            </div>
+          <!--  <div ng-switch-when="data">
+                <h1>Tutorials</h1>
+                <p>Learn from examples.</p>
+            </div>-->
 
 
 
-
-<div ng-show="vm.opportunityMaster.masterName.sectorType">
-        <div  class="form-group" ng-if="vm.opportunityMaster.masterName.sectorType == 'Finance (including NBFCs)'">
+<div ng-switch-when="data">
+        <div  class="form-group" ng-if="vm.opportunityMaster.masterName.segment == 'Finance'">
 
             <label class="control-label">Summary Data</label>
             <table id="mytable" class="table table-bordered">
@@ -275,7 +296,7 @@
         </div>
 
 
-                <div class="form-group" ng-if="vm.opportunityMaster.masterName.sectorType != 'Finance (including NBFCs)'">
+                <div class="form-group" ng-if="vm.opportunityMaster.masterName.segment != 'Finance'">
 
                     <label class="control-label">Summary Data</label>
                     <table id="mytable1" class="table table-bordered">
@@ -336,7 +357,7 @@
                             <td><input name="ebitdaGrowthFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaGrowthFour" ng-value="getNonGrowth(vm.opportunityMaster.nonFinancialSummaryData.ebitdaThree, vm.opportunityMaster.nonFinancialSummaryData.ebitdaFour,7)" ng-disabled="true"/></td>
                             <td><input name="ebitdaGrowthFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaGrowthFive" ng-value="getNonGrowth(vm.opportunityMaster.nonFinancialSummaryData.ebitdaFour, vm.opportunityMaster.nonFinancialSummaryData.ebitdaFive,8)" ng-disabled="true"/></td>
                         </tr>
-                        
+
                           <tr>
                             <td scope="col">Other Income</td>
                             <td><input name="otherIncOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.otherIncOne" ng-disabled="" /> </td>
@@ -345,7 +366,7 @@
                             <td><input name="otherIncFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.otherIncFour" ng-disabled=""/></td>
                             <td><input name="otherIncFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.otherIncFive" ng-disabled=""/></td>
                         </tr>
-                        
+
                           <tr>
                             <td scope="col">Interest Exp</td>
                             <td><input name="intExpOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.intExpOne" ng-disabled="" /> </td>
@@ -354,7 +375,7 @@
                             <td><input name="intExpFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.intExpFour" ng-disabled=""/></td>
                             <td><input name="intExpFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.intExpFive" ng-disabled=""/></td>
                         </tr>
-                        
+
                           <tr>
                             <td scope="col">Depreciation</td>
                             <td><input name="depOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.depOne" ng-disabled="" /> </td>
@@ -363,7 +384,7 @@
                             <td><input name="depFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.depFour" ng-disabled=""/></td>
                             <td><input name="depFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.depFive" ng-disabled=""/></td>
                         </tr>
-                        
+
                            <tr>
                             <td scope="col">PBT</td>
                             <td><input name="pbtOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbtOne"
@@ -372,12 +393,12 @@
                              ng-value="getNonPbt(vm.opportunityMaster.nonFinancialSummaryData.ebitdaTwo, vm.opportunityMaster.nonFinancialSummaryData.otherIncTwo,vm.opportunityMaster.nonFinancialSummaryData.intExpTwo,vm.opportunityMaster.nonFinancialSummaryData.depTwo,2)"  ng-disabled="true"/> </td>
                             <td><input name="pbtThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbtThree"
                              ng-value="getNonPbt(vm.opportunityMaster.nonFinancialSummaryData.ebitdaThree, vm.opportunityMaster.nonFinancialSummaryData.otherIncThree,vm.opportunityMaster.nonFinancialSummaryData.intExpThree,vm.opportunityMaster.nonFinancialSummaryData.depThree,3)"  ng-disabled="true"/></td>
-                            <td><input name="pbtFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbtFour" 
+                            <td><input name="pbtFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbtFour"
                              ng-value="getNonPbt(vm.opportunityMaster.nonFinancialSummaryData.ebitdaFour, vm.opportunityMaster.nonFinancialSummaryData.otherIncFour,vm.opportunityMaster.nonFinancialSummaryData.intExpFour,vm.opportunityMaster.nonFinancialSummaryData.depFour,4)" ng-disabled="true"/></td>
                             <td><input name="pbtFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbtFive"
                              ng-value="getNonPbt(vm.opportunityMaster.nonFinancialSummaryData.ebitdaFive, vm.opportunityMaster.nonFinancialSummaryData.otherIncFive,vm.opportunityMaster.nonFinancialSummaryData.intExpFive,vm.opportunityMaster.nonFinancialSummaryData.depFive,5)"  ng-disabled="true"/></td>
                         </tr>
-                        
+
                          <tr>
                             <td scope="col">Tax</td>
                             <td><input name="taxOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxOne" ng-disabled="" /> </td>
@@ -386,7 +407,7 @@
                             <td><input name="taxFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxFour" ng-disabled=""/></td>
                             <td><input name="taxFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxFive" ng-disabled=""/></td>
                         </tr>
-                        
+
 
 
                         <tr>
@@ -470,7 +491,7 @@
                             <td><input name="peFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.deFour" ng-value="getNonPe(vm.opportunityMaster.nonFinancialSummaryData.totDebFour, vm.opportunityMaster.nonFinancialSummaryData.networthFour,14)" ng-disabled="true"/></td>
                             <td><input name="peFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.deFive" ng-value="getNonPe(vm.opportunityMaster.nonFinancialSummaryData.totDebFive, vm.opportunityMaster.nonFinancialSummaryData.networthFive,15)" ng-disabled="true"/></td>
                         </tr>
-                        
+
                           <tr>
                             <td scope="col">Tax Rate</td>
                             <td><input name="taxRateOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateOne" ng-disabled="" /> </td>
@@ -479,7 +500,7 @@
                             <td><input name="taxRateFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateFour" ng-disabled=""/></td>
                             <td><input name="taxRateFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateFive" ng-disabled=""/></td>
                         </tr>
-                                                
+
                           <tr>
                             <td scope="col">Interest Rate</td>
                             <td><input name="taxRateOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateOne" ng-disabled="" /> </td>
@@ -488,7 +509,7 @@
                             <td><input name="taxRateFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateFour" ng-disabled=""/></td>
                             <td><input name="taxRateFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateFive" ng-disabled=""/></td>
                         </tr>
-                        
+
                           <tr>
                             <td scope="col">Depreciation Rate</td>
                             <td><input name="depRateOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.depRateOne" ng-disabled="" /> </td>
@@ -505,6 +526,7 @@
 
 
 </div>
+        </div>
 
 
         <!--    </table>-->

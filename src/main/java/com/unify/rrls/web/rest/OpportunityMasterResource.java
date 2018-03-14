@@ -29,6 +29,7 @@ import org.jsoup.parser.Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -44,11 +45,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 //import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.http.MediaType;
 import com.codahale.metrics.annotation.Timed;
 import com.unify.rrls.security.SecurityUtils;
 import com.unify.rrls.web.rest.util.HeaderUtil;
@@ -58,11 +60,12 @@ import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.MediaType;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
@@ -237,7 +240,7 @@ public class OpportunityMasterResource {
                   opportunityMasterContactRepository.save(oC);
 
              }
-      if(opportunityMaster.getMasterName().getSectorType().equals("Finance (including NBFCs)")){
+      if(opportunityMaster.getMasterName().getSegment().equals("Finance")){
 
       	FinancialSummaryData summaryData = opportunityMaster.getFinancialSummaryData();
          summaryData.setOpportunityMasterId(result);
@@ -366,7 +369,7 @@ public class OpportunityMasterResource {
 
 
 		OpportunityMaster result = opportunityMasterRepository.save(opportunityMasters);
-        if(opportunityMasters.getMasterName().getSectorType().equals("Finance (including NBFCs)")) {
+        if(opportunityMasters.getMasterName().getSegment().equals("Finance")) {
             financialSummaryDataRepository.save(opportunityMasters.getFinancialSummaryData());
 
             List<OpportunitySummaryData> opportunitySummaryDataList = opportunitySummaryDataRepository.findByOpportunityMasterid(result);
@@ -485,37 +488,79 @@ public class OpportunityMasterResource {
 
     Context context;
 */
-
- /*   @PostMapping("/opportunity-masters/download-file")
+  /*  @GetMapping("/opportunity-masters/download-file")
     @Timed
-    public ResponseEntity<FileUpload> downloader(HttpServletRequest request, HttpServletResponse response,
-                         @RequestBody FileUpload fileUpload) throws URISyntaxException, IOException{
+	public ResponseEntity<Object> downloadFile() throws IOException  {
+	
+		try {
+	
+		
+		String filename = "src/main/resources/BANNARI AMMAN SUGARS LTD./baidik/image/Wheat_generic_UI.PNG";
+	
+		File file = new File(filename);
+		
+		InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"", file.getName()));
+		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+		headers.add("Pragma", "no-cache");
+		headers.add("Expires", "0");
+		
+		ResponseEntity<Object> responseEntity = ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.parseMediaType("image/png")).body(resource);
+		return responseEntity;
+		} catch (Exception e ) {
+			return new ResponseEntity<>("error occurred", HttpStatus.INTERNAL_SERVER_ERROR);	
+		} 
+	}*/
 
-        System.out.println("Entering"+fileUpload.getFileName()+"path:"+fileUpload.getFileData());
 
+    @GetMapping("/opportunity-masters/download-file")
+    @Timed
+    public  void downloader(HttpServletRequest request, HttpServletResponse response){
 
-      *//*  ResponseBuilder responses=Response.ok((Object)file);
-              responses.header("Content-Disposition", "attachment; filename="+files);
-    	    responses.setHeader("Content-Disposition", "attachment; filename="+fileUpload.getFileName());
-    	    responses.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-*//*
-        FileInputStream inputStream = new FileInputStream(new File(fileUpload.getFileData()));
-        String fileNames=fileName;
-        response.setHeader("Content-Disposition", "attachment; filename="+fileUpload.getFileName());
-        response.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+       // System.out.println("Entering"+fileUpload.getFileName()+"path:"+fileUpload.getFileData());
 
-        ServletOutputStream outputStream = response.getOutputStream();
-        IOUtils.copy(inputStream, outputStream);
+    	ServletContext context=request.getServletContext();
+    	String fileToDownload="src/main/resources/BANNARI AMMAN SUGARS LTD./baidik/image/Wheat_generic_UI.PNG";
+    	File file=new File(fileToDownload);
+        try
+        (InputStream fileInputStream = new FileInputStream(file);
+                OutputStream output = response.getOutputStream();) {
+            response.reset();
+       
+        response.setContentType(MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(file));
+        response.setHeader("Content-Disposition","attachment; filename=\""+file.getName()+"\"");
+        response.setContentLength((int)(file.length()));
 
-        outputStream.close();
-        inputStream.close();
+        IOUtils.copyLarge(fileInputStream, output);
 
-        return ResponseEntity.ok().build();
+        output.flush();
+       
 
+        }catch(FileNotFoundException ex){
+        	System.out.println("File not found");
+        }
+        catch(Exception e)
+        {
+        	System.out.println("file"+e);
+        }
 
-                 }*/
+                 }
+    
+  
+    @GetMapping("/file")
+    @Timed
+    public void getFile( HttpServletResponse response) throws URISyntaxException, IOException {
+    	String fileToDownload="src/main/resources/BANNARI AMMAN SUGARS LTD./baidik/image/Wheat_generic_UI.PNG";
+    	File file=new File(fileToDownload);
+        FileInputStream stream =  new FileInputStream(file);
+        response.setContentType("image/png");
+        response.setHeader("Content-disposition", "attachment; filename=Wheat_generic_UI.PNG");
+        IOUtils.copy(stream,response.getOutputStream());
+        stream.close();
+    }
 
-    @Autowired
+  /*  @Autowired
     ServletContext context;
      @GetMapping("/opportunity-masters/download-file")
      public void downloader(HttpServletRequest request, HttpServletResponse response) {
@@ -566,7 +611,7 @@ public class OpportunityMasterResource {
 
 
 
- }
+ }*/
 
 
 
@@ -589,11 +634,7 @@ public class OpportunityMasterResource {
 		name = sFile.substring(0, idxOfDot);
 		File fPath=new File(sFilesDirectory+sFile);
 		Path path = Paths.get(sFile);
-      //  System.out.println("fpath---->"+fPath);
 
-      //  System.out.println("ind---->"+idxOfDot+"extension"+extension+"name--->"+name);
-
-       // System.out.println("sFile----->"+sFile);
 		int counter = 1;
 		while(fPath.exists()){
 			sFile = name+"("+counter+")."+extension;
@@ -603,7 +644,7 @@ public class OpportunityMasterResource {
 		}
 		sFile=sFilesDirectory+sFile;
 
-     //   System.out.println("After sfile---->"+sFile);
+
 
 		File dirFiles = new File(sFilesDirectory);
 		dirFiles.mkdirs();
@@ -617,55 +658,12 @@ public class OpportunityMasterResource {
 		result.setFileData(sFile);
 		result.setOpportunityMasterId(opportunityMaster);
 		result=fileUploadRepository.save(result);
-		/*List<FileUpload> fileUploads = fileUploadRepository.findByOpportunityMasterId(opportunityMaster);
-		if (!fileUploads.isEmpty()) {
-		opportunityMaster.setFileUploads(fileUploads);			}
-		*/
+
 		return ResponseEntity.created(new URI("/api/opportunity-masters"))
 				.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);/*ResponseUtil.wrapOrNotFound(Optional.ofNullable(result));*/
 	}
 
-	/*@PostMapping("/opportunity-masters/additional-word-file")
-	@Timed
-	public ResponseEntity<AdditionalFileUpload> createWordAdditionalFile(@RequestBody DocumentCreationBean documentCreationBean)
-			throws URISyntaxException, IOException{
-		FileUpload fileUpload=fileUploadRepository.findOne(documentCreationBean.getFileId());
-		String sFilesDirectory="";
-		String user=SecurityUtils.getCurrentUserLogin();
-		String sFile=fileUpload.getFileName();
-		sFile=sFile.substring(0, sFile.lastIndexOf('.'));
-		sFilesDirectory = "src/main/resources/"+fileUpload.getOpportunityMasterId().getMasterName().getOppName()+"/"+user+"/"+sFile+"/";
-		sFile=sFile+"-add.docx";
-		String extension = "";
-		String name = "";
 
-		int idxOfDot =sFile.lastIndexOf('.');   //Get the last index of . to separate extension
-		extension = sFile.substring(idxOfDot + 1);
-		name = sFile.substring(0, idxOfDot);
-		File fPath=new File(sFilesDirectory+sFile);
-		Path path = Paths.get(sFile);
-		int counter = 1;
-		while(fPath.exists()){
-			sFile = name+"("+counter+")."+extension;
-		    path = Paths.get(sFile);
-		    fPath=new File(sFilesDirectory+sFile);
-		    counter++;
-		}
-		sFile=sFilesDirectory+sFile;
-
-		File dirFiles = new File(sFilesDirectory);
-		dirFiles.mkdirs();
-
-		AdditionalFileUpload result = new AdditionalFileUpload();
-		convertHTMLToDoc(documentCreationBean.getFileContent(),sFilesDirectory, sFile);
-		result.setFileName(fPath.getName());
-		result.setFileData(sFile);
-		result.setFileUploadID(fileUpload);
-		result=additionalFileUploadRepository.save(result);
-
-		return ResponseEntity.created(new URI("/api/opportunity-masters"))
-				.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);ResponseUtil.wrapOrNotFound(Optional.ofNullable(result));
-	}*/
 
 	/**
 	 * GET /opportunity-masters : get all the opportunityMasters.
@@ -729,10 +727,13 @@ public class OpportunityMasterResource {
 		//opportunityMaster.setStrategyMapping(strategyMappings);
 		//OpportunityMasterContact opportunityMasterContact = opportunityMasterContactRepository.findByOpportunityMasterId(opportunityMaster);
 		//opportunityMaster.setOpportunityMasterContact(opportunityMasterContact);
+
 		FinancialSummaryData summaryData = financialSummaryDataRepository.findByOpportunityMasterId(opportunityMaster);
+        System.out.println("MAPPINGvf----->"+summaryData);
 		opportunityMaster.setFinancialSummaryData(summaryData);
 		NonFinancialSummaryData nonFinancialSummaryData=nonFinancialSummaryDataRepository.findByOpportunityMaster(opportunityMaster);
 		opportunityMaster.setNonFinancialSummaryData(nonFinancialSummaryData);
+        System.out.println("MAPPINGvfn----->"+nonFinancialSummaryData);
 		List<FileUploadComments> fileComments = fileUploadCommentsRepository.findByOpportunityMaster(opportunityMaster);
 		opportunityMaster.setFileUploadCommentList(fileComments);
 		if (!fileUploads.isEmpty()) {
@@ -794,6 +795,8 @@ public class OpportunityMasterResource {
 		opportunityMasterRepository.delete(id);
 		return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
 	}
+
+
 
 	public String convertHTMLToDoc(String xhtml, String destinationPath, String fileName) {
 		log.info("HTML to DOC conversion\n--------------------------------------\nstarted....\n" + xhtml);
@@ -899,5 +902,121 @@ public class OpportunityMasterResource {
 		out.close();
 		System.out.println("File Uploading is Completed");
 	}
+
+    @PostMapping(value = "/file-upload-data")
+    @Timed
+    public  void putBankBookDB(@RequestBody FinancialSummaryData financialSummaryData,@RequestBody NonFinancialSummaryData nonFinancialSummaryData) {
+
+        log.info("In BankBook putBankBookDB() method");
+        int iCurrRowNum=0;
+
+    /*    try {
+
+
+
+            FileInputStream fis = new FileInputStream(new File(sLocation + "\\"+sUserId+" - Book.xls"));
+            //FileInputStream fis = new FileInputStream(new File("C:\\Users\\Noah\\AppData\\Roaming\\Skype\\My Skype Received Files\\2604 nov.xls"));
+
+            HSSFWorkbook workbook = new HSSFWorkbook(fis);
+
+            HSSFSheet sheet = workbook.getSheetAt(0);
+            int iPutNxtDetailsToDB = 0;
+            DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+            Iterator<Row> rowIterator = sheet.iterator();
+            int iTotRowInserted = 0;
+            int iPhysNumOfCells;
+            String sOpeningBal = "";
+            String dDate = "";
+            Integer iSheetCheck=0;
+            Integer iDontInsertFromCurrRow=0;
+
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                iCurrRowNum = row.getRowNum() + 1;
+
+                // Row row2 = row;
+                iTotRowInserted++;
+                Iterator<Cell> cellIterator = row.cellIterator();
+                int iPos = 0;
+                int iTotConToMeet = 5;
+                int iTotConMet = 0;
+                int iConCheckNow = 0;
+                int iConDontInsert =0;
+                String sConCheck = "";
+                iPhysNumOfCells = row.getPhysicalNumberOfCells();
+
+                while (cellIterator.hasNext() && iPutNxtDetailsToDB == 0) {
+                    Cell cell = cellIterator.next();
+
+                    if (iPutNxtDetailsToDB == 0) {
+                        if (iPos == 0)
+                            sConCheck = "Voucher Ref No";
+                        if (iPos == 1)
+                            sConCheck = "Narration";
+                        if (iPos == 2)
+                            sConCheck = "Debit";
+                        if (iPos == 3)
+                            sConCheck = "Credit";
+                        if (iPos == 4)
+                            sConCheck = "Balance";
+
+                        if (cell.getStringCellValue().trim().equals(sConCheck))
+                            iTotConMet++;
+
+                        iPos++;
+                        if (iTotConToMeet == iTotConMet) {
+                            iPutNxtDetailsToDB = 1;
+                            iConCheckNow = 1;
+                        }
+                    }
+                }
+//Check Here 2863
+                int iIsOpenBal = 0;
+
+
+
+                if (iPutNxtDetailsToDB == 1 && iConCheckNow == 0 && iIsOpenBal == 0 && iConDontInsert==0  && iDontInsertFromCurrRow==0) {
+
+                    if (iPhysNumOfCells == 1)
+                        dDate = BaseFunctions.getDateCellString(row.getCell(0));
+
+                    if (iIsOpenBal == 0 && iPhysNumOfCells != 1 && iPhysNumOfCells == 4) {
+
+                        while (cellIterator.hasNext()) {
+                            Cell cell = cellIterator.next();
+                            cell.setCellType(Cell.CELL_TYPE_STRING);
+                        }
+                        String voucherRef = row.getCell(0).getStringCellValue();
+
+                        String sDebit = "";
+                        String sCredit = "";
+                        String sTransClosBal = "";
+                        if (row.getCell(3) != null)
+                            sDebit = BaseFunctions.getCellString(row.getCell(3));
+                        if (row.getCell(4) != null)
+                            sCredit = BaseFunctions.getCellString(row.getCell(4));
+                        if (row.getCell(5) != null)
+                            sTransClosBal = BaseFunctions.getCellString(row.getCell(5));
+
+
+
+
+                    }
+
+                }
+            }
+
+            log.info("In BankBook putBankBookDB()" + iTotRowInserted + " inserted");
+
+        } catch (FileNotFoundException e) {
+            log.error("Exception at BankBook putBankBookDB() method " + e);
+        } catch (IOException e) {
+            log.error("Exception at BankBook putBankBookDB() method " + e);
+        } catch (Exception e) {
+            log.error("Exception at BankBook putBankBookDB() method at row "+iCurrRowNum + e);
+        }
+*/
+    }
 
 }

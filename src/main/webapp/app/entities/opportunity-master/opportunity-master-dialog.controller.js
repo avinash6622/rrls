@@ -30,6 +30,8 @@
 		vm.opportunityNames = $scope.opportunityNames = OpportunityName.query();
 		vm.upload = upload;
 		vm.selectFile = selectFile;
+        vm.selectFileData = selectFileData;
+		vm.uploadfile = uploadfile;
 		/* vm.saveDoc=saveDoc; */
 		vm.readOnly = false;
 
@@ -44,8 +46,19 @@
 			data : function(searchText) {
 				return $http.get('api/opportunity-names').then(
 						function(response) {
-							searchText = searchText.toUpperCase();
+                            searchText = searchText.toUpperCase();
+                            console.log(searchText);
 
+
+                          /*  var result= new RegExp(searchText, "i");
+
+                            console.log(result);*/
+
+						    /*var re =new RegExp(searchText,"i");
+
+
+							searchText = re.ignoreCase;
+*/
 							// ideally filtering should be done on the server
 							var states = _.filter(response.data,
 									function(state) {
@@ -74,6 +87,7 @@
 				// state.airport = e.item;
 			}
 		}
+		var myDate = new Date();
 
 		$scope.addContact = function() {
 			vm.opportunityMaster.selectedoppContanct.push({})
@@ -416,6 +430,18 @@
 			});
 		}
 
+        function selectFileData (file) {
+            console.log("File",file);
+
+        }
+		function uploadfile(){
+
+		    console.log(vm.opportunityMaster.financialSummaryData);
+
+            OpportunityMaster.upload(vm.opportunityMaster.financialSummaryData,vm.opportunityMaster.nonFinancialSummaryData)
+
+
+        }
 		function save() {
 			vm.isSaving = true;
 
