@@ -44,19 +44,25 @@
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
                                     ui-sref="strategy-master-detail({id:strategyMaster.id})"
-                                    class="btn btn-info btn-sm">
+                                    class="btn btn-info btn-sm" data-toggle="tooltip"
+                                     tooltip="view"
+         							 tooltip-placement="bottom">
                                 <span class="glyphicon glyphicon-eye-open"></span>
                                 <span class="hidden-sm-down"></span>
                             </button>
                             <button type="submit"
                                     ui-sref="strategy-master.edit({id:strategyMaster.id})"
-                                    class="btn btn-primary btn-sm">
+                                    class="btn btn-primary btn-sm"
+                                     tooltip="edit"
+         							 tooltip-placement="bottom">
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 <span class="hidden-sm-down"></span>
                             </button>
                             <button type="submit"
                                     ui-sref="strategy-master.delete({id:strategyMaster.id})"
-                                    class="btn btn-danger btn-sm">
+                                    class="btn btn-danger btn-sm"
+                                     tooltip="delete"
+         							 tooltip-placement="bottom">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                 <span class="hidden-sm-down"></span>
                             </button>
