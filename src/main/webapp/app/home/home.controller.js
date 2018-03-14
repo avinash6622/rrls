@@ -6,9 +6,9 @@
         .controller('HomeController', HomeController);
 
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'AlertService', 'OpportunityMaster','ParseLinks', 'paginationConstants', '$state','$http'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'AlertService', 'OpportunityMaster','ParseLinks', 'paginationConstants', '$state','$http','$filter'];
 
-    function HomeController ($scope, Principal, LoginService, AlertService, OpportunityMaster,ParseLinks,paginationConstants, $state,$http) {
+    function HomeController ($scope, Principal, LoginService, AlertService, OpportunityMaster,ParseLinks,paginationConstants, $state,$http,$filter) {
         var vm = this;
 
         vm.account = null;
@@ -26,11 +26,49 @@
         vm.predicate = 'id';
         vm.reset = reset;
         vm.reverse = true;
+
         vm.dashboardvalues = [];
 
         $scope.$on('authenticationSuccess', function() {
             getAccount();
         });
+
+
+        var myDate = new Date();
+
+
+
+        var previousYear = new Date(myDate);
+
+        previousYear.setYear(myDate.getFullYear()-1);
+
+        var previousYearBefore = new Date(previousYear);
+        previousYearBefore.setYear(previousYear.getFullYear()-1);
+
+
+
+        var nextYear = new Date(myDate);
+
+        nextYear.setYear(myDate.getFullYear()+1);
+
+
+        var nextYearNext = new Date(nextYear);
+
+        nextYearNext.setYear(nextYear.getFullYear()+1);
+
+
+
+        $scope.currentYear = $filter('date')(myDate,'yyyy');
+
+        $scope.nextYear = $filter('date')(nextYear,'yyyy');
+
+        $scope.prevYear = $filter('date')(previousYear,'yyyy');
+
+        $scope.prevYearBefore = $filter('date')(previousYearBefore,'yyyy');
+
+        $scope.neYearNext = $filter('date')(nextYearNext,'yyyy');
+
+
 
         getAccount();
 
@@ -59,13 +97,31 @@
                 .then(function(response) {
                     console.log("RESPONSE",response);
                     var len = response.data;
+
                    // vm.dashboardvalues =  response.data;
                     for (var i = 0; i < len.length; i++) {
                         vm.dashboardvalues.push(len[i]);
                     }
                 });
 
-               console.log("DASHBOARD VALUE",vm.dashboardvalues);
+
+
+
+        // console.log("dshkjhkfjs--->"+vm.dashboardvalues.opportunityMasterid.oppStatus);
+            $scope.checkstatus = function(arr2)
+            {
+                if(arr2.opportunityMasterid.oppStatus === 'Approved')
+                {
+                    return true;
+                }
+                else
+                {
+                    return false
+                }
+            }
+
+
+            console.log("DASHBOARD VALUE",vm.dashboardvalues);
 
        /*     OpportunityMaster.getsummarydata({}, function (data, headers){
                 console.log(data);
