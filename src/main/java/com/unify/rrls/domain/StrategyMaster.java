@@ -46,7 +46,8 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
     @Column(name="AUM")
     private String aum;
 
-  /*  @Column(name="Total_AUM")
+
+ /*   @Column(name="Total_AUM")
     private String totalAum;*/
 
     @Column(name="Total_stocks")
@@ -133,7 +134,7 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
         this.aum = aum;
     }
 
- /*   public String getTotalAum() {
+   /* public String getTotalAum() {
         return totalAum;
     }
 
