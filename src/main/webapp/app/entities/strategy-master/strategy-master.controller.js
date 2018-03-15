@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('StrategyMasterController', StrategyMasterController);
 
-    StrategyMasterController.$inject = ['StrategyMaster', 'ParseLinks', 'AlertService', 'paginationConstants'];
+    StrategyMasterController.$inject = ['StrategyMaster', 'ParseLinks', 'AlertService', 'paginationConstants','$scope'];
 
-    function StrategyMasterController(StrategyMaster, ParseLinks, AlertService, paginationConstants) {
+    function StrategyMasterController(StrategyMaster, ParseLinks, AlertService, paginationConstants,$scope) {
 
         var vm = this;
 
@@ -49,7 +49,24 @@
             function onError(error) {
                 AlertService.error(error.data.message);
             }
+
+
         }
+
+       // console.log("jsdhfjkhkjsd--->",vm.strategyMasters);
+        $scope.getTotal = function() {
+            var total = 0;
+            angular.forEach(vm.strategyMasters, function(el) {
+               // console.log(el.aum);
+                if(el.aum != null)
+                {
+                    total += parseFloat(el.aum);
+                }
+
+            });
+            return total;
+        };
+
 
         function reset () {
             vm.page = 0;

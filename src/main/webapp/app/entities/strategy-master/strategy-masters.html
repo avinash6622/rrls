@@ -1,12 +1,13 @@
 <div>
-    <h2>Strategy Master</h2>
+
     <jhi-alert></jhi-alert>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-4 no-padding-left">
+            <div class="col-md-2"><h4>Strategy</h4></div>
+            <div class="col-xs-2 pull-right">
                 <button class="btn btn-primary" ui-sref="strategy-master.new" >
                     <span class="glyphicon glyphicon-plus"></span>
-                    <span >
+                    <span>
                         Create New Strategy
                     </span>
                 </button>
@@ -18,11 +19,10 @@
         <table class="jh-table table table-striped">
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
-                    <!-- <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th> -->
-                    <!--<th jh-sort-by="strategyCode"><span>Strategy Code</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+
                     <th jh-sort-by="strategyName"><span>Strategy Name</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="aum"><span>AUM</span> <span class="glyphicon glyphicon-sort"></span></th>
-                  <!--  <th jh-sort-by="totalAum"><span>Total AUM</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+
                     <th jh-sort-by="totalStocks"><span>Total Stocks</span> <span class="glyphicon glyphicon-sort"></span></th>
 
                     <th></th>
@@ -30,16 +30,12 @@
             </thead>
             <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
                 <tr ng-repeat="strategyMaster in vm.strategyMasters track by strategyMaster.id">
-                   <!--  <td><a ui-sref="strategy-master-detail({id:strategyMaster.id})">{{strategyMaster.id}}</a></td> -->
-                    <!--<td><a ui-sref="strategy-master-detail({id:strategyMaster.id})">{{strategyMaster.strategyCode}}</a></td>-->
+
                     <td><a ui-sref="strategy-master-detail({id:strategyMaster.id})">{{strategyMaster.strategyName}}</a></td>
                     <td>{{strategyMaster.aum}}</td>
-                       <!-- <td>{{strategyMaster.totalAum}}</td>-->
+
                     <td>{{strategyMaster.totalStocks}}</td>
-                <!--     <td>{{strategyMaster.createdBy}}</td>
-                    <td>{{strategyMaster.updatedBy}}</td>
-                        <td>{{strategyMaster.createdDate | date:'mediumDate'}}</td>
-                    <td>{{strategyMaster.updatedDate | date:'medium'}}</td> -->
+
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
@@ -58,18 +54,31 @@
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 <span class="hidden-sm-down"></span>
                             </button>
-                            <button type="submit"
+                    <!--        <button type="submit"
                                     ui-sref="strategy-master.delete({id:strategyMaster.id})"
                                     class="btn btn-danger btn-sm"
                                      tooltip="delete"
          							 tooltip-placement="bottom">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                 <span class="hidden-sm-down"></span>
-                            </button>
+                            </button>-->
                         </div>
                     </td>
                 </tr>
+                <tr>
+                <td>
+                    <span style="font-weight: bold;">Total AUM</span>
+                </td>
+                    <td>
+                        <span style="font-weight: bold;">{{getTotal()}}</span>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
             </tbody>
+
+
         </table>
-    </div>
+
+</div>
 </div>

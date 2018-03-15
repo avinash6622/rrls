@@ -14,7 +14,7 @@
                 method: 'GET',
                 transformResponse: function (data) {
                     data = angular.fromJson(data);
-                   /* console.log("Data:",data);*/
+                    console.log("Data:",data);
                     return data;
                 }
             },

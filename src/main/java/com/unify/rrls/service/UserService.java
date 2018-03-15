@@ -142,11 +142,12 @@ public class UserService {
         user.setResetDate(Instant.now());
         user.setActivated(true);
         user.setUserId(userDTO.getUserId());
-        authoritySet.add(authorityRepositoryOne);       
+        authoritySet.add(authorityRepositoryOne);
         user.setAuthorities(authoritySet);
-        user.setRoleMaster(userDTO.getRoleMaster());      
+        user.setRoleMaster(userDTO.getRoleMaster());
         userRepository.save(user);
         log.debug("Created Information for User: {}", user);
+        System.out.println("");
         return user;
     }
 
@@ -195,9 +196,11 @@ public class UserService {
                 managedAuthorities.clear();
                 Authority authorityRepositoryOne = authorityRepository.findOne(AuthoritiesConstants.USER);
                 managedAuthorities.add(authorityRepositoryOne);
+                System.out.println("USERDTO--->"+ userDTO.getAuthorities().toString());
                 userDTO.getAuthorities().stream()
                     .map(authorityRepository::findOne)
                     .forEach(managedAuthorities::add);
+                System.out.println("Authorities--->"+managedAuthorities);
                 cacheManager.getCache("users").evict(user.getLogin());
                 log.debug("Changed Information for User: {}", user);
                 return user;
