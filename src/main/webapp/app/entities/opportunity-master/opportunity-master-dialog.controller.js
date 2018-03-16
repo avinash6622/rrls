@@ -50,15 +50,7 @@
                             console.log(searchText);
 
 
-                          /*  var result= new RegExp(searchText, "i");
 
-                            console.log(result);*/
-
-						    /*var re =new RegExp(searchText,"i");
-
-
-							searchText = re.ignoreCase;
-*/
 							// ideally filtering should be done on the server
 							var states = _.filter(response.data,
 									function(state) {

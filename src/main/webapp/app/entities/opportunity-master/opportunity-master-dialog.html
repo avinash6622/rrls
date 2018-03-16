@@ -18,11 +18,11 @@
     </div>
     <div>
         <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" ng-show="vm.opportunityMaster.id">
+     <!--   <div class="form-group" ng-show="vm.opportunityMaster.id">
             <label for="id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
                     ng-model="vm.opportunityMaster.id" readonly />
-        </div>
+        </div>-->
 
       <!--   <div class="form-group">
            <label for="field_opportunityMasterName">Opportuntiy Name</label>
@@ -32,7 +32,6 @@
          </div>-->
 
         <div class="form-group">
-            <label for="field_opportunityMasterName">Opportuntiy Name</label>
             <input type="text" class="form-control" id="field_opportunityMasterName"
                    ng-model="vm.opportunityMaster.masterName.oppName"
                    placeholder="Type Opportunity Name"
@@ -42,7 +41,6 @@
 
 
         <div class="form-group">
-            <label class="control-label" for="field_sectorType">Sector</label>
             <input type="text" id="field_sectorType"class="form-control" placeholder="Sector"
                    ng-model="vm.opportunityMaster.masterName.sectorType" />
         <div ng-show="editForm.oppName.$invalid">
@@ -57,7 +55,6 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_oppDescription">Opportunity Description</label>
             <input type="text" class="form-control" placeholder="Description" name="oppDescription" id="field_oppDescription"
                     ng-model="vm.opportunityMaster.oppDescription"
                     required max="250"/>

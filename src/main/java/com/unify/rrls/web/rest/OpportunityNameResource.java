@@ -5,6 +5,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.net.URI;
 
+import com.unify.rrls.domain.OpportunitySector;
+import com.unify.rrls.repository.OpportunitySectorRepository;
 import com.unify.rrls.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,8 +35,11 @@ public class OpportunityNameResource {
 
 	private final OpportunityNameRepository opportunityNameRepository;
 
-	public OpportunityNameResource(OpportunityNameRepository opportunityNameRepository) {
+	private final OpportunitySectorRepository opportunitySectorRepository;
+
+	public OpportunityNameResource(OpportunityNameRepository opportunityNameRepository,OpportunitySectorRepository opportunitySectorRepository) {
 		this.opportunityNameRepository = opportunityNameRepository;
+		this.opportunitySectorRepository=opportunitySectorRepository;
 	}
 
 	@GetMapping("/opportunity-names")
@@ -66,6 +71,18 @@ public class OpportunityNameResource {
 
         return ResponseEntity.created(new URI("/api/opportunity-masters/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
+    }
+
+    @GetMapping("/opportunity-sector")
+    @Timed
+    public ResponseEntity<List<OpportunitySector>> getAllSectorNames(@ApiParam Pageable pageable) {
+        log.debug("REST request to get a page of OpportunityNames");
+        List<OpportunitySector> page = opportunitySectorRepository.findAll();
+        System.out.println("page---->"+page);
+		/*HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-names");
+		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);*/
+        HttpHeaders headers=new HttpHeaders();
+        return new ResponseEntity<>(page, headers,HttpStatus.OK);
     }
 
 

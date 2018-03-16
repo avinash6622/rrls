@@ -108,17 +108,7 @@
 
 
         // console.log("dshkjhkfjs--->"+vm.dashboardvalues.opportunityMasterid.oppStatus);
-            $scope.checkstatus = function(arr2)
-            {
-                if(arr2.opportunityMasterid.oppStatus === 'Approved')
-                {
-                    return true;
-                }
-                else
-                {
-                    return false
-                }
-            }
+
 
 
             console.log("DASHBOARD VALUE",vm.dashboardvalues);

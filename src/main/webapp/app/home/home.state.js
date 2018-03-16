@@ -10,7 +10,7 @@
     function stateConfig($stateProvider) {
         $stateProvider.state('home', {
             parent: 'app',
-            url: '/',
+            url: '/home',
             data: {
                 authorities: [],
                 pageTitle: 'Research Repository Learning System | Unifi'
@@ -20,8 +20,8 @@
                     templateUrl: 'app/home/home.html',
                     controller: 'HomeController',
                     controllerAs: 'vm'
-                }            
-         
+                }
+
             }
         });
     }
@@ -56,7 +56,7 @@
             },
             resolve: {
             }
-        })    
+        })
        ;
     }
 
