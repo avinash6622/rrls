@@ -20,14 +20,18 @@
         vm.username = null;
 
         $timeout(function (){angular.element('#username').focus();});
-
-        function cancel () {
+        
+          function cancel () {
             vm.credentials = {
                 username: null,
                 password: null,
                 rememberMe: true
             };
             vm.authenticationError = false;
+            if(Principal.isAuthenticated()) {
+                   $state.go('home', {}, {reload: true});
+                 }
+            
          //   $uibModalInstance.dismiss('cancel');
         }
 
@@ -55,7 +59,10 @@
                     var previousState = Auth.getPreviousState();
                     Auth.resetPreviousState();
                     $state.go(previousState.name, previousState.params);
-                }
+                } else {
+                	                  $state.go('home');
+                	                 }
+                
             }).catch(function () {
                 vm.authenticationError = true;
             });
