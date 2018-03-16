@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('OpportunityNameController', OpportunityNameController);
 
-    OpportunityNameController.$inject = ['OpportunityName', 'ParseLinks', 'AlertService', 'paginationConstants','entity'];
+    OpportunityNameController.$inject = ['OpportunityName', 'ParseLinks', 'AlertService', 'paginationConstants','entity','$http','$sce'];
 
-    function OpportunityNameController(OpportunityName, ParseLinks, AlertService, paginationConstants,entity) {
+    function OpportunityNameController(OpportunityName, ParseLinks, AlertService, paginationConstants,entity,$http,$sce) {
 
         var vm = this;
 
@@ -21,7 +21,50 @@
         };
         vm.predicate = 'id';
         vm.reverse = true;
+        vm.selectedSector = null;
+        vm.sectorType = null;
 
+
+
+        vm.autoCompleteOptions = {
+            minimumChars : 1,
+            dropdownHeight : '200px',
+            data : function(searchText) {
+                return $http.get('api/opportunity-sector').then(
+                    function(response) {
+                        searchText = searchText.toLowerCase();
+                        console.log(searchText);
+
+
+                        // ideally filtering should be done on the server
+                        var states = _.filter(response.data,
+                            function(state) {
+                                return (state.sectorName).toLowerCase()
+                                    .startsWith(searchText);
+
+                            });
+
+                       /*  return _.pluck(states, 'sectorType');*/
+                        return states;
+                    });
+            },
+            renderItem : function(item) {
+                return {
+                    value : item,
+                    label : $sce.trustAsHtml("<p class='auto-complete'>"
+                        + item.sectorName + "</p>")
+                };
+            },
+
+            itemSelected : function(e) {
+                console.log(e);
+
+                vm.selectedSector = e;
+                vm.opportunityNames.sectorType = e.item.sectorName;
+                vm.opportunityNames.segment = e.item.sectorTypes;
+                // state.airport = e.item;
+            }
+        }
 
         function save () {
             vm.isSaving = true;
@@ -29,7 +72,7 @@
 
             console.log("ndksjangkjshagn",vm.opportunityNames);
             if (vm.opportunityNames.id !== null) {
-                OpportunityName.update(vm.opportunityMaster, onSaveSuccess, onSaveError);
+                OpportunityName.update(vm.opportunityNames, onSaveSuccess, onSaveError);
             } else {
                 OpportunityName.save(vm.opportunityNames, onSaveSuccess, onSaveError);
             }

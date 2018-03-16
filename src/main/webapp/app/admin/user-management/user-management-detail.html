@@ -1,6 +1,6 @@
 <div>
     <h2>
-        <span>User</span> [<b>{{vm.user.login}}</b>]
+        <span>User</span>
     </h2>
     <dl class="dl-horizontal jh-entity-details">
         <dt><span>Login</span></dt>
@@ -17,8 +17,8 @@
         <dd>{{vm.user.lastName}}</dd>
         <dt><span>Email</span></dt>
         <dd>{{vm.user.email}}</dd>
-        <dt><span>Role</span></dt>
-        <dd>{{vm.user.roleMaster.roleName}}</dd>
+       <!-- <dt><span>Role</span></dt>
+        <dd>{{vm.user.roleMaster.roleName}}</dd>-->
         <dt><span>Created By</span></dt>
         <dd>{{vm.user.createdBy}}</dd>
         <dt><span>Created Date</span></dt>
@@ -27,9 +27,9 @@
         <dd>{{vm.user.lastModifiedBy}}</dd>
         <dt><span>Last Modified Date</span></dt>
         <dd>{{vm.user.lastModifiedDate | date:'dd/MM/yy HH:mm'}}</dd>
-         <dt><span>Research Analyst</span></dt>
-        <dd>{{vm.user.userId.login}}</dd>
-        <dt><span>Profiles</span></dt>
+        <!-- <dt><span>Research Analyst</span></dt>
+        <dd>{{vm.user.userId.login}}</dd>-->
+        <dt><span>Roles</span></dt>
         <dd>
             <ul class="list-unstyled">
                 <li ng-repeat="authority in vm.user.authorities">

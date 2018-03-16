@@ -44,14 +44,14 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
 
 
     @Column(name="AUM")
-    private String aum;
+    private Double aum;
 
 
  /*   @Column(name="Total_AUM")
     private String totalAum;*/
 
     @Column(name="Total_stocks")
-    private String totalStocks;
+    private Double totalStocks;
 
     @Transient
     @JsonProperty
@@ -126,29 +126,22 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
         this.opportunitySummaryData = opportunitySummaryData;
     }
 
-    public String getAum() {
+    public Double getAum() {
         return aum;
     }
 
-    public void setAum(String aum) {
+    public void setAum(Double aum) {
         this.aum = aum;
     }
 
-   /* public String getTotalAum() {
-        return totalAum;
-    }
-
-    public void setTotalAum(String totalAum) {
-        this.totalAum = totalAum;
-    }*/
-
-    public String getTotalStocks() {
+    public Double getTotalStocks() {
         return totalStocks;
     }
 
-    public void setTotalStocks(String totalStocks) {
+    public void setTotalStocks(Double totalStocks) {
         this.totalStocks = totalStocks;
     }
+
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

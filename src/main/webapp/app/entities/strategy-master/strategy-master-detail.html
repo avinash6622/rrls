@@ -12,21 +12,22 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="dl-horizontal jh-entity-details">
-        <dt><span>Strategy Code</span></dt>
+
+        <dt>
+            <span>AUM</span>
+        </dt>
+
         <dd>
-            <span>{{vm.strategyMaster.strategyCode}}</span>
+           {{vm.strategyMaster.aum}}
         </dd>
-        <!-- <dt><span>Strategy Name</span></dt>
+
+        <dt>
+            <span>Total Stocks</span>
+        </dt>
+
         <dd>
-            <span>{{vm.strategyMaster.strategyName}}</span>
-        </dd> -->
-        <dt><span>Status</span></dt>
-        <dd>
-            <span>{{vm.strategyMaster.sStatus ? 'Active': 'Inactive'}}</span>
-        </dd>
-        <dt><span>Date Active</span></dt>
-        <dd>
-            <span>{{vm.strategyMaster.dateActive | date:'mediumDate'}}</span>
+            {{vm.strategyMaster.totalStocks}}
+
         </dd>
 
         <dt>

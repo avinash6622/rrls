@@ -1,31 +1,42 @@
-<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+<div class="container">
 
-    <div class="modal-header">
-    <!--    <button type="button" class="btn btn-default pull-right"
-                ng-click="vm.clear()">Go Back</button>-->
-        <h4 class="modal-title" id="myOpportunityMasterLabel">Create Opportunity Name</h4>
+    <div>
+        <!--    <button type="button" class="btn btn-default pull-right"
+                    ng-click="vm.clear()">Go Back</button>-->
+        <h4 style="text-align: center;">Create Opportunity Name</h4>
     </div>
-    <div class="modal-body">
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+    <form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+
 
         <div class="form-group">
-            <label for="field_opportunitySecurityCode">Security Code</label>
-            <input class="form-control" type="text" name="securityCode" id="field_opportunitySecurityCode" ng-model="vm.opportunityNames.securityCode"/>
+            <label for="field_opportunitySecurityCode"></label>
+            <input class="form-control" type="text" name="securityCode" id="field_opportunitySecurityCode" ng-model="vm.opportunityNames.securityCode" placeholder="Security Code"/>
 
         </div>
 
         <div class="form-group">
-            <label for="field_opportunityMasterName">Opportuntiy Name</label>
-            <input class="form-control" type="text" name="oppName" id="field_opportunityMasterName" ng-model="vm.opportunityNames.oppName"/>
+            <label for="field_opportunitySecurityId"></label>
+            <input class="form-control" type="text" name="securityId" id="field_opportunitySecurityId" ng-model="vm.opportunityNames.securityId" placeholder="Security ID"/>
 
         </div>
 
         <div class="form-group">
-            <label for="field_opportunityMasterSector">Sector</label>
-            <input class="form-control" type="text" name="sectorType" id="field_opportunityMasterSector" ng-model="vm.opportunityNames.sectorType"/>
+            <label for="field_opportunityMasterName"></label>
+            <input class="form-control" type="text" name="oppName" id="field_opportunityMasterName" ng-model="vm.opportunityNames.oppName"placeholder="Opportunity Name"/>
 
         </div>
 
         <div class="form-group">
+            <label for="field_opportunityMasterSector"></label>
+            <input class="form-control" type="text" name="sectorType" id="field_opportunityMasterSector" ng-model="vm.opportunityNames.sectorType"  auto-complete="vm.autoCompleteOptions" placeholder="Sector"/>
+
+        </div>
+
+    <!--    <div class="form-group">
             <label for="field_opportunityMasterSector">Segment</label>
             <div class="radio">
                 <label>
@@ -40,9 +51,9 @@
                     BSE
                 </label>
             </div>
-        </div>
+        </div>-->
 
-    </div>
+
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
@@ -52,4 +63,6 @@
         </button>
     </div>
 </form>
-
+</div>
+</div>
+</div>

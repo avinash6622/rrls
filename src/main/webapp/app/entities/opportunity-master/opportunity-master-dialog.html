@@ -18,11 +18,11 @@
     </div>
     <div>
         <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" ng-show="vm.opportunityMaster.id">
+     <!--   <div class="form-group" ng-show="vm.opportunityMaster.id">
             <label for="id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
                     ng-model="vm.opportunityMaster.id" readonly />
-        </div>
+        </div>-->
 
       <!--   <div class="form-group">
            <label for="field_opportunityMasterName">Opportuntiy Name</label>
@@ -120,7 +120,7 @@
 
         <div class="form-group"><button type="button" ng-click="addContact()" class="btn btn-primary">Add Contact</button></div>
 
-        <div class="form-group">
+        <div class="form-group" ng-show="vm.opportunityMaster.id">
 
             <input type="radio" ng-model="myVar" value="Excel">Excel Upload
             <input type="radio" ng-model="myVar" value="data">Entry
