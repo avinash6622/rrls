@@ -22,6 +22,11 @@
                     controllerAs: 'vm'
                 }
 
+            },
+            resolve: {
+                isAuthenticate: function(Principal) {
+                    return Principal.isAuthenticated();
+                }
             }
         });
     }

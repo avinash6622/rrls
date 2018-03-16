@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$rootScope', '$state', '$timeout', 'Auth'];
+    LoginController.$inject = ['$rootScope', '$state', '$timeout', 'Auth', 'Principal'];
 
-    function LoginController ($rootScope, $state, $timeout, Auth) {
+    function LoginController ($rootScope, $state, $timeout, Auth, Principal) {
         var vm = this;
 
         vm.authenticationError = false;
@@ -21,6 +21,10 @@
         vm.username = null;
 
         $timeout(function (){angular.element('#username').focus();});
+
+        if(Principal.isAuthenticated()) {
+            $state.go('home', {}, {reload: true});
+        }
 
         function cancel () {
             vm.credentials = {
@@ -58,6 +62,8 @@
                     var previousState = Auth.getPreviousState();
                     Auth.resetPreviousState();
                     $state.go(previousState.name, previousState.params);
+                } else {
+                    $state.go('home');
                 }
             }).catch(function () {
                 vm.authenticationError = true;
