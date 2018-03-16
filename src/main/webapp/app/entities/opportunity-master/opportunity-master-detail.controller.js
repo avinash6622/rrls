@@ -119,8 +119,7 @@
 
             var	result = parseFloat(val1) + parseFloat(val2);
             result=(isNaN(result)) ? '':result;
-            console.log("val3 ",val3);
-            //console.log(vm.opportunityMaster.financialSummaryData);
+            if(result!=''){
             switch(val3){
       	  case 1:
       		  vm.opportunityMaster.financialSummaryData.totIncOne = result;
@@ -139,7 +138,7 @@
       		break;
       	default:
       			  break;
-      	  }
+      	  }}
 
 
             return result;
@@ -148,6 +147,7 @@
 
             	var result = (parseFloat(val1) / parseFloat(val2)).toFixed(2);
             	result=(isNaN(result)) ? '':result;
+            	if(result!=''){
             	 switch(val3){
          	  case 1:
          		  vm.opportunityMaster.financialSummaryData.pbvOne = result;
@@ -181,7 +181,7 @@
          		break;
          	default:
          			  break;
-         	  }
+         	  }}
           	return result;
             };
             $scope.getFinRoe = function(val1, val2,val3,val4) {
@@ -193,6 +193,7 @@
                	result=(result*100).toFixed(2);
              	 }
           		result=(isNaN(result)) ? '':result;
+          		if(result!=''){
           		 switch(val4){
           		  case 1:
           			  vm.opportunityMaster.financialSummaryData.roeOne = result;
@@ -211,7 +212,7 @@
           			break;
           		default:
           				  break;
-          		  }
+          		  }}
               	return result;
               };
           	$scope.getNonGrowth = function(val1, val2, val3) {
@@ -219,6 +220,7 @@
     			var result = (parseFloat(val2) / parseFloat(val1)) - 1;
     			result = (result * 100).toFixed(2);
     			result = (isNaN(result)) ? '' : result;
+    			if(result!=''){
     			switch (val3) {
     			case 1:
     				vm.opportunityMaster.nonFinancialSummaryData.revGrowthTwo = result;
@@ -258,7 +260,7 @@
     				break;
     			default:
     				break;
-    			}
+    			}}
     			return result;
     		};
     		$scope.getNonMargin = function(val1, val2, val3) {
@@ -266,6 +268,7 @@
     			var result = parseFloat(val1) / parseFloat(val2);
     			result = (result * 100).toFixed(2);
     			result = (isNaN(result)) ? '' : result;
+    			if(result!=''){
     			switch (val3) {
     			case 1:
     				vm.opportunityMaster.nonFinancialSummaryData.marginOne = result;
@@ -284,7 +287,7 @@
     				break;
     			default:
     				break;
-    			}
+    			}}
     			return result;
     		};
 
@@ -293,6 +296,7 @@
     			var result = parseFloat(val1) + parseFloat(val2) - parseFloat(val3)
     					- parseFloat(val4);
     			result = (isNaN(result)) ? '' : result;
+    			if(result!=''){
     			switch (val5) {
     			case 1:
     				vm.opportunityMaster.nonFinancialSummaryData.pbtOne = result;
@@ -311,7 +315,7 @@
     				break;
     			default:
     				break;
-    			}
+    			}}
     			return result;
     		};
 
@@ -319,6 +323,7 @@
 
     			var result = parseFloat(val1) - parseFloat(val2);
     			result = (isNaN(result)) ? '' : result;
+    			if(result!=''){
     			switch (val3) {
     			case 1:
     				vm.opportunityMaster.nonFinancialSummaryData.patOne = result;
@@ -337,13 +342,14 @@
     				break;
     			default:
     				break;
-    			}
+    			}}
     			return result;
     		};
     		$scope.getNonPe = function(val1, val2, val3) {
 
     			var result = (parseFloat(val1) / parseFloat(val2)).toFixed(2);
     			result = (isNaN(result)) ? '' : result;
+    			if(result!=''){
     			switch (val3) {
     			case 1:
     				vm.opportunityMaster.nonFinancialSummaryData.peOne = result;
@@ -392,8 +398,9 @@
     				break;
     			default:
     				break;
-    			}
+    			}}
     			return result;
+    			
     		};
     		$scope.getNonRoe = function(val1, val2, val3) {
 
@@ -406,6 +413,7 @@
     				result = (result * 100).toFixed(2);
     			}
     			result = (isNaN(result)) ? '' : result;
+    			if(result!=''){
     			switch (val3) {
     			case 1:
     				vm.opportunityMaster.nonFinancialSummaryData.roeOne = result;
@@ -424,7 +432,7 @@
     				break;
     			default:
     				break;
-    			}
+    			}}
     			return result;
     		};
         $scope.isDisabled = true;
