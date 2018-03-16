@@ -4,10 +4,9 @@
     angular
         .module('researchRepositoryLearningSystemApp')
         .controller('LoginController', LoginController);
+    LoginController.$inject = ['$rootScope', '$state', '$timeout', 'Auth', 'Principal'];
 
-    LoginController.$inject = ['$rootScope', '$state', '$timeout', 'Auth'];
-
-    function LoginController ($rootScope, $state, $timeout, Auth) {
+    function LoginController ($rootScope, $state, $timeout, Auth, Principal) {
         var vm = this;
 
         vm.authenticationError = false;

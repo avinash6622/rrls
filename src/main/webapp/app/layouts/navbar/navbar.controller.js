@@ -39,13 +39,14 @@
 
         function login() {
             collapseNavbar();
-            LoginService.open();
+         //   LoginService.open();
+            $state.go('home');
         }
 
         function logout() {
             collapseNavbar();
             Auth.logout();
-            $state.go('home');
+            $state.go('login');
         }
 
         function toggleNavbar() {
