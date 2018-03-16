@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!-- endinject -->
     <link rel="stylesheet" href="content/css/vendor.css">
+    <link rel="stylesheet" href="content/css/styles.css">
     <!-- endbuild -->
     <!-- build:css content/css/main.css -->
     <link rel="stylesheet" href="content/css/main.css">
@@ -27,8 +28,8 @@
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <div ui-view="navbar" ng-cloak></div>
-    <div class="container">
-        <div class="well" ui-view="content">
+    <div class="container-fluid">
+        <div  ui-view="content">
             <!-- Angular views -->
         </div>
 
@@ -79,6 +80,7 @@
     <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
     <script src="bower_components/angular-ckeditor/angular-ckeditor.min.js"></script>
     <script src="bower_components/underscore/underscore-min.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
     <script src="bower_components/angular-auto-complete/angular-auto-complete.js"></script>
     <script src="content/lib/ckeditor/ckeditor.js"></script>
     <script src="content/lib/ckeditor/plugins/ajax/ajax.js"></script>
@@ -153,6 +155,7 @@
     <script src="app/components/util/base64.service.js"></script>
     <script src="app/components/login/login.service.js"></script>
     <script src="app/components/login/login.controller.js"></script>
+    <script src="app/components/login/login.state.js"></script>
     <script src="app/components/form/show-validation.directive.js"></script>
     <script src="app/components/form/pagination.constants.js"></script>
     <script src="app/components/form/minbytes.directive.js"></script>
