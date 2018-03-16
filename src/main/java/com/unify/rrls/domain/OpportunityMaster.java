@@ -71,8 +71,8 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
     @Transient
     @JsonProperty
     private NonFinancialSummaryData nonFinancialSummaryData;
-
-	//private List<StrategyMaster> selectedStrategyMaster=new ArrayList<StrategyMaster>();
+    
+   	//private List<StrategyMaster> selectedStrategyMaster=new ArrayList<StrategyMaster>();
 
 	@OneToMany(mappedBy = "opportunityMasterId")
 	private List<FileUpload> fileUploads;

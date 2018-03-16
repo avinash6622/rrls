@@ -357,6 +357,13 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-data</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi-ooxml</artifactId>
+    <version>3.16</version>
+</dependency>
+        
       <!-- jhipster-needle-maven-add-dependency -->
           <!-- <dependency>
             <groupId>org.docx4j</groupId>
