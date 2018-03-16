@@ -903,8 +903,25 @@ public class OpportunityMasterResource {
 
     @PostMapping(value = "/file-upload-data")
     @Timed
-    public  void uploadSummaryData(@RequestBody OpportunityMaster opportunityMaster,@RequestParam MultipartFile fileUpload) {
+    public  void uploadSummaryData(@RequestBody OpportunityMaster opportunityMaster,@RequestParam MultipartFile[] fileUpload) throws IOException {
         int iCurrRowNum=0;
+        
+        String  sFilesDirectory =  "src/main/resources/"+opportunityMaster.getMasterName().getOppName()+"/";
+      
+       File dirFiles = new File(sFilesDirectory);
+       dirFiles.mkdirs();
+         
+       for (MultipartFile sFile : fileUpload) {
+    	   String nFile="";
+    	   nFile=sFile.getOriginalFilename();
+     	fileStream = IOUtils.toByteArray(sFile.getInputStream());
+
+           System.out.println("FILE NAME--->"+nFile);
+
+          
+               File sFiles = new File(dirFiles, nFile);
+               writeFile(fileStream, sFiles);
+              }
 if(opportunityMaster.getMasterName().getSegment()=="Finance"){
         try {
         	FinancialSummaryData finance=new FinancialSummaryData();

@@ -32,6 +32,7 @@
 		vm.selectFile = selectFile;
         vm.selectFileData = selectFileData;
 		vm.uploadfile = uploadfile;
+		vm.fileId='';
 		/* vm.saveDoc=saveDoc; */
 		vm.readOnly = false;
 
@@ -462,14 +463,14 @@
 
         function selectFileData (file) {
             console.log("File",file);
-            vm.opportunityMaster.fileUpload=file;
+           vm.fileId=file;
 
         }
 		function uploadfile(){
 
-		    console.log(vm.opportunityMaster.financialSummaryData);
+		    console.log(vm.opportunityMaster.fileUpload);
 
-            OpportunityMaster.upload(vm.opportunityMaster,file);
+            OpportunityMaster.upload(vm.opportunityMaster,vm.fileId);
 
 
         }
