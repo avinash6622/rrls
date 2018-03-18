@@ -49,16 +49,16 @@
 
                 <th scope="col"></th>
                 <th scope="col" colspan="3"></th>
-                <th scope="col" colspan="5">PAT</th>
-                <th scope="col" colspan="5">P/E</th>
-                <th scope="col" colspan="5">RoE</th>
-                <th scope="col" colspan="5">D/E</th>
-                <th scope="col" colspan="5">PAT Growth</th>
-                <th scope="col" colspan="5">Portfolio P/E</th>
-                <th scope="col" colspan="5">Earnings Gr</th>
+                <th scope="col" colspan="5" style="text-align: center">PAT</th>
+                <th scope="col" colspan="5" style="text-align: center">P/E</th>
+                <th scope="col" colspan="5" style="text-align: center">RoE</th>
+                <th scope="col" colspan="5" style="text-align: center">D/E</th>
+                <th scope="col" colspan="5" style="text-align: center">PAT Growth</th>
+                <th scope="col" colspan="5" style="text-align: center">Portfolio P/E</th>
+                <th scope="col" colspan="5" style="text-align: center">Earnings Gr</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
-                <th scope="col" colspan="2">PEG - FY 18</th>
+                <th scope="col" colspan="2" style="text-align: center">PEG - FY 18</th>
 
             </tr>
 
@@ -124,49 +124,49 @@
             </thead>
             <tbody>
             <tr ng-repeat="value in vm.strategyMaster.opportunitySummaryData">
-                <td scope="col"><a ui-sref="opportunity-master-detail({id:value.opportunityMasterid.id})">{{value.opportunityMasterid.masterName.oppName}}</a></td>
-                      <td>{{value.bWeight}}</td>
-                      <td>{{value.cmp}}</td>
-                      <td>{{value.marketCap}}</td>
-                      <td>{{value.patFirstYear}}</td>
-                      <td>{{value.patSecondYear}}</td>
-                      <td>{{value.patThirdYear}}</td>
-                      <td>{{value.patFourthYear}}</td>
-                      <td>{{value.patFifthYear}}</td>
-                      <td>{{value.peFirstYear}}</td>
-                      <td>{{value.peSecondYear}}</td>
-                      <td>{{value.peThirdYear}}</td>
-                      <td>{{value.peFourthYear}}</td>
-                      <td>{{value.peFifthYear}}</td>
-                      <td>{{value.roeFirstYear}}</td>
-                      <td>{{value.roeSecondYear}}</td>
-                      <td>{{value.roeThirdYear}}</td>
-                      <td>{{value.roeFourthYear}}</td>
-                      <td>{{value.roeFifthYear}}</td>
-                      <td>{{value.deFirstYear}}</td>
-                      <td>{{value.deSecondYear}}</td>
-                      <td>{{value.deThirdColour}}</td>
-                      <td>{{value.deFourthYear}}</td>
-                      <td>{{value.deFifthYear}}</td>
-                      <td>{{value.patGrowthFirst}}</td>
-                      <td>{{value.patGrowthSecond}}</td>
-                      <td>{{value.patGrowthThird}}</td>
-                      <td>{{value.patGrowthFourth}}</td>
-                      <td>{{value.patGrowthFifth}}</td>
-                      <td>{{value.portPeFirst}}</td>
-                      <td>{{value.portPeSecond}}</td>
-                      <td>{{value.portPeThird}}</td>
-                      <td>{{value.portPeFourth}}</td>
-                      <td>{{value.portPeFifth}}</td>
-                      <td>{{value.earningsFirst}}</td>
-                      <td>{{value.earningsSecond}}</td>
-                      <td>{{value.earningsThird}}</td>
-                      <td>{{value.earningsFourth}}</td>
-                      <td>{{value.earningsFifth}}</td>
-                      <td>{{value.wtAvgCap}}</td>
-                      <td>{{value.roe}}</td>
-                      <td>{{value.pegOj}}</td>
-                      <td>{{value.pegYearPeg}}</td>
+                <td scope="col" style="text-align: left"><a ui-sref="opportunity-master-detail({id:value.opportunityMasterid.id})">{{value.opportunityMasterid.masterName.oppName}}</a></td>
+                      <td style="text-align: right">{{value.bWeight}}</td>
+                      <td style="text-align: right">{{value.cmp}}</td>
+                      <td style="text-align: right">{{value.marketCap}}</td>
+                      <td style="text-align: right">{{value.patFirstYear}}</td>
+                      <td style="text-align: right">{{value.patSecondYear}}</td>
+                      <td style="text-align: right">{{value.patThirdYear}}</td>
+                      <td style="text-align: right">{{value.patFourthYear}}</td>
+                      <td style="text-align: right">{{value.patFifthYear}}</td>
+                      <td style="text-align: right">{{value.peFirstYear}}</td>
+                      <td style="text-align: right">{{value.peSecondYear}}</td>
+                      <td style="text-align: right">{{value.peThirdYear}}</td>
+                      <td style="text-align: right">{{value.peFourthYear}}</td>
+                      <td style="text-align: right">{{value.peFifthYear}}</td>
+                      <td style="text-align: right">{{value.roeFirstYear}}</td>
+                      <td style="text-align: right">{{value.roeSecondYear}}</td>
+                      <td style="text-align: right">{{value.roeThirdYear}}</td>
+                      <td style="text-align: right">{{value.roeFourthYear}}</td>
+                      <td style="text-align: right">{{value.roeFifthYear}}</td>
+                      <td style="text-align: right">{{value.deFirstYear}}</td>
+                      <td style="text-align: right">{{value.deSecondYear}}</td>
+                      <td style="text-align: right">{{value.deThirdColour}}</td>
+                      <td style="text-align: right">{{value.deFourthYear}}</td>
+                      <td style="text-align: right">{{value.deFifthYear}}</td>
+                      <td style="text-align: right">{{value.patGrowthFirst}}</td>
+                      <td style="text-align: right">{{value.patGrowthSecond}}</td>
+                      <td style="text-align: right">{{value.patGrowthThird}}</td>
+                      <td style="text-align: right">{{value.patGrowthFourth}}</td>
+                      <td style="text-align: right">{{value.patGrowthFifth}}</td>
+                      <td style="text-align: right">{{value.portPeFirst}}</td>
+                      <td style="text-align: right">{{value.portPeSecond}}</td>
+                      <td style="text-align: right">{{value.portPeThird}}</td>
+                      <td style="text-align: right">{{value.portPeFourth}}</td>
+                      <td style="text-align: right">{{value.portPeFifth}}</td>
+                      <td style="text-align: right">{{value.earningsFirst}}</td>
+                      <td style="text-align: right">{{value.earningsSecond}}</td>
+                      <td style="text-align: right">{{value.earningsThird}}</td>
+                      <td style="text-align: right">{{value.earningsFourth}}</td>
+                      <td style="text-align: right">{{value.earningsFifth}}</td>
+                      <td style="text-align: right">{{value.wtAvgCap}}</td>
+                      <td style="text-align: right">{{value.roe}}</td>
+                      <td style="text-align: right">{{value.pegOj}}</td>
+                      <td style="text-align: right">{{value.pegYearPeg}}</td>
 
 
             </tr>

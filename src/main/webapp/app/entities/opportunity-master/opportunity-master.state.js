@@ -14,7 +14,7 @@
             url: '/opportunity-master',
             data: {
                 authorities: ['ROLE_USER'],
-                pageTitle: 'Opportunity Master'
+                pageTitle: 'Opportunity'
             },
             views: {
                 'content@': {

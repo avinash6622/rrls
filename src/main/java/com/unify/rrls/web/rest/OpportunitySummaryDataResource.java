@@ -92,7 +92,7 @@ public class OpportunitySummaryDataResource {
         }
 		else if(opportunityMaster.getNonFinancialSummaryData() != null){
         nonFinancialSummaryDataRepository.save(opportunityMaster.getNonFinancialSummaryData());
-        
+
         List<OpportunitySummaryData> opportunitySummaryDataList = opportunitySummaryDataRepository.findByOpportunityMasterid(opportunityMaster);
 
         for (OpportunitySummaryData sm : opportunitySummaryDataList) {
@@ -129,7 +129,7 @@ public class OpportunitySummaryDataResource {
 
 		}
 		else{
-			
+
 		}
 		return null;
 	}
@@ -159,6 +159,8 @@ public class OpportunitySummaryDataResource {
         System.out.println(page);
         //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
         HttpHeaders headers=new HttpHeaders();
+       // HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Total-Count", Long.toString(summaryData.size()));
         return new ResponseEntity<>(summaryData, headers, HttpStatus.OK);
     }
 
@@ -169,13 +171,13 @@ public class OpportunitySummaryDataResource {
         List<Integer> strategyids =new ArrayList<>();
         List<StrategyMaster> strategyMasters =new ArrayList<>();
         StrategyMaster object;
-        Query q = em.createNativeQuery("select strategy_mas_id from opportunity_summary_data where opp_master = "+id+"");        
+        Query q = em.createNativeQuery("select strategy_mas_id from opportunity_summary_data where opp_master = "+id+"");
         strategyids=q.getResultList();
         for(Integer sm:strategyids)
         {
         	object=strategyMasterRepository.findOne(sm.longValue());
         	strategyMasters.add(object);
-        }        
+        }
 
         System.out.println("LIST VAL---->"+strategyMasters);
 

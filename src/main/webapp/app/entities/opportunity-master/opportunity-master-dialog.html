@@ -19,13 +19,14 @@
     <div class="form-group">
         <button type="button" class="btn btn-default pull-right"
                 ng-click="vm.clear()">Go Back</button>
-        <h4 class="modal-title" id="myOpportunityMasterLabel">Create Opportunity</h4>
+        <h4 class="modal-title" id="myOpportunityMasterLabel" ng-show="!vm.opportunityMaster.id">Create Opportunity</h4>
+        <h4 class="modal-title" id="myOpportunityMasterLabel1" ng-show="vm.opportunityMaster.id">Edit Opportunity</h4>
     </div>
     <div>
         <jhi-alert-error></jhi-alert-error>
 
 
-        <div class="form-group">
+        <div class="form-group" ng-show="!vm.opportunityMaster.id">
             <label for="field_opportunityMasterName"></label>
             <input type="text" class="form-control" id="field_opportunityMasterName"
                    ng-model="vm.opportunityMaster.masterName.oppName"
@@ -33,9 +34,17 @@
                    auto-complete="vm.autoCompleteOptions"/>
         </div>
 
+        <div class="form-group" ng-show="vm.opportunityMaster.id">
+            <label for="field_opportunityMasterName"></label>
+            <input type="text" class="form-control" id="field_opportunityMasterName1"
+                   ng-model="vm.opportunityMaster.masterName.oppName"
+                   placeholder="Type Opportunity Name"
+                   auto-complete="vm.autoCompleteOptions" ng-disabled="true"/>
+        </div>
 
 
-        <div class="form-group">
+
+        <div class="form-group" ng-show="!vm.opportunityMaster.id">
             <label for="field_sectorType"></label>
             <input type="text" id="field_sectorType"class="form-control" placeholder="Sector"
                    ng-model="vm.opportunityMaster.masterName.sectorType" />
@@ -50,6 +59,25 @@
                 </p>
             </div>
         </div>
+
+
+        <div class="form-group" ng-show="vm.opportunityMaster.id">
+            <label for="field_sectorType"></label>
+            <input type="text" id="field_sectorType1"class="form-control" placeholder="Sector"
+                   ng-model="vm.opportunityMaster.masterName.sectorType" ng-disabled="true" />
+            <div ng-show="editForm.oppName.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.oppName.$error.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                   ng-show="editForm.oppName.$error.max">
+                    This field cannot be more than 50.
+                </p>
+            </div>
+        </div>
+
+
         <div class="form-group">
             <label for="field_oppDescription"></label>
             <input type="text" class="form-control" placeholder="Description" name="oppDescription" id="field_oppDescription"
@@ -114,6 +142,8 @@
 
         <div class="form-group"><button type="button" ng-click="addContact()" class="btn btn-primary">Add Contact</button></div>
 
+
+
         <div class="form-group" ng-show="vm.opportunityMaster.id">
 
             <input type="radio" ng-model="myVar" value="Excel">Excel Upload
@@ -132,10 +162,12 @@
                     <button type="button" class="btn btn-default" ng-click="vm.uploadfile()">Upload</button>
                 </div>
             </div>
-          <!--  <div ng-switch-when="data">
-                <h1>Tutorials</h1>
-                <p>Learn from examples.</p>
-            </div>-->
+
+
+
+
+
+
 
 
 
@@ -143,7 +175,7 @@
         <div  class="form-group" ng-if="vm.opportunityMaster.masterName.segment == 'Finance'">
 
             <label class="control-label">Summary Data</label>
-            <table id="mytable" class="table table-bordered">
+            <table id="mytable3" class="table table-bordered">
                 <thead>
 
                 <tr class="headborder">
@@ -294,7 +326,7 @@
                 <div class="form-group" ng-if="vm.opportunityMaster.masterName.segment != 'Finance'">
 
                     <label class="control-label">Summary Data</label>
-                    <table id="mytable1" class="table table-bordered">
+                    <table id="mytable4" class="table table-bordered">
                         <thead>
 
                         <tr class="headborder">

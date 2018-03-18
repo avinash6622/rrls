@@ -6,9 +6,9 @@
         .controller('HomeController', HomeController);
 
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'AlertService', 'OpportunityMaster','ParseLinks', 'paginationConstants', '$state','$http','$filter'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'AlertService', 'OpportunityMaster','ParseLinks', 'paginationConstants', '$state','$http','$filter','pagingParams'];
 
-    function HomeController ($scope, Principal, LoginService, AlertService, OpportunityMaster,ParseLinks,paginationConstants, $state,$http,$filter) {
+    function HomeController ($scope, Principal, LoginService, AlertService, OpportunityMaster,ParseLinks,paginationConstants, $state,$http,$filter,pagingParams) {
         var vm = this;
 
         vm.account = null;
@@ -16,16 +16,21 @@
         vm.login = LoginService.open;
         vm.register = register;
 
+
         vm.opportunityMasters = [];
         vm.loadPage = loadPage;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
-        vm.page = 0;
+        vm.page = 1;
+        vm.oppmas=[];
+        vm.totalItems = null;
         vm.links = {
             last: 0
         };
-        vm.predicate = 'id';
-        vm.reset = reset;
-        vm.reverse = true;
+     //   vm.predicate = 'id';
+       // vm.reset = reset;
+        vm.reverse = pagingParams.ascending;
+        vm.predicate = pagingParams.predicate;
+        vm.transition = transition;
 
         vm.dashboardvalues = [];
 
@@ -85,11 +90,11 @@
         loadAll();
 
         function loadAll () {
-            /*OpportunityMaster.query({
-                page: vm.page,
+            OpportunityMaster.query({
+                page: pagingParams.page - 1,
                 size: vm.itemsPerPage,
                 sort: sort()
-            }, onSuccess, onError);*/
+            }, onSuccess, onError);
 
 
     // console.log("DATA------>"+vm.opportunityMasters);
@@ -102,6 +107,8 @@
                     for (var i = 0; i < len.length; i++) {
                         vm.dashboardvalues.push(len[i]);
                     }
+
+
                 });
 
 
@@ -111,19 +118,8 @@
 
 
 
-            console.log("DASHBOARD VALUE",vm.dashboardvalues);
+          //  console.log("DASHBOARD VALUE",vm.dashboardvalues);
 
-       /*     OpportunityMaster.getsummarydata({}, function (data, headers){
-                console.log(data);
-                console.log(headers);
-
-                for (var i = 0; i < data.length; i++) {
-                    vm.dashboardvalues.push(data[i]);
-                }
-                console.log(  vm.dashboardvalues)
-            },function (err) {
-                console.log(err);
-            });*/
 
 
         }
@@ -137,11 +133,17 @@
         }
 
         function onSuccess(data, headers) {
+           // vm.links = ParseLinks.parse(headers('link'));
             vm.links = headers('link') ? ParseLinks.parse(headers('link')) : vm.links;
             vm.totalItems = headers('X-Total-Count');
-            for (var i = 0; i < data.length; i++) {
+            console.log(vm.totalItems);
+            vm.queryCount = vm.totalItems;
+            vm.page = pagingParams.page;
+            vm.oppmas=data;
+            console.log("jsdhjksnd--->", vm.oppmas)
+          /*  for (var i = 0; i < data.length; i++) {
                 vm.opportunityMasters.push(data[i]);
-            }
+            }*/
 
 
         }
@@ -149,14 +151,23 @@
         function onError(error) {
             AlertService.error(error.data.message);
         }
-        function reset () {
+     /*   function reset () {
             vm.page = 0;
             vm.opportunityMasters = [];
             loadAll();
-        }
+        }*/
         function loadPage(page) {
             vm.page = page;
-            loadAll();
+            vm.transition();
+        }
+
+
+        function transition () {
+            $state.transitionTo($state.$current, {
+                page: vm.page,
+                sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
+                search: vm.currentSearch
+            });
         }
     }
 })();

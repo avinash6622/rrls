@@ -86,9 +86,20 @@ div.scrollmenu {
         <div class="row">
 <div>
 
-	<!--   <h2><span>Opportunity Master</span> {{vm.opportunityMaster.id}}</h2> -->
-	<h2>{{vm.opportunityMaster.masterName.oppName}}</h2>
-	<div class="text-danger text-right ng-binding text-bold">{{vm.opportunityMaster.oppStatus}}</div>
+    <div class="row">
+
+    <div class="col-md-3">	<h2>{{vm.opportunityMaster.masterName.oppName}}</h2></div>
+    <div class="col-md-1 pull-right">
+    <button type="button"
+            ui-sref="opportunity-master.edit({id:vm.opportunityMaster.id})"
+            class="btn btn-primary pull-right">
+        <span class="glyphicon glyphicon-pencil"></span> <span
+        class="hidden-sm-down"> Edit</span>
+    </button>
+    </div>
+</div>
+
+    <div class="text-danger text-right font-weight-bold"><strong>{{vm.opportunityMaster.oppStatus}}</strong></div>
 	<hr>
 	<jhi-alert-error></jhi-alert-error>
 	<dl class="dl-horizontal jh-entity-details">
@@ -163,28 +174,7 @@ div.scrollmenu {
 
 
 
-			<!--    <div>
-            <div class="brdb PA5">
-                <div class="FL PR15 brdr">
-                    <div class="PT3 PB3 UC gL_10">Prev.close</div>
-                    <div class="gD_12 PB3">
-                        <strong>
-                            54.60
-                        </strong>
-                    </div>
-                </div>
-            </div>
-            &lt;!&ndash;<span>
-                CMP : </br>
-                MCAP :</br>
-                P/E  :</br>
-                ROE  :</br>
-                P/BV :</br>
-                D/E  :</br>
-            </span>
-&ndash;&gt;
 
-            </div>-->
 		</dd>
 
 		<dt>
@@ -386,10 +376,11 @@ div.scrollmenu {
 
 			<textarea ng-model="vm.fileComments" name="comments"
 				id="field_comments" rows="4" cols="120"></textarea>
-			<br>
+			</br>
+            <div>
 			<button class="btn btn-primary" ng-click="vm.saveComment()"
 				ng-disabled="" vm.isSaving>Submit Comment</button>
-
+            </div></br>
 		</dd>
 
 		<dt>
@@ -397,9 +388,12 @@ div.scrollmenu {
 			<span>Summary Data</span>
 		</dt>
 		<dd>
+            <div>
 			<button class="btn btn-primary" ng-if="isDisabled" ng-click="ok()">Edit</button>
 			<button class="btn btn-warning" ng-if="!isDisabled"
 				ng-click="cancel()">Cancel</button>
+            <button class="btn btn-primary pull-right" ng-click="submitTable()">Submit</button>
+            </div></br>
 		</dd>
 
 		<div>
@@ -1210,7 +1204,7 @@ div.scrollmenu {
 
 			</div>
 
-			<button class="btn btn-primary" ng-click="submitTable()">Submit</button>
+
 
 		</div>
 
@@ -1229,11 +1223,6 @@ div.scrollmenu {
 		Back</span>
 </button>
 
-<button type="button"
-	ui-sref="opportunity-master.edit({id:vm.opportunityMaster.id})"
-	class="btn btn-primary">
-	<span class="glyphicon glyphicon-pencil"></span> <span
-		class="hidden-sm-down"> Edit</span>
-</button>
+
         </div></div></div>
 <!-- </form> -->

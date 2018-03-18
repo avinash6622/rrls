@@ -77,6 +77,7 @@
 
 				vm.selectedOpportunity = e;
 				vm.opportunityMaster.masterName = e.item;
+				console.log(vm.opportunityMaster.masterName);
 				// state.airport = e.item;
 			}
 		}
