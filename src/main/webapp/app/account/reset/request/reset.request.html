@@ -1,8 +1,10 @@
-<div>
+<div class="container">
+
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <h1>Reset your password</h1>
-
+            <h3 style="text-align: center;">Reset your password</h3>
+            <div class="col-md-8 col-md-offset-2">
+                <div class="well">
             <div class="alert alert-danger" ng-show="vm.errorEmailNotExists">
                 <strong>Email address isn't registered!</strong> Please check and try again.
             </div>
@@ -14,6 +16,8 @@
             <div class="alert alert-success" ng-show="vm.success === 'OK'">
                 <p>Check your emails for details on how to reset your password.</p>
             </div>
+
+
 
             <form ng-show="!vm.success" name="form" role="form" novalidate ng-submit="vm.requestReset()" show-validation>
                 <div class="form-group">
@@ -41,7 +45,9 @@
                 </div>
                 <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Reset</button>
             </form>
+            </div>
 
         </div>
     </div>
+</div>
 </div>
