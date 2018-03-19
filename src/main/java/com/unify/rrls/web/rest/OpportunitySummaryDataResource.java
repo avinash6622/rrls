@@ -150,10 +150,14 @@ public class OpportunitySummaryDataResource {
         List<OpportunitySummaryData> summaryData = new ArrayList<OpportunitySummaryData>();
 
         for (OpportunitySummaryData opportunitySummaryData:page) {
-            System.out.println("kjhdsfhisdj----->"+opportunitySummaryData);
-            List <StrategyMaster> strategyMasterList=getStrategyList(opportunitySummaryData.getOpportunityMasterid().getId());
-            opportunitySummaryData.setStrategyMasterList(strategyMasterList);
-            summaryData.add(opportunitySummaryData);
+            if(opportunitySummaryData.getOpportunityMasterid().getOppStatus() != null) {
+                if (opportunitySummaryData.getOpportunityMasterid().getOppStatus().equals("Approved")) {
+                    System.out.println("kjhdsfhisdj----->" + opportunitySummaryData);
+                    List<StrategyMaster> strategyMasterList = getStrategyList(opportunitySummaryData.getOpportunityMasterid().getId());
+                    opportunitySummaryData.setStrategyMasterList(strategyMasterList);
+                    summaryData.add(opportunitySummaryData);
+                }
+            }
         }
 
         System.out.println(page);
