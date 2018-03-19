@@ -196,11 +196,13 @@ div.scrollmenu {
 			<span>Contact Details</span>
 		</dt>
 		<dd>
+            <div style="height: 100px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
 			<span ng-repeat="contact in vm.opportunityMaster.selectedoppContanct">
 				Name : {{contact.name}}</br> Designation: {{contact.designation}}</br> Email:
 				{{contact.email}}</br> Contact No: {{contact.contactnum}}</br>
 			</br>
 			</span>
+            </div>
 		</dd>
 
 		<div class="row" ng-show="vm.opportunityMaster.fileUploads">
