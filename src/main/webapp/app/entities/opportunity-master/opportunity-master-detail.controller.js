@@ -93,6 +93,7 @@
 
             OpportunityMaster.summarydatavalues(vm.opportunityMaster, function (resp) {
                 console.log("safsdaf---->"+resp);
+                isDisabled=true;
             }, function (err) {
                 console.log(err);
             });

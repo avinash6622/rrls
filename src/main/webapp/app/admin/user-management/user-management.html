@@ -42,8 +42,8 @@
                 </td>
 
                <td>
-                    <div ng-repeat="authority in user.authorities">
-                        <span class="label label-info">{{ authority }}</span>
+                    <div ng-repeat="authority in user.authorities">                    
+                        <span class="label label-info" ng-if="authority!='User'">{{ authority }}</span>
                     </div>
                 </td>
                 <td>{{user.createdDate | date:'dd/MM/yy HH:mm'}}</td>
