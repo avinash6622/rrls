@@ -197,7 +197,26 @@
                     $state.go('^');
                 });
             }]
-        });
+        })
+   /*   .state('opportunity-master.download',{
+          parent: 'download',
+          url: '/{fileName}',
+
+          views :{
+
+          },
+
+          resolve: {
+
+          },
+          onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+              var vm = this;
+              vm.readOnly = true;
+          }]
+
+
+        })*/
+           ;
     }
 
 })();

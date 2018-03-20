@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('OpportunityMasterDetailController', OpportunityMasterDetailController);
 
-    OpportunityMasterDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'OpportunityMaster', 'StrategyMaster', 'Upload', 'FileUploadComments','FileUpload','$uibModal','$filter'];
+    OpportunityMasterDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'OpportunityMaster', 'StrategyMaster', 'Upload', 'FileUploadComments','FileUpload','$uibModal','$filter','$http'];
 
-    function OpportunityMasterDetailController($scope, $rootScope, $stateParams, previousState, entity, OpportunityMaster, StrategyMaster, Upload, FileUploadComments,FileUpload,$uibModal,$filter) {
+    function OpportunityMasterDetailController($scope, $rootScope, $stateParams, previousState, entity, OpportunityMaster, StrategyMaster, Upload, FileUploadComments,FileUpload,$uibModal,$filter,$http) {
         var vm = this;
 
         vm.opportunityMaster = entity;
@@ -402,7 +402,7 @@
     				break;
     			}}
     			return result;
-    			
+
     		};
     		$scope.getNonRoe = function(val1, val2, val3) {
 
@@ -620,34 +620,33 @@
         }
 
         function loadFileContent(fileID) {
-        	console.log(fileID);
+           console.log(fileID);
+        	console.log(fileID.fileData);
 
         	vm.fileId = fileID;
             vm.fileUpload=fileID;
+            $http({
+                method: 'GET',
+                url: 'api/values/download',
+                params: { name: fileID.fileData},
+            }).success(function (data, status, headers) {
 
-        /*	vm.fileId=fileID;
+            }).error(function (data) {
 
-        	OpportunityMaster.getFileContent({id : fileID}, function(resp){
-                console.log(resp);
-               /!* console.log("my variable.. "+$scope.myvar);*!/
-                vm.htmlContent = resp.htmlContent;
-               // vm.fileUploadCommentList = resp.fileUploadCommentList;
+            });
 
-                $scope.myvar = false;
-                  }, function(err) {
-                   console.log(err);
-               });*/
 
-           
-           OpportunityMaster.downloadfilecontent(function(resp){
+
+window.open('download/' + fileID.fileName, '_blank');
+         /*  OpportunityMaster.downloadfilecontent(function(resp){
                 console.log(resp);
 
             }, function(err) {
                 console.log(err);
-            });
+            });*/
         }
 
-  
+
         function onSaveSuccess (result) {
             vm.isSaving = false;
             vm.opportunityMaster.fileUploadCommentList.push(result);

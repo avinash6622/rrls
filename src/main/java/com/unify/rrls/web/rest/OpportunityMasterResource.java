@@ -489,43 +489,43 @@ public class OpportunityMasterResource {
   /*  @GetMapping("/opportunity-masters/download-file")
     @Timed
 	public ResponseEntity<Object> downloadFile() throws IOException  {
-	
+
 		try {
-	
-		
+
+
 		String filename = "src/main/resources/BANNARI AMMAN SUGARS LTD./baidik/image/Wheat_generic_UI.PNG";
-	
+
 		File file = new File(filename);
-		
+
 		InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"", file.getName()));
 		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
 		headers.add("Pragma", "no-cache");
 		headers.add("Expires", "0");
-		
+
 		ResponseEntity<Object> responseEntity = ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.parseMediaType("image/png")).body(resource);
 		return responseEntity;
 		} catch (Exception e ) {
-			return new ResponseEntity<>("error occurred", HttpStatus.INTERNAL_SERVER_ERROR);	
-		} 
+			return new ResponseEntity<>("error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}*/
 
 
-    @GetMapping("/opportunity-masters/download-file")
+    @RequestMapping("/opportunity-masters/download-file")
     @Timed
     public  void downloader(HttpServletRequest request, HttpServletResponse response){
 
        // System.out.println("Entering"+fileUpload.getFileName()+"path:"+fileUpload.getFileData());
 
     	ServletContext context=request.getServletContext();
-    	String fileToDownload="src/main/resources/BANNARI AMMAN SUGARS LTD./baidik/image/Wheat_generic_UI.PNG";
+    	String fileToDownload="src/main/resources/ABAN OFFSHORE LTD/girija/image/flower11.jpg";
     	File file=new File(fileToDownload);
         try
         (InputStream fileInputStream = new FileInputStream(file);
                 OutputStream output = response.getOutputStream();) {
             response.reset();
-       
+
         response.setContentType(MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(file));
         response.setHeader("Content-Disposition","attachment; filename=\""+file.getName()+"\"");
         response.setContentLength((int)(file.length()));
@@ -533,7 +533,7 @@ public class OpportunityMasterResource {
         IOUtils.copyLarge(fileInputStream, output);
 
         output.flush();
-       
+
 
         }catch(FileNotFoundException ex){
         	System.out.println("File not found");
@@ -544,8 +544,8 @@ public class OpportunityMasterResource {
         }
 
                  }
-    
-  
+
+
     @GetMapping("/file")
     @Timed
     public void getFile( HttpServletResponse response) throws URISyntaxException, IOException {
@@ -673,9 +673,9 @@ public class OpportunityMasterResource {
 	 */
 	@GetMapping("/opportunity-masters")
 	@Timed
-	public ResponseEntity<List<OpportunityMaster>> getAllOpportunityMasters() {
+	public ResponseEntity<List<OpportunityMaster>> getAllOpportunityMasters(@ApiParam Pageable pageable) {
 		log.debug("REST request to get a page of OpportunityMasters");
-		List<OpportunityMaster> page = opportunityMasterRepository.findAll();
+		Page<OpportunityMaster> page = opportunityMasterRepository.findAll(pageable);
 		List<StrategyMaster> strategyMapMaster;
 
 		for(OpportunityMaster opportunityMaster:page)
@@ -692,7 +692,7 @@ public class OpportunityMasterResource {
 		System.out.println(page);
 		//HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
 		HttpHeaders headers=new HttpHeaders();
-		return new ResponseEntity<>(page, headers,HttpStatus.OK);
+		return new ResponseEntity<>(page.getContent(), headers,HttpStatus.OK);
 	}
 
 
@@ -905,12 +905,12 @@ public class OpportunityMasterResource {
     @Timed
     public  void uploadSummaryData(@RequestBody OpportunityMaster opportunityMaster,@RequestParam MultipartFile[] fileUpload) throws IOException {
         int iCurrRowNum=0;
-        
+
         String  sFilesDirectory =  "src/main/resources/"+opportunityMaster.getMasterName().getOppName()+"/";
-      
+
        File dirFiles = new File(sFilesDirectory);
        dirFiles.mkdirs();
-         
+
        for (MultipartFile sFile : fileUpload) {
     	   String nFile="";
     	   nFile=sFile.getOriginalFilename();
@@ -918,7 +918,7 @@ public class OpportunityMasterResource {
 
            System.out.println("FILE NAME--->"+nFile);
 
-          
+
                File sFiles = new File(dirFiles, nFile);
                writeFile(fileStream, sFiles);
               }
@@ -926,21 +926,21 @@ if(opportunityMaster.getMasterName().getSegment()=="Finance"){
         try {
         	FinancialSummaryData finance=new FinancialSummaryData();
         	String file="C:\\Users\\girija noah\\Desktop\\Financial template.xlsx";
-        	
+
             FileInputStream fis = new FileInputStream(new File(file));
             //FileInputStream fis = new FileInputStream(new File("C:\\Users\\Noah\\AppData\\Roaming\\Skype\\My Skype Received Files\\2604 nov.xls"));
 
             XSSFWorkbook workbook = new XSSFWorkbook(fis);
 
             XSSFSheet sheet = workbook.getSheetAt(0);
-            int iPutNxtDetailsToDB = 0;         
+            int iPutNxtDetailsToDB = 0;
 
             Iterator<Row> rowIterator = sheet.iterator();
             int iTotRowInserted = 0;
-            int iPhysNumOfCells;         
+            int iPhysNumOfCells;
             String dDate = "";
             Integer iSheetCheck=0;
-           
+
             while (rowIterator.hasNext()) {
                 Row row = rowIterator.next();
                 iCurrRowNum = row.getRowNum() + 1;
@@ -951,7 +951,7 @@ if(opportunityMaster.getMasterName().getSegment()=="Finance"){
                 int iPos = 0;
                 int iTotConToMeet = 1;
                 int iTotConMet = 0;
-                int iConCheckNow = 0;               
+                int iConCheckNow = 0;
                 String sConCheck = "";
                 iPhysNumOfCells = row.getPhysicalNumberOfCells();
 
@@ -961,7 +961,7 @@ if(opportunityMaster.getMasterName().getSegment()=="Finance"){
                     if (iPutNxtDetailsToDB == 0) {
                         if (iPos == 0)
                             sConCheck = "INR Cr";
-                        
+
                         if (cell.getStringCellValue().trim().equals(sConCheck))
                             iTotConMet++;
 
@@ -974,15 +974,15 @@ if(opportunityMaster.getMasterName().getSegment()=="Finance"){
                 }
 
                 if (iPutNxtDetailsToDB == 1 && iConCheckNow == 0) {
-                  
+
                     if (iPhysNumOfCells != 1) {
 
                         while (cellIterator.hasNext()) {
-                            Cell cell = cellIterator.next();                          
+                            Cell cell = cellIterator.next();
                         }
                         String finColumn = row.getCell(0).getStringCellValue();
-                     
-                        if (finColumn.contains("Net Interest Income")) {                       	 
+
+                        if (finColumn.contains("Net Interest Income")) {
                         	finance.setNetIntOne(row.getCell(1).getNumericCellValue());
                         	finance.setNetIntTwo(row.getCell(2).getNumericCellValue());
                         	finance.setNetIntThree(row.getCell(3).getNumericCellValue());
@@ -999,7 +999,7 @@ if(opportunityMaster.getMasterName().getSegment()=="Finance"){
                        		   finance.setTotIncTwo(row.getCell(2).getNumericCellValue());
                        		   finance.setTotIncThree(row.getCell(3).getNumericCellValue());
                        		   finance.setTotIncFour(row.getCell(4).getNumericCellValue());
-                       		   finance.setTotIncFive(row.getCell(5).getNumericCellValue());}                    
+                       		   finance.setTotIncFive(row.getCell(5).getNumericCellValue());}
                         if (finColumn.contains("Operating Expenses"))
                         {  finance.setOpExpOne(row.getCell(1).getNumericCellValue());
                    		   finance.setOpExpTwo(row.getCell(2).getNumericCellValue());
@@ -1059,13 +1059,13 @@ if(opportunityMaster.getMasterName().getSegment()=="Finance"){
                    		   finance.setPbvTwo(row.getCell(2).getNumericCellValue());
                    		   finance.setPbvThree(row.getCell(3).getNumericCellValue());
                    		   finance.setPbvFour(row.getCell(4).getNumericCellValue());
-                   		   finance.setPbvFive(row.getCell(5).getNumericCellValue());}                      
+                   		   finance.setPbvFive(row.getCell(5).getNumericCellValue());}
                         if (finColumn.contains("P/E"))
                         {  finance.setPeOne(row.getCell(1).getNumericCellValue());
                    		   finance.setPeTwo(row.getCell(2).getNumericCellValue());
                    		   finance.setPeThree(row.getCell(3).getNumericCellValue());
                    		   finance.setPeFour(row.getCell(4).getNumericCellValue());
-                   		   finance.setPeFive(row.getCell(5).getNumericCellValue());}                      
+                   		   finance.setPeFive(row.getCell(5).getNumericCellValue());}
 
                 }
 
@@ -1086,21 +1086,21 @@ if(opportunityMaster.getMasterName().getSegment()=="Finance"){
         try {
         	NonFinancialSummaryData nonFinance=new NonFinancialSummaryData();
         	String file="C:\\Users\\girija noah\\Desktop\\Non-Financial.xlsx";
-        	
+
             FileInputStream fis = new FileInputStream(new File(file));
             //FileInputStream fis = new FileInputStream(new File("C:\\Users\\Noah\\AppData\\Roaming\\Skype\\My Skype Received Files\\2604 nov.xls"));
 
             XSSFWorkbook workbook = new XSSFWorkbook(fis);
 
             XSSFSheet sheet = workbook.getSheetAt(0);
-            int iPutNxtDetailsToDB = 0;         
+            int iPutNxtDetailsToDB = 0;
 
             Iterator<Row> rowIterator = sheet.iterator();
             int iTotRowInserted = 0;
-            int iPhysNumOfCells;         
+            int iPhysNumOfCells;
             String dDate = "";
             Integer iSheetCheck=0;
-           
+
             while (rowIterator.hasNext()) {
                 Row row = rowIterator.next();
                 iCurrRowNum = row.getRowNum() + 1;
@@ -1111,7 +1111,7 @@ if(opportunityMaster.getMasterName().getSegment()=="Finance"){
                 int iPos = 0;
                 int iTotConToMeet = 1;
                 int iTotConMet = 0;
-                int iConCheckNow = 0;               
+                int iConCheckNow = 0;
                 String sConCheck = "";
                 iPhysNumOfCells = row.getPhysicalNumberOfCells();
 
@@ -1121,7 +1121,7 @@ if(opportunityMaster.getMasterName().getSegment()=="Finance"){
                     if (iPutNxtDetailsToDB == 0) {
                         if (iPos == 0)
                             sConCheck = "INR Cr";
-                        
+
                         if (cell.getStringCellValue().trim().equals(sConCheck))
                             iTotConMet++;
 
@@ -1134,15 +1134,15 @@ if(opportunityMaster.getMasterName().getSegment()=="Finance"){
                 }
 
                 if (iPutNxtDetailsToDB == 1 && iConCheckNow == 0) {
-                  
+
                     if (iPhysNumOfCells != 1 && iPhysNumOfCells != 0) {
 
                         while (cellIterator.hasNext()) {
-                            Cell cell = cellIterator.next();                          
+                            Cell cell = cellIterator.next();
                         }
                         String finColumn = row.getCell(0).getStringCellValue();
-                     
-                        if (finColumn.equals("Revenues")) {                       	 
+
+                        if (finColumn.equals("Revenues")) {
                         	nonFinance.setRevenueOne(row.getCell(1).getNumericCellValue());
                         	nonFinance.setRevenueTwo(row.getCell(2).getNumericCellValue());
                         	nonFinance.setRevenueThree(row.getCell(3).getNumericCellValue());
@@ -1155,12 +1155,12 @@ if(opportunityMaster.getMasterName().getSegment()=="Finance"){
                     	   nonFinance.setRevGrowthFour(row.getCell(4).getNumericCellValue());
                     	   nonFinance.setRevGrowthFive(row.getCell(5).getNumericCellValue());}
                         if (finColumn.equals("EBITDA"))
-                        {    
+                        {
                         nonFinance.setEbitdaOne(row.getCell(1).getNumericCellValue());
                         nonFinance.setEbitdaTwo(row.getCell(2).getNumericCellValue());
                         nonFinance.setEbitdaThree(row.getCell(3).getNumericCellValue());
                         nonFinance.setEbitdaFour(row.getCell(4).getNumericCellValue());
-                        nonFinance.setEbitdaFive(row.getCell(5).getNumericCellValue());}                    
+                        nonFinance.setEbitdaFive(row.getCell(5).getNumericCellValue());}
                         if (finColumn.equals("Margin(%)"))
                         {  nonFinance.setMarginOne(row.getCell(1).getNumericCellValue());
                         nonFinance.setMarginTwo(row.getCell(2).getNumericCellValue());
@@ -1220,7 +1220,7 @@ if(opportunityMaster.getMasterName().getSegment()=="Finance"){
                         nonFinance.setMarketCapTwo(row.getCell(2).getNumericCellValue());
                         nonFinance.setMarketCapThree(row.getCell(3).getNumericCellValue());
                         nonFinance.setMarketCapFour(row.getCell(4).getNumericCellValue());
-                        nonFinance.setMarketCapFive(row.getCell(5).getNumericCellValue());}                      
+                        nonFinance.setMarketCapFive(row.getCell(5).getNumericCellValue());}
                         if (finColumn.equals("P/E"))
                         {  nonFinance.setPeOne(row.getCell(1).getNumericCellValue());
                         nonFinance.setPeTwo(row.getCell(2).getNumericCellValue());
@@ -1244,7 +1244,7 @@ if(opportunityMaster.getMasterName().getSegment()=="Finance"){
                         nonFinance.setRoeTwo(row.getCell(2).getNumericCellValue());
                         nonFinance.setRoeThree(row.getCell(3).getNumericCellValue());
                         nonFinance.setRoeFour(row.getCell(4).getNumericCellValue());
-                        nonFinance.setRoefive(row.getCell(5).getNumericCellValue());}                        
+                        nonFinance.setRoefive(row.getCell(5).getNumericCellValue());}
                         if (finColumn.equals("Total Debt"))
                         {  nonFinance.setTotDebOne(row.getCell(1).getNumericCellValue());
                         nonFinance.setTotDebTwo(row.getCell(2).getNumericCellValue());

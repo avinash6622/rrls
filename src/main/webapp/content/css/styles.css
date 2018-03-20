@@ -69,3 +69,7 @@
 .progress-description {
     margin: 0;
 }
+
+.well .dl-horizontal dt {
+    text-align: left !important;
+}

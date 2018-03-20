@@ -10,9 +10,8 @@
     }
 </style>
 
-<div class="container-fluid">
+<div>
 <div class="well">
-<div class="row">
 
 <form name="editForm" role="form" novalidate ng-submit="vm.save()">
 
@@ -27,7 +26,6 @@
 
 
         <div class="form-group" ng-show="!vm.opportunityMaster.id">
-            <label for="field_opportunityMasterName"></label>
             <input type="text" class="form-control" id="field_opportunityMasterName"
                    ng-model="vm.opportunityMaster.masterName.oppName"
                    placeholder="Type Opportunity Name"
@@ -35,7 +33,6 @@
         </div>
 
         <div class="form-group" ng-show="vm.opportunityMaster.id">
-            <label for="field_opportunityMasterName"></label>
             <input type="text" class="form-control" id="field_opportunityMasterName1"
                    ng-model="vm.opportunityMaster.masterName.oppName"
                    placeholder="Type Opportunity Name"
@@ -45,9 +42,8 @@
 
 
         <div class="form-group" ng-show="!vm.opportunityMaster.id">
-            <label for="field_sectorType"></label>
             <input type="text" id="field_sectorType"class="form-control" placeholder="Sector"
-                   ng-model="vm.opportunityMaster.masterName.sectorType" />
+                   ng-model="vm.opportunityMaster.masterName.sectorType" ng-disabled="true" />
         <div ng-show="editForm.oppName.$invalid">
                 <p class="help-block"
                     ng-show="editForm.oppName.$error.required">
@@ -79,11 +75,10 @@
 
 
         <div class="form-group">
-            <label for="field_oppDescription"></label>
             <input type="text" class="form-control" placeholder="Description" name="oppDescription" id="field_oppDescription"
                     ng-model="vm.opportunityMaster.oppDescription"
                     required max="250"/>
-            <div ng-show="editForm.oppDescription.$invalid">
+            <!--<div ng-show="editForm.oppDescription.$invalid">
                 <p class="help-block"
                     ng-show="editForm.oppDescription.$error.required">
                     This field is required.
@@ -92,7 +87,7 @@
                     ng-show="editForm.oppDescription.$error.max">
                     This field cannot be more than 250.
                 </p>
-            </div>
+            </div>-->
         </div>
 
         <div class="form-group">
@@ -587,7 +582,6 @@
 </form>
 </div>
 </div>
-    </div>
 
 
 

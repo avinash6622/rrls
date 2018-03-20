@@ -1,13 +1,13 @@
-<div  class="container-fluid">
+<div>
     <div class="well">
 
     <jhi-alert></jhi-alert>
     <div>
         <div class="row">
 
-            <div class="col-md-2"><h4>Opportunity</h4></div>
-            <div class="col-md-2 pull-right">
-                <button class="btn btn-primary" ui-sref="opportunity-master.new" >
+            <!--<div class="col-md-2"><h4>Opportunity</h4></div>-->
+            <div class="col-md-8 pull-right">
+                <button class="btn btn-primary pull-right" ui-sref="opportunity-master.new" >
                     <span class="glyphicon glyphicon-plus"></span>
                     <span >
                         Create New Opportunity
@@ -15,7 +15,7 @@
                 </button>
             </div>
 
-             <div class="col-md-4 col-md-offset-2"><input class="form-control ng-pristine ng-valid" ng-model="searchKeyword" type="text" placeholder="Search"> </div>
+             <div class="col-md-4"><input class="form-control ng-pristine ng-valid" ng-model="searchKeyword" type="text" placeholder="Search"> </div>
 
 
         </div>
@@ -41,11 +41,11 @@
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
                  <!--    <th jh-sort-by="oppCode"><span>Opp Code</span> <span class="glyphicon glyphicon-sort"></span></th> -->
-                 <th jh-sort-by="masterName.id"><span>Opportunity Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+                 <th jh-sort-by="masterName.oppName"><span>Opportunity Name</span> <span class="glyphicon glyphicon-sort"></span></th>
 
-                  	<th jh-sort-by="masterName.oppName"><span>Sector</span> <span class="glyphicon glyphicon-sort"></span></th>
+                  	<th jh-sort-by="masterName.sectorType"><span>Sector</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="oppDescription"><span>Opportunity Description</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="selectedStrategyMaster.strategyName"><span>Strategy</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th><span>Strategy</span></th>
                   <th jh-sort-by="createdBy"><span>Created By</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>

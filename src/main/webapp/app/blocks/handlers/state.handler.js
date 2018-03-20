@@ -27,6 +27,7 @@
                     event.preventDefault();
                     $window.open(toState.url, '_self');
                 }
+                console.log($rootScope);
 
                 if (Principal.isIdentityResolved()) {
                     Auth.authorize();

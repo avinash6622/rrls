@@ -20,7 +20,7 @@
         vm.username = null;
 
         $timeout(function (){angular.element('#username').focus();});
-        
+
           function cancel () {
             vm.credentials = {
                 username: null,
@@ -31,7 +31,7 @@
             if(Principal.isAuthenticated()) {
                    $state.go('home', {}, {reload: true});
                  }
-            
+
          //   $uibModalInstance.dismiss('cancel');
         }
 
@@ -62,7 +62,7 @@
                 } else {
                 	                  $state.go('home');
                 	                 }
-                
+
             }).catch(function () {
                 vm.authenticationError = true;
             });

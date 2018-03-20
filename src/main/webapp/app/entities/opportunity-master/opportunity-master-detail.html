@@ -81,14 +81,13 @@ div.scrollmenu {
 	padding-left: 0;
 }
 </style>
-<div class="container-fluid">
+<div>
     <div class="well">
-        <div class="row">
 <div>
 
     <div class="row">
 
-    <div class="col-md-3">	<h2>{{vm.opportunityMaster.masterName.oppName}}</h2></div>
+    <div class="col-md-3">	<h4>{{vm.opportunityMaster.masterName.oppName}} <span class="text-danger font-weight-bold"><strong>{{vm.opportunityMaster.oppStatus}}</strong></span></h4></div>
     <div class="col-md-1 pull-right">
     <button type="button"
             ui-sref="opportunity-master.edit({id:vm.opportunityMaster.id})"
@@ -99,7 +98,7 @@ div.scrollmenu {
     </div>
 </div>
 
-    <div class="text-danger text-right font-weight-bold"><strong>{{vm.opportunityMaster.oppStatus}}</strong></div>
+
 	<hr>
 	<jhi-alert-error></jhi-alert-error>
 	<dl class="dl-horizontal jh-entity-details">
@@ -107,11 +106,12 @@ div.scrollmenu {
 			<span>Sector</span>
 		</dt>
 		<dd>
-			<span>{{vm.opportunityMaster.masterName.sectorType}}</span>
 
 
-			<div class="row"
+
+			<div class=""
 				ng-if="vm.opportunityMaster.nonFinancialSummaryData == null">
+                <div class="pull-left">{{vm.opportunityMaster.masterName.sectorType}}</div>
 				<div class="pull-right">
 					<div class="col-md-1 pr-md-1">
 						<div>CMP</div>
@@ -392,9 +392,9 @@ div.scrollmenu {
 		<dd>
             <div>
 			<button class="btn btn-primary" ng-if="isDisabled" ng-click="ok()">Edit</button>
-			<button class="btn btn-warning" ng-if="!isDisabled"
-				ng-click="submitTable()">Submit</button>
-            <!-- <button class="btn btn-primary pull-right" ng-click="submitTable()">Submit</button> -->
+			<!--<button class="btn btn-warning" ng-if="!isDisabled"
+				ng-click="cancel()">Cancel</button>-->
+            <button class="btn btn-primary" ng-if="!isDisabled" ng-click="submitTable()">Submit</button>
             </div></br>
 		</dd>
 
@@ -1202,9 +1202,6 @@ div.scrollmenu {
 
 
 				</div>
-
-
-			</div>
 
 
 

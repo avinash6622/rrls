@@ -66,7 +66,7 @@
                     controller: 'StrategyMasterDialogController',
                     controllerAs: 'vm',
                     backdrop: 'static',
-                    size: 'lg',
+                    size: 't',
                     resolve: {
                         entity: ['StrategyMaster', function(StrategyMaster) {
                             return StrategyMaster.get({id : $stateParams.id}).$promise;
