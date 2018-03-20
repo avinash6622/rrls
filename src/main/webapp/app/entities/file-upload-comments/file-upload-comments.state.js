@@ -13,7 +13,7 @@
             parent: 'entity',
             url: '/file-upload-comments',
             data: {
-                authorities: ['ROLE_USER'],
+                authorities: ['User'],
                 pageTitle: 'FileUploadComments'
             },
             views: {
@@ -30,7 +30,7 @@
             parent: 'file-upload-comments',
             url: '/file-upload-comments/{id}',
             data: {
-                authorities: ['ROLE_USER'],
+                authorities: ['User'],
                 pageTitle: 'FileUploadComments'
             },
             views: {
@@ -58,7 +58,7 @@
             parent: 'file-upload-comments-detail',
             url: '/detail/edit',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -83,7 +83,7 @@
             parent: 'file-upload-comments',
             url: '/new',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -115,7 +115,7 @@
             parent: 'file-upload-comments',
             url: '/{id}/edit',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -140,7 +140,7 @@
             parent: 'file-upload-comments',
             url: '/{id}/delete',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({

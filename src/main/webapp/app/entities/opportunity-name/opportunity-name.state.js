@@ -13,7 +13,7 @@
             parent: 'entity',
             url: '/opportunity-name',
             data: {
-                authorities: ['ROLE_USER'],
+                authorities: ['User'],
                 pageTitle: 'Opportunity Name'
             },
             views: {

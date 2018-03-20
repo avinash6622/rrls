@@ -13,7 +13,7 @@
             parent: 'entity',
             url: '/strategy-master',
             data: {
-                authorities: ['ROLE_USER'],
+                authorities: ['User'],
                 pageTitle: 'Strategy Master'
             },
             views: {
@@ -30,7 +30,7 @@
             parent: 'strategy-master',
             url: '/strategy-master/{id}',
             data: {
-                authorities: ['ROLE_USER'],
+                authorities: ['User'],
                 pageTitle: 'Strategy Master'
             },
             views: {
@@ -58,7 +58,7 @@
             parent: 'strategy-master-detail',
             url: '/detail/edit',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -83,7 +83,7 @@
             parent: 'strategy-master',
             url: '/new',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -118,7 +118,7 @@
             parent: 'strategy-master',
             url: '/{id}/edit',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -143,7 +143,7 @@
             parent: 'strategy-master',
             url: '/{id}/delete',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({

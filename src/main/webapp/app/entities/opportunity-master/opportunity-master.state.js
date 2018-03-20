@@ -13,7 +13,7 @@
             parent: 'entity',
             url: '/opportunity-master',
             data: {
-                authorities: ['ROLE_USER'],
+                authorities: ['User'],
                 pageTitle: 'Opportunity'
             },
             views: {
@@ -30,7 +30,7 @@
             parent: 'opportunity-master',
             url: '/opportunity-master/{id}',
             data: {
-                authorities: ['ROLE_USER'],
+                authorities: ['User'],
                 pageTitle: 'Opportunity Master'
             },
             views: {
@@ -58,7 +58,7 @@
             parent: 'opportunity-master-detail',
             url: '/detail/edit',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -83,7 +83,7 @@
             parent: 'opportunity-master',
             url: '/new',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             views: {
                 'content@': {
@@ -137,7 +137,7 @@
             parent: 'opportunity-master',
             url: '/{id}/edit',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             views: {
                 'content@': {
@@ -178,7 +178,7 @@
             parent: 'opportunity-master',
             url: '/{id}/delete',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({

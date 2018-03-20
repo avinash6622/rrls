@@ -298,7 +298,7 @@ div.scrollmenu {
 		<dt>
 			<button type="button" class="btn btn-primary"
 				ng-click="showdocument(); vm.htmlContent = null;" ng-show="!myvar"
-				has-authority="ROLE_RA">
+				has-authority="Research">
 				<span class="hidden-sm-down">CreateDocument</span>
 			</button>
 
@@ -311,39 +311,39 @@ div.scrollmenu {
 		</dt>
 		<dd>
 			<button class="btn btn-success" ng-click="open('Approved')"
-				ng-disabled="" has-authority="ROLE_CIO" vm.isSaving>Approve</button>
+				ng-disabled="" has-authority="CIO" vm.isSaving>Approve</button>
 			<button class="btn btn-warning" ng-click="open('Change Requested')"
-				ng-disabled="" has-authority="ROLE_CIO" vm.isSaving>Change
+				ng-disabled="" has-authority="CIO" vm.isSaving>Change
 				Request</button>
 			<button class="btn btn-danger" ng-click="open('Wait Listed')"
-				ng-disabled="" has-authority="ROLE_CIO" vm.isSaving>Wait
+				ng-disabled="" has-authority="CIO" vm.isSaving>Wait
 				Listed</button>
 		</dd>
 		</dd>
 
-		<dt has-authority="ROLE_RA">
+		<dt has-authority="Research">
 			<span>Select File Format</span>
 		</dt>
 
 
-		<dd has-authority="ROLE_RA">
+		<dd has-authority="Research">
 			<select ng-model="selitem" ng-change="getselectval()">
 				<option ng-repeat="x in fileformat">{{x}}</option>
 			</select>
 		</dd>
 
-		<dt has-authority="ROLE_RA">
+		<dt has-authority="Research">
 			<span>Description</span>
 		</dt>
-		<dd has-authority="ROLE_RA">
+		<dd has-authority="Research">
 			<input type="text" class="col-sm-6" id="fileid" name="fileid"
 				ng-model="vm.uploadfileName" />
 		</dd>
 
-		<dt has-authority="ROLE_RA">
+		<dt has-authority="Research">
 			<span>Upload</span>
 		</dt>
-		<dd has-authority="ROLE_RA">
+		<dd has-authority="Research">
 			<div class="form-group">
 				<input type="file" ngf-select="vm.selectFile($file)" name="file"
 					id="file_upload"

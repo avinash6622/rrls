@@ -13,7 +13,7 @@
             parent: 'entity',
             url: '/additional-file-upload',
             data: {
-                authorities: ['ROLE_USER'],
+                authorities: ['User'],
                 pageTitle: 'AdditionalFileUploads'
             },
             views: {
@@ -30,7 +30,7 @@
             parent: 'additional-file-upload',
             url: '/additional-file-upload/{id}',
             data: {
-                authorities: ['ROLE_USER'],
+                authorities: ['User'],
                 pageTitle: 'AdditionalFileUpload'
             },
             views: {
@@ -58,7 +58,7 @@
             parent: 'additional-file-upload-detail',
             url: '/detail/edit',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -83,7 +83,7 @@
             parent: 'additional-file-upload',
             url: '/new',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -117,7 +117,7 @@
             parent: 'additional-file-upload',
             url: '/{id}/edit',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -142,7 +142,7 @@
             parent: 'additional-file-upload',
             url: '/{id}/delete',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
