@@ -186,7 +186,7 @@
             };
             $scope.getFinRoe = function(val1, val2,val3,val4) {
           	  if(val2==0)
-              	 {	var result = parseFloat(val1) / parseFloat(val3);
+              	 {	var result = parseFloat(val1) / parseFloat(val3);              	
                	result=(result*100).toFixed(2);  }
              	 else{
               		var result = parseFloat(val1) / ((parseFloat(val2)+parseFloat(val3))/2);
@@ -197,6 +197,7 @@
           		 switch(val4){
           		  case 1:
           			  vm.opportunityMaster.financialSummaryData.roeOne = result;
+          			 
           			  break;
           		  case 2:
           			  vm.opportunityMaster.financialSummaryData.roeTwo = result;
@@ -406,7 +407,7 @@
 
     			if (val2 == 0) {
     				var result = parseFloat(val1) / parseFloat(val3);
-    				result = (result * 100).toFixed(2);
+    				result = (result * 100).toFixed(2);    				
     			} else {
     				var result = parseFloat(val1)
     						/ ((parseFloat(val2) + parseFloat(val3)) / 2);
@@ -416,7 +417,8 @@
     			if(result!=''){
     			switch (val3) {
     			case 1:
-    				vm.opportunityMaster.nonFinancialSummaryData.roeOne = result;
+    				 console.log('Roe one',result);
+    				vm.opportunityMaster.nonFinancialSummaryData.roeOne = result;    				
     				break;
     			case 2:
     				vm.opportunityMaster.nonFinancialSummaryData.roeTwo = result;

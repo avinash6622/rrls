@@ -901,7 +901,7 @@ public class OpportunityMasterResource {
 		System.out.println("File Uploading is Completed");
 	}
 
-    @PostMapping(value = "/file-upload-data")
+  /*  @PostMapping(value = "/file-upload-data")
     @Timed
     public  void uploadSummaryData(@RequestBody OpportunityMaster opportunityMaster,@RequestParam MultipartFile[] fileUpload) throws IOException {
         int iCurrRowNum=0;
@@ -1291,6 +1291,6 @@ if(opportunityMaster.getMasterName().getSegment()=="Finance"){
             log.error("Exception at financial uploadFinancial() method at row "+iCurrRowNum + e);
         }
 }
-    }
+    }*/
 
 }

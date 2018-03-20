@@ -464,15 +464,30 @@
 
         function selectFileData (file) {
             console.log("File",file);
-           vm.fileId=file;
+            vm.opportunityMaster.fileUpload=file;
 
         }
 		function uploadfile(){
 
-		    console.log(vm.opportunityMaster.fileUpload);
+			  console.log(vm.opportunityMaster.fileUpload);
 
-            OpportunityMaster.upload(vm.opportunityMaster,vm.fileId);
-
+	          // OpportunityMaster.upload(vm.opportunityMaster,{fileploads:vm.opportunityMaster.fileUpload});
+			    Upload.upload({
+	                url: 'api/file-upload-data',
+	                data: {fileUploads: vm.opportunityMaster.fileUpload},
+	                params: {oppId: vm.opportunityMaster.id}// {oppCode: inputData.oppCode, oppName: inputData.oppName, oppDescription: inputData.oppDescription, strategyMasterId: inputData.strategyMasterId.id}
+	            }).then(function (resp) {
+	                console.log(resp);
+	                if(resp.status == 201) {
+	                	vm.opportunityMaster.fileUploads.push(resp.data);
+	                }
+	            }, function (resp) {
+	                console.log(resp);
+	            }, function (evt) {
+	                console.log(evt);
+	                //var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+	                //console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+	            });
 
         }
 		function save() {
