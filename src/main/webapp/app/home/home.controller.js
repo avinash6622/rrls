@@ -15,6 +15,7 @@
         vm.isAuthenticated = null;
         vm.login = LoginService.open;
         vm.register = register;
+        vm.itemsValue = 'Opportunities';
 
 
         vm.opportunityMasters = [];

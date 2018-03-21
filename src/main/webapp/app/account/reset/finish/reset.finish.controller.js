@@ -4,6 +4,7 @@
     angular
         .module('researchRepositoryLearningSystemApp')
         .controller('ResetFinishController', ResetFinishController);
+      /*  .directive("compareTo1",compareTo1);*/
 
     ResetFinishController.$inject = ['$stateParams', '$timeout', 'Auth', 'LoginService'];
 
@@ -36,4 +37,22 @@
             }
         }
     }
+/*    function compareTo1() {
+        return {
+            require: "ngModel",
+            scope: {
+                otherModelValue: "=compareTo1"
+            },
+            link: function(scope, element, attributes, ngModel) {
+
+                ngModel.$validators.compareTo1 = function(modelValue) {
+                    return modelValue == scope.otherModelValue;
+                };
+
+                scope.$watch("otherModelValue", function() {
+                    ngModel.$validate();
+                });
+            }
+        };
+    };*/
 })();
