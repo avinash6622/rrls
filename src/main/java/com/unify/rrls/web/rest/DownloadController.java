@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,21 +16,36 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Path;
 
 @Controller
 public class DownloadController {
 
     @Autowired
     ServletContext context;
+    @PersistenceContext
+    EntityManager em;
 
-    @RequestMapping(value = "/download/{fileName:.+}",method = RequestMethod.GET)
+    @RequestMapping(value = "/download/{fileID:.+}",method = RequestMethod.GET)
     public void downloader(HttpServletRequest request, HttpServletResponse response,
-                           @PathVariable("fileName") String fileName) {
+                           @PathVariable("fileID")  int fileID) {
         try {
-            String downloadFolder = context.getRealPath("/resources/BOMBAY DYEING &amp; MFG.CO.LTD/girija/image");
-            File file = new File(downloadFolder + File.separator + fileName);
 
-            if (file.exists()) {
+            Query q = em.createNativeQuery("select file_data from ra_file_upload where id = "+fileID+"");
+
+            String path = (String) q.getSingleResult();
+
+          //  System.out.println("Filename---->"+path);
+
+            int index = path.lastIndexOf("\\");
+            String fileName = path.substring(index + 1);
+           String pathName= path.substring(16,path.lastIndexOf(File.separator));
+
+           String downloadFolder = context.getRealPath(pathName);
+
+           File file = new File(downloadFolder + File.separator + fileName);
+
+           if (file.exists()) {
                 String mimeType = context.getMimeType(file.getPath());
 
                 if (mimeType == null) {
