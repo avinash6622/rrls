@@ -46,7 +46,7 @@ div.scrollmenu {
 
     <div class="row">
 
-    <div class="col-md-3">	<h4>{{vm.opportunityMaster.masterName.oppName}} <span class="text-danger font-weight-bold"><strong>{{vm.opportunityMaster.oppStatus}}</strong></span></h4></div>
+        <div class="col-md-3">	<h4><strong>{{vm.opportunityMaster.masterName.oppName}}-<span class="text-danger font-weight-bold"><strong>{{vm.opportunityMaster.oppStatus}}</strong></span></strong></h4></div>
     <div class="col-md-1 pull-right">
     <button type="button"
             ui-sref="opportunity-master.edit({id:vm.opportunityMaster.id})"
@@ -73,27 +73,27 @@ div.scrollmenu {
                 <div class="pull-left">{{vm.opportunityMaster.masterName.sectorType}}</div>
 				<div class="pull-right">
 					<div class="col-md-1 pr-md-1">
-						<div>CMP</div>
+                        <div><strong>CMP</strong></div>
 						<div></div>
 					</div>
 					<div class="col-sm-offset-1 col-md-1 pl-md-1">
-						<div>MCAP</div>
+						<div><strong>MCAP</strong></div>
 						<div>{{vm.opportunityMaster.financialSummaryData.marCapThree}}</div>
 					</div>
 					<div class="col-sm-offset-1 col-md-1 pl-md-1">
-						<div>P/E</div>
+						<div><strong>P/E</strong></div>
 						<div>{{vm.opportunityMaster.financialSummaryData.peThree}}</div>
 					</div>
 					<div class="col-sm-offset-1 col-md-1 pl-md-1">
-						<div>ROE</div>
+						<div><strong>ROE</strong></div>
 						<div>{{vm.opportunityMaster.financialSummaryData.roeThree}}</div>
 					</div>
 					<div class="col-sm-offset-1 col-md-1 pl-md-1">
-						<div>P/BV</div>
+						<div><strong>P/BV</strong></div>
 						<div>{{vm.opportunityMaster.financialSummaryData.pbvThree}}</div>
 					</div>
 					<div class="col-sm-offset-1 col-md-1 pl-md-1">
-						<div>D/E</div>
+						<div><strong>D/E</strong></div>
 						<div></div>
 					</div>
 				</div>
@@ -189,7 +189,7 @@ div.scrollmenu {
 						style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
 						<div class="panel-body"
 							ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Excel Model'}">
-							<a ng-click="vm.loadFileContent(fileUploads)">{{fileUploads.fileName}}</a>
+							<a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
 							<b> - {{fileUploads.createdBy | capitalize}}</b> <span
 								class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
@@ -380,7 +380,7 @@ div.scrollmenu {
 						</thead>
 						<tbody>
 							<tr>
-								<td scope="col">Net Interest Income</td>
+								<td scope="col" style="text-align: left">Net Interest Income</td>
 								<td><input name="netIntOne"
 									ng-model="vm.opportunityMaster.financialSummaryData.netIntOne"
 									ng-disabled="isDisabled" /></td>
@@ -399,7 +399,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">Non Interest Income</td>
+								<td scope="col" style="text-align: left">Non Interest Income</td>
 								<td><input name="nonIntOne"
 									ng-model="vm.opportunityMaster.financialSummaryData.nonIntOne"
 									ng-disabled="isDisabled" /></td>
@@ -418,7 +418,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">Total Income</td>
+								<td scope="col"  style="text-align: left">Total Income</td>
 								<td><input name="totIncOne"
 									ng-model="vm.opportunityMaster.financialSummaryData.totIncOne"
 									ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntOne, vm.opportunityMaster.financialSummaryData.nonIntOne,1)"
@@ -442,7 +442,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">Operating Expenses</td>
+								<td scope="col" style="text-align: left">Operating Expenses</td>
 								<td><input name="opExpOne"
 									ng-model="vm.opportunityMaster.financialSummaryData.opExpOne"
 									ng-disabled="isDisabled" /></td>
@@ -461,7 +461,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">Operating Profit</td>
+								<td scope="col" style="text-align: left">Operating Profit</td>
 								<td><input name="opProOne"
 									ng-model="vm.opportunityMaster.financialSummaryData.opProOne"
 									ng-disabled="isDisabled" /></td>
@@ -481,7 +481,7 @@ div.scrollmenu {
 
 
 							<tr>
-								<td scope="col">Provisions</td>
+								<td scope="col" style="text-align: left">Provisions</td>
 								<td><input name="provisionsOne"
 									ng-model="vm.opportunityMaster.financialSummaryData.provisionsOne"
 									ng-disabled="isDisabled" /></td>
@@ -500,7 +500,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">PAT</td>
+								<td scope="col" style="text-align: left">PAT</td>
 								<td><input name="patOne"
 									ng-model="vm.opportunityMaster.financialSummaryData.patOne"
 									ng-disabled="isDisabled" /></td>
@@ -519,7 +519,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">EPS</td>
+								<td scope="col" style="text-align: left">EPS</td>
 								<td><input name="epsOne"
 									ng-model="vm.opportunityMaster.financialSummaryData.epsOne"
 									ng-disabled="isDisabled" /></td>
@@ -538,7 +538,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">Market Cap</td>
+								<td scope="col" style="text-align: left">Market Cap</td>
 								<td><input name="marCapOne"
 									ng-model="vm.opportunityMaster.financialSummaryData.marCapOne"
 									ng-disabled="isDisabled" /></td>
@@ -557,7 +557,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">AUM</td>
+								<td scope="col" style="text-align: left">AUM</td>
 								<td><input name="aumOne"
 									ng-model="vm.opportunityMaster.financialSummaryData.aumOne"
 									ng-disabled="isDisabled" /></td>
@@ -576,7 +576,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">Networth</td>
+								<td scope="col" style="text-align: left">Networth</td>
 								<td><input name="networthOne"
 									ng-model="vm.opportunityMaster.financialSummaryData.networthOne"
 									ng-disabled="isDisabled" /></td>
@@ -595,7 +595,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">ROE</td>
+								<td scope="col" style="text-align: left">ROE</td>
 								<td><input name="roeOne"
 									ng-model="vm.opportunityMaster.financialSummaryData.roeOne"
 									ng-value="getFinRoe(vm.opportunityMaster.financialSummaryData.patOne,0,vm.opportunityMaster.financialSummaryData.networthOne,1)"
@@ -619,7 +619,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">P/BV</td>
+								<td scope="col" style="text-align: left">P/BV</td>
 								<td><input name="pbvOne"
 									ng-model="vm.opportunityMaster.financialSummaryData.pbvOne"
 									ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.networthOne,1)"
@@ -644,7 +644,7 @@ div.scrollmenu {
 
 
 							<tr>
-								<td scope="col">P/E</td>
+								<td scope="col" style="text-align: left">P/E</td>
 								<td><input name="peOne"
 									ng-model="vm.opportunityMaster.financialSummaryData.peOne"
 									ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.patOne,6)"
@@ -693,7 +693,7 @@ div.scrollmenu {
 						</thead>
 						<tbody>
 							<tr>
-								<td scope="col">Revenues</td>
+								<td scope="col" style="text-align: left">Revenues</td>
 								<td><input name="netIntOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueOne"
 									ng-disabled="isDisabled" /></td>
@@ -712,7 +712,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">Growth(%)</td>
+								<td scope="col" style="text-align: left">Growth(%)</td>
 								<td><input name="revGrowthOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revGrowthOne"
 									ng-disabled="true" /></td>
@@ -736,7 +736,7 @@ div.scrollmenu {
 
 
 							<tr>
-								<td scope="col">EBITDA</td>
+								<td scope="col" style="text-align: left">EBITDA</td>
 								<td><input name="totIncOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaOne"
 									ng-disabled="isDisabled" /></td>
@@ -755,7 +755,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">Margin(%)</td>
+								<td scope="col" style="text-align: left">Margin(%)</td>
 								<td><input name="marginOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marginOne"
 									ng-value="getNonMargin(vm.opportunityMaster.nonFinancialSummaryData.ebitdaOne, vm.opportunityMaster.nonFinancialSummaryData.revenueOne,1)"
@@ -779,7 +779,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">Growth(%)</td>
+								<td scope="col" style="text-align: left">Growth(%)</td>
 								<td><input name="ebitdaGrowthOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaGrowthOne"
 									ng-disabled="true" /></td>
@@ -801,7 +801,7 @@ div.scrollmenu {
 									ng-disabled="true" /></td>
 							</tr>
 							<tr>
-								<td scope="col">Other Income</td>
+								<td scope="col" style="text-align: left">Other Income</td>
 								<td><input name="otherIncOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.otherIncOne"
 									ng-disabled="isDisabled" /></td>
@@ -820,7 +820,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">Interest Exp</td>
+								<td scope="col" style="text-align: left">Interest Exp</td>
 								<td><input name="intExpOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intExpOne"
 									ng-disabled="isDisabled" /></td>
@@ -839,7 +839,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">Depreciation</td>
+								<td scope="col" style="text-align: left">Depreciation</td>
 								<td><input name="depOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depOne"
 									ng-disabled="isDisabled" /></td>
@@ -858,7 +858,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">PBT</td>
+								<td scope="col" style="text-align: left">PBT</td>
 								<td><input name="pbtOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbtOne"
 									ng-value="getNonPbt(vm.opportunityMaster.nonFinancialSummaryData.ebitdaOne, vm.opportunityMaster.nonFinancialSummaryData.otherIncOne,vm.opportunityMaster.nonFinancialSummaryData.intExpOne,vm.opportunityMaster.nonFinancialSummaryData.depOne,1)"
@@ -882,7 +882,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">Tax</td>
+								<td scope="col" style="text-align: left">Tax</td>
 								<td><input name="taxOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxOne"
 									ng-disabled="isDisabled" /></td>
@@ -901,7 +901,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">PAT</td>
+								<td scope="col" style="text-align: left">PAT</td>
 								<td><input name="provisionsOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patOne"
 									ng-value="getNonPat(vm.opportunityMaster.nonFinancialSummaryData.pbtOne, vm.opportunityMaster.nonFinancialSummaryData.taxOne,1)"
@@ -925,7 +925,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">Growth(%)</td>
+								<td scope="col" style="text-align: left">Growth(%)</td>
 								<td><input name="patGrowthOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patGrowthOne"
 									ng-disabled="true" /></td>
@@ -948,7 +948,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">Market Cap</td>
+								<td scope="col" style="text-align: left">Market Cap</td>
 								<td><input name="epsOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapOne"
 									ng-disabled="isDisabled" /></td>
@@ -967,7 +967,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">P/E</td>
+								<td scope="col" style="text-align: left">P/E</td>
 								<td><input name="peOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.peOne"
 									ng-value="getNonPe(vm.opportunityMaster.nonFinancialSummaryData.marketCapThree, vm.opportunityMaster.nonFinancialSummaryData.patOne,1)"
@@ -991,7 +991,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">Networth</td>
+								<td scope="col" style="text-align: left">Networth</td>
 								<td><input name="aumOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.networthOne"
 									ng-disabled="isDisabled" /></td>
@@ -1010,7 +1010,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">P/B</td>
+								<td scope="col" style="text-align: left">P/B</td>
 								<td><input name="pbOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbOne"
 									ng-value="getNonPe(vm.opportunityMaster.nonFinancialSummaryData.marketCapThree, vm.opportunityMaster.nonFinancialSummaryData.networthOne,6)"
@@ -1035,7 +1035,7 @@ div.scrollmenu {
 
 
 							<tr>
-								<td scope="col">ROE(%)</td>
+								<td scope="col" style="text-align: left">ROE(%)</td>
 								<td><input name="roeOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.roeOne"
 									ng-value="getNonRoe(vm.opportunityMaster.nonFinancialSummaryData.patOne,0, vm.opportunityMaster.nonFinancialSummaryData.networthOne,1)"
@@ -1059,7 +1059,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">Total Debt</td>
+								<td scope="col"  style="text-align: left">Total Debt</td>
 								<td><input name="pbvOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.totDebOne"
 									ng-disabled="isDisabled" /></td>
@@ -1078,7 +1078,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">D/E</td>
+								<td scope="col" style="text-align: left">D/E</td>
 								<td><input name="peOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.deOne"
 									ng-value="getNonPe(vm.opportunityMaster.nonFinancialSummaryData.totDebOne, vm.opportunityMaster.nonFinancialSummaryData.networthOne,11)"
@@ -1101,7 +1101,7 @@ div.scrollmenu {
 									ng-disabled="true" /></td>
 							</tr>
 							<tr>
-								<td scope="col">Tax Rate</td>
+								<td scope="col" style="text-align: left">Tax Rate</td>
 								<td><input name="taxRateOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateOne"
 									ng-disabled="isDisabled" /></td>
@@ -1120,7 +1120,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">Interest Rate</td>
+								<td scope="col" style="text-align: left">Interest Rate</td>
 								<td><input name="taxRateOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateOne"
 									ng-disabled="isDisabled" /></td>
@@ -1139,7 +1139,7 @@ div.scrollmenu {
 							</tr>
 
 							<tr>
-								<td scope="col">Depreciation Rate</td>
+								<td scope="col" style="text-align: left">Depreciation Rate</td>
 								<td><input name="depRateOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depRateOne"
 									ng-disabled="isDisabled" /></td>
