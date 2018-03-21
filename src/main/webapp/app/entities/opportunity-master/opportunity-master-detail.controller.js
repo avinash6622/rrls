@@ -187,7 +187,7 @@
             };
             $scope.getFinRoe = function(val1, val2,val3,val4) {
           	  if(val2==0)
-              	 {	var result = parseFloat(val1) / parseFloat(val3);              	
+              	 {	var result = parseFloat(val1) / parseFloat(val3);
                	result=(result*100).toFixed(2);  }
              	 else{
               		var result = parseFloat(val1) / ((parseFloat(val2)+parseFloat(val3))/2);
@@ -198,7 +198,7 @@
           		 switch(val4){
           		  case 1:
           			  vm.opportunityMaster.financialSummaryData.roeOne = result;
-          			 
+
           			  break;
           		  case 2:
           			  vm.opportunityMaster.financialSummaryData.roeTwo = result;
@@ -408,7 +408,7 @@
 
     			if (val2 == 0) {
     				var result = parseFloat(val1) / parseFloat(val3);
-    				result = (result * 100).toFixed(2);    				
+    				result = (result * 100).toFixed(2);
     			} else {
     				var result = parseFloat(val1)
     						/ ((parseFloat(val2) + parseFloat(val3)) / 2);
@@ -419,7 +419,7 @@
     			switch (val3) {
     			case 1:
     				 console.log('Roe one',result);
-    				vm.opportunityMaster.nonFinancialSummaryData.roeOne = result;    				
+    				vm.opportunityMaster.nonFinancialSummaryData.roeOne = result;
     				break;
     			case 2:
     				vm.opportunityMaster.nonFinancialSummaryData.roeTwo = result;
@@ -623,7 +623,7 @@
            console.log(fileID);
         	console.log(fileID.fileData);
 
-        	vm.fileId = fileID;
+        /*	vm.fileId = fileID;
             vm.fileUpload=fileID;
             $http({
                 method: 'GET',
@@ -635,15 +635,10 @@
 
             });
 
+*/
 
+      window.open('/download/' + fileID, '_blank');
 
-window.open('download/' + fileID.fileName, '_blank');
-         /*  OpportunityMaster.downloadfilecontent(function(resp){
-                console.log(resp);
-
-            }, function(err) {
-                console.log(err);
-            });*/
         }
 
 
