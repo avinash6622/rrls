@@ -623,19 +623,7 @@
            console.log(fileID);
         	console.log(fileID.fileData);
 
-        /*	vm.fileId = fileID;
-            vm.fileUpload=fileID;
-            $http({
-                method: 'GET',
-                url: 'api/values/download',
-                params: { name: fileID.fileData},
-            }).success(function (data, status, headers) {
 
-            }).error(function (data) {
-
-            });
-
-*/
 
       window.open('/download/' + fileID, '_blank');
 

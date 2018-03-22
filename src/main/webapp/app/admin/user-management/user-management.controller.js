@@ -25,6 +25,7 @@
         vm.reverse = pagingParams.ascending;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
         vm.transition = transition;
+        vm.itemsValue = 'Users';
 
         vm.loadAll();
         Principal.identity().then(function(account) {

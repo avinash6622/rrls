@@ -3,7 +3,10 @@
 
     angular
         .module('researchRepositoryLearningSystemApp')
-        .controller('PasswordController', PasswordController);
+        .controller('PasswordController', PasswordController)
+        .directive("compareTo",compareTo);
+
+    	
 
     PasswordController.$inject = ['Auth', 'Principal'];
 
@@ -36,4 +39,24 @@
             }
         }
     }
+
+
+    function compareTo() {
+        return {
+            require: "ngModel",
+            scope: {
+                otherModelValue: "=compareTo"
+            },
+            link: function(scope, element, attributes, ngModel) {
+
+                ngModel.$validators.compareTo = function(modelValue) {
+                    return modelValue == scope.otherModelValue;
+                };
+
+                scope.$watch("otherModelValue", function() {
+                    ngModel.$validate();
+                });
+            }
+        };
+    };
 })();
