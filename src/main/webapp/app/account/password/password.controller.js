@@ -6,7 +6,7 @@
         .controller('PasswordController', PasswordController)
         .directive("compareTo",compareTo);
 
-    	
+
 
     PasswordController.$inject = ['Auth', 'Principal'];
 

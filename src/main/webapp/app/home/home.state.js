@@ -13,7 +13,7 @@
             url: '/home',
             data: {
                 authorities: [],
-                pageTitle: 'Research Repository Learning System | Unifi'
+                pageTitle: 'Research Repository & Learning System'
             },
             views: {
                 'content@': {

@@ -13,7 +13,7 @@
             url: '/',
             data: {
                 authorities: [],
-                pageTitle: 'Research Repository And Learning System'
+                pageTitle: 'Research Repository & Learning System'
             },
             views: {
                 'content@': {

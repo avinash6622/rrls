@@ -1,7 +1,6 @@
 package com.unify.rrls.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -237,9 +236,6 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
             ", strategyMapping=" + strategyMapping +
             '}';
     }*/
-
-
-
 
     @Override
 	public int hashCode() {
