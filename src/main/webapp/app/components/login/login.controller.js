@@ -4,9 +4,9 @@
     angular
         .module('researchRepositoryLearningSystemApp')
         .controller('LoginController', LoginController);
-    LoginController.$inject = ['$rootScope', '$state', '$timeout', 'Auth', 'Principal'];
+    LoginController.$inject = ['$rootScope', '$state', '$timeout', 'Auth', 'Principal','$scope','$filter'];
 
-    function LoginController ($rootScope, $state, $timeout, Auth, Principal) {
+    function LoginController ($rootScope, $state, $timeout, Auth, Principal,$scope,$filter) {
         var vm = this;
 
         vm.authenticationError = false;
@@ -18,6 +18,7 @@
         vm.rememberMe = true;
         vm.requestResetPassword = requestResetPassword;
         vm.username = null;
+        vm.roles = {};
 
         $timeout(function (){angular.element('#username').focus();});
 
@@ -34,6 +35,14 @@
 
          //   $uibModalInstance.dismiss('cancel');
         }
+
+        var myDate=new Date();
+
+        $scope.currentYear = $filter('date')(myDate,'yyyy');
+
+
+
+           console.log("djfsjfjsd--->",vm.roles);
 
         function login (event) {
         	console.log('hi---->');
@@ -60,8 +69,32 @@
                     Auth.resetPreviousState();
                     $state.go(previousState.name, previousState.params);
                 } else {
-                	                  $state.go('home');
-                	                 }
+                    Principal.identity().then(function(account) {
+                        console.log("njdsnnkskj--->",account);
+                        vm.roles = account;
+                        console.log(vm.roles.authorities);
+                        if(vm.roles.authorities[1] == 'CIO')
+                        {
+                            console.log("hii");
+                           $state.go('strategy-master');
+                        }
+                        else{
+
+                            if(vm.roles.authorities[1] == 'Admin')
+                            {
+                                $state.go('user-management');
+                            }
+                            else{
+                                $state.go('home');
+                            }
+
+                   }
+
+
+
+
+                    });
+                    }
 
             }).catch(function () {
                 vm.authenticationError = true;
