@@ -8,15 +8,20 @@
 
 
 
-    PasswordController.$inject = ['Auth', 'Principal'];
+    PasswordController.$inject = ['Auth', 'Principal','$scope','$filter'];
 
-    function PasswordController (Auth, Principal) {
+    function PasswordController (Auth, Principal,$scope,$filter) {
         var vm = this;
 
         vm.changePassword = changePassword;
         vm.doNotMatch = null;
         vm.error = null;
         vm.success = null;
+
+
+        var myDate=new Date();
+
+        $scope.currentYear = $filter('date')(myDate,'yyyy');
 
         Principal.identity().then(function(account) {
             vm.account = account;

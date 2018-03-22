@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('UserManagementController', UserManagementController);
 
-    UserManagementController.$inject = ['Principal', 'User', 'ParseLinks', 'AlertService', '$state', 'pagingParams', 'paginationConstants'];
+    UserManagementController.$inject = ['Principal', 'User', 'ParseLinks', 'AlertService', '$state', 'pagingParams', 'paginationConstants','$scope','$filter'];
 
-    function UserManagementController(Principal, User, ParseLinks, AlertService, $state, pagingParams, paginationConstants) {
+    function UserManagementController(Principal, User, ParseLinks, AlertService, $state, pagingParams, paginationConstants,$scope,$filter) {
         var vm = this;
 
         vm.authorities = ['User', 'Admin'];
@@ -31,6 +31,10 @@
         Principal.identity().then(function(account) {
             vm.currentAccount = account;
         });
+
+         var myDate=new Date();
+
+        $scope.currentYear = $filter('date')(myDate,'yyyy');
 
         function setActive (user, isActivated) {
             user.activated = isActivated;

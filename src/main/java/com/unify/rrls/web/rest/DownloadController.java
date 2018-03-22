@@ -31,15 +31,29 @@ public class DownloadController {
                            @PathVariable("fileID")  int fileID) {
         try {
 
-            Query q = em.createNativeQuery("select file_data from ra_file_upload where id = "+fileID+"");
+            Query q = em.createNativeQuery("select file_name, file_data from ra_file_upload where id = "+fileID+"");
 
-            String path = (String) q.getSingleResult();
+           // String path = (String) q.getSingleResult();
+            Object[] fileupload = (Object[]) q.getSingleResult();
+
+            String path= (String) fileupload[1];
+
+            String name= (String) fileupload[0];
 
           //  System.out.println("Filename---->"+path);
 
             int index = path.lastIndexOf("\\");
             String fileName = path.substring(index + 1);
-           String pathName= path.substring(16,path.lastIndexOf(File.separator));
+
+            String[] array = fileName.split(".");
+            array = fileName.split("\\.");
+
+            array = fileName.split("[.]");
+
+            String extension = array[1];
+
+
+            String pathName= path.substring(16,path.lastIndexOf(File.separator));
 
            String downloadFolder = context.getRealPath(pathName);
 
@@ -53,7 +67,7 @@ public class DownloadController {
                 }
 
                 response.setContentType(mimeType);
-                response.addHeader("Content-Disposition", "attachment; filename=" + fileName);
+                response.addHeader("Content-Disposition", "attachment; filename=" + name+"."+extension);
                 response.setContentLength((int) file.length());
 
                 OutputStream os = response.getOutputStream();

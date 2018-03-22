@@ -62,7 +62,7 @@ div.scrollmenu {
 	<jhi-alert-error></jhi-alert-error>
 	<dl class="dl-horizontal jh-entity-details">
 		<dt>
-			<span>Sector</span>
+			<span>Sector:</span>
 		</dt>
 		<dd>
 
@@ -137,13 +137,13 @@ div.scrollmenu {
 		</dd>
 
 		<dt>
-			<span>Description</span>
+			<span>Description:</span>
 		</dt>
 		<dd>
 			<span>{{vm.opportunityMaster.oppDescription}}</span>
 		</dd>
 		<dt>
-			<span>Strategy</span>
+			<span>Strategy:</span>
 		</dt>
 		<dd>
 			<div
@@ -152,12 +152,12 @@ div.scrollmenu {
 
 		</dd>
 		<dt>
-			<span>Contact Details</span>
+			<span>Contact Details:</span>
 		</dt>
 		<dd>
             <div style="height: 100px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
 			<span ng-repeat="contact in vm.opportunityMaster.selectedoppContanct">
-				Name : {{contact.name}}</br> Designation: {{contact.designation}}</br> Email:
+				Name: {{contact.name}}</br> Designation: {{contact.designation}}</br> Email:
 				{{contact.email}}</br> Contact No: {{contact.contactnum}}</br>
 			</br>
 			</span>
@@ -167,7 +167,7 @@ div.scrollmenu {
 		<div class="row" ng-show="vm.opportunityMaster.fileUploads">
 			<div class="col-md-3">
 				<div class="panel panel-default">
-					<div class="panel-heading">Presentation</div>
+					<div class="panel-heading"><strong>Presentation</strong></div>
 					<div
 						style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
 						<div class="panel-body"
@@ -184,7 +184,7 @@ div.scrollmenu {
 
 			<div class="col-md-3">
 				<div class="panel panel-default">
-					<div class="panel-heading">Excel Model</div>
+                    <div class="panel-heading"><strong>Excel Model</strong></div>
 					<div
 						style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
 						<div class="panel-body"
@@ -199,7 +199,7 @@ div.scrollmenu {
 			</div>
 			<div class="col-md-3">
 				<div class="panel panel-default">
-					<div class="panel-heading">Quarterly Updates</div>
+                    <div class="panel-heading"><strong>Quarterly Updates</strong></div>
 					<div
 						style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
 						<div class="panel-body"
@@ -215,7 +215,7 @@ div.scrollmenu {
 
 			<div class="col-md-3">
 				<div class="panel panel-default">
-					<div class="panel-heading">Miscellaneous</div>
+					<div class="panel-heading"><strong>Miscellaneous</strong></div>
 					<div
 						style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
 						<div class="panel-body"
@@ -281,7 +281,7 @@ div.scrollmenu {
 		</dd>
 
 		<dt has-authority="Research">
-			<span>Select File Format</span>
+			<span>Select File Format:</span>
 		</dt>
 
 
@@ -292,7 +292,7 @@ div.scrollmenu {
 		</dd>
 
 		<dt has-authority="Research">
-			<span>Description</span>
+			<span>Description:</span>
 		</dt>
 		<dd has-authority="Research">
 			<input type="text" class="col-sm-6" id="fileid" name="fileid"
@@ -300,7 +300,7 @@ div.scrollmenu {
 		</dd>
 
 		<dt has-authority="Research">
-			<span>Upload</span>
+			<span>Upload:</span>
 		</dt>
 		<dd has-authority="Research">
 			<div class="form-group">
@@ -315,7 +315,7 @@ div.scrollmenu {
 
 
 		<dt>
-			<span>Comments</span>
+			<span>Comments:</span>
 		</dt>
 		<dd>
 			<div
@@ -346,7 +346,7 @@ div.scrollmenu {
 
 		<dt>
 
-			<span>Summary Data</span>
+			<span>Summary Data:</span>
 		</dt>
 		<dd>
             <div>
@@ -1182,5 +1182,10 @@ div.scrollmenu {
 </button>
 
 
-        </div></div></div>
+        </div></div>
+<footer class="footer footer-dark" ng-cloak>
+    <p data-translate="footer" style="font-size: 12px">&copy;{{currentYear}}, All rights reserved.</p>
+</footer>
+
+</div>
 <!-- </form> -->

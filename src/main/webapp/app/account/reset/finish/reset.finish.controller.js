@@ -6,9 +6,9 @@
         .controller('ResetFinishController', ResetFinishController);
       /*  .directive("compareTo1",compareTo1);*/
 
-    ResetFinishController.$inject = ['$stateParams', '$timeout', 'Auth', 'LoginService'];
+    ResetFinishController.$inject = ['$stateParams', '$timeout', 'Auth', 'LoginService','$scope'];
 
-    function ResetFinishController ($stateParams, $timeout, Auth, LoginService) {
+    function ResetFinishController ($stateParams, $timeout, Auth, LoginService,$scope) {
         var vm = this;
 
         vm.keyMissing = angular.isUndefined($stateParams.key);
@@ -21,6 +21,11 @@
         vm.success = null;
 
         $timeout(function (){angular.element('#password').focus();});
+
+
+        var myDate=new Date();
+
+        $scope.currentYear = $filter('date')(myDate,'yyyy');
 
         function finishReset() {
             vm.doNotMatch = null;

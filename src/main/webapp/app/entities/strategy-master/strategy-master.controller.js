@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('StrategyMasterController', StrategyMasterController);
 
-    StrategyMasterController.$inject = ['StrategyMaster', 'ParseLinks', 'AlertService', 'paginationConstants','$scope'];
+    StrategyMasterController.$inject = ['StrategyMaster', 'ParseLinks', 'AlertService', 'paginationConstants','$scope','$filter'];
 
-    function StrategyMasterController(StrategyMaster, ParseLinks, AlertService, paginationConstants,$scope) {
+    function StrategyMasterController(StrategyMaster, ParseLinks, AlertService, paginationConstants,$scope,$filter) {
 
         var vm = this;
 
@@ -23,6 +23,11 @@
         vm.reverse = true;
 
         loadAll();
+
+
+        var myDate=new Date();
+
+        $scope.currentYear = $filter('date')(myDate,'yyyy');
 
         function loadAll () {
             StrategyMaster.query({

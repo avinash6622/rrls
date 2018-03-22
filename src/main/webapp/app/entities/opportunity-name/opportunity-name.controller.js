@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('OpportunityNameController', OpportunityNameController);
 
-    OpportunityNameController.$inject = ['OpportunityName', 'ParseLinks', 'AlertService', 'paginationConstants','entity','$http','$sce'];
+    OpportunityNameController.$inject = ['OpportunityName', 'ParseLinks', 'AlertService', 'paginationConstants','entity','$http','$sce','$scope','$filter'];
 
-    function OpportunityNameController(OpportunityName, ParseLinks, AlertService, paginationConstants,entity,$http,$sce) {
+    function OpportunityNameController(OpportunityName, ParseLinks, AlertService, paginationConstants,entity,$http,$sce,$scope,$filter) {
 
         var vm = this;
 
@@ -24,7 +24,9 @@
         vm.selectedSector = null;
         vm.sectorType = null;
 
+        var myDate=new Date();
 
+        $scope.currentYear = $filter('date')(myDate,'yyyy');
 
         vm.autoCompleteOptions = {
             minimumChars : 1,

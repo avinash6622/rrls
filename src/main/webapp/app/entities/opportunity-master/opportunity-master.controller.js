@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('OpportunityMasterController', OpportunityMasterController);
 
-    OpportunityMasterController.$inject = ['OpportunityMaster', 'ParseLinks', 'AlertService', 'paginationConstants'];
+    OpportunityMasterController.$inject = ['OpportunityMaster', 'ParseLinks', 'AlertService', 'paginationConstants','$scope','$filter'];
 
-    function OpportunityMasterController(OpportunityMaster, ParseLinks, AlertService, paginationConstants) {
+    function OpportunityMasterController(OpportunityMaster, ParseLinks, AlertService, paginationConstants,$scope,$filter) {
 
         var vm = this;
 
@@ -23,6 +23,12 @@
         vm.reverse = true;
 
         loadAll();
+
+
+
+        var myDate=new Date();
+
+        $scope.currentYear = $filter('date')(myDate,'yyyy');
 
         function loadAll () {
             OpportunityMaster.query({
