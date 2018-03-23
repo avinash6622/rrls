@@ -27,7 +27,7 @@
 
         <div class="navbar-collapse" uib-collapse="vm.isNavbarCollapsed" ng-switch="vm.isAuthenticated()">
             <ul class="nav navbar-nav navbar-right">
-                <li ui-sref-active="active" ng-switch-when="true">
+                <li ui-sref-active="active" ng-switch-when="true" has-authority = "Research">
                     <a ui-sref="home" ng-click="vm.collapseNavbar()">
                         <span class="glyphicon glyphicon-home"></span>
                         <span class="hidden-sm">Home</span>
@@ -63,7 +63,7 @@
                                     <span>Opportunity Master</span>
                                 </a>
                             </li>
-                        <li ui-sref-active="active">
+                        <li ui-sref-active="active" has-any-authority="Admin,Research">
                             <a ui-sref="opportunity-name" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span>Opportunity Name</span>
