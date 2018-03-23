@@ -112,13 +112,15 @@ public class OpportunityMasterResource {
 	private final FinancialSummaryDataRepository financialSummaryDataRepository;
 	private final NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository;
 	private final OpportunitySummaryDataRepository opportunitySummaryDataRepository;
+	private final OpportunityAutomationRepository opportunityAutomationRepository;
 
 
 	public OpportunityMasterResource(OpportunityMasterRepository opportunityMasterRepository,
 			FileUploadRepository fileUploadRepository, FileUploadCommentsRepository fileUploadCommentsRepository,
 			StrategyMappingRepository strategyMappingRepository,StrategyMasterRepository strategyMasterRepository,
 			AdditionalFileUploadRepository additionalFileUploadRepository,OpportunityMasterContactRepository opportunityMasterContactRepository,FinancialSummaryDataRepository financialSummaryDataRepository
-    ,NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository, OpportunitySummaryDataRepository opportunitySummaryDataRepository) {
+    ,NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository, OpportunitySummaryDataRepository opportunitySummaryDataRepository,
+    OpportunityAutomationRepository opportunityAutomationRepository) {
 		this.opportunityMasterRepository = opportunityMasterRepository;
 		this.fileUploadRepository = fileUploadRepository;
 		this.fileUploadCommentsRepository = fileUploadCommentsRepository;
@@ -129,6 +131,7 @@ public class OpportunityMasterResource {
 		this.financialSummaryDataRepository=financialSummaryDataRepository;
 		this.nonFinancialSummaryDataRepository=nonFinancialSummaryDataRepository;
 		this.opportunitySummaryDataRepository=opportunitySummaryDataRepository;
+		this.opportunityAutomationRepository=opportunityAutomationRepository;
 	}
 
 	/**
@@ -347,6 +350,7 @@ public class OpportunityMasterResource {
 	public ResponseEntity<OpportunityMaster> updateOpportunityMaster(@RequestBody OpportunityMaster opportunityMasters)
 			throws URISyntaxException, IOException, MissingServletRequestParameterException {
 		log.debug("REST request to update OpportunityMaster : {}", opportunityMasters);
+		OpportunityAutomation opportunityAutomation=new OpportunityAutomation();
 		List<StrategyMapping> strategyMappings=new ArrayList<>();
 		strategyMappings = strategyMappingRepository.findByOpportunityMaster(opportunityMasters);
 		System.out.println(opportunityMasters.getSelectedStrategyMaster());
@@ -364,15 +368,14 @@ public class OpportunityMasterResource {
 
 		}}
 		opportunityMasterContactRepository.save(opportunityMasters.getSelectedoppContanct());
-
+		opportunityAutomation=opportunityAutomationRepository.findByOpportunityMaster(opportunityMasters);
 
 		OpportunityMaster result = opportunityMasterRepository.save(opportunityMasters);
         if(opportunityMasters.getMasterName().getSegment().equals("Finance")) {
             financialSummaryDataRepository.save(opportunityMasters.getFinancialSummaryData());
 
             List<OpportunitySummaryData> opportunitySummaryDataList = opportunitySummaryDataRepository.findByOpportunityMasterid(result);
-
-
+           
             for (OpportunitySummaryData sm : opportunitySummaryDataList) {
                // OpportunitySummaryData opportunitySummaryData = new OpportunitySummaryData();
                 sm.setPatFirstYear(opportunityMasters.getFinancialSummaryData().getPatOne());
@@ -391,10 +394,16 @@ public class OpportunityMasterResource {
                 sm.setPeThirdYear(opportunityMasters.getFinancialSummaryData().getPeThree());
                 sm.setPeFourthYear(opportunityMasters.getFinancialSummaryData().getPeFour());
                 sm.setPeFifthYear(opportunityMasters.getFinancialSummaryData().getPeFive());
+                if(!opportunityAutomation.equals(null)&& opportunityAutomation.getPrevClose().equals(null))
+                {
+                	sm.setCmp(opportunityAutomation.getPrevClose());
+                }  	
+                
+
                 opportunitySummaryDataRepository.save(sm);
 
             }
-
+            
         }
         else {
 
@@ -429,7 +438,10 @@ public class OpportunityMasterResource {
                 sm.setPatGrowthThird(opportunityMasters.getNonFinancialSummaryData().getPatGrowthThree());
                 sm.setPatGrowthFourth(opportunityMasters.getNonFinancialSummaryData().getPatGrowthFour());
                 sm.setPatGrowthFifth(opportunityMasters.getNonFinancialSummaryData().getPatGrowthFive());
-
+                if(!opportunityAutomation.equals(null)&& opportunityAutomation.getPrevClose().equals(null))
+                {
+                	sm.setCmp(opportunityAutomation.getPrevClose());
+                } 
                 opportunitySummaryDataRepository.save(sm);
             }
 
@@ -572,9 +584,13 @@ public class OpportunityMasterResource {
 	@Timed
 	public ResponseEntity<OpportunityMaster> getOpportunityMaster(@PathVariable Long id) {
 		log.debug("REST request to get OpportunityMaster : {}", id);
+		OpportunityAutomation opportunityAutomation=new OpportunityAutomation();
 		OpportunityMaster opportunityMaster = opportunityMasterRepository.findOne(id);
+		NonFinancialSummaryData nonFinancialSummaryData=new NonFinancialSummaryData();
+		FinancialSummaryData summaryData=new FinancialSummaryData();
 		List<FileUpload> fileUploads = fileUploadRepository.findByOpportunityMasterId(opportunityMaster);
 		List<StrategyMapping> strategyMappings = strategyMappingRepository.findByOpportunityMaster(opportunityMaster);
+		opportunityAutomation=opportunityAutomationRepository.findByOpportunityMaster(opportunityMaster);
 
 		List<StrategyMaster> strategyMasters =new ArrayList<StrategyMaster>();
 		List<OpportunityMasterContact> opportunityMasterContacts =  opportunityMasterContactRepository.findByOpportunityMasterId(opportunityMaster);
@@ -588,11 +604,19 @@ public class OpportunityMasterResource {
 		//opportunityMaster.setStrategyMapping(strategyMappings);
 		//OpportunityMasterContact opportunityMasterContact = opportunityMasterContactRepository.findByOpportunityMasterId(opportunityMaster);
 		//opportunityMaster.setOpportunityMasterContact(opportunityMasterContact);
-
-		FinancialSummaryData summaryData = financialSummaryDataRepository.findByOpportunityMasterId(opportunityMaster);
+       		
+        	
+		summaryData = financialSummaryDataRepository.findByOpportunityMasterId(opportunityMaster);
         System.out.println("MAPPINGvf----->"+summaryData);
+ if(!opportunityAutomation.equals(null)&& opportunityMaster.getMasterName().getSegment().equals("Finance")){
+	 summaryData.setMarCapThree(opportunityAutomation.getMarketCap());
+        } 
 		opportunityMaster.setFinancialSummaryData(summaryData);
-		NonFinancialSummaryData nonFinancialSummaryData=nonFinancialSummaryDataRepository.findByOpportunityMaster(opportunityMaster);
+		nonFinancialSummaryData=nonFinancialSummaryDataRepository.findByOpportunityMaster(opportunityMaster);
+		System.out.println(nonFinancialSummaryData);
+		 if((!opportunityAutomation.equals(null)) && opportunityMaster.getMasterName().getSegment().equals("Non-Finance")){
+			 nonFinancialSummaryData.setMarketCapThree(opportunityAutomation.getMarketCap());
+		        } 
 		opportunityMaster.setNonFinancialSummaryData(nonFinancialSummaryData);
         System.out.println("MAPPINGvfn----->"+nonFinancialSummaryData);
 		List<FileUploadComments> fileComments = fileUploadCommentsRepository.findByOpportunityMaster(opportunityMaster);

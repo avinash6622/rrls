@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import com.unify.rrls.domain.*;
 import com.unify.rrls.repository.FinancialSummaryDataRepository;
 import com.unify.rrls.repository.NonFinancialSummaryDataRepository;
+import com.unify.rrls.repository.OpportunityAutomationRepository;
 import com.unify.rrls.repository.StrategyMasterRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,16 +38,20 @@ public class OpportunitySummaryDataResource {
 
 	private final FinancialSummaryDataRepository financialSummaryDataRepository;
 
-	private final NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository;
+	private final NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository;	
 
 	private final StrategyMasterRepository strategyMasterRepository;
+	
+	private final OpportunityAutomationRepository opportunityAutomationRepository;
 
 	public OpportunitySummaryDataResource(OpportunitySummaryDataRepository opportunitySummaryDataRepository,FinancialSummaryDataRepository financialSummaryDataRepository,
-                                          NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository,StrategyMasterRepository strategyMasterRepository) {
+                                          NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository,StrategyMasterRepository strategyMasterRepository,
+                                          OpportunityAutomationRepository opportunityAutomationRepository) {
 		this.opportunitySummaryDataRepository = opportunitySummaryDataRepository;
 		this.financialSummaryDataRepository = financialSummaryDataRepository;
 		this.nonFinancialSummaryDataRepository = nonFinancialSummaryDataRepository;
 		this.strategyMasterRepository = strategyMasterRepository;
+		this.opportunityAutomationRepository=opportunityAutomationRepository;
 	}
 
 	@PostMapping("/opportunity-summary")
