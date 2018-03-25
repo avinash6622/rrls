@@ -10,7 +10,8 @@
               <span class="glyphicon glyphicon-flash"></span> <span>Create a new User</span>
           </button>
         </div>
-        </div></br>
+        </div>
+        <div style="margin-bottom: 5px"></div>
     <div class="table-responsive">
         <table class="jh-table table table-striped">
             <thead>
@@ -82,13 +83,12 @@
     </div>
     <div class="text-center">
 
-
         <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
         <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
     </div>
 </div>
     <footer class="footer footer-dark" ng-cloak>
-        <p data-translate="footer" style="font-size: 12px">&copy;{{currentYear}}, All rights reserved.</p>
+        <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.</p>
     </footer>
 
 </div>

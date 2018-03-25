@@ -16,32 +16,15 @@
             </div>
 
              <div class="col-md-4"><input class="form-control ng-pristine ng-valid" ng-model="searchKeyword" type="text" placeholder="Search"> </div>
-
-
         </div>
     </div>
-
-    <!--<div class="row">
-        <div class="col-md-2"><h4>Users</h4></div>
-
-        <div class="col-md-2 pull-right">
-            <button class="btn btn-primary" ui-sref="user-management.new">
-                <span class="glyphicon glyphicon-flash"></span> <span>Create a new User</span>
-            </button>
-
-        </div>
-    </div>-->
-
-
-
-
-    <br/>
+     <div style="margin-bottom: 5px"></div>
     <div class="table-responsive">
         <table class="jh-table table table-striped">
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
                  <!--    <th jh-sort-by="oppCode"><span>Opp Code</span> <span class="glyphicon glyphicon-sort"></span></th> -->
-                 <th jh-sort-by="masterName.oppName"><span>Opportunity Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+                 <th jh-sort-by="masterName.oppName"><span>Opportunity</span> <span class="glyphicon glyphicon-sort"></span></th>
 
                   	<th jh-sort-by="masterName.sectorType"><span>Sector</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="oppDescription"><span>Opportunity Description</span> <span class="glyphicon glyphicon-sort"></span></th>
@@ -56,9 +39,10 @@
                     <td><a ui-sref="opportunity-master-detail({id:opportunityMaster.id})">{{opportunityMaster.masterName.oppName}}
                     </a></td>
                      <td> {{opportunityMaster.masterName.sectorType}}</td>
-                    <td><a ui-sref="opportunity-master-detail({id:opportunityMaster.id})">{{opportunityMaster.oppDescription}}</a></td>
-                    <td>
+                    <td>{{opportunityMaster.oppDescription}}</td>
+                    <td><a ui-sref="strategy-master-detail({id:opportunityMaster.selectedStrategyMaster.strategyMaster.id})">
                       <div ng-repeat="selectedStrategyMaster in opportunityMaster.selectedStrategyMaster">{{selectedStrategyMaster.strategyName}}</div>
+                    </a>
                     </td>
                      <td>{{opportunityMaster.createdBy |capitalize}}
                     </td>
@@ -91,9 +75,14 @@
             </tbody>
         </table>
     </div>
+
+        <div class="text-center">
+            <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
+            <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+        </div>
 </div>
 
     <footer class="footer footer-dark" ng-cloak>
-        <p data-translate="footer" style="font-size: 12px">&copy;{{currentYear}}, All rights reserved.</p>
+        <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.</p>
     </footer>
 </div>

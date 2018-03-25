@@ -375,7 +375,7 @@ public class OpportunityMasterResource {
             financialSummaryDataRepository.save(opportunityMasters.getFinancialSummaryData());
 
             List<OpportunitySummaryData> opportunitySummaryDataList = opportunitySummaryDataRepository.findByOpportunityMasterid(result);
-           
+
             for (OpportunitySummaryData sm : opportunitySummaryDataList) {
                // OpportunitySummaryData opportunitySummaryData = new OpportunitySummaryData();
                 sm.setPatFirstYear(opportunityMasters.getFinancialSummaryData().getPatOne());
@@ -397,13 +397,13 @@ public class OpportunityMasterResource {
                 if(!opportunityAutomation.equals(null)&& opportunityAutomation.getPrevClose().equals(null))
                 {
                 	sm.setCmp(opportunityAutomation.getPrevClose());
-                }  	
-                
+                }
+
 
                 opportunitySummaryDataRepository.save(sm);
 
             }
-            
+
         }
         else {
 
@@ -441,7 +441,7 @@ public class OpportunityMasterResource {
                 if(!opportunityAutomation.equals(null)&& opportunityAutomation.getPrevClose().equals(null))
                 {
                 	sm.setCmp(opportunityAutomation.getPrevClose());
-                } 
+                }
                 opportunitySummaryDataRepository.save(sm);
             }
 
@@ -566,7 +566,8 @@ public class OpportunityMasterResource {
 		}
 		System.out.println(page);
 		//HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
-		HttpHeaders headers=new HttpHeaders();
+		HttpHeaders headers=PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
+
 		return new ResponseEntity<>(page.getContent(), headers,HttpStatus.OK);
 	}
 
@@ -604,19 +605,19 @@ public class OpportunityMasterResource {
 		//opportunityMaster.setStrategyMapping(strategyMappings);
 		//OpportunityMasterContact opportunityMasterContact = opportunityMasterContactRepository.findByOpportunityMasterId(opportunityMaster);
 		//opportunityMaster.setOpportunityMasterContact(opportunityMasterContact);
-       		
-        	
+
+
 		summaryData = financialSummaryDataRepository.findByOpportunityMasterId(opportunityMaster);
         System.out.println("MAPPINGvf----->"+summaryData);
  if(!opportunityAutomation.equals(null)&& opportunityMaster.getMasterName().getSegment().equals("Finance")){
 	 summaryData.setMarCapThree(opportunityAutomation.getMarketCap());
-        } 
+        }
 		opportunityMaster.setFinancialSummaryData(summaryData);
 		nonFinancialSummaryData=nonFinancialSummaryDataRepository.findByOpportunityMaster(opportunityMaster);
 		System.out.println(nonFinancialSummaryData);
 		 if((!opportunityAutomation.equals(null)) && opportunityMaster.getMasterName().getSegment().equals("Non-Finance")){
 			 nonFinancialSummaryData.setMarketCapThree(opportunityAutomation.getMarketCap());
-		        } 
+		        }
 		opportunityMaster.setNonFinancialSummaryData(nonFinancialSummaryData);
         System.out.println("MAPPINGvfn----->"+nonFinancialSummaryData);
 		List<FileUploadComments> fileComments = fileUploadCommentsRepository.findByOpportunityMaster(opportunityMaster);

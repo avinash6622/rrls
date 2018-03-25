@@ -5,22 +5,26 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('OpportunityMasterController', OpportunityMasterController);
 
-    OpportunityMasterController.$inject = ['OpportunityMaster', 'ParseLinks', 'AlertService', 'paginationConstants','$scope','$filter'];
+    OpportunityMasterController.$inject = ['OpportunityMaster', 'ParseLinks', 'AlertService', 'paginationConstants','$scope','$filter','pagingParams'];
 
-    function OpportunityMasterController(OpportunityMaster, ParseLinks, AlertService, paginationConstants,$scope,$filter) {
+    function OpportunityMasterController(OpportunityMaster, ParseLinks, AlertService, paginationConstants,$scope,$filter,pagingParams) {
 
         var vm = this;
 
         vm.opportunityMasters = [];
         vm.loadPage = loadPage;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
-        vm.page = 0;
+        vm.predicate = pagingParams.predicate;
+        vm.reverse = pagingParams.ascending;
+        vm.page = 1;
         vm.links = {
             last: 0
         };
         vm.predicate = 'id';
         vm.reset = reset;
         vm.reverse = true;
+        vm.transition = transition;
+        vm.itemsValue = 'Opportunities';
 
         loadAll();
 
@@ -32,7 +36,7 @@
 
         function loadAll () {
             OpportunityMaster.query({
-                page: vm.page,
+                page: pagingParams.page - 1,
                 size: vm.itemsPerPage,
                 sort: sort()
             }, onSuccess, onError);
@@ -45,11 +49,14 @@
             }
 
             function onSuccess(data, headers) {
-               /* vm.links = ParseLinks.parse(headers('link'));*/
+                vm.links = ParseLinks.parse(headers('link'));
                 vm.totalItems = headers('X-Total-Count');
                 for (var i = 0; i < data.length; i++) {
                     vm.opportunityMasters.push(data[i]);
                 }
+                vm.queryCount = vm.totalItems;
+                vm.page = pagingParams.page;
+
             }
 
             function onError(error) {
@@ -66,6 +73,14 @@
         function loadPage(page) {
             vm.page = page;
             loadAll();
+        }
+
+        function transition () {
+            $state.transitionTo($state.$current, {
+                page: vm.page,
+                sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
+                search: vm.currentSearch
+            });
         }
     }
 })();
