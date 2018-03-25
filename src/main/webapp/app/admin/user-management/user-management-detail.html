@@ -2,7 +2,14 @@
 
 <div>
     <div class="well">
-<h4 style="margin-top:0;"><span>User</span></h4>
+   <h4 style="margin-top:0;"><span>User</span></h4>
+        <div class="pull-right">
+        <button type="submit"
+                ui-sref="user-management"
+                class="btn btn-info">
+            <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span>Back</span>
+        </button>
+        </div>
     <dl class="dl-horizontal jh-entity-details">
         <dt><span>Login:</span></dt>
         <dd>
@@ -34,16 +41,12 @@
         <dd>
             <ul class="list-unstyled">
                 <li ng-repeat="authority in vm.user.authorities">
-                    <span class="label label-info">{{authority}}</span>
+                    <span ng-if="authority!='User'" class="label label-info">{{authority}}</span>
                 </li>
             </ul>
         </dd>
     </dl>
-    <button type="submit"
-            ui-sref="user-management"
-            class="btn btn-info">
-        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
-    </button>
+
 </div>
     <footer class="footer footer-dark" ng-cloak>
         <p data-translate="footer" style="font-size: 12px">&copy;2018, All rights reserved.</p>
