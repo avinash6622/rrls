@@ -295,8 +295,8 @@
 
     		$scope.getNonPbt = function(val1, val2, val3, val4, val5) {
 
-    			var result = parseFloat(val1) + parseFloat(val2) - parseFloat(val3)
-    					- parseFloat(val4);
+    			var result = (parseFloat(val1) + parseFloat(val2) - parseFloat(val3)
+    					- parseFloat(val4)).toFixed(2);
     			result = (isNaN(result)) ? '' : result;
     			if(result!=''){
     			switch (val5) {
@@ -323,7 +323,7 @@
 
     		$scope.getNonPat = function(val1, val2, val3) {
 
-    			var result = parseFloat(val1) - parseFloat(val2);
+    			var result = (parseFloat(val1) - parseFloat(val2)).toFixed(2);
     			result = (isNaN(result)) ? '' : result;
     			if(result!=''){
     			switch (val3) {
@@ -404,7 +404,7 @@
     			return result;
 
     		};
-    		$scope.getNonRoe = function(val1, val2, val3) {
+    		$scope.getNonRoe = function(val1, val2, val3,val4) {
 
     			if (val2 == 0) {
     				var result = parseFloat(val1) / parseFloat(val3);
@@ -416,7 +416,7 @@
     			}
     			result = (isNaN(result)) ? '' : result;
     			if(result!=''){
-    			switch (val3) {
+    			switch (val4) {
     			case 1:
     				 console.log('Roe one',result);
     				vm.opportunityMaster.nonFinancialSummaryData.roeOne = result;

@@ -13,7 +13,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "opportunity_summary_data")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class OpportunitySummaryData  implements Serializable {
+public class OpportunitySummaryData extends AbstractAuditingEntity implements Serializable {
 
 	/**
 	 *

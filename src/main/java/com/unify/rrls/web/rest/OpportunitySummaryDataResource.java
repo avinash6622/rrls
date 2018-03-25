@@ -14,7 +14,10 @@ import com.unify.rrls.domain.*;
 import com.unify.rrls.repository.FinancialSummaryDataRepository;
 import com.unify.rrls.repository.NonFinancialSummaryDataRepository;
 import com.unify.rrls.repository.OpportunityAutomationRepository;
+import com.unify.rrls.repository.OpportunityMasterRepository;
 import com.unify.rrls.repository.StrategyMasterRepository;
+import com.unify.rrls.security.SecurityUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -43,15 +46,18 @@ public class OpportunitySummaryDataResource {
 	private final StrategyMasterRepository strategyMasterRepository;
 	
 	private final OpportunityAutomationRepository opportunityAutomationRepository;
+	
+	private final OpportunityMasterRepository opportunityMasterRepository;
 
 	public OpportunitySummaryDataResource(OpportunitySummaryDataRepository opportunitySummaryDataRepository,FinancialSummaryDataRepository financialSummaryDataRepository,
                                           NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository,StrategyMasterRepository strategyMasterRepository,
-                                          OpportunityAutomationRepository opportunityAutomationRepository) {
+                                          OpportunityAutomationRepository opportunityAutomationRepository,OpportunityMasterRepository opportunityMasterRepository) {
 		this.opportunitySummaryDataRepository = opportunitySummaryDataRepository;
 		this.financialSummaryDataRepository = financialSummaryDataRepository;
 		this.nonFinancialSummaryDataRepository = nonFinancialSummaryDataRepository;
 		this.strategyMasterRepository = strategyMasterRepository;
 		this.opportunityAutomationRepository=opportunityAutomationRepository;
+		this.opportunityMasterRepository=opportunityMasterRepository;
 	}
 
 	@PostMapping("/opportunity-summary")
@@ -59,7 +65,8 @@ public class OpportunitySummaryDataResource {
 	public String updateOpportunitySummaryData(
         @Valid @RequestBody OpportunityMaster opportunityMaster) throws URISyntaxException {
 
-
+		OpportunityAutomation opportunityAutomation=new OpportunityAutomation();
+		opportunityAutomation=opportunityAutomationRepository.findByOpportunityMaster(opportunityMaster);
 		log.debug("REST request to save OpportunitySummaryData : {}", opportunityMaster.getOpportunitySummaryData());
       //  System.out.println("opportunityMaster---->"+opportunityMaster);
 
@@ -90,6 +97,10 @@ public class OpportunitySummaryDataResource {
             sm.setPeThirdYear(opportunityMaster.getFinancialSummaryData().getPeThree());
             sm.setPeFourthYear(opportunityMaster.getFinancialSummaryData().getPeFour());
             sm.setPeFifthYear(opportunityMaster.getFinancialSummaryData().getPeFive());
+            if((opportunityAutomation!=null) && (opportunityAutomation.getPrevClose()==null))
+            {
+            	sm.setCmp(opportunityAutomation.getPrevClose());
+            } 
             opportunitySummaryDataRepository.save(sm);
 
         }
@@ -128,6 +139,10 @@ public class OpportunitySummaryDataResource {
             sm.setPatGrowthThird(opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree());
             sm.setPatGrowthFourth(opportunityMaster.getNonFinancialSummaryData().getPatGrowthFour());
             sm.setPatGrowthFifth(opportunityMaster.getNonFinancialSummaryData().getPatGrowthFive());
+            if((opportunityAutomation!=null) && (opportunityAutomation.getPrevClose()==null))
+            {
+            	sm.setCmp(opportunityAutomation.getPrevClose());
+            } 
 
             opportunitySummaryDataRepository.save(sm);
         }
@@ -151,16 +166,20 @@ public class OpportunitySummaryDataResource {
         Query q = em.createNativeQuery("select * from opportunity_summary_data group by opp_master",OpportunitySummaryData.class);
 
         List<OpportunitySummaryData> page =  q.getResultList();
+        String userName=SecurityUtils.getCurrentUserLogin();
+        
 
         List<OpportunitySummaryData> summaryData = new ArrayList<OpportunitySummaryData>();
 
         for (OpportunitySummaryData opportunitySummaryData:page) {
             if(opportunitySummaryData.getOpportunityMasterid().getOppStatus() != null) {
-                if (opportunitySummaryData.getOpportunityMasterid().getOppStatus().equals("Approved")) {
-                    System.out.println("kjhdsfhisdj----->" + opportunitySummaryData);
+                if (opportunitySummaryData.getOpportunityMasterid().getOppStatus().equals("Approved")) {                
+                	System.out.println(opportunitySummaryData.getOpportunityMasterid());
+                	if(opportunitySummaryData.getCreatedBy().equals(userName)){                  
                     List<StrategyMaster> strategyMasterList = getStrategyList(opportunitySummaryData.getOpportunityMasterid().getId());
                     opportunitySummaryData.setStrategyMasterList(strategyMasterList);
-                    summaryData.add(opportunitySummaryData);
+                    summaryData.add(opportunitySummaryData);}
+                 
                 }
             }
         }

@@ -209,8 +209,7 @@ public class FileUploadResource {
       dirFiles.mkdirs();
    
       FileUpload fileUploaded=new FileUpload();
-      FileUpload result =new FileUpload();
-
+     
       for (MultipartFile sFile : fileUploads) {
 
     	 setFileName(sFile.getOriginalFilename());
@@ -330,11 +329,11 @@ public class FileUploadResource {
                              		   finance.setEpsFour(row.getCell(4).getNumericCellValue());
                              		   finance.setEpsFive(row.getCell(5).getNumericCellValue());}
                                   if (finColumn.contains("Market Cap"))
-                                  {  finance.setMarCapOne(row.getCell(1).getNumericCellValue());
-                             		   finance.setMarCapTwo(row.getCell(2).getNumericCellValue());
+                                  { /* finance.setMarCapOne(row.getCell(1).getNumericCellValue());
+                             		   finance.setMarCapTwo(row.getCell(2).getNumericCellValue());*/
                              		   finance.setMarCapThree(row.getCell(3).getNumericCellValue());
-                             		   finance.setMarCapFour(row.getCell(4).getNumericCellValue());
-                             		   finance.setMarCapFive(row.getCell(5).getNumericCellValue());}
+                             		  /* finance.setMarCapFour(row.getCell(4).getNumericCellValue());
+                             		   finance.setMarCapFive(row.getCell(5).getNumericCellValue());*/}
                                   if (finColumn.contains("AUM"))
                                   {  finance.setAumOne(row.getCell(1).getNumericCellValue());
                              		   finance.setAumTwo(row.getCell(2).getNumericCellValue());
@@ -415,7 +414,7 @@ public class FileUploadResource {
 
                       XSSFWorkbook workbook = new XSSFWorkbook(fis);
 
-                      XSSFSheet sheet = workbook.getSheetAt(0);
+                      XSSFSheet sheet = workbook.getSheetAt(1);
                       int iPutNxtDetailsToDB = 0;         
 
                       Iterator<Row> rowIterator = sheet.iterator();
@@ -472,7 +471,7 @@ public class FileUploadResource {
                                   	nonFinance.setRevenueFour(row.getCell(4).getNumericCellValue());
                                   	nonFinance.setRevenueFive(row.getCell(5).getNumericCellValue());}
                                  if (finColumn.equals("Rev.Growth(%)")){
-                              	   nonFinance.setRevGrowthOne(row.getCell(1).getNumericCellValue());
+                              	  /* nonFinance.setRevGrowthOne(row.getCell(1).getNumericCellValue());*/
                               	   nonFinance.setRevGrowthTwo(row.getCell(2).getNumericCellValue());
                               	   nonFinance.setRevGrowthThree(row.getCell(3).getNumericCellValue());
                               	   nonFinance.setRevGrowthFour(row.getCell(4).getNumericCellValue());
@@ -491,7 +490,7 @@ public class FileUploadResource {
                                   nonFinance.setMarginFour(row.getCell(4).getNumericCellValue());
                                   nonFinance.setMarginFive(row.getCell(5).getNumericCellValue());}
                                   if (finColumn.equals("EBI.Growth(%)"))
-                                  {  nonFinance.setEbitdaGrowthOne(row.getCell(1).getNumericCellValue());
+                                  { /* nonFinance.setEbitdaGrowthOne(row.getCell(1).getNumericCellValue());*/
                                   nonFinance.setEbitdaGrowthTwo(row.getCell(2).getNumericCellValue());
                                   nonFinance.setEbitdaGrowthThree(row.getCell(3).getNumericCellValue());
                                   nonFinance.setEbitdaGrowthFour(row.getCell(4).getNumericCellValue());
@@ -533,18 +532,18 @@ public class FileUploadResource {
                                   nonFinance.setPatfour(row.getCell(4).getNumericCellValue());
                                   nonFinance.setPatFive(row.getCell(5).getNumericCellValue());}
                                   if (finColumn.equals("PAT.Growth(%)"))
-                                  {  nonFinance.setPatGrowthOne(row.getCell(1).getNumericCellValue());
+                                  { /* nonFinance.setPatGrowthOne(row.getCell(1).getNumericCellValue());*/
                                   nonFinance.setPatGrowthTwo(row.getCell(2).getNumericCellValue());
                                   nonFinance.setPatGrowthThree(row.getCell(3).getNumericCellValue());
                                   nonFinance.setPatGrowthFour(row.getCell(4).getNumericCellValue());
                                   nonFinance.setPatGrowthFive(row.getCell(5).getNumericCellValue());}
                                   if (finColumn.equals("Market Cap"))
-                                  {  nonFinance.setMarketCapOne(row.getCell(1).getNumericCellValue());
-                                  nonFinance.setMarketCapTwo(row.getCell(2).getNumericCellValue());
+                                  {  /*nonFinance.setMarketCapOne(row.getCell(1).getNumericCellValue());
+                                  nonFinance.setMarketCapTwo(row.getCell(2).getNumericCellValue());*/
                                   nonFinance.setMarketCapThree(row.getCell(3).getNumericCellValue());
-                                  nonFinance.setMarketCapFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setMarketCapFive(row.getCell(5).getNumericCellValue());}                      
-                                  if (finColumn.equals("P/E"))
+                                 /* nonFinance.setMarketCapFour(row.getCell(4).getNumericCellValue());
+                                  nonFinance.setMarketCapFive(row.getCell(5).getNumericCellValue()); */}                     
+                                  if (finColumn.equals("PE"))
                                   {  nonFinance.setPeOne(row.getCell(1).getNumericCellValue());
                                   nonFinance.setPeTwo(row.getCell(2).getNumericCellValue());
                                   nonFinance.setPethree(row.getCell(3).getNumericCellValue());
@@ -556,7 +555,7 @@ public class FileUploadResource {
                                   nonFinance.setNetworthThree(row.getCell(3).getNumericCellValue());
                                   nonFinance.setNetworthFour(row.getCell(4).getNumericCellValue());
                                   nonFinance.setNetworthFive(row.getCell(5).getNumericCellValue());}
-                                  if (finColumn.equals("P/B"))
+                                  if (finColumn.equals("PB"))
                                   {  nonFinance.setPbOne(row.getCell(1).getNumericCellValue());
                                   nonFinance.setPbTwo(row.getCell(2).getNumericCellValue());
                                   nonFinance.setPbThree(row.getCell(3).getNumericCellValue());
@@ -574,7 +573,7 @@ public class FileUploadResource {
                                   nonFinance.setTotDebThree(row.getCell(3).getNumericCellValue());
                                   nonFinance.setTotDebFour(row.getCell(4).getNumericCellValue());
                                   nonFinance.setTotDebFive(row.getCell(5).getNumericCellValue());}
-                                  if (finColumn.equals("D/E"))
+                                  if (finColumn.equals("DE"))
                                   {  nonFinance.setDeOne(row.getCell(1).getNumericCellValue());
                                   nonFinance.setDeTwo(row.getCell(2).getNumericCellValue());
                                   nonFinance.setDeThree(row.getCell(3).getNumericCellValue());
@@ -593,11 +592,11 @@ public class FileUploadResource {
                                   nonFinance.setIntRateFour(row.getCell(4).getNumericCellValue());
                                   nonFinance.setIntRateFive(row.getCell(5).getNumericCellValue());}
                                   if (finColumn.equals("Deprciation Rate"))
-                                  {  nonFinance.setDepOne(row.getCell(1).getNumericCellValue());
-                                  nonFinance.setDepTwo(row.getCell(2).getNumericCellValue());
-                                  nonFinance.setDepThree(row.getCell(3).getNumericCellValue());
-                                  nonFinance.setDepFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setDepFive(row.getCell(5).getNumericCellValue());}
+                                  {  nonFinance.setDepRateOne(row.getCell(1).getNumericCellValue());
+                                  nonFinance.setDepRateTwo(row.getCell(2).getNumericCellValue());
+                                  nonFinance.setDepRateThree(row.getCell(3).getNumericCellValue());
+                                  nonFinance.setDepRateFour(row.getCell(4).getNumericCellValue());
+                                  nonFinance.setDepRateFive(row.getCell(5).getNumericCellValue());}
 
                           }
 
@@ -641,7 +640,7 @@ public class FileUploadResource {
                       opportunitySummaryDataRepository.save(sm);
                       }
                       log.info("In financial uploadFinancial" + iTotRowInserted + " inserted");
-
+                      
                   } catch (FileNotFoundException e) {
                       log.error("Exception at financial uploadFinancial() method " + e);
                   } catch (IOException e) {
@@ -656,9 +655,7 @@ public class FileUploadResource {
   
       
         //fileUploadRepository.save(fileUpload);
-        return ResponseEntity.created(new URI("/api/file-upload-data/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        return null;
     }
 
     /**

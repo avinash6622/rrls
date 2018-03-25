@@ -4,9 +4,9 @@
     angular
         .module('researchRepositoryLearningSystemApp')
         .controller('LoginController', LoginController);
-    LoginController.$inject = ['$rootScope', '$state', '$timeout', 'Auth', 'Principal','$scope','$filter'];
+    LoginController.$inject = ['$rootScope', '$state', '$timeout', 'Auth', 'Principal','$scope','$filter','$location'];
 
-    function LoginController ($rootScope, $state, $timeout, Auth, Principal,$scope,$filter) {
+    function LoginController ($rootScope, $state, $timeout, Auth, Principal,$scope,$filter,$location) {
         var vm = this;
 
         vm.authenticationError = false;
@@ -19,6 +19,8 @@
         vm.requestResetPassword = requestResetPassword;
         vm.username = null;
         vm.roles = {};
+
+        $scope.currentPath = $location.path();
 
         $timeout(function (){angular.element('#username').focus();});
 
