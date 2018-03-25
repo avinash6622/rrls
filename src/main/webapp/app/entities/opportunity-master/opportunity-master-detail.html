@@ -41,19 +41,29 @@ div.scrollmenu {
 }
 </style>
 <div>
+
     <div class="well">
 <div>
 
     <div class="row">
 
         <div class="col-md-3">	<h4><strong>{{vm.opportunityMaster.masterName.oppName}}-<span class="text-danger font-weight-bold"><strong>{{vm.opportunityMaster.oppStatus}}</strong></span></strong></h4></div>
-    <div class="col-md-1 pull-right">
+    <div class="col-md-6 pull-right">
+        <div class="col-md-3 col-md-offset-6">
     <button type="button"
             ui-sref="opportunity-master.edit({id:vm.opportunityMaster.id})"
             class="btn btn-primary pull-right">
         <span class="glyphicon glyphicon-pencil"></span> <span
         class="hidden-sm-down"> Edit</span>
     </button>
+        </div>
+        <div class="col-md-2">
+        <button type="submit" ui-sref="{{ vm.previousState }}"
+                class="btn btn-info pull-right">
+            <span class="glyphicon glyphicon-arrow-left"></span><span>
+		Back</span>
+        </button>
+        </div>
     </div>
 </div>
 
@@ -104,15 +114,19 @@ div.scrollmenu {
 				 <div class="pull-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{vm.opportunityMaster.masterName.sectorType}}</div>
 				<div class="pull-right">
 					<div class="col-md-1 pr-md-1">
-						<div><strong>CMP</strong></div>
+
+                        <div><strong>CMP</strong></div>
+
 						<div></div>
 					</div>
 					<div class="col-sm-offset-1 col-md-1 pl-md-1">
-						<div><strong>MCAP</strong></div>
-						<div>{{vm.opportunityMaster.nonFinancialSummaryData.marketCapThree}}</div>
+
+                        <div><strong>MCAP</strong></div>
+				<div>{{vm.opportunityMaster.nonFinancialSummaryData.marketCapThree}}</div>
 					</div>
 					<div class="col-sm-offset-1 col-md-1 pl-md-1">
-						<div><strong>P/E</strong></div>
+
+                        <div><strong>P/E</strong></div>
 						<div>{{vm.opportunityMaster.nonFinancialSummaryData.pethree}}</div>
 					</div>
 					<div class="col-sm-offset-1 col-md-1 pl-md-1">
@@ -158,8 +172,8 @@ div.scrollmenu {
 		<dd>
             <div style="height: 100px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
 			<span ng-repeat="contact in vm.opportunityMaster.selectedoppContanct">
-				Name: {{contact.name}}</br> Designation: {{contact.designation}}</br> Email:
-				{{contact.email}}</br> Contact No: {{contact.contactnum}}</br>
+                <strong>Name:</strong> {{contact.name}}</br><strong>Designation:</strong>{{contact.designation}}</br><strong>Email:</strong>
+				{{contact.email}}</br><strong>Contact No:</strong>{{contact.contactnum}}</br>
 			</br>
 			</span>
             </div>
@@ -274,7 +288,7 @@ div.scrollmenu {
 				ng-disabled="" has-authority="CIO" vm.isSaving>Approve</button>
 			<button class="btn btn-warning" ng-click="open('Change Requested')"
 				ng-disabled="" has-authority="CIO" vm.isSaving>Change
-				Request</button>
+				Question</button>
 			<button class="btn btn-danger" ng-click="open('Wait Listed')"
 				ng-disabled="" has-authority="CIO" vm.isSaving>Wait
 				Listed</button>
@@ -1176,16 +1190,12 @@ div.scrollmenu {
 
 
 
-<button type="submit" ui-sref="{{ vm.previousState }}"
-	class="btn btn-info">
-	<span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span>
-		Back</span>
-</button>
+
 
 
         </div></div>
 <footer class="footer footer-dark" ng-cloak>
-    <p data-translate="footer" style="font-size: 12px">&copy;{{currentYear}}, All rights reserved.</p>
+    <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.</p>
 </footer>
 
 </div>
