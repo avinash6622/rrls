@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('OpportunityMasterController', OpportunityMasterController);
 
-    OpportunityMasterController.$inject = ['OpportunityMaster', 'ParseLinks', 'AlertService', 'paginationConstants','$scope','$filter','pagingParams'];
+    OpportunityMasterController.$inject = ['OpportunityMaster', 'ParseLinks', 'AlertService', 'paginationConstants','$scope','$filter','pagingParams','$state'];
 
-    function OpportunityMasterController(OpportunityMaster, ParseLinks, AlertService, paginationConstants,$scope,$filter,pagingParams) {
+    function OpportunityMasterController(OpportunityMaster, ParseLinks, AlertService, paginationConstants,$scope,$filter,pagingParams,$state) {
 
         var vm = this;
 
