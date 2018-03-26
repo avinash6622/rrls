@@ -1,23 +1,36 @@
+<style>
+    .col-xs-3 .btn{
+    padding:0px !important;
+
+}
+    .col-xs-3{
+        padding-right: 0px !important;
+    }
+
+</style>
+
+
+
 <div>
     <div class="well">
 
     <jhi-alert></jhi-alert>
-    <div>
+
+        <div>
         <div class="row">
-            <div class="col-xs-2">
+<!--            <div class="col-xs-2">
                 <button class="btn btn-primary" ui-sref="strategy-master.new" >
                     <span class="glyphicon glyphicon-plus"></span>
                     <span>
                         Create New Strategy
                     </span>
                 </button>
-            </div>
+            </div>-->
 
         </div>
     </div>
+       <!-- <div style="margin-bottom: 5px"></div>-->
 
-
-        <br/>
     <div class="table-responsive">
         <table class="jh-table table table-striped">
             <thead>
@@ -28,7 +41,21 @@
 
                     <th jh-sort-by="totalStocks"><span>Total Stocks</span> <span class="glyphicon glyphicon-sort"></span></th>
 
-                    <th></th>
+
+
+                    <th>
+                        <div class="pull-right">
+                        <div class="col-xs-3">
+                            <button class="btn btn-primary" ui-sref="strategy-master.new" >
+                                <span class="glyphicon glyphicon-plus"></span>
+                                <span>
+                        Create New Strategy
+                    </span>
+                            </button>
+                        </div>
+                        </div>
+
+                    </th>
                 </tr>
             </thead>
             <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
@@ -87,7 +114,7 @@
 
     </div>
     <footer class="footer footer-dark" ng-cloak>
-        <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.</p>
+        <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.</p>
     </footer>
 
 </div>
