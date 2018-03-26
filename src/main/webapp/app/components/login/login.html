@@ -22,6 +22,7 @@
         <div class="col-md-4 col-md-offset-4">
             <div class="well">
             <form class="form" role="form" ng-submit="vm.login($event)">
+                <div style="margin-bottom: 5px"></div>
                 <div class="input-group" style="margin-bottom: 25px">
                      <!-- <label for="username"></label>-->
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -42,14 +43,14 @@
                 <div class="input-group" style="margin-bottom: 25px">
                 <button type="submit"  class="btn btn-primary">Sign in</button>
                 </div>
-                <div class="input-group" >
+                <div class="input-group" style="margin-left: 10px">
                 <a class="alert-link" href="" ng-click="vm.requestResetPassword()">Did you forget your password?</a>
                 </div>
 
             </form>
             </div>
             <footer class="footer footer-dark pull-left" ng-cloak>
-                <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.</p>
+                <p data-translate="footer" style="font-size: 12px; margin-left: 19px">&copy;{{currentYear}}, All rights reserved.</p>
             </footer>
             <p></p>
 
