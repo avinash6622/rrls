@@ -174,8 +174,8 @@
                            id="file_upload"
                            ngf-pattern=".xlsx"
                            accept=".xlsx" required="">
-                    <br />
-                    <button type="button" class="btn btn-default" ng-click="vm.uploadfile()">Upload</button>
+                  
+                    <button type="button" class="btn btn-default uploadBtn" ng-click="vm.uploadfile()">Upload</button>
                 </div>
             </div>
 
@@ -592,6 +592,7 @@
         </div> -->
         <!-- <div ckeditor="options" ng-model="vm.opportunityMaster.htmlContent" ng-if="vm.opportunityMaster.htmlContent" ready="onReady()" ng-change="changeEditor()" readonly="vm.readOnly"></div> -->
     </div>
+    </br>
     <div>
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
