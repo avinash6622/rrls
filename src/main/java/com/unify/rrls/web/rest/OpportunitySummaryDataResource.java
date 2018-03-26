@@ -172,16 +172,16 @@ public class OpportunitySummaryDataResource {
         List<OpportunitySummaryData> summaryData = new ArrayList<OpportunitySummaryData>();
 
         for (OpportunitySummaryData opportunitySummaryData:page) {
-            if(opportunitySummaryData.getOpportunityMasterid().getOppStatus() != null) {
-                if (opportunitySummaryData.getOpportunityMasterid().getOppStatus().equals("Approved")) {                
+           // if(opportunitySummaryData.getOpportunityMasterid().getOppStatus() != null) {
+               // if (opportunitySummaryData.getOpportunityMasterid().getOppStatus().equals("Approved")) {                
                 	System.out.println(opportunitySummaryData.getOpportunityMasterid());
                 	if(opportunitySummaryData.getCreatedBy().equals(userName)){                  
                     List<StrategyMaster> strategyMasterList = getStrategyList(opportunitySummaryData.getOpportunityMasterid().getId());
                     opportunitySummaryData.setStrategyMasterList(strategyMasterList);
                     summaryData.add(opportunitySummaryData);}
                  
-                }
-            }
+                //}
+            //}
         }
 
         System.out.println(page);

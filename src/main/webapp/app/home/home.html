@@ -126,7 +126,7 @@ border:none !important;
                              </tr>
                              </thead>
                         <tbody>
-                             <tr ng-repeat="value in vm.dashboardvalues | filter: { opportunityMasterid: {oppStatus: 'Approved' }}">
+                             <tr ng-repeat="value in vm.dashboardvalues">
                                  <td scope="col" style="text-align: left"><a ui-sref="opportunity-master-detail({id:value.opportunityMasterid.id})">{{value.opportunityMasterid.masterName.oppName}}</a></td>
                                  <td style="text-align: left">
                                      <span ng-repeat="strategy in value.strategyMasterList">

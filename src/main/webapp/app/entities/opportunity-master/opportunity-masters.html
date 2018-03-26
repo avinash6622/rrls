@@ -44,7 +44,7 @@
                       <div ng-repeat="selectedStrategyMaster in opportunityMaster.selectedStrategyMaster">{{selectedStrategyMaster.strategyName}}</div>
                     </a>
                     </td>
-                     <td>{{opportunityMaster.createdBy |capitalize}}
+                     <td><a ui-sref="home({})">{{opportunityMaster.createdBy |capitalize}}</a>
                     </td>
 
                     <td class="text-right">
