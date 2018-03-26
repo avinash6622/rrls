@@ -1,8 +1,39 @@
+<style>
 
+    .col-xs-3 .btn{
+        padding:0px !important;
+
+    }
+    .page-header{
+         padding-bottom: 0px!important;
+         border-bottom: 0px !important;
+}
+</style>
 
 <div>
     <div class="well">
-   <h4 style="margin-top:0;"><span>User</span></h4>
+
+        <div class="page-header" style="margin:0">
+            <div class="row">
+                <div class="col-md-6"><h4 style="margin-top:0;"><span><strong>User</strong></span></h4></div>
+                <div class="pull-right">
+                    <div class="col-xs-3">
+                        <button type="submit"
+                                ui-sref="user-management"
+                                class="btn btn-info">
+                            <span class="glyphicon glyphicon-arrow-left"></span><span>Back</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+<!--
+        <div class="row">
+ <div>
         <div class="pull-right">
         <button type="submit"
                 ui-sref="user-management"
@@ -10,6 +41,7 @@
             <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span>Back</span>
         </button>
         </div>
+        </div>-->
     <dl class="dl-horizontal jh-entity-details">
         <dt><span>Login:</span></dt>
         <dd>
@@ -48,8 +80,9 @@
     </dl>
 
 </div>
+</div>
     <footer class="footer footer-dark" ng-cloak>
-        <p data-translate="footer" style="font-size: 12px">&copy;2018, All rights reserved.</p>
+        <p data-translate="footer" style="font-size: 12px;margin-left: 9px">&copy;2018, All rights reserved.</p>
     </footer>
 
 </div>
