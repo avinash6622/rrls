@@ -16,6 +16,7 @@
         vm.login = LoginService.open;
         vm.register = register;
         vm.itemsValue = 'Opportunities';
+        
 
 
         vm.opportunityMasters = [];
@@ -62,7 +63,7 @@
 
         nextYearNext.setYear(nextYear.getFullYear()+1);
 
-
+        $scope.marginTopSize = '10px;';
 
         $scope.currentYear = $filter('date')(myDate,'yyyy');
 

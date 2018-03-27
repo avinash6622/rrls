@@ -566,11 +566,10 @@ public class OpportunityMasterResource {
 		String role=SecurityUtils.getCurrentRoleLogin();
 		String username=SecurityUtils.getCurrentUserLogin();
 		//List<OpportunityMaster> opportunityMaster=opportunityMasterRepository.findByCreatedBy(username);
-		if(role.equals("Research")){
-		page = opportunityMasterRepository.findByCreatedBy(username,pageable);}
-		if(role.equals("CIO") || role.equals("Admin")){
+		
+		
 			page = opportunityMasterRepository.findAll(pageable);	
-		}
+		
 		List<StrategyMaster> strategyMapMaster;
 
 		for(OpportunityMaster opportunityMaster:page)
