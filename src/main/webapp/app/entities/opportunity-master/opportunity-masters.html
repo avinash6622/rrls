@@ -40,9 +40,11 @@
                     </a></td>
                      <td> {{opportunityMaster.masterName.sectorType}}</td>
                     <td>{{opportunityMaster.oppDescription}}</td>
-                    <td><a ui-sref="strategy-master-detail({id:opportunityMaster.selectedStrategyMaster.strategyMaster.id})">
-                      <div ng-repeat="selectedStrategyMaster in opportunityMaster.selectedStrategyMaster">{{selectedStrategyMaster.strategyName}}</div>
-                    </a>
+
+
+                    <td><span ng-repeat="selectedStrategyMaster in opportunityMaster.selectedStrategyMaster"><a ui-sref="strategy-master-detail({id:selectedStrategyMaster.id})">
+                      <div>{{selectedStrategyMaster.strategyName}}</div>
+                    </a></span>
                     </td>
                      <td><a ui-sref="home({})">{{opportunityMaster.createdBy |capitalize}}</a>
                     </td>

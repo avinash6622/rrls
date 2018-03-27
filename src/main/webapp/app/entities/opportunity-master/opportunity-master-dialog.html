@@ -11,7 +11,7 @@
 
     .col-xs-3 .btn{
         padding:2px !important;
-
+        padding-right: 4px !important;
 
     }
     .col-xs-3{
@@ -156,7 +156,7 @@
              </fieldset>
              </div>
 
-        <div class="form-group"><button type="button" ng-click="addContact()" class="btn btn-primary">Add Contact</button></div>
+        <div class="form-group"><button type="button" ng-click="addContact()" style="padding: 2px;padding-right:4px" class="btn btn-primary">Add Contact</button></div>
 
 
 
@@ -174,7 +174,7 @@
                            id="file_upload"
                            ngf-pattern=".xlsx"
                            accept=".xlsx" required="">
-                  
+
                     <button type="button" class="btn btn-default uploadBtn" ng-click="vm.uploadfile()">Upload</button>
                 </div>
             </div>
@@ -594,10 +594,10 @@
     </div>
     </br>
     <div>
-        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()" style="padding: 2px; padding-right:4px">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
         </button>
-        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary" style="padding: 2px;padding-right:4px">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
         </button>
     </div>

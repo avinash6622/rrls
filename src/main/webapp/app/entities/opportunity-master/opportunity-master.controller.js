@@ -56,6 +56,7 @@
                 }
                 vm.queryCount = vm.totalItems;
                 vm.page = pagingParams.page;
+                console.log(vm.opportunityMasters);
 
             }
 

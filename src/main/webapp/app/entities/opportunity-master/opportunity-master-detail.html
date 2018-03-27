@@ -79,7 +79,7 @@ div.scrollmenu {
                     class="hidden-sm-down"> Edit</span>
                 </button>
                 </div>
-                
+
             <!--</div>
         </div>
         <div class="pull-right">
@@ -90,7 +90,7 @@ div.scrollmenu {
                     <span class="glyphicon glyphicon-arrow-left"></span><span>
 		Back</span>
                 </button>
-                </div>  
+                </div>
 
     </div>
 </div>
@@ -339,12 +339,12 @@ div.scrollmenu {
 			</button>
 		</dt>
 		<dd>
-			<button class="btn btn-success" ng-click="open('Approved')"
+			<button class="btn btn-success" style="padding:2px" ng-click="open('Approved')"
 				ng-disabled="" has-authority="CIO" vm.isSaving>Approve</button>
-			<button class="btn btn-warning" ng-click="open('Change Requested')"
+			<button class="btn btn-warning"  style="padding:2px" ng-click="open('Change Requested')"
 				ng-disabled="" has-authority="CIO" vm.isSaving>Change
 				Question</button>
-			<button class="btn btn-danger" ng-click="open('Wait Listed')"
+			<button class="btn btn-danger"  style="padding:2px" ng-click="open('Wait Listed')"
 				ng-disabled="" has-authority="CIO" vm.isSaving>Wait
 				Listed</button>
 		</dd>
@@ -389,7 +389,7 @@ div.scrollmenu {
 		</dt>
 		<dd>
 			<div
-				style="height: 150px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
+				style="height: 120px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
 
 				<div class="actionBox"
 					ng-repeat="fileUploadComments in vm.opportunityMaster.fileUploadCommentList |orderBy: '-createdDate'">
@@ -406,11 +406,11 @@ div.scrollmenu {
 			</div>
 
 			<textarea ng-model="vm.fileComments" name="comments"
-				id="field_comments" class="comm" rows="4" cols="120"></textarea>		
-            
-			<button class="btn btn-primary" ng-click="vm.saveComment()"
+                      id="field_comments" class="comm" rows="4" cols="120"></textarea></br>
+
+			<button class="btn btn-primary" style="padding: 2px;padding-right: 12px;padding-left: 12px" ng-click="vm.saveComment()"
 				ng-disabled="" vm.isSaving>Submit Comment</button>
-           
+
 		</dd>
 
 		<dt>
@@ -419,11 +419,11 @@ div.scrollmenu {
 		</dt>
 		<dd>
             <div>
-			<button class="btn btn-primary" ng-if="isDisabled" ng-click="ok()">Edit</button>
+			<button class="btn btn-primary" style="padding: 2px;padding-right: 12px;padding-left: 12px" ng-if="isDisabled" ng-click="ok()">Edit</button>
 			<!--<button class="btn btn-warning" ng-if="!isDisabled"
 				ng-click="cancel()">Cancel</button>-->
-            <button class="btn btn-primary" ng-if="!isDisabled" ng-click="submitTable()">Submit</button>
-            </div></br>
+            <button class="btn btn-primary" style="padding: 2px;padding-right: 12px;padding-left: 12px" ng-if="!isDisabled" ng-click="submitTable()">Submit</button>
+            </div>
 		</dd>
 		<div>
 
@@ -1247,7 +1247,7 @@ div.scrollmenu {
 
         </div></div>
 <footer class="footer footer-dark" ng-cloak>
-    <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.</p>
+    <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.</p>
 </footer>
 
 </div>
