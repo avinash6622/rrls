@@ -32,7 +32,7 @@
       //  vm.submiTable=submitTable;
 
 
-         console.log("file---->",vm.opportunityMaster);
+
 
         var unsubscribe = $rootScope.$on('researchRepositoryLearningSystemApp:opportunityMasterUpdate', function(event, result) {
             vm.opportunityMaster = result;
@@ -62,7 +62,7 @@
         $scope.fileformat = ["Presentation", "Excel Model", "Quarterly Updates","Miscellaneous"];
 
         $scope.getselectval = function () {
-           console.log('Name: ' + $scope.selitem);
+
         };
 
         var myDate = new Date();
@@ -85,14 +85,12 @@
 
         $scope.submitTable = function() {
 
-           console.log("DATA----->",vm.opportunityMaster.financialSummaryData);
 
-           console.log("DATA----->",vm.opportunityMaster.nonFinancialSummaryData);
 
-            //console.log("bdsfjhj",tableValue);
+
 
             OpportunityMaster.summarydatavalues(vm.opportunityMaster, function (resp) {
-                console.log("safsdaf---->"+resp);
+
                 isDisabled=true;
             }, function (err) {
                 console.log(err);
@@ -418,7 +416,7 @@
     			if(result!=''){
     			switch (val4) {
     			case 1:
-    				 console.log('Roe one',result);
+
     				vm.opportunityMaster.nonFinancialSummaryData.roeOne = result;
     				break;
     			case 2:
@@ -449,13 +447,13 @@
                     this.message = 'some message';
 
                     this.ok = function() {
-                        console.log(this.description);
-                        console.log(vm.opportunityMaster.id);
+
+
 
                         var val = this.description;
 
                         OpportunityMaster.description({statusDes : val,id: vm.opportunityMaster.id,oppStatus:status}, function(resp){
-                            console.log(resp);
+
                             vm.opportunityMaster.oppStatus = resp.oppStatus;
                         }, function(err) {
                             console.log(err);
@@ -485,14 +483,6 @@
 
         };
 
-    /*    function submitTable()
-        {
-
-
-          console.log(summaryData.bWeight);
-
-
-        }*/
 
         function load() {
 
@@ -500,7 +490,7 @@
              console.log(resp);*/
             vm.opportunityMaster.fileUploadCommentList;
             vm.opportunityMaster.status;
-            console.log(vm.opportunityMaster.fileUploadCommentList)
+
               /* }, function(err) {
                 console.log(err);
             });*/
@@ -517,8 +507,7 @@
 
         function upload () {
         console.log('uploading....');
-        console.log($scope.selitem);
-        console.log(vm.uploadfileName);
+
         var selectitem = $scope.selitem;
             vm.isSaving = true;
 
@@ -528,7 +517,7 @@
                     data: {fileUploads: vm.opportunityMaster.fileUpload},
                     params: {oppId: vm.opportunityMaster.id,filetype:selectitem,uploadfileName:vm.uploadfileName}// {oppCode: inputData.oppCode, oppName: inputData.oppName, oppDescription: inputData.oppDescription, strategyMasterId: inputData.strategyMasterId.id}
                 }).then(function (resp) {
-                    console.log(resp);
+
                     if(resp.status == 201) {
                     	vm.opportunityMaster.fileUploads.push(resp.data);
                     }
@@ -541,23 +530,22 @@
                 });
         }
         function selectFile (file) {
-            console.log("File",file);
+
             vm.opportunityMaster.fileUpload = file;
         }
 
         function createFile()
         {
-        	console.log(vm.newdoc);
-        	console.log('File name......'+vm.fileName);
+
         	var doc = "<body>"+vm.newdoc+"</body>";
         	OpportunityMaster.wordCreation({fileContent: doc,fileName:vm.fileName,oppId:vm.opportunityMaster.id,
         		oppName:vm.opportunityMaster.masterName.oppName,oppId:vm.opportunityMaster.id}, function(result){
-        			console.log('result',result);
+
 
         			vm.opportunityMaster.fileUploads.push(result);
-        			console.log('opp',vm.opportunityMaster.fileUploads);
 
-        			console.log("filename",result.fileName);
+
+
         			clear();
         		}, onSaveError);
 
@@ -592,7 +580,7 @@
             });*/
 
             //inputData.fileUploadId = vm.fileId;
-            console.log( vm.fileComments, vm.opportunityMaster)
+
             inputData.opportunityComments = vm.fileComments;
             inputData.opportunityMaster=vm.opportunityMaster;
 
@@ -605,9 +593,9 @@
         }
       /*  $scope.data='';*/
        function approveFile(status){
-        	console.log(vm.opportunityMaster.id);
 
-        	console.log('status..', status);
+
+
 
         	vm.opportunityMaster.oppStatus = status;
 
@@ -620,12 +608,8 @@
         }
 
         function loadFileContent(fileID) {
-           console.log(fileID);
-        	console.log(fileID.fileData);
 
-
-
-      window.open('/download/' + fileID, '_blank');
+           window.open('/download/' + fileID, '_blank');
 
         }
 

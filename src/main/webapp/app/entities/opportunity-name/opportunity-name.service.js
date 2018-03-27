@@ -17,7 +17,7 @@
                     if (data) {
                         data = angular.fromJson(data);
                     }
-                    console.log("DATA----->"+data);
+
                     return data;
                 }
             },

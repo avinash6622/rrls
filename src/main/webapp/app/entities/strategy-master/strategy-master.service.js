@@ -20,7 +20,7 @@
                         data.createdDate = DateUtils.convertLocalDateFromServer(data.createdDate);
                         data.updatedDate = DateUtils.convertDateTimeFromServer(data.updatedDate);
                     }
-                    console.log(data);
+
                     return data;
                 }
             },

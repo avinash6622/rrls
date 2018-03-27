@@ -58,11 +58,11 @@
 
         }
 
-       // console.log("jsdhfjkhkjsd--->",vm.strategyMasters);
+
         $scope.getTotal = function() {
             var total = 0;
             angular.forEach(vm.strategyMasters, function(el) {
-               // console.log(el.aum);
+
                 if(el.aum != null)
                 {
                     total += parseFloat(el.aum);

@@ -35,10 +35,10 @@
             'save': {
                 method: 'POST',
                 transformRequest: function (data) {
-                    console.log("CONTACT----->",data);
+
                     var copy = angular.copy(data);
                     copy.createdDate = DateUtils.convertLocalDateToServer(copy.createdDate);
-                    console.log("ADSFFA",copy);
+
                     return angular.toJson(copy);
                 }
             },
@@ -92,7 +92,7 @@
 
                 transformResponse: function(data){
 
-                     console.log(data);
+
 
 
                }
@@ -105,8 +105,7 @@
                 method:'GET',
                 transformResponse: function(data){
 
-                    /*console.log(data);
-                    return data;*/
+
 
                 }
 
@@ -116,7 +115,7 @@
                 url:'api/opportunity-summary',
                 method:'POST',
                 transformResponse:function(data){
-                    console.log(data);
+
                 }
             },
 
@@ -143,7 +142,7 @@
 
                 transformResponse: function(data){
 
-                    console.log(data);
+
 
 
                 }

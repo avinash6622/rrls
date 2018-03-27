@@ -35,7 +35,7 @@
                 return $http.get('api/opportunity-sector').then(
                     function(response) {
                         searchText = searchText.toLowerCase();
-                        console.log(searchText);
+
 
 
                         // ideally filtering should be done on the server
@@ -59,7 +59,7 @@
             },
 
             itemSelected : function(e) {
-                console.log(e);
+
 
                 vm.selectedSector = e;
                 vm.opportunityNames.sectorType = e.item.sectorName;
@@ -72,7 +72,7 @@
             vm.isSaving = true;
 
 
-            console.log("ndksjangkjshagn",vm.opportunityNames);
+
             if (vm.opportunityNames.id !== null) {
                 OpportunityName.update(vm.opportunityNames, onSaveSuccess, onSaveError);
             } else {

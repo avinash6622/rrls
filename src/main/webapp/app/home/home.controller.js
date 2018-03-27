@@ -16,7 +16,7 @@
         vm.login = LoginService.open;
         vm.register = register;
         vm.itemsValue = 'Opportunities';
-        
+
 
 
         vm.opportunityMasters = [];
@@ -99,7 +99,7 @@
             }, onSuccess, onError);
 */
 
-    // console.log("DATA------>"+vm.opportunityMasters);
+    //
             $http.get('api/opportunity-summary/getdata/')
                 .then(function(response) {
                     console.log("RESPONSE",response);
