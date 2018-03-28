@@ -5,20 +5,30 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('StrategyMasterDetailController', StrategyMasterDetailController);
 
-    StrategyMasterDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'StrategyMaster','$filter'];
+    StrategyMasterDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'StrategyMaster','$filter','pagingParams','ParseLinks','paginationConstants'];
 
-    function StrategyMasterDetailController($scope, $rootScope, $stateParams, previousState, entity, StrategyMaster,$filter) {
+    function StrategyMasterDetailController($scope, $rootScope, $stateParams, previousState, entity, StrategyMaster,$filter,pagingParams,ParseLinks,paginationConstants) {
         var vm = this;
 
         vm.strategyMaster = entity;
         vm.previousState = previousState.name;
-
-
+        vm.itemsPerPage = paginationConstants.itemsPerPage;
+        vm.page = 1;
+        vm.opportunitySummaryData = vm.strategyMaster.opportunitySummaryData;
+        console.log(vm.opportunitySummaryData.length);
+        vm.itemsValue = 'Opportunities';
 
         var unsubscribe = $rootScope.$on('researchRepositoryLearningSystemApp:strategyMasterUpdate', function(event, result) {
             vm.strategyMaster = result;
-        });
+
+            });
         $scope.$on('$destroy', unsubscribe);
+
+        console.log(vm.strategyMaster);
+
+        vm.totalItems = vm.opportunitySummaryData.length;
+        vm.queryCount = vm.totalItems;
+        vm.page = pagingParams.page;
 
 
         var myDate = new Date();
@@ -54,5 +64,9 @@
         $scope.prevYearBefore = $filter('date')(previousYearBefore,'yyyy');
 
         $scope.neYearNext = $filter('date')(nextYearNext,'yyyy');
+
+
+
+
     }
 })();

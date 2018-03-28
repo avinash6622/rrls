@@ -49,6 +49,7 @@
                 for (var i = 0; i < data.length; i++) {
                     vm.strategyMasters.push(data[i]);
                 }
+
             }
 
             function onError(error) {

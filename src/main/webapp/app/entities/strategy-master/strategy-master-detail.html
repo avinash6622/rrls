@@ -82,10 +82,10 @@
 
             <tr class="headborder">
 
-                <th>Opportunity Name</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
+                <th rowspan="2"  style="vertical-align: middle;">Opportunity Name</th>
+                <th rowspan="2"  style="vertical-align: middle;">Weight</th>
+                <th rowspan="2"  style="vertical-align: middle;">CMP</th>
+                <th rowspan="2"  style="vertical-align: middle;">M Cap</th>
                 <th scope="col" colspan="5" style="text-align: center">PAT</th>
                 <th scope="col" colspan="5" style="text-align: center">P/E</th>
                 <th scope="col" colspan="5" style="text-align: center">RoE</th>
@@ -93,18 +93,18 @@
                 <th scope="col" colspan="5" style="text-align: center">PAT Growth</th>
                 <th scope="col" colspan="5" style="text-align: center">Portfolio P/E</th>
                 <th scope="col" colspan="5" style="text-align: center">Earnings Gr</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
+                <th rowspan="2" style="vertical-align: middle;">Wt. Avg Mcap</th>
+                <th rowspan="2" style="vertical-align: middle;">RoE</th>
                 <th scope="col" colspan="2" style="text-align: center">PEG - FY 18</th>
 
             </tr>
 
             <tr>
 
+              <!--  <th scope="col"></th>-->
+               <!-- <th scope="col"></th>
                 <th scope="col"></th>
-                <th scope="col">Weight</th>
-                <th scope="col">CMP</th>
-                <th scope="col">M Cap</th>
+                <th scope="col"></th>-->
 <!--pat-->
                 <th scope="col">FY {{prevYearBefore}}</th>
                 <th scope="col">FY {{prevYear}}</th>
@@ -152,8 +152,8 @@
                 <th scope="col">FY {{neYearNext}}</th>
 
 
-                <th scope="col">Wt. Avg Mcap</th>
-                <th scope="col">RoE</th>
+               <!-- <th scope="col"></th>
+                <th scope="col"></th>-->
                 <th scope="col">O / J</th>
                 <th scope="col">PEG</th>
 
@@ -222,7 +222,16 @@
         <span class="hidden-sm-down"> Edit</span>
     </button>-->
 </div>
-        </div></div>
+
+
+        </div>
+        <div class="text-center">
+
+            <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
+            <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+        </div>
+
+    </div>
     <footer class="footer footer-dark" ng-cloak>
         <p data-translate="footer" style="font-size: 12px;margin-left: 10px">&copy;2018, All rights reserved.</p>
     </footer>
