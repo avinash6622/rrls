@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('StrategyMasterDetailController', StrategyMasterDetailController);
 
-    StrategyMasterDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'StrategyMaster','$filter','pagingParams','ParseLinks','paginationConstants'];
+    StrategyMasterDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'StrategyMaster','$filter','pagingParams','ParseLinks','paginationConstants','$state'];
 
-    function StrategyMasterDetailController($scope, $rootScope, $stateParams, previousState, entity, StrategyMaster,$filter,pagingParams,ParseLinks,paginationConstants) {
+    function StrategyMasterDetailController($scope, $rootScope, $stateParams, previousState, entity, StrategyMaster,$filter,pagingParams,ParseLinks,paginationConstants,$state) {
         var vm = this;
 
         vm.strategyMaster = entity;
@@ -29,7 +29,7 @@
         vm.totalItems = vm.opportunitySummaryData.length;
         vm.queryCount = vm.totalItems;
         vm.page = pagingParams.page;
-
+        vm.transition = transition;
 
         var myDate = new Date();
 
@@ -65,7 +65,13 @@
 
         $scope.neYearNext = $filter('date')(nextYearNext,'yyyy');
 
-
+        function transition () {
+            $state.transitionTo($state.$current, {
+                page: vm.page,
+                sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
+                search: vm.currentSearch
+            });
+        }
 
 
     }
