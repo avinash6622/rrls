@@ -16,10 +16,9 @@
         <table class="jh-table table table-striped">
             <thead>
             <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
-
+                <th jh-sort-by="login"><span>Login ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                 <th jh-sort-by="firstName"><span>First Name</span> <span class="glyphicon glyphicon-sort"></span></th>
                 <th jh-sort-by="lastName"><span>Last Name</span> <span class="glyphicon glyphicon-sort"></span></th>
-                <th jh-sort-by="login"><span>Login ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                 <th jh-sort-by="email"><span>Email ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                 <th jh-sort-by="createdDate"><span>Created Date</span> <span class="glyphicon glyphicon-sort"></span></th>
                 <th><span>Status</span></th>
@@ -33,9 +32,9 @@
             <tbody>
             <tr ng-repeat="user in vm.users track by user.id">
                 <!--<td><a ui-sref="user-management-detail({login:user.login})">{{user.id}}</a></td>-->
+                <td><a ui-sref="user-management-detail({login:user.login})">{{user.login}}</a></td>
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
-                <td>{{user.login}}</td>
                 <td>{{user.email}}</td>
                 <td>{{user.createdDate | date:'dd/MM/yy HH:mm'}}</td>
                 <td>
