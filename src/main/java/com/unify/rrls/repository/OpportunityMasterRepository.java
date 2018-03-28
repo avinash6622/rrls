@@ -1,6 +1,8 @@
 package com.unify.rrls.repository;
 
 import com.unify.rrls.domain.OpportunityMaster;
+import com.unify.rrls.domain.OpportunityName;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +20,7 @@ public interface OpportunityMasterRepository extends JpaRepository<OpportunityMa
 	
 	Page<OpportunityMaster> findByCreatedBy(String Role,Pageable pageable);
 	List<OpportunityMaster>findByCreatedBy(String name);
-
+	OpportunityMaster findByMasterName(OpportunityName opportunityName);
 
 
 

@@ -15,10 +15,7 @@
         vm.isAuthenticated = null;
         vm.login = LoginService.open;
         vm.register = register;
-        vm.itemsValue = 'Opportunities';
-
-
-
+        vm.itemsValue = 'Opportunities';     
         vm.opportunityMasters = [];
         vm.loadPage = loadPage;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
@@ -92,6 +89,7 @@
         loadAll();
 
         function loadAll () {
+        	console.log($state.params);
          /*   OpportunityMaster.query({
                 page: pagingParams.page - 1,
                 size: vm.itemsPerPage,
@@ -100,9 +98,9 @@
 */
 
     //
-            $http.get('api/opportunity-summary/getdata/')
+            $http.get('api/opportunity-summary/getdata')
                 .then(function(response) {
-                    console.log("RESPONSE",response);
+                    console.log("RESPONSE");
                     var len = response.data;
 
                    // vm.dashboardvalues =  response.data;
@@ -113,6 +111,27 @@
                     vm.queryCount = vm.totalItems;
 
                 });
+            
+            if ($state.params && $state.params.createdBy) {
+            
+	           $http.get('api/opportunity-summary/getdata/' + $state.params.createdBy)
+	            .then(function(response) {
+	            	vm.dashboardvalues = [];
+	                console.log("RESPONSE");
+	                var len = response.data;
+	
+	               // vm.dashboardvalues =  response.data;
+	                for (var i = 0; i < len.length; i++) {
+	                    vm.dashboardvalues.push(len[i]);
+	                }
+	                vm.totalItems =  vm.dashboardvalues.length;
+	                vm.queryCount = vm.totalItems;
+	
+	            });
+           
+            }
+   
+       
                 /*,onSuccess1(vm.dashboardvalues),onError1());
 
             function onSuccess1(data)

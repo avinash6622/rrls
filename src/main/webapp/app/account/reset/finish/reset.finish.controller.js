@@ -6,9 +6,9 @@
         .controller('ResetFinishController', ResetFinishController);
       /*  .directive("compareTo1",compareTo1);*/
 
-    ResetFinishController.$inject = ['$stateParams', '$timeout', 'Auth', 'LoginService','$scope'];
+    ResetFinishController.$inject = ['$stateParams', '$timeout', 'Auth', 'LoginService','$scope','$filter'];
 
-    function ResetFinishController ($stateParams, $timeout, Auth, LoginService,$scope) {
+    function ResetFinishController ($stateParams, $timeout, Auth, LoginService,$scope,$filter) {
         var vm = this;
 
         vm.keyMissing = angular.isUndefined($stateParams.key);

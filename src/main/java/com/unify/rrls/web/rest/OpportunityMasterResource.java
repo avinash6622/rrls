@@ -226,11 +226,21 @@ public class OpportunityMasterResource {
 		FinancialSummaryData addFinance=new FinancialSummaryData();
 		NonFinancialSummaryData addNonFinance=new NonFinancialSummaryData();	
 		List<StrategyMapping> addStrategy=new ArrayList<>();
+		OpportunityMaster master=new OpportunityMaster();
+		
+	      if (opportunityMaster != null) {
+	            master=opportunityMasterRepository.findByMasterName(opportunityMaster.getMasterName());
+	            if(master !=null){
+	                return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "name exists",
+	                    "A new opportunity cannot already have same opportunity name")).body(null);
+	            }
 
-		if (opportunityMaster.getId() != null) {
+	        }
+
+	/*	if (opportunityMaster.getId() != null) {
 			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists",
 					"A new opportunityMaster cannot already have an ID")).body(null);
-		}
+		}*/
 
 		OpportunityMaster result = opportunityMasterRepository.save(opportunityMaster);
         System.out.println("sdfsdfsd--->"+result);
@@ -387,9 +397,15 @@ public class OpportunityMasterResource {
             financialSummaryDataRepository.save(opportunityMasters.getFinancialSummaryData());
 
             List<OpportunitySummaryData> opportunitySummaryDataList = opportunitySummaryDataRepository.findByOpportunityMasterid(result);
+            if(!opportunitySummaryDataList.isEmpty()){
+            	for(OpportunitySummaryData sm : opportunitySummaryDataList){
+            		opportunitySummaryDataRepository.delete(sm);
+            	}
+            }
 
-            for (OpportunitySummaryData sm : opportunitySummaryDataList) {
-               // OpportunitySummaryData opportunitySummaryData = new OpportunitySummaryData();
+            for(StrategyMaster sm1:opportunityMasters.getSelectedStrategyMaster())
+            {
+            	OpportunitySummaryData sm = new OpportunitySummaryData();
                 sm.setPatFirstYear(opportunityMasters.getFinancialSummaryData().getPatOne());
                 sm.setPatSecondYear(opportunityMasters.getFinancialSummaryData().getPatTwo());
                 sm.setPatThirdYear(opportunityMasters.getFinancialSummaryData().getPatThree());
@@ -406,6 +422,8 @@ public class OpportunityMasterResource {
                 sm.setPeThirdYear(opportunityMasters.getFinancialSummaryData().getPeThree());
                 sm.setPeFourthYear(opportunityMasters.getFinancialSummaryData().getPeFour());
                 sm.setPeFifthYear(opportunityMasters.getFinancialSummaryData().getPeFive());
+                sm.setOpportunityMasterid(opportunityMasters);
+                sm.setStrategyMasterId(sm1);
                 if((opportunityAutomation!=null)&& (opportunityAutomation.getPrevClose()==null))
                 {
                 	sm.setCmp(opportunityAutomation.getPrevClose());
@@ -422,8 +440,15 @@ public class OpportunityMasterResource {
             nonFinancialSummaryDataRepository.save(opportunityMasters.getNonFinancialSummaryData());
             List<OpportunitySummaryData> opportunitySummaryDataList = opportunitySummaryDataRepository.findByOpportunityMasterid(result);
 
-            for (OpportunitySummaryData sm : opportunitySummaryDataList) {
+            if(!opportunitySummaryDataList.isEmpty()){
+            	for(OpportunitySummaryData sm : opportunitySummaryDataList){
+            		opportunitySummaryDataRepository.delete(sm);
+            	}
+            }
 
+            for(StrategyMaster sm1:opportunityMasters.getSelectedStrategyMaster())
+            {
+            	OpportunitySummaryData sm = new OpportunitySummaryData();
                 sm.setMarketCap(opportunityMasters.getNonFinancialSummaryData().getMarketCapThree());
                 sm.setPatFirstYear(opportunityMasters.getNonFinancialSummaryData().getPatOne());
                 sm.setPatSecondYear(opportunityMasters.getNonFinancialSummaryData().getPatTwo());
@@ -450,6 +475,8 @@ public class OpportunityMasterResource {
                 sm.setPatGrowthThird(opportunityMasters.getNonFinancialSummaryData().getPatGrowthThree());
                 sm.setPatGrowthFourth(opportunityMasters.getNonFinancialSummaryData().getPatGrowthFour());
                 sm.setPatGrowthFifth(opportunityMasters.getNonFinancialSummaryData().getPatGrowthFive());
+                sm.setOpportunityMasterid(opportunityMasters);
+                sm.setStrategyMasterId(sm1);
                 if((opportunityAutomation!=null)&& (opportunityAutomation.getPrevClose()==null))
                 {
                 	sm.setCmp(opportunityAutomation.getPrevClose());
