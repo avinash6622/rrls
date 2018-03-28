@@ -42,7 +42,30 @@
 
         $scope.currentYear = $filter('date')(myDate,'yyyy');
 
+        Principal.identity().then(function(account) {
+           // console.log("njdsnnkskj--->",account);
+            vm.roles = account;
+           // console.log(vm.roles.authorities);
 
+            if(Principal.isAuthenticated()) {
+
+
+                if (vm.roles.authorities[1] == 'CIO') {
+                    console.log("hii");
+                    $state.go('strategy-master');
+                }
+                else {
+
+                    if (vm.roles.authorities[1] == 'Admin') {
+                        $state.go('user-management');
+                    }
+                    else {
+                        $state.go('home');
+                    }
+
+                }
+            }
+            });
 
            console.log("djfsjfjsd--->",vm.roles);
 
