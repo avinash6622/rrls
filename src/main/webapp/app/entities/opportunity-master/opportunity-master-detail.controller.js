@@ -511,7 +511,7 @@
         var selectitem = $scope.selitem;
             vm.isSaving = true;
 
-                //OpportunityMaster.saveWithUpload({inputData: vm.opportunityMaster, fileUpload: vm.opportunityMaster.fileUpload}, onSaveSuccess, onSaveError);
+
                 Upload.upload({
                     url: 'api/file-uploads',
                     data: {fileUploads: vm.opportunityMaster.fileUpload},
@@ -525,8 +525,7 @@
                     console.log(resp);
                 }, function (evt) {
                     console.log(evt);
-                    //var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                    //console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+
                 });
         }
         function selectFile (file) {
@@ -553,33 +552,14 @@
         }
 
 
-       /* function additionalFile()
-        {
-        	console.log(vm.addNewdoc);
-        	var doc = "<body>"+vm.addNewdoc+"</body>";
-        	console.log(vm.fileId);
-        	OpportunityMaster.addWordCreation({fileContent: doc,fileId:vm.fileId}, function(result){
-        			console.log('result',result);
-        			vm.opportunityMaster.fileUploads.push(result);
-        			//console.log('opp',vm.opportunityMaster.fileUploads);
-        			clear();
-        		}, onSaveError);
 
-
-        }   */
 
 
 
         function saveComment() {
             vm.isSaving = true;
             var inputData = {};
-            /*angular.forEach(vm.opportunityMaster.fileUploadCommentList, function(oppKey, oppValue){
-            	if(vm.fileId == vm.opportunityMaster.fileUploads[oppValue].id){
-            		inputData.fileUploadId = vm.opportunityMaster.fileUploads[oppValue];
-            	}
-            });*/
 
-            //inputData.fileUploadId = vm.fileId;
 
             inputData.opportunityComments = vm.fileComments;
             inputData.opportunityMaster=vm.opportunityMaster;
@@ -588,10 +568,9 @@
         	  vm.opportunityMaster.fileUploadCommentList.push(resp);
         	  vm.fileComments = "";
           }, onSaveError);
-           // console.log(result);
-           // vm.opportunityMaster.fileUploadCommentList = result;
+
         }
-      /*  $scope.data='';*/
+
        function approveFile(status){
 
 
@@ -600,9 +579,9 @@
         	vm.opportunityMaster.oppStatus = status;
 
         	OpportunityMaster.update(vm.opportunityMaster, function(resp) {
-        		//console.log(resp);
+
         	}, function(err) {
-        		//console.log(err);
+        		console.log(err);
         	});
 
         }
@@ -618,7 +597,7 @@
             vm.isSaving = false;
             vm.opportunityMaster.fileUploadCommentList.push(result);
             vm.fileComments = "";
-            //vm.load();
+
         }
 
         function onSaveError () {

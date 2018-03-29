@@ -90,14 +90,9 @@
 
         function loadAll () {
         	console.log($state.params);
-         /*   OpportunityMaster.query({
-                page: pagingParams.page - 1,
-                size: vm.itemsPerPage,
-                sort: sort()
-            }, onSuccess, onError);
-*/
 
-    //
+
+
             $http.get('api/opportunity-summary/getdata')
                 .then(function(response) {
                     console.log("RESPONSE");
@@ -131,32 +126,7 @@
 
             }
 
-
-                /*,onSuccess1(vm.dashboardvalues),onError1());
-
-            function onSuccess1(data)
-            {
-                console.log("hiii",vm.oppmas);
-               /!* vm.links = headers('link') ? ParseLinks.parse(headers('link')) : vm.links;*!/
-                vm.totalItems = data.length;
-                console.log(vm.totalItems);
-                vm.queryCount = vm.totalItems;
-                vm.page = pagingParams.page;
-
-            }*/
-
-
-
-
-        // console.log("dshkjhkfjs--->"+vm.dashboardvalues.opportunityMasterid.oppStatus);
-
-
-
-          //  console.log("DASHBOARD VALUE",vm.dashboardvalues);
-
-
-
-        }
+            }
 
         function sort() {
             var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
@@ -166,22 +136,7 @@
             return result;
         }
 
-    /*    function onSuccess(data, headers) {
-           // vm.links = ParseLinks.parse(headers('link'));
-            vm.links = headers('link') ? ParseLinks.parse(headers('link')) : vm.links;
-            vm.totalItems = headers('X-Total-Count');
-            console.log(vm.totalItems);
-            vm.queryCount = vm.totalItems;
-            vm.page = pagingParams.page;
-            vm.oppmas=data;
-            console.log("jsdhjksnd--->", vm.oppmas)
-          /!*  for (var i = 0; i < data.length; i++) {
-                vm.opportunityMasters.push(data[i]);
-            }*!/
 
-
-        }
-*/
         function onError(error) {
             AlertService.error(error.data.message);
         }
