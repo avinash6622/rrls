@@ -150,9 +150,6 @@
 
             },
 
-
-
-
             /*,
             'addWordCreation':{
             	url: 'api/opportunity-masters/additional-word-file/',

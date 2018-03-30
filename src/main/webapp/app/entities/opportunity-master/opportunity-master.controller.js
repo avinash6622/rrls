@@ -14,7 +14,7 @@
         vm.opportunityMasters = [];
         vm.loadPage = loadPage;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
-        vm.predicate = pagingParams.predicate;
+        vm.predicate = pagingParams.predicate;     
         vm.reverse = pagingParams.ascending;
         vm.page = 1;
         vm.links = {
@@ -42,9 +42,11 @@
             }, onSuccess, onError);
             function sort() {
                 var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
+                console.log(vm.predicate);
                 if (vm.predicate !== 'id') {
                     result.push('id');
                 }
+                console.log(result);
                 return result;
             }
 

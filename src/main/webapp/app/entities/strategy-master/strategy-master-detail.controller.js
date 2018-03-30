@@ -13,27 +13,41 @@
         vm.strategyMaster = entity;
         vm.previousState = previousState.name;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
+        vm.predicate = pagingParams.predicate;      
+        vm.reverse = true;
         vm.page = 1;
         vm.opportunitySummaryData = vm.strategyMaster.opportunitySummaryData;
-        console.log(vm.opportunitySummaryData.length);
+       
         vm.itemsValue = 'Opportunities';
-
+       
+       
+     
         var unsubscribe = $rootScope.$on('researchRepositoryLearningSystemApp:strategyMasterUpdate', function(event, result) {
             vm.strategyMaster = result;
 
             });
         $scope.$on('$destroy', unsubscribe);
-
-        console.log(vm.strategyMaster);
-
+       
+        vm.predicate = 'id';
         vm.totalItems = vm.opportunitySummaryData.length;
         vm.queryCount = vm.totalItems;
         vm.page = pagingParams.page;
         vm.transition = transition;
-
+        
+        $scope.order = function (predicate) {  
+           vm.reverse = (vm.predicate === vm.predicate) ? !vm.reverse : false;  
+            vm.predicate = predicate;  
+          };  
+        
+          $scope.paginate = function (value) {  
+            var begin, end, index;  
+            begin = (vm.page - 1) * vm.itemsPerPage;  
+            end = begin + vm.itemsPerPage;  
+            index = vm.opportunitySummaryData.indexOf(value);  
+            return (begin <= index && index < end);  
+          };
+      
         var myDate = new Date();
-
-
 
         var previousYear = new Date(myDate);
 
