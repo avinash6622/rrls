@@ -29,6 +29,8 @@
         /*vm.additionalFile=additionalFile;*/
         vm.addFileName='';
         vm.summaryData='';
+
+
       //  vm.submiTable=submitTable;
 
 
@@ -518,7 +520,16 @@
                     params: {oppId: vm.opportunityMaster.id,filetype:selectitem,uploadfileName:vm.uploadfileName}// {oppCode: inputData.oppCode, oppName: inputData.oppName, oppDescription: inputData.oppDescription, strategyMasterId: inputData.strategyMasterId.id}
                 }).then(function (resp) {
 
+                    console.log(resp);
+
                     if(resp.status == 201) {
+                        if(vm.opportunityMaster.fileUploads==null)
+                        {
+                            vm.opportunityMaster.fileUploads = [];
+
+                        }
+                     //   console.log("gashgdjgasudgua",vm.opportunityMaster.fileUploads);
+
                     	vm.opportunityMaster.fileUploads.push(resp.data);
                     }
                 }, function (resp) {
