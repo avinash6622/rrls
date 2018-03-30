@@ -6,9 +6,9 @@
         .controller('HomeController', HomeController);
 
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'AlertService', 'OpportunityMaster','ParseLinks', 'paginationConstants', '$state','$http','$filter','pagingParams'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'AlertService', 'OpportunityMaster','ParseLinks','paginationConstants','$state','$http','$filter','pagingParams'];
 
-    function HomeController ($scope, Principal, LoginService, AlertService, OpportunityMaster,ParseLinks,paginationConstants, $state,$http,$filter,pagingParams) {
+    function HomeController ($scope, Principal, LoginService, AlertService, OpportunityMaster,ParseLinks,paginationConstants,$state,$http,$filter,pagingParams) {
         var vm = this;
 
         vm.account = null;
@@ -27,9 +27,11 @@
         };
      //   vm.predicate = 'id';
        // vm.reset = reset;
+        vm.reverse = true;
         vm.reverse = pagingParams.ascending;
         vm.predicate = pagingParams.predicate;
-        vm.transition = transition;
+       /* vm.transition = transition;*/
+        vm.predicate = 'id';
 
         vm.dashboardvalues = [];
 
@@ -86,26 +88,15 @@
             $state.go('register');
         }
 
-        loadAll();
+      /*  loadAll();*/
 
-        function loadAll () {
+      /*  function loadAll () {*/
         	console.log($state.params);
 
 
 
-            $http.get('api/opportunity-summary/getdata')
-                .then(function(response) {
-                    console.log("RESPONSE");
-                    var len = response.data;
 
-                   // vm.dashboardvalues =  response.data;
-                    for (var i = 0; i < len.length; i++) {
-                        vm.dashboardvalues.push(len[i]);
-                    }
-                    vm.totalItems =  vm.dashboardvalues.length;
-                    vm.queryCount = vm.totalItems;
 
-                });
 
             if ($state.params && $state.params.createdBy) {
 
@@ -123,9 +114,48 @@
 	                vm.queryCount = vm.totalItems;
 
 	            });
+                $scope.order = function (predicate) {
+                    vm.reverse = (vm.predicate === vm.predicate) ? !vm.reverse : false;
+                    vm.predicate = predicate;
+                };
+
+                $scope.paginate = function (value) {
+                    var begin, end, index;
+                    begin = (vm.page - 1) * vm.itemsPerPage;
+                    end = begin + vm.itemsPerPage;
+                    index = vm.dashboardvalues.indexOf(value);
+                    return (begin <= index && index < end);
+                };
 
             }
+else{
+                $http.get('api/opportunity-summary/getdata')
+                    .then(function(response) {
+                        console.log("RESPONSEs");
+                        var len = response.data;
 
+                        // vm.dashboardvalues =  response.data;
+                        for (var i = 0; i < len.length; i++) {
+                            vm.dashboardvalues.push(len[i]);
+                        }
+                        vm.totalItems =  vm.dashboardvalues.length;
+                        vm.queryCount = vm.totalItems;
+
+                    });
+                $scope.order = function (predicate) {
+                    vm.reverse = (vm.predicate === vm.predicate) ? !vm.reverse : false;
+                    vm.predicate = predicate;
+                };
+
+                $scope.paginate = function (value) {
+                    var begin, end, index;
+                    begin = (vm.page - 1) * vm.itemsPerPage;
+                    end = begin + vm.itemsPerPage;
+                    index = vm.dashboardvalues.indexOf(value);
+                    return (begin <= index && index < end);
+                };
+
+            }
             }
 
         function sort() {
@@ -151,14 +181,14 @@
         }
 
 
-        function transition () {
+    /*    function transition () {
             $state.transitionTo($state.$current, {
                 page: vm.page,
                 sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
                 search: vm.currentSearch
             });
-        }
-    }
+        }*/
+/*    }*/
 })();
 
 

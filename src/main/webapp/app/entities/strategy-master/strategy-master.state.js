@@ -59,6 +59,8 @@
                     controllerAs: 'vm'
                 }
             },
+
+
             resolve: {
                 entity: ['$stateParams', 'StrategyMaster', function($stateParams, StrategyMaster) {
                     return StrategyMaster.get({id : $stateParams.id}).$promise;
