@@ -97,7 +97,7 @@ public class OpportunitySummaryDataResource {
             sm.setPeThirdYear(opportunityMaster.getFinancialSummaryData().getPeThree());
             sm.setPeFourthYear(opportunityMaster.getFinancialSummaryData().getPeFour());
             sm.setPeFifthYear(opportunityMaster.getFinancialSummaryData().getPeFive());
-            if((opportunityAutomation!=null) && (opportunityAutomation.getPrevClose()==null))
+            if((opportunityAutomation!=null) && (opportunityAutomation.getPrevClose()!=null))
             {
             	sm.setCmp(opportunityAutomation.getPrevClose());
             } 
@@ -139,7 +139,7 @@ public class OpportunitySummaryDataResource {
             sm.setPatGrowthThird(opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree());
             sm.setPatGrowthFourth(opportunityMaster.getNonFinancialSummaryData().getPatGrowthFour());
             sm.setPatGrowthFifth(opportunityMaster.getNonFinancialSummaryData().getPatGrowthFive());
-            if((opportunityAutomation!=null) && (opportunityAutomation.getPrevClose()==null))
+            if((opportunityAutomation!=null) && (opportunityAutomation.getPrevClose()!=null))
             {
             	sm.setCmp(opportunityAutomation.getPrevClose());
             } 
