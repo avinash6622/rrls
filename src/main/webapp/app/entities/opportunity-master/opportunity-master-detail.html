@@ -139,7 +139,7 @@ div.scrollmenu {
 				<div class="pull-right">
 					<div class="col-md-1 pr-md-1">
                         <div><strong>CMP</strong></div>
-						<div>{{vm.opportunityMaster.opportunitySummaryData}}</div>
+						<div>{{vm.opportunityMaster.financialSummaryData.cmp}}</div>
 					</div>
 					<div class="col-sm-offset-1 col-md-1 pl-md-1">
 						<div><strong>MCAP</strong></div>
@@ -172,7 +172,7 @@ div.scrollmenu {
 
                         <div><strong>CMP</strong></div>
 
-						<div>{{vm.opportunityMaster.opportunitySummaryData}}</div>
+						<div>{{vm.opportunityMaster.nonFinancialSummaryData.cmp}}</div>
 					</div>
 					<div class="col-sm-offset-1 col-md-1 pl-md-1">
 
@@ -608,19 +608,19 @@ div.scrollmenu {
 								<td scope="col" style="text-align: left">Market Cap</td>
 								<td><input name="marCapOne"
 									ng-model="vm.opportunityMaster.financialSummaryData.marCapOne"
-									ng-disabled="isDisabled" style="text-align: right"/></td>
+									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="marCapTwo"
 									ng-model="vm.opportunityMaster.financialSummaryData.marCapTwo"
-									ng-disabled="isDisabled" style="text-align: right"/></td>
+									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="marCapThree"
 									ng-model="vm.opportunityMaster.financialSummaryData.marCapThree"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="marCapFour"
 									ng-model="vm.opportunityMaster.financialSummaryData.marCapFour"
-									ng-disabled="isDisabled" style="text-align: right"/></td>
+									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="marCapFive"
 									ng-model="vm.opportunityMaster.financialSummaryData.marCapFive"
-									ng-disabled="isDisabled" style="text-align: right"/></td>
+									ng-disabled="true" style="text-align: right"/></td>
 							</tr>
 
 							<tr>
@@ -1018,19 +1018,19 @@ div.scrollmenu {
 								<td scope="col" style="text-align: left">Market Cap</td>
 								<td><input name="epsOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapOne"
-									ng-disabled="isDisabled" style="text-align: right"/></td>
+									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="epsTwo"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapTwo"
-									ng-disabled="isDisabled" style="text-align: right"/></td>
+									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="epsThree"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapThree"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="epsFour"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapFour"
-									ng-disabled="isDisabled" style="text-align: right"/></td>
+									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="epsFive"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapFive"
-									ng-disabled="isDisabled" style="text-align: right"/></td>
+									ng-disabled="true" style="text-align: right"/></td>
 							</tr>
 
 							<tr>

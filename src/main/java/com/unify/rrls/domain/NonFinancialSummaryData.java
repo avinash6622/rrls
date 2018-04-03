@@ -78,6 +78,8 @@ public class NonFinancialSummaryData implements Serializable{
 	public Double getOtherIncOne() {
 		return otherIncOne;
 	}
+	@Column(name="cmp")
+	public Double cmp;
 	public void setOtherIncOne(Double otherIncOne) {
 		this.otherIncOne = otherIncOne;
 	}
@@ -918,6 +920,12 @@ public class NonFinancialSummaryData implements Serializable{
 	}
 	public void setOpportunityMaster(OpportunityMaster opportunityMaster) {
 		this.opportunityMaster = opportunityMaster;
+	}
+	public Double getCmp() {
+		return cmp;
+	}
+	public void setCmp(Double cmp) {
+		this.cmp = cmp;
 	}
 
 

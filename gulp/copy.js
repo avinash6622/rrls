@@ -38,7 +38,7 @@ function fonts() {
 function common() {
     return gulp.src([
         config.app + 'robots.txt',
-        config.app + 'favicon.ico',
+        config.app + 'unifi_logo.ico',
         config.app + '.htaccess',
         // config.app + 'sw.js',
         config.app + 'manifest.webapp'

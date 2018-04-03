@@ -164,6 +164,8 @@ public class FinancialSummaryData implements Serializable{
 	private Double peFour;
 	@Column(name = "pe_five")
 	private Double peFive;
+	@Column(name = "cmp")
+	private Double cmp;
 	@OneToOne
 	@JoinColumn(name = "opp_master_id")
 	private OpportunityMaster opportunityMasterId;
@@ -601,8 +603,15 @@ public class FinancialSummaryData implements Serializable{
     public void setOpportunityMasterId(OpportunityMaster opportunityMasterId) {
         this.opportunityMasterId = opportunityMasterId;
     }
+    
 
-    @Override
+    public Double getCmp() {
+		return cmp;
+	}
+	public void setCmp(Double cmp) {
+		this.cmp = cmp;
+	}
+	@Override
 	    public boolean equals(Object o) {
 	        if (this == o) {
 	            return true;
