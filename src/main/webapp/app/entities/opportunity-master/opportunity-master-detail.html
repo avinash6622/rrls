@@ -69,7 +69,7 @@ div.scrollmenu {
     <div class="page-header" style="margin:0">
     <div class="row">
 
-        <div class="col-md-3"><h4><strong>{{vm.opportunityMaster.masterName.oppName}}-<span class="text-danger font-weight-bold"><strong>{{vm.opportunityMaster.oppStatus}}</strong></span></strong></h4></div>
+        <div class="col-md-3"><h4><strong>{{vm.opportunityMaster.masterName.oppName}}<span class="text-danger font-weight-bold" ng-if="vm.opportunityMaster.oppStatus"><strong> - {{vm.opportunityMaster.oppStatus}}</strong></span></strong></h4></div>
         <div class="pull-right">
  <div class="col-xs-4">
                 <button type="button"
