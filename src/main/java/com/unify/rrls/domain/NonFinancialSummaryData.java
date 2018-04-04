@@ -191,6 +191,8 @@ public class NonFinancialSummaryData implements Serializable{
 	private Double patTwo;
 	@Column(name = "pat_three")
 	private Double patthree;
+	@Column(name = "weight")
+	private Double weight;
 	public Double getIntExpOne() {
 		return intExpOne;
 	}
@@ -928,5 +930,10 @@ public class NonFinancialSummaryData implements Serializable{
 		this.cmp = cmp;
 	}
 
-
+public Double getWeight() {
+	return weight;
+}
+public void setWeight(Double weight) {
+	this.weight = weight;
+}
 }

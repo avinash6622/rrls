@@ -352,13 +352,13 @@ public class FileUploadResource {
                              		   finance.setRoeThree(row.getCell(3).getNumericCellValue()*100);
                              		   finance.setRoeFour(row.getCell(4).getNumericCellValue()*100);
                              		   finance.setRoeFive(row.getCell(5).getNumericCellValue()*100);}
-                                  if (finColumn.contains("P/BV"))
+                                  if (finColumn.contains("PBV"))
                                   {  finance.setPbvOne(row.getCell(1).getNumericCellValue());
                              		   finance.setPbvTwo(row.getCell(2).getNumericCellValue());
                              		   finance.setPbvThree(row.getCell(3).getNumericCellValue());
                              		   finance.setPbvFour(row.getCell(4).getNumericCellValue());
                              		   finance.setPbvFive(row.getCell(5).getNumericCellValue());}                      
-                                  if (finColumn.contains("P/E"))
+                                  if (finColumn.contains("PE"))
                                   {  finance.setPeOne(row.getCell(1).getNumericCellValue());
                              		   finance.setPeTwo(row.getCell(2).getNumericCellValue());
                              		   finance.setPeThree(row.getCell(3).getNumericCellValue());
@@ -597,6 +597,12 @@ public class FileUploadResource {
                                   nonFinance.setDepRateThree(row.getCell(3).getNumericCellValue());
                                   nonFinance.setDepRateFour(row.getCell(4).getNumericCellValue());
                                   nonFinance.setDepRateFive(row.getCell(5).getNumericCellValue());}
+                                  if (finColumn.equals("Weight")){
+                                	 
+                                      nonFinance.setWeight(row.getCell(3).getNumericCellValue());
+                                      
+                                	  
+                                  }
 
                           }
 
@@ -636,6 +642,23 @@ public class FileUploadResource {
                     	  sm.setPatGrowthThird(nonFinance.getPatGrowthThree());
                     	  sm.setPatGrowthFourth(nonFinance.getPatGrowthFour());
                     	  sm.setPatGrowthFifth(nonFinance.getPatGrowthFive());
+                    	  sm.setbWeight(nonFinance.getWeight());
+                    	  sm.setPegOj((nonFinance.getPethree()/nonFinance.getPatGrowthThree()));
+                    	  if(nonFinance.getWeight()!=null){
+                    	  sm.setPortPeFirst(nonFinance.getWeight()*nonFinance.getPeOne());
+                    	  sm.setPortPeSecond(nonFinance.getWeight()*nonFinance.getPeTwo());
+                    	  sm.setPortPeThird(nonFinance.getWeight()*nonFinance.getPethree());
+                    	  sm.setPortPeFourth(nonFinance.getWeight()*nonFinance.getPeFour());
+                    	  sm.setPortPeFifth(nonFinance.getWeight()*nonFinance.getPeFive());
+                    	  //sm.setEarningsFirst((nonFinance.getWeight()*nonFinance.getPatGrowthOne())/100.0);
+                    	  sm.setEarningsSecond((nonFinance.getWeight()*nonFinance.getPatGrowthTwo())/100.0);
+                    	  sm.setEarningsThird((nonFinance.getWeight()*nonFinance.getPatGrowthThree())/100.0);
+                    	  sm.setEarningsFourth((nonFinance.getWeight()*nonFinance.getPatGrowthFour())/100.0);
+                    	  sm.setEarningsFifth((nonFinance.getWeight()*nonFinance.getPatGrowthFive())/100.0);
+                    	  sm.setWtAvgCap((nonFinance.getWeight()*nonFinance.getMarketCapThree())/100.0);
+                    	  sm.setRoe((nonFinance.getWeight()*nonFinance.getMarketCapThree())/100.0);
+                    	  sm.setPegYearPeg(nonFinance.getWeight()*(nonFinance.getPethree()/nonFinance.getPatGrowthThree()));
+                    	  }
                      
                       opportunitySummaryDataRepository.save(sm);
                       }

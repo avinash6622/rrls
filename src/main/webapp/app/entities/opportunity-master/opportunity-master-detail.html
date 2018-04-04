@@ -157,10 +157,10 @@ div.scrollmenu {
 						<div><strong>P/BV</strong></div>
 						<div>{{vm.opportunityMaster.financialSummaryData.pbvThree}}</div>
 					</div>
-					<div class="col-sm-offset-1 col-md-1 pl-md-1">
+					<!-- <div class="col-sm-offset-1 col-md-1 pl-md-1">
 						<div><strong>D/E</strong></div>
 						<div></div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 
@@ -188,10 +188,10 @@ div.scrollmenu {
 						<div><strong>ROE</strong></div>
 						<div>{{vm.opportunityMaster.nonFinancialSummaryData.roeThree}}</div>
 					</div>
-					<div class="col-sm-offset-1 col-md-1 pl-md-1">
+				<!-- 	<div class="col-sm-offset-1 col-md-1 pl-md-1">
 						<div><strong>P/BV</strong></div>
 						<div></div>
-					</div>
+					</div> -->
 					<div class="col-sm-offset-1 col-md-1 pl-md-1">
 						<div><strong>D/E</strong></div>
 						<div>{{vm.opportunityMaster.nonFinancialSummaryData.deThree}}</div>
@@ -733,6 +733,14 @@ div.scrollmenu {
 									ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.patFive,10)"
 									ng-disabled="true" style="text-align: right"/></td>
 							</tr>
+							 <!--  <tr>
+                    <td scope="col"  style="text-align: left">Weight</td>
+                    <td><input name="weightOne"  ng-disabled="true" style="text-align: right"/> </td>
+                    <td><input name="weightTwo"   ng-disabled="true" style="text-align: right"/> </td>
+                    <td><input name="weightThree" ng-model="vm.opportunityMaster.financialSummaryData.weight"  ng-disabled="isDisabled" style="text-align: right"/></td>
+                    <td><input name="weightFour"   ng-disabled="true" style="text-align: right"/></td>
+                    <td><input name="weightFive"  ng-disabled="true" style="text-align: right"/></td>
+                </tr> -->
 						</tbody>
 					</table>
 
@@ -1223,6 +1231,14 @@ div.scrollmenu {
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depRateFive"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 							</tr>
+							  <tr>
+                    <td scope="col"  style="text-align: left">Weight</td>
+                    <td><input name="weightOne"  ng-disabled="true" style="text-align: right"/> </td>
+                    <td><input name="weightTwo"   ng-disabled="true" style="text-align: right"/> </td>
+                    <td><input name="weightThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.weight"  ng-disabled="isDisabled" style="text-align: right"/></td>
+                    <td><input name="weightFour"   ng-disabled="true" style="text-align: right"/></td>
+                    <td><input name="weightFive"  ng-disabled="true" style="text-align: right"/></td>
+                </tr>
 						</tbody>
 					</table>
 

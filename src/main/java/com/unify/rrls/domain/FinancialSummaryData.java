@@ -166,6 +166,8 @@ public class FinancialSummaryData implements Serializable{
 	private Double peFive;
 	@Column(name = "cmp")
 	private Double cmp;
+	@Column(name = "weight")
+	private Double weight;
 	@OneToOne
 	@JoinColumn(name = "opp_master_id")
 	private OpportunityMaster opportunityMasterId;
@@ -610,6 +612,13 @@ public class FinancialSummaryData implements Serializable{
 	}
 	public void setCmp(Double cmp) {
 		this.cmp = cmp;
+	}
+	
+	public Double getWeight() {
+		return weight;
+	}
+	public void setWeight(Double weight) {
+		this.weight = weight;
 	}
 	@Override
 	    public boolean equals(Object o) {
