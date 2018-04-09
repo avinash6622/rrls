@@ -3,6 +3,7 @@
 
     <div>
      <jhi-alert></jhi-alert>
+    
         <!--    <button type="button" class="btn btn-default pull-right"
                     ng-click="vm.clear()">Go Back</button>-->
         <h4 style="text-align: center;"><strong>Create Unlisted Opportunity</strong></h4>
@@ -16,8 +17,8 @@
 
         <div class="form-group">
             <label for="field_opportunitySecurityCode"></label>
-            <input class="form-control" type="text" name="securityCode" id="field_opportunitySecurityCode" ng-model="vm.opportunityNames.securityCode" placeholder="Security Code"/>
-
+            <input class="form-control" type="text" name="securityCode" id="field_opportunitySecurityCode" ng-pattern="/^[0-9]*$/" ng-model="vm.opportunityNames.securityCode" placeholder="Security Code"/>
+ 			<span ng-show="editForm.securityCode.$error.pattern">Not a valid number!</span>
         </div>
 
         <div class="form-group">

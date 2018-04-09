@@ -133,7 +133,7 @@ public class FileUploadResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new fileUpload cannot already have an ID")).body(null);
         }*/
         String user= SecurityUtils.getCurrentUserLogin();
-        String  sFilesDirectory =  "D:/RRLS/"+opp.getMasterName().getOppName()+"/"+user;
+        String  sFilesDirectory =  "C:/RRLS_Backup/RRLS/"+opp.getMasterName().getOppName()+"/"+user;
        // String  sFilesDirectoryimg =  "src/main/resources/"+opp.getMasterName().getOppName()+"/"+user+"/image/";
       File dirFiles = new File(sFilesDirectory);
       dirFiles.mkdirs();
