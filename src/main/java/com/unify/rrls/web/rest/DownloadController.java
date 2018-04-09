@@ -53,11 +53,11 @@ public class DownloadController {
             String extension = array[1];
 
 
-            String pathName= path.substring(16,path.lastIndexOf(File.separator));
+            String pathName= path.substring(0,path.lastIndexOf(File.separator));
 
-           String downloadFolder = context.getRealPath(pathName);
+           //String downloadFolder = context.getRealPath(pathName);
 
-           File file = new File(downloadFolder + File.separator + fileName);
+           File file = new File(pathName + File.separator + fileName);
 
            if (file.exists()) {
                 String mimeType = context.getMimeType(file.getPath());

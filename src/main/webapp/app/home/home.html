@@ -35,6 +35,25 @@ border:none !important;
 		border-right-style: none !important;
 		border-left-style: none !important;
 }
+<style>
+    .table-responsive>.fixed-column {
+        position: absolute!important;
+        display: inline-block!important;
+        width: 40px!important;
+        border: none;
+        background: white!important;
+    }
+
+    @media(min-width:768px) {
+        .table-responsive>.fixed-column {
+            display: none;
+        }
+    }
+
+    .fixed-column thead,.fixed-column tbody{
+        background: white!important;
+    }
+</style>
 
 </style>
  <div ng-cloak>
@@ -65,8 +84,9 @@ border:none !important;
                     You are logged in as user "{{vm.account.login |capitalize}}".
                     <br>
                     </div>-->
-                     <div class="scrollmenu">
-                         <table id="mytable" class="table table-bordered">
+                     <div class="scrollmenu" table-scroll" id="table-scroll">
+                      <div class="table-responsive">
+                         <table id="mytable" class="table table-striped table-bordered">
                              <thead>
 
                              <tr class="headborder">
@@ -91,79 +111,79 @@ border:none !important;
                                 <!-- <th scope="col"></th>
                                  <th scope="col"></th>-->
                                  <!--pat-->
-                                 <th scope="col">FY {{prevYearBefore}}</th>
-                                 <th scope="col">FY {{prevYear}}</th>
-                                 <th scope="col">FY {{currentYear}}</th>
-                                 <th scope="col">FY {{nextYear}}</th>
-                                 <th scope="col">FY {{neYearNext}}</th>
+                                 <th scope="col" class="ng-binding">FY {{prevYearBefore}}</th>
+                                 <th scope="col" class="ng-binding">FY {{prevYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{currentYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{nextYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{neYearNext}}</th>
 
 
                                  <!-- p/E-->
-                                 <th scope="col">FY {{prevYearBefore}}</th>
-                                 <th scope="col">FY {{prevYear}}</th>
-                                 <th scope="col">FY {{currentYear}}</th>
-                                 <th scope="col">FY {{nextYear}}</th>
-                                 <th scope="col">FY {{neYearNext}}</th>
+                                 <th scope="col" class="ng-binding">FY {{prevYearBefore}}</th>
+                                 <th scope="col" class="ng-binding">FY {{prevYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{currentYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{nextYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{neYearNext}}</th>
                                  <!--ROE-->
-                                 <th scope="col">FY {{prevYearBefore}}</th>
-                                 <th scope="col">FY {{prevYear}}</th>
-                                 <th scope="col">FY {{currentYear}}</th>
-                                 <th scope="col">FY {{nextYear}}</th>
-                                 <th scope="col">FY {{neYearNext}}</th>
+                                 <th scope="col" class="ng-binding">FY {{prevYearBefore}}</th>
+                                 <th scope="col" class="ng-binding">FY {{prevYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{currentYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{nextYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{neYearNext}}</th>
                                  <!--D/E-->
-                                 <th scope="col">FY {{prevYearBefore}}</th>
-                                 <th scope="col">FY {{prevYear}}</th>
-                                 <th scope="col">FY {{currentYear}}</th>
-                                 <th scope="col">FY {{nextYear}}</th>
-                                 <th scope="col">FY {{neYearNext}}</th>
+                                 <th scope="col" class="ng-binding">FY {{prevYearBefore}}</th>
+                                 <th scope="col" class="ng-binding">FY {{prevYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{currentYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{nextYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{neYearNext}}</th>
                                  <!--PAT growth-->
 
-                                 <th scope="col">FY {{prevYearBefore}}</th>
-                                 <th scope="col">FY {{prevYear}}</th>
-                                 <th scope="col">FY {{currentYear}}</th>
-                                 <th scope="col">FY {{nextYear}}</th>
-                                 <th scope="col">FY {{neYearNext}}</th>
+                                 <th scope="col" class="ng-binding">FY {{prevYearBefore}}</th>
+                                 <th scope="col" class="ng-binding">FY {{prevYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{currentYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{nextYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{neYearNext}}</th>
 
                                  <th scope="col">O/J</th>
 
                              </tr>
                              </thead>
                         <tbody>
-                             <tr ng-repeat="value in vm.dashboardvalues | orderBy:predicate:reverse | filter:paginate">
-                                 <td scope="col" style="text-align: left"><a ui-sref="opportunity-master-detail({id:value.opportunityMasterid.id})">{{value.opportunityMasterid.masterName.oppName}}</a></td>
+                             <tr ng-repeat="value in vm.dashboardvalues | orderBy:predicate:reverse | filter:paginate" class="ng-scope tbody-class">
+                                 <td scope="col" style="text-align: left"><a class="ng-binding" ui-sref="opportunity-master-detail({id:value.opportunityMasterid.id})">{{value.opportunityMasterid.masterName.oppName}}</a></td>
                                  <td style="text-align: left">
-                                     <span ng-repeat="strategy in value.strategyMasterList">
-                                         <a ui-sref="strategy-master-detail({id:strategy.id})">{{strategy.strategyName}}</br></a>
+                                     <span ng-repeat="strategy in value.strategyMasterList" class="ng-scope">
+                                         <a ui-sref="strategy-master-detail({id:strategy.id})" class="ng-binding" >{{strategy.strategyName}}</br></a>
                                      </span>
                                  </td>
-                                 <td style="text-align: right">{{value.cmp | number:2}}</td>
-                                 <td style="text-align: right">{{value.marketCap | number:2}}</td>
-                                 <td style="text-align: right">{{value.patFirstYear | number:2}}</td>
-                                 <td style="text-align: right">{{value.patSecondYear | number:2}}</td>
-                                 <td style="text-align: right">{{value.patThirdYear | number:2}}</td>
-                                 <td style="text-align: right">{{value.patFourthYear | number:2}}</td>
-                                 <td style="text-align: right">{{value.patFifthYear | number:2}}</td>
-                                 <td style="text-align: right">{{value.peFirstYear | number:2}}</td>
-                                 <td style="text-align: right">{{value.peSecondYear | number:2}}</td>
-                                 <td style="text-align: right">{{value.peThirdYear | number:2}}</td>
-                                 <td style="text-align: right">{{value.peFourthYear | number:2}}</td>
-                                 <td style="text-align: right">{{value.peFifthYear | number:2}}</td>
-                                 <td style="text-align: right">{{value.roeFirstYear | number:2}}</td>
-                                 <td style="text-align: right">{{value.roeSecondYear | number:2}}</td>
-                                 <td style="text-align: right">{{value.roeThirdYear | number:2}}</td>
-                                 <td style="text-align: right">{{value.roeFourthYear | number:2}}</td>
-                                 <td style="text-align: right">{{value.roeFifthYear | number:2}}</td>
-                                 <td style="text-align: right">{{value.deFirstYear | number:2}}</td>
-                                 <td style="text-align: right">{{value.deSecondYear | number:2}}</td>
-                                 <td style="text-align: right">{{value.deThirdColour | number:2}}</td>
-                                 <td style="text-align: right">{{value.deFourthYear | number:2}}</td>
-                                 <td style="text-align: right">{{value.deFifthYear | number:2}}</td>
-                                 <td style="text-align: right">{{value.patGrowthFirst | number:2}}</td>
-                                 <td style="text-align: right">{{value.patGrowthSecond | number:2}}</td>
-                                 <td style="text-align: right">{{value.patGrowthThird | number:2}}</td>
-                                 <td style="text-align: right">{{value.patGrowthFourth | number:2}}</td>
-                                 <td style="text-align: right">{{value.patGrowthFifth | number:2}}</td>
-                                 <td style="text-align: right">{{value.pegOj | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.cmp | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.marketCap | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patFirstYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patSecondYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patThirdYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patFourthYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patFifthYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.peFirstYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.peSecondYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.peThirdYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.peFourthYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.peFifthYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.roeFirstYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.roeSecondYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.roeThirdYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.roeFourthYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.roeFifthYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.deFirstYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.deSecondYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.deThirdColour | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.deFourthYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.deFifthYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthFirst | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthSecond | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthThird | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthFourth | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthFifth | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.pegOj | number:2}}</td>
 
 
                              </tr>
@@ -185,7 +205,7 @@ border:none !important;
 
                     <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
                     <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
-                </div>
+                </div></div>
             </div>
 
 
@@ -205,4 +225,17 @@ border:none !important;
     <p data-translate="footer" style="font-size: 12px">&copy;{{currentYear}}, All rights reserved.</p>
 </footer>
 
+<script>
+$(window).on('load',function(){
+    var $table = $('#mytable');
+    var $fixedColumn = $table.clone().insertBefore($table).addClass('fixed-column');
 
+    //$fixedColumn.find('th:not(:lt(4)),tbody > .tbody-class td:not(:lt(4))').remove();
+
+    $fixedColumn.find('th:not(:lt(4)), tbody tr td:not(:nth-child(-n+4))').remove();
+
+    $fixedColumn.find('tr').each(function (i, elem) {
+        $(this).height($table.find('tr:eq(' + i + ')').height());
+    });
+});    
+</script>
