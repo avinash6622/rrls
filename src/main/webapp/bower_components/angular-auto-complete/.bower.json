@@ -35,5 +35,7 @@
   },
   "_source": "https://github.com/vickramravichandran/angular-auto-complete.git",
   "_target": "^1.6.4",
-  "_originalSource": "angular-auto-complete"
+  "_originalSource": "angular-auto-complete",
+  "_direct": true
+
 }

@@ -33,7 +33,7 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+            <tbody>
                 <tr ng-repeat="opportunityMaster in vm.opportunityMasters | filter: searchKeyword">
 
                     <td><a ui-sref="opportunity-master-detail({id:opportunityMaster.id})">{{opportunityMaster.masterName.oppName}}
