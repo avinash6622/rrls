@@ -49,6 +49,12 @@ public class CacheConfiguration {
             cm.createCache(com.unify.rrls.domain.FileUploadComments.class.getName(), jcacheConfiguration);
             cm.createCache(com.unify.rrls.domain.OpportunityName.class.getName(), jcacheConfiguration);
             cm.createCache(com.unify.rrls.domain.StrategyMapping.class.getName(), jcacheConfiguration);
+            cm.createCache(com.unify.rrls.domain.OpportunityMasterContact.class.getName(),jcacheConfiguration);
+            cm.createCache(com.unify.rrls.domain.OpportunitySummaryData.class.getName(),jcacheConfiguration);
+            cm.createCache(com.unify.rrls.domain.FinancialSummaryData.class.getName(),jcacheConfiguration);
+            cm.createCache(com.unify.rrls.domain.NonFinancialSummaryData.class.getName(),jcacheConfiguration);
+            cm.createCache(com.unify.rrls.domain.OpportunitySector.class.getName(),jcacheConfiguration);
+            cm.createCache(com.unify.rrls.domain.OpportunityAutomation.class.getName(),jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

@@ -15,7 +15,9 @@
             'infinite-scroll',
             // jhipster-needle-angularjs-add-module JHipster will add new module here
             'angular-loading-bar',
-            'ckeditor'
+            'ckeditor',
+            'autoCompleteModule'
+           // 'angucomplete-alt'
         ])
         .run(run);
 

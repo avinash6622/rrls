@@ -27,9 +27,20 @@
                     event.preventDefault();
                     $window.open(toState.url, '_self');
                 }
+                console.log($rootScope);
 
                 if (Principal.isIdentityResolved()) {
                     Auth.authorize();
+                }
+                
+                $rootScope.marginOne = "";
+                
+                if(toState.name == "login" ){
+                	 $rootScope.marginOne = "margin-top: 40px";
+                	return $rootScope.marginOne;
+                } else {
+                	$rootScope.marginOne = "margin-top: 10px";
+                	return $rootScope.marginOne;
                 }
 
             });

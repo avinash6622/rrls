@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Research Repository Learning System | Unifi</title>
+    <title>Research Repository & Learning System</title>
     <meta name="description" content="">
     <meta name="theme-color" content="#000000">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,26 +14,33 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!-- endinject -->
     <link rel="stylesheet" href="content/css/vendor.css">
+    <link rel="stylesheet" href="content/css/styles.css">
     <!-- endbuild -->
     <!-- build:css content/css/main.css -->
     <link rel="stylesheet" href="content/css/main.css">
     <!-- endbuild -->
-    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="shortcut icon" href="unifi_logo.ico" />
     <link rel="manifest" href="mianifest.webapp" />
+    <link href="bower_components/angular-auto-complete/angular-auto-complete.css" rel="stylesheet" type="text/css"/>
 </head>
 <body ng-app="researchRepositoryLearningSystemApp" ng-strict-di>
     <!--[if lt IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <div ui-view="navbar" ng-cloak></div>
-    <div class="container">
-        <div class="well" ui-view="content">
+    <div style="{{marginOne}}" ui-view="navbar" ng-cloak></div>
+    <div class="container-fluid" style="">
+        <div  ui-view="content">
             <!-- Angular views -->
         </div>
 
-        <footer class="footer footer-dark" ng-cloak>
-            <p data-translate="footer">&copy;2017, All rights reserved.</p>
-        </footer>
+
+
+
+<!--
+     <footer class="footer footer-dark" ng-cloak>
+            <p data-translate="footer">&copy;2018, All rights reserved.</p>
+        </footer>-->
+
     </div>
     <noscript>
         <h1>You must enable javascript to view this page.</h1>
@@ -77,8 +84,20 @@
     <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
     <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
     <script src="bower_components/angular-ckeditor/angular-ckeditor.min.js"></script>
+    <script src="bower_components/underscore/underscore-min.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/angular-auto-complete/angular-auto-complete.js"></script>
     <script src="content/lib/ckeditor/ckeditor.js"></script>
     <script src="content/lib/ckeditor/plugins/ajax/ajax.js"></script>
+    <script src="content/lib/excel-library/Blob.js"></script>
+    <script src="content/lib/excel-library/canvas-datagrid.js"></script>
+    <script src="content/lib/excel-library/FileSaver.js"></script>
+    <script src="content/lib/excel-library/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+	<!-- <script src="content/lib/excel-library/ui-bootstrap-custom-tpls-0.10.0.js"></script>
+ -->
+
+
     <!-- endinject -->
     <!-- endbuild -->
 
@@ -125,6 +144,8 @@
     <script src="app/entities/opportunity-name/opportunity-name.service.js"></script>
     <script src="app/entities/opportunity-name/opportunity-name.state.js"></script>
     <script src="app/entities/file-upload-comments/file-upload-comments.service.js"></script>
+    <script src="app/entities/file-upload/file-upload.service.js"></script>
+    <script src="app/entities/additional-file-upload/additional-file-upload.service.js"></script>
     <script src="app/entities/entity.state.js"></script>
     <script src="app/components/util/truncate-words.filter.js"></script>
     <script src="app/components/util/truncate-characters.filter.js"></script>
@@ -139,6 +160,7 @@
     <script src="app/components/util/base64.service.js"></script>
     <script src="app/components/login/login.service.js"></script>
     <script src="app/components/login/login.controller.js"></script>
+    <script src="app/components/login/login.state.js"></script>
     <script src="app/components/form/show-validation.directive.js"></script>
     <script src="app/components/form/pagination.constants.js"></script>
     <script src="app/components/form/minbytes.directive.js"></script>
@@ -198,6 +220,8 @@
     <script src="app/account/activate/activate.controller.js"></script>
     <script src="app/account/account.state.js"></script>
     <script src="app/components/autocomplete/autocomplete.directive.js"></script>
+
+
     <!-- endinject -->
     <!-- endbuild -->
 

@@ -1,9 +1,14 @@
 package com.unify.rrls.repository;
 
 import com.unify.rrls.domain.OpportunityMaster;
-import org.springframework.stereotype.Repository;
+import com.unify.rrls.domain.OpportunityName;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
+
+import java.util.List;
 
 
 /**
@@ -12,5 +17,11 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface OpportunityMasterRepository extends JpaRepository<OpportunityMaster, Long> {
+	
+	Page<OpportunityMaster> findByCreatedBy(String Role,Pageable pageable);
+	List<OpportunityMaster>findByCreatedBy(String name);
+	OpportunityMaster findByMasterName(OpportunityName opportunityName);
+
+
 
 }

@@ -1,11 +1,12 @@
-
 <style>
 .capitalize {
     text-transform: capitalize;
 }
 div.scrollmenu {
-   
+
     overflow: auto;
+   /* max-width: 125px;
+    min-width: 125px;*/
     white-space: nowrap;
 }
 .bordercolor{
@@ -24,284 +25,217 @@ background-color: #9bbd85;}
 }
 table {
   border-collapse: collapse;
-  
+
 }
-.noborder{    
-border:none !important; 
+.noborder{
+border:none !important;
       border-right: none !important;
 		border-left: none !important;
 		border-top: none !important;
 		border-right-style: none !important;
 		border-left-style: none !important;
 }
+<style>
+    .table-responsive>.fixed-column {
+        position: absolute!important;
+        display: inline-block!important;
+        width: 40px!important;
+        border: none;
+        background: white!important;
+    }
+
+    @media(min-width:768px) {
+        .table-responsive>.fixed-column {
+            display: none;
+        }
+    }
+
+    .fixed-column thead,.fixed-column tbody{
+        background: white!important;
+    }
+</style>
 
 </style>
  <div ng-cloak>
+     <div class="row">
+         <div class="col-md-3 col-sm-6 col-xs-12">
+
+         </div>
+         <div class="col-md-3 col-sm-6 col-xs-12">
+
+         </div>
+
+         <div class="clearfix visible-sm-block"></div>
+
+         <div class="col-md-3 col-sm-6 col-xs-12">
+
+         </div>
+         <div class="col-md-3 col-sm-6 col-xs-12">
+
+         </div>
+     </div>
     <div class="row">
         <div class="col-md-12">
-            <h1>Welcome!</h1>
+         <!--   <h1>Welcome!</h1>-->
 
             <div ng-switch="vm.isAuthenticated()">
             <div ng-switch-when="true">
-            	<div class="alert alert-success">
+            	<!--<div class="alert alert-success">
                     You are logged in as user "{{vm.account.login |capitalize}}".
                     <br>
-                    </div>
-                     <div class="scrollmenu">
-   <table class="table table-bordered">
-  <thead>
-    <tr class="headborder">    
-      <th scope="col">#</th>
-      <th scope="col">Opportunity Name</th>
-      <th scope="col" colspan="3"></th>
-      <th scope="col" colspan="3">PAT</th>
-      <th scope="col" colspan="3">P/E</th>
-      <th scope="col" colspan="2">RoE</th>
-      <th scope="col">D/E</th>
-      <th scope="col" colspan="2">PAT Growth</th>
-      <th scope="col" colspan="2">Portfolio P/E</th>
-      <th scope="col" colspan="2">Earnings Gr</th>
-      <th scope="col"></th>
-      <th scope="col"></th>
-       <th scope="col" colspan="2">PEG - FY 18</th>      
-    </tr>
-    <tr>
-     <th scope="col"></th>
-      <th scope="col"></th>
-      <th scope="col">Weight</th>
-      <th scope="col">CMP</th>
-      <th scope="col">M Cap</th>
-      <th scope="col">FY 2017</th>
-      <th scope="col">FY 2018</th>
-      <th scope="col">FY 2019</th>
-      <th scope="col">FY 2017</th>
-      <th scope="col">FY 2018</th>
-      <th scope="col">FY 2019</th>
-      <th scope="col">FY 2018</th>
-      <th scope="col">FY 2019</th>
-      <th scope="col">FY 18</th>
-       <th scope="col">FY 2018</th>
-      <th scope="col">FY 2019</th>
-       <th scope="col">FY 2017</th>
-      <th scope="col">FY 2018</th>
-       <th scope="col">FY 2018</th>
-      <th scope="col">FY 2019</th>     
-      <th scope="col">Wt. Avg Mcap</th>
-      <th scope="col">RoE</th>
-     <th scope="col">O / J</th>
-     <th scope="col">PEG</th>  
-    </tr>
-  </thead>
-  <tbody>                  
-                            
-    <tr>
-      <th scope="row">1</th>
-      <td> <a ui-sref="opportunity-master-detail({id:7})">VIJAYA BANK</a></td>
-      <td>7.5%</td>
-      <td>129</td>
-      <td>5,397</td>
-      <td>95</td>
-      <td>210</td>
-      <td>240</td>
-      <td>56.8</td>
-      <td>25.7</td>
-      <td>22.5</td>
-      <td>15%</td>
-      <td>15%</td>
-      <td>0.53</td>
-      <td>121%</td>
-      <td>14%</td>
-      <td>4.26</td>
-      <td>1.93</td>
-      <td>9.08%</td>
-      <td>1.07%</td>
-      <td>405</td>
-      <td>1%</td>
-       <td>0.21</td>
-        <td>0.02</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td> <a ui-sref="opportunity-master-detail({id:9})">DHRUV ESTATES LTD</a></td>
-      <td>10%</td>
-      <td>202</td>
-      <td>4,568</td>
-      <td>150</td>
-      <td>198</td>
-      <td>240</td>
-      <td>30.5</td>
-      <td>23.1</td>
-      <td>19.0</td>
-      <td>15%</td>
-      <td>15%</td>
-      <td>0.50</td>
-      <td>32%</td>
-      <td>21%</td>
-      <td>3.05</td>
-      <td>2.31</td>
-      <td>3.20%</td>
-      <td>2.12%</td>
-      <td>457</td>
-      <td>2%</td>
-       <td>0.72</td>
-        <td>0.07</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td> <a ui-sref="opportunity-master-detail({id:12})">ABAN OFFSHORE LTD</a></td>
-      <td>10%</td>
-      <td>260</td>
-      <td>1,049</td>
-      <td>45</td>
-      <td>60</td>
-      <td>75</td>
-      <td>23.3</td>
-      <td>17.5</td>
-      <td>14.0</td>
-      <td>18%</td>
-      <td>19%</td>
-      <td>0.10</td>
-      <td>33%</td>
-      <td>25%</td>
-      <td>2.33</td>
-      <td>1.75</td>
-      <td>3.33%</td>
-      <td>2.50%</td>
-      <td>105</td>
-      <td>2%</td>
-       <td>0.52</td>
-        <td>0.05</td>
-    </tr>
-     <tr>
-      <th scope="row">4</th>
-       <td> <a ui-sref="opportunity-master-detail({id:13})">Polaris Consulting & Services Limited</a></td>
-      <td>7.5%</td>
-      <td>331</td>
-      <td>1,316</td>
-      <td>140</td>
-      <td>170</td>
-      <td>199</td>
-      <td>9.4</td>
-      <td>7.7</td>
-      <td>6.6</td>
-      <td>19%</td>
-      <td>19%</td>
-      <td>0.30</td>
-      <td>21%</td>
-      <td>17%</td>
-      <td>0.71</td>
-      <td>0.58</td>
-      <td>1.61%</td>
-      <td>1.28%</td>
-      <td>99</td>
-      <td>1%</td>
-       <td>0.36</td>
-        <td>0.03</td>
-    </tr>
-   <tr><th colspan="24" class="noborder"></th></tr>
-     <tr class="bordercolor">
-    <!--   <th colspan="1" class="noborder"></th> -->
-       <th colspan="2">Active Buying List</th>
-      <th>87.5%</th>
-      <th></th>
-       <th></th>
-       <th></th>
-       <th></th>
-       <th></th>
-      <th></th>
-       <th></th>
-      <th></th>
-      <th></th>
-       <th></th>
-       <th></th>
-       <th></th>
-       <th></th>
-      <th>22.19</th>
-      <th>16.36</th>
-      <th>28%</th>
-      <th>17%</th>
-       <th></th>
-       <th></th>
-       <th></th>
-      <th>0.66</th>
-    </tr>
-    <tr class="bordercolor">
-     <!--  <th colspan="1" class="noborder"></th> -->
-       <th colspan="2">Average</th>
-      <th></th>
-      <th></th>
-       <th></th>
-       <th></th>
-       <th></th>
-       <th></th>
-      <th>24.7</th>
-       <th>17.9</th>
-      <th>15.0</th>
-      <th>20%</th>
-       <th>20%</th>
-       <th></th>
-       <th>32%</th>
-       <th>20%</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-       <th></th>
-       <th></th>
-       <th></th>
-      <th></th>
-    </tr>
-    
-     <tr class="bordercolor">
-    <!--   <th colspan="1" class="noborder"></th> -->
-       <th colspan="2">Median</th>
-      <th></th>
-      <th></th>
-       <th>1,891</th>
-       <th></th>
-       <th></th>
-       <th></th>
-      <th>23.0</th>
-       <th>18.7</th>
-      <th>15.4</th>
-      <th>19%</th>
-       <th>19%</th>
-       <th></th>
-       <th>23%</th>
-       <th>18%</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-       <th></th>
-       <th></th>
-       <th></th>
-      <th></th>
-    </tr>
-   
-  </tbody>
-</table>
+                    </div>-->
+                     <div class="scrollmenu" table-scroll" id="table-scroll">
+                      <div class="table-responsive">
+                         <table id="mytable" class="table table-striped table-bordered">
+                             <thead>
+
+                             <tr class="headborder">
+
+                                 <th rowspan="2" style="vertical-align: middle;">Opportunity</th>
+                                 <th rowspan="2" style="vertical-align: middle;">Strategy</th>
+                                 <th rowspan="2" style="vertical-align: middle;">Prev. close</th>
+                                 <th rowspan="2" style="vertical-align: middle;">M.Cap</th>
+                                 <th scope="col" colspan="5">PAT</th>
+                                 <th scope="col" colspan="5">P/E</th>
+                                 <th scope="col" colspan="5">RoE</th>
+                                 <th scope="col" colspan="5">D/E</th>
+                                 <th scope="col" colspan="5">PAT Growth</th>
+                                 <th scope="col" colspan="1">PEG - FY 18</th>
+
+                             </tr>
+
+                             <tr>
+
+                                <!-- <th scope="col"></th>
+                                 <th scope="col"></th>-->
+                                <!-- <th scope="col"></th>
+                                 <th scope="col"></th>-->
+                                 <!--pat-->
+                                 <th scope="col" class="ng-binding">FY {{prevYearBefore}}</th>
+                                 <th scope="col" class="ng-binding">FY {{prevYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{currentYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{nextYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{neYearNext}}</th>
 
 
-                     
+                                 <!-- p/E-->
+                                 <th scope="col" class="ng-binding">FY {{prevYearBefore}}</th>
+                                 <th scope="col" class="ng-binding">FY {{prevYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{currentYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{nextYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{neYearNext}}</th>
+                                 <!--ROE-->
+                                 <th scope="col" class="ng-binding">FY {{prevYearBefore}}</th>
+                                 <th scope="col" class="ng-binding">FY {{prevYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{currentYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{nextYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{neYearNext}}</th>
+                                 <!--D/E-->
+                                 <th scope="col" class="ng-binding">FY {{prevYearBefore}}</th>
+                                 <th scope="col" class="ng-binding">FY {{prevYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{currentYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{nextYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{neYearNext}}</th>
+                                 <!--PAT growth-->
+
+                                 <th scope="col" class="ng-binding">FY {{prevYearBefore}}</th>
+                                 <th scope="col" class="ng-binding">FY {{prevYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{currentYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{nextYear}}</th>
+                                 <th scope="col" class="ng-binding">FY {{neYearNext}}</th>
+
+                                 <th scope="col">O/J</th>
+
+                             </tr>
+                             </thead>
+                        <tbody>
+                             <tr ng-repeat="value in vm.dashboardvalues | orderBy:predicate:reverse | filter:paginate" class="ng-scope tbody-class">
+                                 <td scope="col" style="text-align: left"><a class="ng-binding" ui-sref="opportunity-master-detail({id:value.opportunityMasterid.id})">{{value.opportunityMasterid.masterName.oppName}}</a></td>
+                                 <td style="text-align: left">
+                                     <span ng-repeat="strategy in value.strategyMasterList" class="ng-scope">
+                                         <a ui-sref="strategy-master-detail({id:strategy.id})" class="ng-binding" >{{strategy.strategyName}}</br></a>
+                                     </span>
+                                 </td>
+                                 <td style="text-align: right" class="ng-binding">{{value.cmp | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.marketCap | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patFirstYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patSecondYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patThirdYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patFourthYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patFifthYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.peFirstYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.peSecondYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.peThirdYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.peFourthYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.peFifthYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.roeFirstYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.roeSecondYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.roeThirdYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.roeFourthYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.roeFifthYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.deFirstYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.deSecondYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.deThirdColour | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.deFourthYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.deFifthYear | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthFirst | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthSecond | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthThird | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthFourth | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthFifth | number:2}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.pegOj | number:2}}</td>
+
+
+                             </tr>
+                             </tbody>
+                         </table>
+
+
+
                   <!--   <div class="list-group">
                     <div class="list-group-item list-group-item-action" ng-repeat="opportunityMaster in vm.opportunityMasters track by opportunityMaster.id">
-              
+
                     <a ui-sref="opportunity-master-detail({id:opportunityMaster.id})">{{opportunityMaster.masterName.oppName}}
                     </a>
                   </div>
                 </div> -->
-                </div> 
+                </div>
+                <div class="text-center">
+
+
+                    <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
+                    <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+                </div></div>
             </div>
-                
+
 
                 <div ng-switch-when="false">
-                  <button class="btn btn-primary" href="" ng-click="vm.login()">Sign in</button>.
+
+
+
+                 <!-- <button class="btn btn-primary" href="" ng-click="vm.login()">Sign in</button>.-->
                 </div>
-                 
+
 
             </div>
         </div>
     </div>
 </div>
+<footer class="footer footer-dark" ng-cloak>
+    <p data-translate="footer" style="font-size: 12px">&copy;{{currentYear}}, All rights reserved.</p>
+</footer>
 
+<script>
+$(window).on('load',function(){
+    var $table = $('#mytable');
+    var $fixedColumn = $table.clone().insertBefore($table).addClass('fixed-column');
+
+    //$fixedColumn.find('th:not(:lt(4)),tbody > .tbody-class td:not(:lt(4))').remove();
+
+    $fixedColumn.find('th:not(:lt(4)), tbody tr td:not(:nth-child(-n+4))').remove();
+
+    $fixedColumn.find('tr').each(function (i, elem) {
+        $(this).height($table.find('tr:eq(' + i + ')').height());
+    });
+});    
+</script>

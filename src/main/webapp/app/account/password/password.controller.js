@@ -3,17 +3,25 @@
 
     angular
         .module('researchRepositoryLearningSystemApp')
-        .controller('PasswordController', PasswordController);
+        .controller('PasswordController', PasswordController)
+        .directive("compareTo",compareTo);
 
-    PasswordController.$inject = ['Auth', 'Principal'];
 
-    function PasswordController (Auth, Principal) {
+
+    PasswordController.$inject = ['Auth', 'Principal','$scope','$filter'];
+
+    function PasswordController (Auth, Principal,$scope,$filter) {
         var vm = this;
 
         vm.changePassword = changePassword;
         vm.doNotMatch = null;
         vm.error = null;
         vm.success = null;
+
+
+        var myDate=new Date();
+
+        $scope.currentYear = $filter('date')(myDate,'yyyy');
 
         Principal.identity().then(function(account) {
             vm.account = account;
@@ -36,4 +44,24 @@
             }
         }
     }
+
+
+    function compareTo() {
+        return {
+            require: "ngModel",
+            scope: {
+                otherModelValue: "=compareTo"
+            },
+            link: function(scope, element, attributes, ngModel) {
+
+                ngModel.$validators.compareTo = function(modelValue) {
+                    return modelValue == scope.otherModelValue;
+                };
+
+                scope.$watch("otherModelValue", function() {
+                    ngModel.$validate();
+                });
+            }
+        };
+    };
 })();

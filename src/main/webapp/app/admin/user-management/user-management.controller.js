@@ -5,12 +5,12 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('UserManagementController', UserManagementController);
 
-    UserManagementController.$inject = ['Principal', 'User', 'ParseLinks', 'AlertService', '$state', 'pagingParams', 'paginationConstants'];
+    UserManagementController.$inject = ['Principal', 'User', 'ParseLinks', 'AlertService', '$state', 'pagingParams', 'paginationConstants','$scope','$filter'];
 
-    function UserManagementController(Principal, User, ParseLinks, AlertService, $state, pagingParams, paginationConstants) {
+    function UserManagementController(Principal, User, ParseLinks, AlertService, $state, pagingParams, paginationConstants,$scope,$filter) {
         var vm = this;
 
-        vm.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
+        vm.authorities = ['User', 'Admin'];
         vm.currentAccount = null;
         vm.languages = null;
         vm.loadAll = loadAll;
@@ -25,11 +25,16 @@
         vm.reverse = pagingParams.ascending;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
         vm.transition = transition;
+        vm.itemsValue = 'Users';
 
         vm.loadAll();
         Principal.identity().then(function(account) {
             vm.currentAccount = account;
         });
+
+         var myDate=new Date();
+
+        $scope.currentYear = $filter('date')(myDate,'yyyy');
 
         function setActive (user, isActivated) {
             user.activated = isActivated;
@@ -53,6 +58,7 @@
             vm.queryCount = vm.totalItems;
             vm.page = pagingParams.page;
             vm.users = data;
+
         }
 
         function onError(error) {

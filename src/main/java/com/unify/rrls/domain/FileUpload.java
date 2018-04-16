@@ -1,19 +1,24 @@
 package com.unify.rrls.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import java.io.Serializable;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Objects;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * A FileUpload.
  */
@@ -41,10 +46,16 @@ public class FileUpload extends AbstractAuditingEntity implements Serializable {
 
     @Column(name = "add_file_flag", length = 10)
     private Integer addFileFlag;
-    
+
+    @Column(name = "file_status")
+    private String fileStatus;
+
+    @Column(name="file_format_type")
+    private String filetype;
+  
     @Transient
-    @JsonProperty
-	private List<FileUploadComments> fileUploadCommentList;	
+	@JsonProperty
+	private String htmlContent;
 
    /* @Size(max = 100)
     @Column(name = "created_by", length = 100)
@@ -63,9 +74,8 @@ public class FileUpload extends AbstractAuditingEntity implements Serializable {
 */
     @ManyToOne
     @JoinColumn(name = "opportunity_master_id")
-    @JsonIgnore
     private OpportunityMaster opportunityMasterId;
-  
+
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -79,6 +89,14 @@ public class FileUpload extends AbstractAuditingEntity implements Serializable {
     public FileUpload id(Long id) {
         this.id = id;
         return this;
+    }
+
+    public String getFiletype() {
+        return filetype;
+    }
+
+    public void setFiletype(String filetype) {
+        this.filetype = filetype;
     }
 
     public String getFileName() {
@@ -132,13 +150,12 @@ public class FileUpload extends AbstractAuditingEntity implements Serializable {
     public void setAddFileFlag(Integer addFileFlag) {
         this.addFileFlag = addFileFlag;
     }
-
-    public List<FileUploadComments> getFileUploadCommentList() {
-		return fileUploadCommentList;
+  
+    public String getHtmlContent() {
+		return htmlContent;
 	}
-    
-    public void setFileUploadCommentList(List<FileUploadComments> fileUploadCommentList) {
-		this.fileUploadCommentList = fileUploadCommentList;
+    public void setHtmlContent(String htmlContent) {
+		this.htmlContent = htmlContent;
 	}
 
   /*  public String getCreatedBy() {
@@ -205,9 +222,18 @@ public class FileUpload extends AbstractAuditingEntity implements Serializable {
     public void setOpportunityMasterId(OpportunityMaster OpportunityMaster) {
         this.opportunityMasterId = OpportunityMaster;
     }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
-    @Override
+    public String getFileStatus() {
+		return fileStatus;
+	}
+
+	public void setFileStatus(String fileStatus) {
+		this.fileStatus = fileStatus;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -234,7 +260,7 @@ public class FileUpload extends AbstractAuditingEntity implements Serializable {
             ", fileName='" + getFileName() + "'" +
             ", fileData='" + getFileData() + "'" +
             ", fileDataContentType='" + fileDataContentType + "'" +
-            ", addFileFlag='" + getAddFileFlag() + "'" +          
+            ", addFileFlag='" + getAddFileFlag() + "'" +
             "}";
     }*/
 }

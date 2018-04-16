@@ -13,8 +13,8 @@
             parent: 'entity',
             url: '/opportunity-master',
             data: {
-                authorities: ['ROLE_USER'],
-                pageTitle: 'Opportunity Master'
+                authorities: ['User'],
+                pageTitle: 'Opportunity'
             },
             views: {
                 'content@': {
@@ -23,14 +23,32 @@
                     controllerAs: 'vm'
                 }
             },
+            params: {
+                page: {
+                    value: '1',
+                    squash: true
+                },
+                sort: {
+                    value: 'id,asc',
+                    squash: true
+                }
+            },
             resolve: {
+                pagingParams: ['$stateParams', 'PaginationUtil', function ($stateParams, PaginationUtil) {
+                    return {
+                        page: PaginationUtil.parsePage($stateParams.page),
+                        sort: $stateParams.sort,
+                        predicate: PaginationUtil.parsePredicate($stateParams.sort),
+                        ascending: PaginationUtil.parseAscending($stateParams.sort)
+                    };
+                }]
             }
         })
         .state('opportunity-master-detail', {
             parent: 'opportunity-master',
             url: '/opportunity-master/{id}',
             data: {
-                authorities: ['ROLE_USER'],
+                authorities: ['User'],
                 pageTitle: 'Opportunity Master'
             },
             views: {
@@ -53,12 +71,12 @@
                     return currentStateData;
                 }]
             }
-        })         
+        })
         .state('opportunity-master-detail.edit', {
             parent: 'opportunity-master-detail',
             url: '/detail/edit',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -83,7 +101,7 @@
             parent: 'opportunity-master',
             url: '/new',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             views: {
                 'content@': {
@@ -95,7 +113,6 @@
             resolve: {
                 entity: function () {
                     return {
-                        strategyId: null,                      
                         oppDescription: null,
                         createdBy: null,
                         updatedBy: null,
@@ -138,7 +155,7 @@
             parent: 'opportunity-master',
             url: '/{id}/edit',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             views: {
                 'content@': {
@@ -179,7 +196,7 @@
             parent: 'opportunity-master',
             url: '/{id}/delete',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -198,7 +215,26 @@
                     $state.go('^');
                 });
             }]
-        });
+        })
+   /*   .state('opportunity-master.download',{
+          parent: 'download',
+          url: '/{fileName}',
+
+          views :{
+
+          },
+
+          resolve: {
+
+          },
+          onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+              var vm = this;
+              vm.readOnly = true;
+          }]
+
+
+        })*/
+           ;
     }
 
 })();

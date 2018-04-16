@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('StrategyMasterController', StrategyMasterController);
 
-    StrategyMasterController.$inject = ['StrategyMaster', 'ParseLinks', 'AlertService', 'paginationConstants'];
+    StrategyMasterController.$inject = ['StrategyMaster', 'ParseLinks', 'AlertService', 'paginationConstants','$scope','$filter'];
 
-    function StrategyMasterController(StrategyMaster, ParseLinks, AlertService, paginationConstants) {
+    function StrategyMasterController(StrategyMaster, ParseLinks, AlertService, paginationConstants,$scope,$filter) {
 
         var vm = this;
 
@@ -23,6 +23,11 @@
         vm.reverse = true;
 
         loadAll();
+
+
+        var myDate=new Date();
+
+        $scope.currentYear = $filter('date')(myDate,'yyyy');
 
         function loadAll () {
             StrategyMaster.query({
@@ -44,12 +49,30 @@
                 for (var i = 0; i < data.length; i++) {
                     vm.strategyMasters.push(data[i]);
                 }
+
             }
 
             function onError(error) {
                 AlertService.error(error.data.message);
             }
+
+
         }
+
+
+        $scope.getTotal = function() {
+            var total = 0;
+            angular.forEach(vm.strategyMasters, function(el) {
+
+                if(el.aum != null)
+                {
+                    total += parseFloat(el.aum);
+                }
+
+            });
+            return total;
+        };
+
 
         function reset () {
             vm.page = 0;
@@ -63,3 +86,4 @@
         }
     }
 })();
+

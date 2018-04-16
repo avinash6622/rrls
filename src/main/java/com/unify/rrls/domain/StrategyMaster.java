@@ -1,5 +1,6 @@
 package com.unify.rrls.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -24,7 +26,7 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-   
+
     @Size(max = 20)
     @Column(name = "strategy_code", length = 20, nullable = false)
     private String strategyCode;
@@ -39,21 +41,21 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
 
     @Column(name = "date_active")
     private LocalDate dateActive;
-/*
-   @Size(max = 50)
-    @Column(name = "created_by", length = 50)
-    private String createdBy;
 
-    @Size(max = 50)
-    @Column(name = "updated_by", length = 50)
-    private String updatedBy;
 
-    
-    @Column(name = "created_date", nullable = false)
-    private LocalDate createdDate;
+    @Column(name="AUM")
+    private Double aum;
 
-    @Column(name = "updated_date")
-    private Instant updatedDate;*/
+
+ /*   @Column(name="Total_AUM")
+    private String totalAum;*/
+
+    @Column(name="Total_stocks")
+    private Double totalStocks;
+
+    @Transient
+    @JsonProperty
+    private List<OpportunitySummaryData> opportunitySummaryData;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -116,58 +118,31 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
         this.dateActive = dateActive;
     }
 
- /*public String getCreatedBy() {
-        return createdBy;
+    public List<OpportunitySummaryData> getOpportunitySummaryData() {
+        return opportunitySummaryData;
     }
 
-    public StrategyMaster createdBy(String createdBy) {
-        this.createdBy = createdBy;
-        return this;
+    public void setOpportunitySummaryData(List<OpportunitySummaryData> opportunitySummaryData) {
+        this.opportunitySummaryData = opportunitySummaryData;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public Double getAum() {
+        return aum;
     }
 
-    public String getUpdatedBy() {
-        return updatedBy;
+    public void setAum(Double aum) {
+        this.aum = aum;
     }
 
-    public StrategyMaster updatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-        return this;
+    public Double getTotalStocks() {
+        return totalStocks;
     }
 
-    public void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
+    public void setTotalStocks(Double totalStocks) {
+        this.totalStocks = totalStocks;
     }
 
-    public LocalDate getCreatedDate() {
-        return createdDate;
-    }
 
-    public StrategyMaster createdDate(LocalDate createdDate) {
-        this.createdDate = createdDate;
-        return this;
-    }
-
-    public void setCreatedDate(LocalDate createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Instant getUpdatedDate() {
-        return updatedDate;
-    }
-
-    public StrategyMaster updatedDate(Instant updatedDate) {
-        this.updatedDate = updatedDate;
-        return this;
-    }
-
-    public void setUpdatedDate(Instant updatedDate) {
-        this.updatedDate = updatedDate;
-    }*/
-    
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -190,18 +165,16 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
         return Objects.hashCode(getId());
     }
 
-   /* @Override
+  /*  @Override
     public String toString() {
         return "StrategyMaster{" +
-            "id=" + getId() +
-            ", strategyCode='" + getStrategyCode() + "'" +
-            ", strategyName='" + getStrategyName() + "'" +
-            ", sStatus='" + getsStatus() + "'" +
-            ", dateActive='" + getDateActive() + "'" +
-            ", createdBy='" + getCreatedBy() + "'" +
-            ", updatedBy='" + getUpdatedBy() + "'" +
-            ", createdDate='" + getCreatedDate() + "'" +
-            ", updatedDate='" + getUpdatedDate() + "'" +
-            "}";
-    }*/
+            "id=" + id +
+            ", strategyCode='" + strategyCode + '\'' +
+            ", strategyName='" + strategyName + '\'' +
+            ", sStatus=" + sStatus +
+            ", dateActive=" + dateActive +
+            '}';
+    }
+*/
+
 }

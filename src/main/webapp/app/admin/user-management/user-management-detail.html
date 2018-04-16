@@ -1,9 +1,50 @@
+<style>
+
+    .col-xs-3 .btn{
+        padding:2px !important;
+        padding-right: 4px !important;
+
+    }
+    .page-header{
+         padding-bottom: 0px!important;
+         border-bottom: 0px !important;
+}
+</style>
+
 <div>
-    <h2>
-        <span>User</span> [<b>{{vm.user.login}}</b>]
-    </h2>
+    <div class="well">
+
+        <div class="page-header" style="margin:0">
+            <div class="row">
+                <div class="col-md-6"><h4 style="margin-top:0;"><span><strong>User</strong></span></h4></div>
+                <div class="pull-right">
+                    <div class="col-xs-3">
+                        <button type="submit"
+                                ui-sref="user-management"
+                                class="btn btn-info">
+                            <span class="glyphicon glyphicon-arrow-left"></span><span>Back</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+<!--
+        <div class="row">
+ <div>
+        <div class="pull-right">
+        <button type="submit"
+                ui-sref="user-management"
+                class="btn btn-info">
+            <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span>Back</span>
+        </button>
+        </div>
+        </div>-->
     <dl class="dl-horizontal jh-entity-details">
-        <dt><span>Login</span></dt>
+        <dt><span>Login:</span></dt>
         <dd>
             <span>{{vm.user.login}}</span>
             <span class="label label-danger" ng-show="!vm.user.activated"
@@ -11,32 +52,38 @@
             <span class="label label-success" ng-show="vm.user.activated"
                  >Activated</span>
         </dd>
-        <dt><span>First Name</span></dt>
+        <dt><span>First Name:</span></dt>
         <dd>{{vm.user.firstName}}</dd>
-        <dt><span>Last Name</span></dt>
+        <dt><span>Last Name:</span></dt>
         <dd>{{vm.user.lastName}}</dd>
-        <dt><span>Email</span></dt>
+        <dt><span>Email:</span></dt>
         <dd>{{vm.user.email}}</dd>
-        <dt><span>Created By</span></dt>
+       <!-- <dt><span>Role</span></dt>
+        <dd>{{vm.user.roleMaster.roleName}}</dd>-->
+        <dt><span>Created By:</span></dt>
         <dd>{{vm.user.createdBy}}</dd>
-        <dt><span>Created Date</span></dt>
+        <dt><span>Created Date:</span></dt>
         <dd>{{vm.user.createdDate | date:'dd/MM/yy HH:mm' }}</dd>
-        <dt><span>Last Modified By</span></dt>
+        <dt><span>Last Modified By:</span></dt>
         <dd>{{vm.user.lastModifiedBy}}</dd>
-        <dt><span>Last Modified Date</span></dt>
+        <dt><span>Last Modified Date:</span></dt>
         <dd>{{vm.user.lastModifiedDate | date:'dd/MM/yy HH:mm'}}</dd>
-        <dt><span>Profiles</span></dt>
+        <!-- <dt><span>Research Analyst</span></dt>
+        <dd>{{vm.user.userId.login}}</dd>-->
+        <dt><span>Roles:</span></dt>
         <dd>
             <ul class="list-unstyled">
                 <li ng-repeat="authority in vm.user.authorities">
-                    <span class="label label-info">{{authority}}</span>
+                    <span ng-if="authority!='User'" class="label label-info">{{authority}}</span>
                 </li>
             </ul>
         </dd>
     </dl>
-    <button type="submit"
-            ui-sref="user-management"
-            class="btn btn-info">
-        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
-    </button>
+
+</div>
+</div>
+    <footer class="footer footer-dark" ng-cloak>
+        <p data-translate="footer" style="font-size: 12px;margin-left: 9px">&copy;2018, All rights reserved.</p>
+    </footer>
+
 </div>

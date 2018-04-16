@@ -4,10 +4,11 @@
     angular
         .module('researchRepositoryLearningSystemApp')
         .controller('ResetFinishController', ResetFinishController);
+      /*  .directive("compareTo1",compareTo1);*/
 
-    ResetFinishController.$inject = ['$stateParams', '$timeout', 'Auth', 'LoginService'];
+    ResetFinishController.$inject = ['$stateParams', '$timeout', 'Auth', 'LoginService','$scope','$filter'];
 
-    function ResetFinishController ($stateParams, $timeout, Auth, LoginService) {
+    function ResetFinishController ($stateParams, $timeout, Auth, LoginService,$scope,$filter) {
         var vm = this;
 
         vm.keyMissing = angular.isUndefined($stateParams.key);
@@ -20,6 +21,11 @@
         vm.success = null;
 
         $timeout(function (){angular.element('#password').focus();});
+
+
+        var myDate=new Date();
+
+        $scope.currentYear = $filter('date')(myDate,'yyyy');
 
         function finishReset() {
             vm.doNotMatch = null;
@@ -36,4 +42,22 @@
             }
         }
     }
+/*    function compareTo1() {
+        return {
+            require: "ngModel",
+            scope: {
+                otherModelValue: "=compareTo1"
+            },
+            link: function(scope, element, attributes, ngModel) {
+
+                ngModel.$validators.compareTo1 = function(modelValue) {
+                    return modelValue == scope.otherModelValue;
+                };
+
+                scope.$watch("otherModelValue", function() {
+                    ngModel.$validate();
+                });
+            }
+        };
+    };*/
 })();

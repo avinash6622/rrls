@@ -1,5 +1,8 @@
 package com.unify.rrls.security;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -78,5 +81,17 @@ public final class SecurityUtils {
                 .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(authority));
         }
         return false;
+    }
+    
+    public static String getCurrentRoleLogin() {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        String roleMaster = null;
+        if (authentication != null) {
+        	List<?> roles=new ArrayList(authentication.getAuthorities());
+        	roleMaster=roles.get(0).toString();
+       System.out.println(roleMaster);
+        }
+        return roleMaster;
     }
 }

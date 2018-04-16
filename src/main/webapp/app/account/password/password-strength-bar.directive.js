@@ -11,8 +11,8 @@
             replace: true,
             restrict: 'E',
             template: '<div id="strength">' +
-                '<small>Password strength:</small>' +
-                '<ul id="strengthBar">' +
+                '<small style="padding-left:12px;">Password strength:</small>' +
+                '<ul id="strengthBar" style="padding-left:12px;">' +
                 '<li class="point"></li><li class="point"></li><li class="point"></li><li class="point"></li><li class="point"></li>' +
                 '</ul>' +
                 '</div>',

@@ -1,4 +1,4 @@
-package com.unify.rrls.web.rest;
+/*package com.unify.rrls.web.rest;
 
 import com.unify.rrls.ResearchRepositoryLearningSystemApp;
 
@@ -32,11 +32,11 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-/**
+*//**
  * Test class for the FileUploadCommentsResource REST controller.
  *
  * @see FileUploadCommentsResource
- */
+ *//*
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ResearchRepositoryLearningSystemApp.class)
 public class FileUploadCommentsResourceIntTest {
@@ -88,12 +88,12 @@ public class FileUploadCommentsResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
-    /**
+    *//**
      * Create an entity for this test.
      *
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
-     */
+     *//*
     public static FileUploadComments createEntity(EntityManager em) {
         FileUploadComments fileUploadComments = new FileUploadComments()
             .fileComments(DEFAULT_FILE_COMMENTS)
@@ -298,3 +298,4 @@ public class FileUploadCommentsResourceIntTest {
         assertThat(fileUploadComments1).isNotEqualTo(fileUploadComments2);
     }
 }
+*/

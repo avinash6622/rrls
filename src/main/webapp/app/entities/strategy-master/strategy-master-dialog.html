@@ -4,37 +4,23 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myStrategyMasterLabel">Create or edit a Strategy Master</h4>
+        <h4 class="modal-title" id="myStrategyMasterLabel" ng-show="!vm.strategyMaster.id">Create Strategy</h4>
+        <h4 class="modal-title" id="myStrategyMasterLabel1" ng-show="vm.strategyMaster.id">Edit Strategy</h4>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" ng-show="vm.strategyMaster.id">
-            <label for="id">ID</label>
+           <!-- <label for="id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
-                    ng-model="vm.strategyMaster.id" readonly />
+                    ng-model="vm.strategyMaster.id" readonly />-->
         </div>
+
         <div class="form-group">
-            <label class="control-label" for="field_strategyCode">Strategy Code</label>
-            <input type="text" class="form-control" name="strategyCode" id="field_strategyCode"
-                    ng-model="vm.strategyMaster.strategyCode"
-                    required ng-maxlength="20"/>
-            <div ng-show="editForm.strategyCode.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.strategyCode.$error.required">
-                    This field is required.
-                </p>
-                <p class="help-block"
-                    ng-show="editForm.strategyCode.$error.maxlength">
-                    This field cannot be longer than 20 characters.
-                </p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="field_strategyName">Strategy Name</label>
+
             <input type="text" class="form-control" name="strategyName" id="field_strategyName"
                     ng-model="vm.strategyMaster.strategyName"
-                    required ng-maxlength="40"/>
-            <div ng-show="editForm.strategyName.$invalid">
+                    required ng-maxlength="40" placeholder="Strategy Name"/>
+         <!--   <div ng-show="editForm.strategyName.$invalid">
                 <p class="help-block"
                     ng-show="editForm.strategyName.$error.required">
                     This field is required.
@@ -43,85 +29,53 @@
                     ng-show="editForm.strategyName.$error.maxlength">
                     This field cannot be longer than 40 characters.
                 </p>
-            </div>
+            </div>-->
         </div>
-        <div class="form-group">
-            <label class="control-label" for="field_sStatus">Status</label>
-            <!--<input type="number" class="form-control" name="sStatus" id="field_sStatus"
-                    ng-model="vm.strategyMaster.sStatus"
-                    />-->
-            <select class="form-control" name="sStatus" id="field_sStatus" ng-model="vm.strategyMaster.sStatus">
-                <option value="1" ng-selected="vm.strategyMaster.sStatus == 1">Active</option>
-                <option value="0" ng-selected="vm.strategyMaster.sStatus == 0">Inactive</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="field_dateActive">Date Active</label>
-                <div class="input-group">
-                    <input id="field_dateActive" type="text" class="form-control" name="dateActive" uib-datepicker-popup="{{dateformat}}" ng-model="vm.strategyMaster.dateActive" is-open="vm.datePickerOpenStatus.dateActive"
-                    />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dateActive')"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                </div>
-        </div>
-       <!--   <div class="form-group">
-            <label class="control-label" for="field_createdBy">Created By</label>
-            <input type="text" class="form-control" name="createdBy" id="field_createdBy"
-                    ng-model="vm.strategyMaster.createdBy"
-                    ng-maxlength="50"/>
-            <div ng-show="editForm.createdBy.$invalid">
+
+        <div class="form-group" ng-show="vm.strategyMaster.id">
+
+            <input type="text" class="form-control" name="Aum" id="field_strategyAum"
+                   ng-model="vm.strategyMaster.aum"
+                   required ng-maxlength="40" placeholder="AUM"/>
+       <!--     <div ng-show="editForm.Aum.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.createdBy.$error.maxlength">
-                    This field cannot be longer than 50 characters.
-                </p>
-            </div>
-        </div>  -->
-       <!--   <div class="form-group">
-            <label class="control-label" for="field_updatedBy">Updated By</label>
-            <input type="text" class="form-control" name="updatedBy" id="field_updatedBy"
-                    ng-model="vm.strategyMaster.updatedBy"
-                    ng-maxlength="50"/>
-            <div ng-show="editForm.updatedBy.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.updatedBy.$error.maxlength">
-                    This field cannot be longer than 50 characters.
-                </p>
-            </div>
-        </div>  -->
-     <!--     <div class="form-group">
-            <label class="control-label" for="field_createdDate">Created Date</label>
-                <div class="input-group">
-                    <input id="field_createdDate" type="text" class="form-control" name="createdDate" uib-datepicker-popup="{{dateformat}}" ng-model="vm.strategyMaster.createdDate" is-open="vm.datePickerOpenStatus.createdDate"
-                    required/>
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('createdDate')"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                </div>
-            <div ng-show="editForm.createdDate.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.createdDate.$error.required">
+                   ng-show="editForm.Aum.$error.required">
                     This field is required.
                 </p>
-            </div>
-        </div> -->
-      <!--   <div class="form-group">
-            <label class="control-label" for="field_updatedDate">Updated Date</label>
-                <div class="input-group">
-                    <input id="field_updatedDate" type="text" class="form-control" name="updatedDate" datetime-picker="{{dateformat}}" ng-model="vm.strategyMaster.updatedDate" is-open="vm.datePickerOpenStatus.updatedDate"
-                    />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('updatedDate')"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                </div>
-        </div> -->
+                <p class="help-block"
+                   ng-show="editForm.Aum.$error.maxlength">
+                    This field cannot be longer than 40 characters.
+                </p>
+            </div>-->
+        </div>
+
+
+
+        <div class="form-group" ng-show="vm.strategyMaster.id">
+
+            <input type="text" class="form-control" name="TotalStocks" id="field_strategyTotalStocks"
+                   ng-model="vm.strategyMaster.totalStocks"
+                   required ng-maxlength="40" placeholder="Total Stocks"/>
+       <!--     <div ng-show="editForm.TotalStocks.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.TotalStocks.$error.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                   ng-show="editForm.TotalStocks.$error.maxlength">
+                    This field cannot be longer than 40 characters.
+                </p>
+            </div>-->
+        </div>
+
+
 
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
         </button>
-        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
         </button>
     </div>

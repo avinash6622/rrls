@@ -13,7 +13,7 @@
             parent: 'entity',
             url: '/strategy-master',
             data: {
-                authorities: ['ROLE_USER'],
+                authorities: ['User'],
                 pageTitle: 'Strategy Master'
             },
             views: {
@@ -23,14 +23,33 @@
                     controllerAs: 'vm'
                 }
             },
+
+            params: {
+                page: {
+                    value: '1',
+                    squash: true
+                },
+                sort: {
+                    value: 'id,asc',
+                    squash: true
+                }
+            },
             resolve: {
+                pagingParams: ['$stateParams', 'PaginationUtil', function ($stateParams, PaginationUtil) {
+                    return {
+                        page: PaginationUtil.parsePage($stateParams.page),
+                        sort: $stateParams.sort,
+                        predicate: PaginationUtil.parsePredicate($stateParams.sort),
+                        ascending: PaginationUtil.parseAscending($stateParams.sort)
+                    };
+                }]
             }
         })
         .state('strategy-master-detail', {
             parent: 'strategy-master',
             url: '/strategy-master/{id}',
             data: {
-                authorities: ['ROLE_USER'],
+                authorities: ['User'],
                 pageTitle: 'Strategy Master'
             },
             views: {
@@ -40,6 +59,8 @@
                     controllerAs: 'vm'
                 }
             },
+
+
             resolve: {
                 entity: ['$stateParams', 'StrategyMaster', function($stateParams, StrategyMaster) {
                     return StrategyMaster.get({id : $stateParams.id}).$promise;
@@ -58,7 +79,7 @@
             parent: 'strategy-master-detail',
             url: '/detail/edit',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -66,7 +87,7 @@
                     controller: 'StrategyMasterDialogController',
                     controllerAs: 'vm',
                     backdrop: 'static',
-                    size: 'lg',
+                    size: 't',
                     resolve: {
                         entity: ['StrategyMaster', function(StrategyMaster) {
                             return StrategyMaster.get({id : $stateParams.id}).$promise;
@@ -83,7 +104,7 @@
             parent: 'strategy-master',
             url: '/new',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -118,7 +139,7 @@
             parent: 'strategy-master',
             url: '/{id}/edit',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -143,7 +164,7 @@
             parent: 'strategy-master',
             url: '/{id}/delete',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['User']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({

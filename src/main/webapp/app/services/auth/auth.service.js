@@ -113,6 +113,7 @@
                 }.bind(this));
 
             function loginThen (data) {
+                $state.reload();
                 Principal.identity(true).then(function(account) {
                     deferred.resolve(data);
                 });

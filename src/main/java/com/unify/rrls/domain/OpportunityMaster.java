@@ -1,28 +1,17 @@
 package com.unify.rrls.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 /**
  * A OpportunityMaster.
@@ -36,13 +25,16 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;	
-
-	/*@Column(name = "opp_name")
-	private String oppName;*/
+	private Long id;
 
 	@Column(name = "opp_description")
 	private String oppDescription;
+
+	@Column(name = "opp_status")
+	private String oppStatus;
+
+	@Column(name = "description")
+    private String statusDes;
 
 	@Transient
 	@JsonProperty
@@ -50,26 +42,52 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 
 	@Transient
 	@JsonProperty
-	private List<FileUploadComments> fileUploadCommentList;	
-	
-	
+	private List<FileUploadComments> fileUploadCommentList;
+
+
 	@Transient
 	@JsonProperty
 	private List<StrategyMaster> selectedStrategyMaster;
-	
-	@ManyToOne
-	@JoinColumn(name = "strategy_master_id")
-	private StrategyMaster strategyMasterId;
+
+	@Transient
+    @JsonProperty
+    private StrategyMapping strategyMapping;
+
+	/*@OneToMany(mappedBy = "opportunityMasterId",cascade={CascadeType.PERSIST},fetch = FetchType.EAGER)*/
+	@Transient
+    @JsonProperty
+    private List<OpportunityMasterContact> selectedoppContanct;
+
+	@Transient
+    @JsonProperty
+    private OpportunitySummaryData opportunitySummaryData;
+
+	@Transient
+    @JsonProperty
+    private FinancialSummaryData financialSummaryData;
+
+
+    @Transient
+    @JsonProperty
+    private NonFinancialSummaryData nonFinancialSummaryData;
+    
+   	//private List<StrategyMaster> selectedStrategyMaster=new ArrayList<StrategyMaster>();
 
 	@OneToMany(mappedBy = "opportunityMasterId")
 	private List<FileUpload> fileUploads;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "master_name")
 	private OpportunityName masterName;
-	
-	@OneToMany(mappedBy = "strategyMaster",cascade={CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)	
-	private List<StrategyMapping> strategyMapping;
+
+
+ /*   @OneToOne(fetch = FetchType.LAZY,
+        cascade =  CascadeType.ALL,
+        mappedBy = "OpportunityMasterID")
+    private OpportunityMasterContact opportunityMasterContact;*/
+
+	/*@OneToMany(mappedBy = "strategyMaster",cascade={CascadeType.PERSIST},fetch = FetchType.EAGER)
+	private List<StrategyMapping> strategyMapping;*/
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
 	public Long getId() {
@@ -79,19 +97,6 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	/*public String getOppName() {
-		return oppName;
-	}
-
-	public OpportunityMaster oppName(String oppName) {
-		this.oppName = oppName;
-		return this;
-	}
-
-	public void setOppName(String oppName) {
-		this.oppName = oppName;
-	}*/
 
 	public String getOppDescription() {
 		return oppDescription;
@@ -104,19 +109,6 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 
 	public void setOppDescription(String oppDescription) {
 		this.oppDescription = oppDescription;
-	}
-
-	public StrategyMaster getStrategyMasterId() {
-		return strategyMasterId;
-	}
-
-	public OpportunityMaster strategyMasterId(StrategyMaster strategyMasterId) {
-		this.strategyMasterId = strategyMasterId;
-		return this;
-	}
-
-	public void setStrategyMasterId(StrategyMaster strategyMasterId) {
-		this.strategyMasterId = strategyMasterId;
 	}
 
 	public String getHtmlContent() {
@@ -142,21 +134,21 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	public void setFileUploadCommentList(List<FileUploadComments> fileUploadCommentList) {
 		this.fileUploadCommentList = fileUploadCommentList;
 	}
-	
+
 	public OpportunityName getMasterName() {
 		return masterName;
 	}
 	public void setMasterName(OpportunityName masterName) {
 		this.masterName = masterName;
 	}
-	
-	public List<StrategyMapping> getStrategyMapping() {
+
+	/*public List<StrategyMapping> getStrategyMapping() {
 		return strategyMapping;
 	}
 	public void setStrategyMapping(List<StrategyMapping> strategyMapping) {
 		this.strategyMapping = strategyMapping;
-	}
-	
+	}*/
+
 	public void setSelectedStrategyMaster(List<StrategyMaster> selectedStrategyMaster) {
 		this.selectedStrategyMaster = selectedStrategyMaster;
 	}
@@ -165,8 +157,47 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	}
 	// jhipster-needle-entity-add-getters-setters - JHipster will add getters
 	// and setters here, do not remove
+	public String getOppStatus() {
+		return oppStatus;
+	}
+	public void setOppStatus(String oppStatus) {
+		this.oppStatus = oppStatus;
+	}
 
-	@Override
+    public List<OpportunityMasterContact> getSelectedoppContanct() {
+        return selectedoppContanct;
+    }
+
+    public void setSelectedoppContanct(List<OpportunityMasterContact> selectedoppContanct) {
+        this.selectedoppContanct = selectedoppContanct;
+    }
+
+
+  public OpportunitySummaryData getOpportunitySummaryData() {
+        return opportunitySummaryData;
+    }
+
+    public void setOpportunitySummaryData(OpportunitySummaryData opportunitySummaryData) {
+        this.opportunitySummaryData = opportunitySummaryData;
+    }
+
+    public FinancialSummaryData getFinancialSummaryData() {
+        return financialSummaryData;
+    }
+
+    public void setFinancialSummaryData(FinancialSummaryData financialSummaryData) {
+        this.financialSummaryData = financialSummaryData;
+    }
+
+    public NonFinancialSummaryData getNonFinancialSummaryData() {
+        return nonFinancialSummaryData;
+    }
+
+    public void setNonFinancialSummaryData(NonFinancialSummaryData nonFinancialSummaryData) {
+        this.nonFinancialSummaryData = nonFinancialSummaryData;
+    }
+
+    @Override
 	public boolean equals(Object o) {
 		if (this == o) {
 			return true;
@@ -181,9 +212,41 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 		return Objects.equals(getId(), opportunityMaster.getId());
 	}
 
-	@Override
+    @Override
+    public String toString() {
+        return "OpportunityMaster{" +
+            "selectedStrategyMaster=" + selectedStrategyMaster +
+            /*", strategyMapping=" + strategyMapping +*/
+            '}';
+    }
+/*    @Override
+    public String toString() {
+        return "OpportunityMaster{" +
+            "id=" + id +
+            ", oppDescription='" + oppDescription + '\'' +
+            ", oppStatus='" + oppStatus + '\'' +
+            ", statusDes='" + statusDes + '\'' +
+            ", htmlContent='" + htmlContent + '\'' +
+            ", fileUploadCommentList=" + fileUploadCommentList +
+            ", selectedStrategyMaster=" + selectedStrategyMaster +
+            ", selectedoppContanct=" + selectedoppContanct +
+            ", financialSummaryData=" + financialSummaryData +
+            ", fileUploads=" + fileUploads +
+            ", masterName=" + masterName +
+            ", strategyMapping=" + strategyMapping +
+            '}';
+    }*/
+
+    @Override
 	public int hashCode() {
 		return Objects.hashCode(getId());
 	}
 
+    public String getStatusDes() {
+        return statusDes;
+    }
+
+    public void setStatusDes(String statusDes) {
+        this.statusDes = statusDes;
+    }
 }

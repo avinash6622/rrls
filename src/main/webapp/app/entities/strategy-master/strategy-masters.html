@@ -1,70 +1,120 @@
+<style>
+    .col-xs-3 .btn{
+    padding:0px !important;
+
+}
+    .col-xs-3{
+        padding-right: 0px !important;
+    }
+
+</style>
+
+
+
 <div>
-    <h2>Strategy Master</h2>
+    <div class="well">
+
     <jhi-alert></jhi-alert>
-    <div class="container-fluid">
+
+        <div>
         <div class="row">
-            <div class="col-xs-4 no-padding-left">
+<!--            <div class="col-xs-2">
                 <button class="btn btn-primary" ui-sref="strategy-master.new" >
                     <span class="glyphicon glyphicon-plus"></span>
-                    <span >
+                    <span>
                         Create New Strategy
                     </span>
                 </button>
-            </div>
+            </div>-->
+
         </div>
     </div>
-    <br/>
+       <!-- <div style="margin-bottom: 5px"></div>-->
+
     <div class="table-responsive">
         <table class="jh-table table table-striped">
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
-                    <!-- <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th> -->
-                    <th jh-sort-by="strategyCode"><span>Strategy Code</span> <span class="glyphicon glyphicon-sort"></span></th>
+
                     <th jh-sort-by="strategyName"><span>Strategy Name</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="sStatus"><span>Status</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="dateActive"><span>Date Active</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <!-- <th jh-sort-by="createdBy"><span>Created By</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="updatedBy"><span>Updated By</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="createdDate"><span>Created Date</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="updatedDate"><span>Updated Date</span> <span class="glyphicon glyphicon-sort"></span></th> -->
-                    <th></th>
+                    <th jh-sort-by="aum"><span>AUM</span> <span class="glyphicon glyphicon-sort"></span></th>
+
+                    <th jh-sort-by="totalStocks"><span>Total Stocks</span> <span class="glyphicon glyphicon-sort"></span></th>
+
+
+
+                    <th>
+                        <div class="pull-right">
+                        <div class="col-xs-3">
+                            <button class="btn btn-primary" ui-sref="strategy-master.new" has-authority="Research">
+                                <span></span>
+                                <span style="padding: 10px">Create New Strategy</span>
+                            </button>
+                        </div>
+                        </div>
+
+                    </th>
                 </tr>
             </thead>
             <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
                 <tr ng-repeat="strategyMaster in vm.strategyMasters track by strategyMaster.id">
-                   <!--  <td><a ui-sref="strategy-master-detail({id:strategyMaster.id})">{{strategyMaster.id}}</a></td> -->
-                    <td><a ui-sref="strategy-master-detail({id:strategyMaster.id})">{{strategyMaster.strategyCode}}</a></td>
-                    <td>{{strategyMaster.strategyName}}</td>
-                    <td>{{strategyMaster.sStatus ? 'Active': 'Inactive'}}</td>
-                        <td>{{strategyMaster.dateActive | date:'mediumDate'}}</td>
-                <!--     <td>{{strategyMaster.createdBy}}</td>
-                    <td>{{strategyMaster.updatedBy}}</td>
-                        <td>{{strategyMaster.createdDate | date:'mediumDate'}}</td>
-                    <td>{{strategyMaster.updatedDate | date:'medium'}}</td> -->
+
+                    <td><a ui-sref="strategy-master-detail({id:strategyMaster.id})">{{strategyMaster.strategyName}}</a></td>
+                    <td>{{strategyMaster.aum}}</td>
+
+                    <td>{{strategyMaster.totalStocks}}</td>
+
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
                                     ui-sref="strategy-master-detail({id:strategyMaster.id})"
-                                    class="btn btn-info btn-sm">
+                                    class="btn btn-info btn-sm" data-toggle="tooltip"
+                                     tooltip="view"
+         							 tooltip-placement="bottom">
                                 <span class="glyphicon glyphicon-eye-open"></span>
                                 <span class="hidden-sm-down"></span>
                             </button>
                             <button type="submit"
                                     ui-sref="strategy-master.edit({id:strategyMaster.id})"
-                                    class="btn btn-primary btn-sm">
+                                    class="btn btn-primary btn-sm"
+                                     tooltip="edit"
+         							 tooltip-placement="bottom">
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 <span class="hidden-sm-down"></span>
                             </button>
-                            <button type="submit"
+                    <!--        <button type="submit"
                                     ui-sref="strategy-master.delete({id:strategyMaster.id})"
-                                    class="btn btn-danger btn-sm">
+                                    class="btn btn-danger btn-sm"
+                                     tooltip="delete"
+         							 tooltip-placement="bottom">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                 <span class="hidden-sm-down"></span>
-                            </button>
+                            </button>-->
                         </div>
                     </td>
                 </tr>
+                <tr>
+                <td>
+                    <span style="font-weight: bold; ">Total AUM</span>
+                </td>
+                    <td>
+                        <span style="font-weight: bold;">{{getTotal()}}</span>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
             </tbody>
+
+
         </table>
-    </div>
+
 </div>
+
+    </div>
+    <footer class="footer footer-dark" ng-cloak>
+        <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.</p>
+    </footer>
+
+</div>
+
+

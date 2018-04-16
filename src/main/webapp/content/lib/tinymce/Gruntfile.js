@@ -286,7 +286,7 @@ module.exports = function (grunt) {
           summary: "TinyMCE is a platform independent web based Javascript HTML WYSIWYG editor " +
           "control released as Open Source under LGPL by Ephox Corp.",
           projectUrl: "http://www.tinymce.com/",
-          iconUrl: "http://www.tinymce.com/favicon.ico",
+          iconUrl: "http://www.tinymce.com/unifi_logo.ico",
           licenseUrl: "http://www.tinymce.com/license",
           requireLicenseAcceptance: true,
           tags: "Editor TinyMCE HTML HTMLEditor",
@@ -328,7 +328,7 @@ module.exports = function (grunt) {
           releaseNotes: "This package has been deprecated use https://www.nuget.org/packages/TinyMCE/",
           summary: "This package has been deprecated use https://www.nuget.org/packages/TinyMCE/",
           projectUrl: "http://www.tinymce.com/",
-          iconUrl: "http://www.tinymce.com/favicon.ico",
+          iconUrl: "http://www.tinymce.com/unifi_logo.ico",
           licenseUrl: "http://www.tinymce.com/license",
           requireLicenseAcceptance: true,
           tags: "Editor TinyMCE HTML HTMLEditor",

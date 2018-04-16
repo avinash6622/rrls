@@ -1,3 +1,4 @@
+
 (function() {
     'use strict';
 
@@ -10,9 +11,9 @@
     function UserManagementDialogController ($stateParams, $uibModalInstance, entity, User,RoleMaster) {
         var vm = this;
 
-        vm.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
+        vm.authorities = ['Admin','Research','CIO','Dealer','Sale','RM'];
         vm.roleMasters = RoleMaster.query();
-
+        vm.users=User.query();
         vm.clear = clear;
         vm.languages = null;
         vm.save = save;
