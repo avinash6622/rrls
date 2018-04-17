@@ -55,6 +55,7 @@ public class CacheConfiguration {
             cm.createCache(com.unify.rrls.domain.NonFinancialSummaryData.class.getName(),jcacheConfiguration);
             cm.createCache(com.unify.rrls.domain.OpportunitySector.class.getName(),jcacheConfiguration);
             cm.createCache(com.unify.rrls.domain.OpportunityAutomation.class.getName(),jcacheConfiguration);
+            cm.createCache(com.unify.rrls.domain.HistoryLogs.class.getName(),jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

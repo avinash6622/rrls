@@ -70,7 +70,7 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
     @Transient
     @JsonProperty
     private NonFinancialSummaryData nonFinancialSummaryData;
-    
+
    	//private List<StrategyMaster> selectedStrategyMaster=new ArrayList<StrategyMaster>();
 
 	@OneToMany(mappedBy = "opportunityMasterId")
@@ -79,6 +79,8 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	@ManyToOne
 	@JoinColumn(name = "master_name")
 	private OpportunityName masterName;
+
+
 
 
  /*   @OneToOne(fetch = FetchType.LAZY,

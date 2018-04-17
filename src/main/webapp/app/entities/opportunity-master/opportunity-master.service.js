@@ -149,6 +149,17 @@
 
 
             },
+            'notification':{
+
+                url:'api/history-logs',
+                method:'GET',
+                transformResponse: function(data){
+                    return data;
+
+                }
+
+
+            },
 
             /*,
             'addWordCreation':{

@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$state', 'Auth', 'Principal', 'ProfileService', 'LoginService','$scope'];
+    NavbarController.$inject = ['$state', 'Auth', 'Principal', 'ProfileService', 'LoginService','$scope','OpportunityMaster','$http'];
 
-    function NavbarController ($state, Auth, Principal, ProfileService, LoginService,$scope) {
+    function NavbarController ($state, Auth, Principal, ProfileService, LoginService,$scope,OpportunityMaster,$http) {
         var vm = this;
 
         vm.isNavbarCollapsed = true;
@@ -29,6 +29,24 @@
         });
 
         getAccount();
+
+
+
+
+        $http.get('api/history-logs')
+            .then(function(response) {
+                vm.notificationValues = [];
+                console.log("RESPONSE",response);
+                var len = response.data;
+
+                // vm.dashboardvalues =  response.data;
+                for (var i = 0; i < len.length; i++) {
+                    vm.notificationValues.push(len[i]);
+                }
+               console.log(vm.notificationValues);
+
+            });
+
 
         function getAccount() {
             Principal.identity().then(function(account) {
