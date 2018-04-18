@@ -1,11 +1,16 @@
-<style>
+<style xmlns="http://www.w3.org/1999/html">
 
     .success-text {
         color: #00C851; }
 
     .primary-text {
         color: #4285F4; }
-
+   .primary-aligned{
+       padding-top: 3px;
+       padding-right: 20px;
+       padding-bottom: 3px;
+       padding-left: 20px;
+   }
 
 
 </style>
@@ -109,57 +114,41 @@
 
 
                 <li uib-dropdown class="dropdown pointer">
+
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="noti_menu">
-                        <span>
-                            <span class="glyphicon glyphicon-bell"></span>
+
+                      <notification-icon animation="my-custom-animation" ng-init="vm.customPending = 0" count=vm.count>
+                        <i class="glyphicon glyphicon-bell"></i>
+                    </notification-icon>
+                            <!--<span class="glyphicon glyphicon-bell"></span>-->
 
                             <b class="caret"></b>
-                        </span>
+
                     </a>
 
-                    <ul class="dropdown-menu dropdown-menu-left" uib-dropdown-menu>
+                    <ul class="dropdown-menu dropdown-messages" style="width: 310px;" uib-dropdown-menu>
+                        <div class="primary-aligned">
 
                         <span ng-repeat="noti in vm.notificationValues">
+                            <li>
 
-                        <li ui-sref-active="active">
-                            <a ui-sref="password" ng-click="vm.collapseNavbar()">
+                                <div>
+                                    <span>A new {{noti.page}} <strong>"{{noti.oppname}}"</strong> was created by {{noti.createdBy}}</span>
+                                    <span class="pull-right text-muted small">{{noti.createdDate | date :"MMM d, y h:mm:ss a" }}</span>
+                                </div>
 
-                                <span>{{noti.action}}</span>
-                            </a>
                         </li>
 
-                        <li ui-sref-active="active" ng-switch="vm.isAuthenticated()">
-                            <a href="" ng-click="vm.logout()" id="logout1">
 
-                                <span>{{noti.createdBy}}</span>
-                            </a>
-                        </li>
-
-                        <li ui-sref-active="active" ng-switch="vm.isAuthenticated()">
-                            <a href="" ng-click="vm.logout()" id="logout2">
-
-                                <span>{{noti.createdDate}}</span>
-                            </a>
-                        </li>
-                        <li ui-sref-active="active" ng-switch="vm.isAuthenticated()">
-                            <a href="" ng-click="vm.logout()" id="logout3">
-
-                                <span>{{noti.lastModifiedBy}}</span>
-                            </a>
-                        </li>
-                        <li ui-sref-active="active" ng-switch="vm.isAuthenticated()">
-                            <a href="" ng-click="vm.logout()" id="logout4">
-
-                                <span>{{noti.oppId.masterName.oppName}}</span>
-                            </a>
-                        </li>
+                        <li class="divider"></li>
 
                         </span>
 
-
+                        </div>
 
                     </ul>
                 </li>
+
 
 
 

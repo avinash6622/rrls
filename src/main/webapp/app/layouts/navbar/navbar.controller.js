@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$state', 'Auth', 'Principal', 'ProfileService', 'LoginService','$scope','OpportunityMaster','$http'];
+    NavbarController.$inject = ['$state', 'Auth', 'Principal', 'ProfileService', 'LoginService','$scope','OpportunityMaster','$http','DateUtils'];
 
-    function NavbarController ($state, Auth, Principal, ProfileService, LoginService,$scope,OpportunityMaster,$http) {
+    function NavbarController ($state, Auth, Principal, ProfileService, LoginService,$scope,OpportunityMaster,$http,DateUtils) {
         var vm = this;
 
         vm.isNavbarCollapsed = true;
@@ -23,6 +23,7 @@
         vm.toggleNavbar = toggleNavbar;
         vm.collapseNavbar = collapseNavbar;
         vm.$state = $state;
+        vm.count = null;
 
         $scope.$on('authenticationSuccess', function() {
             getAccount();
@@ -37,13 +38,18 @@
             .then(function(response) {
                 vm.notificationValues = [];
                 console.log("RESPONSE",response);
+
+
                 var len = response.data;
 
-                // vm.dashboardvalues =  response.data;
+                vm.count = len.length;
+
                 for (var i = 0; i < len.length; i++) {
                     vm.notificationValues.push(len[i]);
                 }
+
                console.log(vm.notificationValues);
+
 
             });
 
