@@ -2,10 +2,7 @@ package com.unify.rrls.web.rest;
 
 
 import com.codahale.metrics.annotation.Timed;
-import com.unify.rrls.domain.HistoryLogs;
-import com.unify.rrls.domain.OpportunityMaster;
-import com.unify.rrls.domain.StrategyMapping;
-import com.unify.rrls.domain.StrategyMaster;
+import com.unify.rrls.domain.*;
 import com.unify.rrls.repository.HistoryLogsRepository;
 import com.unify.rrls.security.SecurityUtils;
 import com.unify.rrls.web.rest.util.PaginationUtil;
@@ -22,7 +19,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -34,11 +33,36 @@ public class NotificationServiceResource {
     private final Logger log = LoggerFactory.getLogger(NotificationServiceResource.class);
 
     @Autowired
-    private final HistoryLogsRepository historyLogsRepository;
+   HistoryLogsRepository historyLogsRepository;
 
     public NotificationServiceResource(HistoryLogsRepository historyLogsRepository){
         this.historyLogsRepository=historyLogsRepository;
     }
+
+    public String notificationHistorysave(String name,String createdBy, String modifiedBy, Instant createdDate, String action, String page,String fileName){
+
+
+
+        HistoryLogs historyLogs = new HistoryLogs();
+
+        historyLogs.setOppname(name);
+
+        historyLogs.setCreatedBy(createdBy);
+        historyLogs.setLastModifiedBy(modifiedBy);
+        historyLogs.setCreatedDate(createdDate);
+        historyLogs.setAction(action);
+        historyLogs.setPage(page);
+        historyLogs.setFileNamecontent(fileName);
+        historyLogsRepository.save(historyLogs);
+
+        return null;
+
+
+     }
+
+
+
+
 
     @GetMapping("/history-logs")
     @Timed

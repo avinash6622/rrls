@@ -114,6 +114,9 @@ public class OpportunityMasterResource {
 	private final OpportunitySummaryDataRepository opportunitySummaryDataRepository;
 	private final OpportunityAutomationRepository opportunityAutomationRepository;
 
+    @Autowired
+	NotificationServiceResource notificationServiceResource;
+
 
 	public OpportunityMasterResource(OpportunityMasterRepository opportunityMasterRepository,
 			FileUploadRepository fileUploadRepository, FileUploadCommentsRepository fileUploadCommentsRepository,
@@ -224,10 +227,10 @@ public class OpportunityMasterResource {
 		//System.out.println(opportunityMaster.getStrategyMasterId());
 		List<OpportunityMasterContact> addContact=new ArrayList<>();
 		FinancialSummaryData addFinance=new FinancialSummaryData();
-		NonFinancialSummaryData addNonFinance=new NonFinancialSummaryData();	
+		NonFinancialSummaryData addNonFinance=new NonFinancialSummaryData();
 		List<StrategyMapping> addStrategy=new ArrayList<>();
 		OpportunityMaster master=new OpportunityMaster();
-		
+
 	      if (opportunityMaster != null) {
 	            master=opportunityMasterRepository.findByMasterName(opportunityMaster.getMasterName());
 	            if(master !=null){
@@ -257,7 +260,7 @@ public class OpportunityMasterResource {
              }
       addContact=opportunityMasterContactRepository.findByOpportunityMasterId(result);
       result.setSelectedoppContanct(addContact);
-    
+
       if(opportunityMaster.getMasterName().getSegment().equals("Finance")){
 
       	FinancialSummaryData summaryData = opportunityMaster.getFinancialSummaryData();
@@ -363,6 +366,13 @@ public class OpportunityMasterResource {
 
 		}
 		System.out.println(result.getId().toString());
+
+      String page="Opportunity";
+
+      String name = String.valueOf(result.getMasterName().getOppName());
+
+
+      notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"",page,"");
 //return null;
 		return ResponseEntity.ok()
 				.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
@@ -522,6 +532,8 @@ public class OpportunityMasterResource {
 
         }
 
+
+
 		return ResponseEntity.ok()
 				.headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, result.getId().toString()))
 				.body(result);
@@ -560,6 +572,16 @@ public class OpportunityMasterResource {
 
 
         OpportunityMaster result = opportunityMasterRepository.save(opportunityMasters);
+
+        String name = result.getMasterName().getOppName();
+
+        String page="Opportunity";
+
+
+
+      notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),result.getOppStatus(),page,"");
+
+
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, opportunityMaster.getId().toString()))
             .body(result);
@@ -628,10 +650,10 @@ public class OpportunityMasterResource {
 		String role=SecurityUtils.getCurrentRoleLogin();
 		String username=SecurityUtils.getCurrentUserLogin();
 		//List<OpportunityMaster> opportunityMaster=opportunityMasterRepository.findByCreatedBy(username);
-		
-		
-			page = opportunityMasterRepository.findAll(pageable);	
-		
+
+
+			page = opportunityMasterRepository.findAll(pageable);
+
 		List<StrategyMaster> strategyMapMaster;
 
 		for(OpportunityMaster opportunityMaster:page)

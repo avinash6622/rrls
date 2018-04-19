@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -41,6 +42,9 @@ public class FileUploadCommentsResource {
         this.fileUploadCommentsRepository = fileUploadCommentsRepository;
     }
 
+    @Autowired
+    NotificationServiceResource notificationServiceResource;
+
     /**
      * POST  /file-upload-comments : Create a new fileUploadComments.
      *
@@ -56,6 +60,14 @@ public class FileUploadCommentsResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new fileUploadComments cannot already have an ID")).body(null);
         }
         FileUploadComments result = fileUploadCommentsRepository.save(fileUploadComments);
+
+
+        String name = result.getOpportunityMaster().getMasterName().getOppName();
+        String page = "Opportunity";
+
+
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"",page,result.getOpportunityComments());
+
         return ResponseEntity.created(new URI("/api/file-upload-comments/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);

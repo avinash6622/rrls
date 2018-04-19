@@ -5,6 +5,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Date;
 import java.util.Objects;
 
@@ -19,18 +20,19 @@ public class HistoryLogs {
     private Integer id;
     @Column(name = "name")
     private String oppname;
-    @Column(name = "opp_id")
-    private Integer oppId;
+
     @Column(name = "opp_created_by")
     private String createdBy;
     @Column(name = "opp_last_modified_by")
     private String lastModifiedBy;
     @Column(name = "opp_created_date")
-    private Timestamp createdDate ;
+    private Instant createdDate ;
     @Column(name = "Action")
     private String action;
     @Column(name = "page")
     private String page;
+    @Column(name="sub_content")
+    private String fileNamecontent;
 
 
 
@@ -50,13 +52,6 @@ public class HistoryLogs {
         this.oppname = oppname;
     }
 
-    public Integer getOppId() {
-        return oppId;
-    }
-
-    public void setOppId(Integer oppId) {
-        this.oppId = oppId;
-    }
 
     public String getCreatedBy() {
         return createdBy;
@@ -74,11 +69,11 @@ public class HistoryLogs {
         this.lastModifiedBy = lastModifiedBy;
     }
 
-    public Timestamp getCreatedDate() {
+    public Instant getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Timestamp createdDate) {
+    public void setCreatedDate(Instant createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -98,6 +93,14 @@ public class HistoryLogs {
         this.page = page;
     }
 
+    public String getFileNamecontent() {
+        return fileNamecontent;
+    }
+
+    public void setFileNamecontent(String fileNamecontent) {
+        this.fileNamecontent = fileNamecontent;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -105,18 +108,18 @@ public class HistoryLogs {
         HistoryLogs that = (HistoryLogs) o;
         return Objects.equals(id, that.id) &&
             Objects.equals(oppname, that.oppname) &&
-            Objects.equals(oppId, that.oppId) &&
             Objects.equals(createdBy, that.createdBy) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(action, that.action) &&
-            Objects.equals(page, that.page);
+            Objects.equals(page, that.page) &&
+            Objects.equals(fileNamecontent, that.fileNamecontent);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, oppname, oppId, createdBy, lastModifiedBy, createdDate, action, page);
+        return Objects.hash(id, oppname, createdBy, lastModifiedBy, createdDate, action, page, fileNamecontent);
     }
 
     @Override
@@ -124,12 +127,12 @@ public class HistoryLogs {
         return "HistoryLogs{" +
             "id=" + id +
             ", oppname='" + oppname + '\'' +
-            ", oppId=" + oppId +
             ", createdBy='" + createdBy + '\'' +
             ", lastModifiedBy='" + lastModifiedBy + '\'' +
             ", createdDate=" + createdDate +
             ", action='" + action + '\'' +
             ", page='" + page + '\'' +
+            ", fileNamecontent='" + fileNamecontent + '\'' +
             '}';
     }
 }

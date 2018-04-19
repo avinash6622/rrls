@@ -13,6 +13,29 @@
    }
 
 
+    a.glyphicon-bell {
+        position: relative;
+        font-size: 1.5em;
+        color: grey;
+        cursor: pointer;
+    }
+    span.fa-comment {
+        position: absolute;
+        font-size: 1.0em;
+        top: 4px;
+        color: red;
+        right: 3px;
+    }
+    span.num {
+        position: absolute;
+        font-size: 0.6em;
+        top: 2px;
+        color: #fff;
+        right: 10px;
+
+    }
+
+
 </style>
 
 
@@ -115,14 +138,20 @@
 
                 <li uib-dropdown class="dropdown pointer">
 
-                    <a class="dropdown-toggle" uib-dropdown-toggle href="" id="noti_menu">
+                 <!--   <a class="dropdown-toggle" uib-dropdown-toggle href="" id="noti_menu">
 
-                      <notification-icon animation="my-custom-animation" ng-init="vm.customPending = 0" count=vm.count>
+                      <notification-icon animation="my-custom-animation" ng-init="vm.customPending = 0" count=vm.count style="width:10px;height: 10px">
                         <i class="glyphicon glyphicon-bell"></i>
                     </notification-icon>
-                            <!--<span class="glyphicon glyphicon-bell"></span>-->
+                            &lt;!&ndash;<span class="glyphicon glyphicon-bell"></span>&ndash;&gt;
 
-                            <b class="caret"></b>
+
+
+                    </a>-->
+
+                    <a class="glyphicon glyphicon-bell">
+                        <span class="fa fa-comment"></span>
+                        <span class="num">2</span>
 
                     </a>
 
