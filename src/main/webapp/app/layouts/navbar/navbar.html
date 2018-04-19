@@ -24,16 +24,25 @@
         font-size: 1.0em;
         top: 4px;
         color: red;
-        right: 3px;
+        right: 6px;
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        border-radius: 50%;
+
     }
     span.num {
         position: absolute;
-        font-size: 0.6em;
+        font-size: 1.2rem;
         top: 2px;
         color: #fff;
-        right: 10px;
+        width: 20px;
+        height: 20px;
+        right: 6px;
+        text-align: center;
 
     }
+
 
 
 </style>
@@ -136,7 +145,7 @@
                 </li>
 
 
-                <li uib-dropdown class="dropdown pointer">
+                <li uib-dropdown class="dropdown pointer notification" ng-switch-when="true">
 
                  <!--   <a class="dropdown-toggle" uib-dropdown-toggle href="" id="noti_menu">
 
@@ -149,13 +158,13 @@
 
                     </a>-->
 
-                    <a class="glyphicon glyphicon-bell">
+                    <a uib-dropdown-toggle href="" class="dropdown-toggle glyphicon glyphicon-bell">
                         <span class="fa fa-comment"></span>
-                        <span class="num">2</span>
+                        <span class="num">{{vm.notificationValues.length}}</span>
 
                     </a>
 
-                    <ul class="dropdown-menu dropdown-messages" style="width: 310px;" uib-dropdown-menu>
+                    <ul class="dropdown-menu dropdown-messages" uib-dropdown-menu>
                         <div class="primary-aligned">
 
                         <span ng-repeat="noti in vm.notificationValues">

@@ -42,7 +42,7 @@
 
                 var len = response.data;
 
-                vm.count = len.length;
+
 
                 for (var i = 0; i < len.length; i++) {
                     vm.notificationValues.push(len[i]);
