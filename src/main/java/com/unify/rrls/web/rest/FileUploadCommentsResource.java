@@ -45,6 +45,10 @@ public class FileUploadCommentsResource {
     @Autowired
     NotificationServiceResource notificationServiceResource;
 
+    @Autowired
+
+    UserResource userResource;
+
     /**
      * POST  /file-upload-comments : Create a new fileUploadComments.
      *
@@ -65,8 +69,10 @@ public class FileUploadCommentsResource {
         String name = result.getOpportunityMaster().getMasterName().getOppName();
         String page = "Opportunity";
 
+       Long id =  userResource.getUserId(result.getCreatedBy());
 
-        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"",page,result.getOpportunityComments());
+
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"",page,result.getOpportunityComments(),id);
 
         return ResponseEntity.created(new URI("/api/file-upload-comments/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

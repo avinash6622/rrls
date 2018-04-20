@@ -33,6 +33,8 @@ public class HistoryLogs {
     private String page;
     @Column(name="sub_content")
     private String fileNamecontent;
+    @Column(name="user_id")
+    private Long userId;
 
 
 
@@ -101,6 +103,14 @@ public class HistoryLogs {
         this.fileNamecontent = fileNamecontent;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -113,13 +123,14 @@ public class HistoryLogs {
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(action, that.action) &&
             Objects.equals(page, that.page) &&
-            Objects.equals(fileNamecontent, that.fileNamecontent);
+            Objects.equals(fileNamecontent, that.fileNamecontent) &&
+            Objects.equals(userId, that.userId);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, oppname, createdBy, lastModifiedBy, createdDate, action, page, fileNamecontent);
+        return Objects.hash(id, oppname, createdBy, lastModifiedBy, createdDate, action, page, fileNamecontent, userId);
     }
 
     @Override
@@ -133,6 +144,7 @@ public class HistoryLogs {
             ", action='" + action + '\'' +
             ", page='" + page + '\'' +
             ", fileNamecontent='" + fileNamecontent + '\'' +
+            ", userId=" + userId +
             '}';
     }
 }

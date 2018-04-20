@@ -83,6 +83,9 @@ public class FileUploadResource {
     @Autowired
     NotificationServiceResource notificationServiceResource;
 
+    @Autowired
+    UserResource userResource;
+
 
     private byte[] fileStream;
 	private String fileName;
@@ -195,9 +198,9 @@ public class FileUploadResource {
          String page ="Opportunity";
 
 
+          Long id =  userResource.getUserId(result.getCreatedBy());
 
-
-      notificationServiceResource.notificationHistorysave(oppName,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"",page,result.getFileName());
+      notificationServiceResource.notificationHistorysave(oppName,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"",page,result.getFileName(),id);
 
 
 

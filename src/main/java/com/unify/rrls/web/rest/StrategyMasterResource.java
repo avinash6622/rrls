@@ -38,6 +38,9 @@ public class StrategyMasterResource {
     @Autowired
     NotificationServiceResource notificationServiceResource;
 
+    @Autowired
+    UserResource userResource;
+
     private final Logger log = LoggerFactory.getLogger(StrategyMasterResource.class);
 
     private static final String ENTITY_NAME = "strategyMaster";
@@ -70,7 +73,9 @@ public class StrategyMasterResource {
 
         String name   = result.getStrategyName();
 
-        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"",page,"");
+        Long id =  userResource.getUserId(result.getCreatedBy());
+
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"",page,"",id);
 
         return ResponseEntity.created(new URI("/api/strategy-masters/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -97,7 +102,8 @@ public class StrategyMasterResource {
 
         String name = "Strategy:"+result.getStrategyName()+","+"AUM :"+result.getAum()+","+"Total stocks:"+result.getTotalStocks();
         String page = "Strategy";
-        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"",page,"");
+        Long id =  userResource.getUserId(result.getCreatedBy());
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"",page,"",id);
 
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, strategyMaster.getId().toString()))

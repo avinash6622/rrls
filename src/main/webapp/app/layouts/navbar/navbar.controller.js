@@ -24,6 +24,9 @@
         vm.collapseNavbar = collapseNavbar;
         vm.$state = $state;
         vm.count = null;
+        vm.close = close;
+
+
 
         $scope.$on('authenticationSuccess', function() {
             getAccount();
@@ -34,32 +37,50 @@
 
 
 
-        $http.get('api/history-logs')
-            .then(function(response) {
-                vm.notificationValues = [];
-                console.log("RESPONSE",response);
 
-
-                var len = response.data;
-
-
-
-                for (var i = 0; i < len.length; i++) {
-                    vm.notificationValues.push(len[i]);
-                }
-
-               console.log(vm.notificationValues);
-
-
-            });
 
 
         function getAccount() {
             Principal.identity().then(function(account) {
                 vm.account = account;
                 vm.isAuthenticated = Principal.isAuthenticated;
+
+
+                $http.get('api/history-logs/'+vm.account.id)
+                    .then(function(response) {
+                        vm.notificationValues = [];
+                        console.log("RESPONSE",response);
+
+
+                        var len = response.data;
+
+                        console.log(len.length);
+
+                        if(len.length == 0){
+                            vm.notificationValues.push("No Notifications");
+                        }
+
+                        else{
+
+                            for (var i = 0; i < len.length; i++) {
+                                vm.notificationValues.push(len[i]);
+                            }
+                        }
+
+
+
+                        console.log(vm.notificationValues);
+
+
+                    });
+
+
             });
+
         }
+
+
+
 
         function login() {
             collapseNavbar();
@@ -80,5 +101,19 @@
         function collapseNavbar() {
             vm.isNavbarCollapsed = true;
         }
+
+        function close(id,userid,index){
+
+            vm.notificationValues.splice(index, 1);
+            console.log(id);
+            console.log(userid);
+
+         OpportunityMaster.notification({notiId :id,userId:userid}, function(resp){
+
+         });
+
+
+        }
+
     }
 })();

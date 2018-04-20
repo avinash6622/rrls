@@ -2,6 +2,7 @@ package com.unify.rrls.web.rest;
 
 import com.unify.rrls.config.Constants;
 import com.codahale.metrics.annotation.Timed;
+import com.unify.rrls.domain.HistoryLogs;
 import com.unify.rrls.domain.User;
 import com.unify.rrls.repository.UserRepository;
 import com.unify.rrls.security.AuthoritiesConstants;
@@ -25,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Query;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -113,8 +115,8 @@ public class UserResource {
             mailService.sendCreationEmail(newUser);
 
             String page="User";
-
-            notificationServiceResource.notificationHistorysave(newUser.getLogin(),newUser.getCreatedBy(),newUser.getLastModifiedBy(),newUser.getCreatedDate(),"",page,"");
+            Long id = getUserId(newUser.getCreatedBy());
+            notificationServiceResource.notificationHistorysave(newUser.getLogin(),newUser.getCreatedBy(),newUser.getLastModifiedBy(),newUser.getCreatedDate(),"",page,"",id);
 
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
                 .headers(HeaderUtil.createAlert( "A user is created with identifier " + newUser.getLogin(), newUser.getLogin()))
@@ -202,4 +204,12 @@ public class UserResource {
         userService.deleteUser(login);
         return ResponseEntity.ok().headers(HeaderUtil.createAlert( "A user is deleted with identifier " + login, login)).build();
     }
+
+    public Long getUserId(String username)
+    {
+
+        User user = userRepository.findByLogin(username);
+        return user.getId();
+    }
+
 }

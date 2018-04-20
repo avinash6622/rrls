@@ -151,8 +151,8 @@
             },
             'notification':{
 
-                url:'api/history-logs',
-                method:'GET',
+                url:'api/store_noti_user_id',
+                method:'POST',
                 transformResponse: function(data){
                     return data;
 

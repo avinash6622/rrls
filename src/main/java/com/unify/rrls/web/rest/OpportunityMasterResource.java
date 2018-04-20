@@ -117,6 +117,9 @@ public class OpportunityMasterResource {
     @Autowired
 	NotificationServiceResource notificationServiceResource;
 
+    @Autowired
+    UserResource userResource;
+
 
 	public OpportunityMasterResource(OpportunityMasterRepository opportunityMasterRepository,
 			FileUploadRepository fileUploadRepository, FileUploadCommentsRepository fileUploadCommentsRepository,
@@ -371,8 +374,8 @@ public class OpportunityMasterResource {
 
       String name = String.valueOf(result.getMasterName().getOppName());
 
-
-      notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"",page,"");
+        Long id =  userResource.getUserId(result.getCreatedBy());
+      notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"",page,"",id);
 //return null;
 		return ResponseEntity.ok()
 				.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
@@ -577,9 +580,9 @@ public class OpportunityMasterResource {
 
         String page="Opportunity";
 
+        Long id =  userResource.getUserId(result.getCreatedBy());
 
-
-      notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),result.getOppStatus(),page,"");
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),result.getOppStatus(),page,"",id);
 
 
         return ResponseEntity.ok()

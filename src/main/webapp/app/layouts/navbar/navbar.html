@@ -159,10 +159,11 @@
                     </a>-->
 
                     <a uib-dropdown-toggle href="" class="dropdown-toggle glyphicon glyphicon-bell">
-                        <span class="fa fa-comment"></span>
-                        <span class="num">{{vm.notificationValues.length}}</span>
+                       <!-- <span class="fa fa-comment"></span>
+                        <span class="num">{{vm.notificationValues.length}}</span>-->
 
                     </a>
+
 
                     <ul class="dropdown-menu dropdown-messages" uib-dropdown-menu>
                         <div class="primary-aligned">
@@ -172,7 +173,11 @@
 
                                 <div>
                                     <span>A new {{noti.page}} <strong>"{{noti.oppname}}"</strong> was created by {{noti.createdBy}}</span>
-                                    <span class="pull-right text-muted small">{{noti.createdDate | date :"MMM d, y h:mm:ss a" }}</span>
+                                    <span class="pull-right text-muted small">{{noti.createdDate | date :"MMM d, y h:mm:ss a" }}&nbsp;&nbsp;
+                                    <button type="button" class="close" aria-label="Close" ng-click="vm.close(noti.id,vm.account.id,$index)">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </span>
                                 </div>
 
                         </li>

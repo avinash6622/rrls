@@ -33,6 +33,9 @@ public class OpportunityNameResource {
     @Autowired
     NotificationServiceResource notificationServiceResource;
 
+    @Autowired
+    UserResource userResource;
+
 	private final Logger log = LoggerFactory.getLogger(OpportunityNameResource.class);
 
 	private static final String ENTITY_NAME = "opportunityName";
@@ -75,7 +78,8 @@ public class OpportunityNameResource {
 
 
         String page = "Opportunity Name";
-        notificationServiceResource.notificationHistorysave(result.getOppName(),result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"",page,"");
+        Long id =  userResource.getUserId(result.getCreatedBy());
+        notificationServiceResource.notificationHistorysave(result.getOppName(),result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"",page,"",id);
 
 
         return ResponseEntity.created(new URI("/api/opportunity-masters/" + result.getId()))
