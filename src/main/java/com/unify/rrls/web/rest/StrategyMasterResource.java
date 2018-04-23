@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -33,6 +34,12 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 public class StrategyMasterResource {
+
+    @Autowired
+    NotificationServiceResource notificationServiceResource;
+
+    @Autowired
+    UserResource userResource;
 
     private final Logger log = LoggerFactory.getLogger(StrategyMasterResource.class);
 
@@ -61,6 +68,15 @@ public class StrategyMasterResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new strategyMaster cannot already have an ID")).body(null);
         }
         StrategyMaster result = strategyMasterRepository.save(strategyMaster);
+
+        String page="Strategy";
+
+        String name   = result.getStrategyName();
+
+        Long id =  userResource.getUserId(result.getCreatedBy());
+
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"",page,"",id);
+
         return ResponseEntity.created(new URI("/api/strategy-masters/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -83,6 +99,12 @@ public class StrategyMasterResource {
             return createStrategyMaster(strategyMaster);
         }
         StrategyMaster result = strategyMasterRepository.save(strategyMaster);
+
+        String name = "Strategy:"+result.getStrategyName()+","+"AUM :"+result.getAum()+","+"Total stocks:"+result.getTotalStocks();
+        String page = "Strategy";
+        Long id =  userResource.getUserId(result.getCreatedBy());
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"",page,"",id);
+
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, strategyMaster.getId().toString()))
             .body(result);

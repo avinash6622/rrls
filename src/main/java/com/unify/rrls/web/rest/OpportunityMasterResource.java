@@ -113,6 +113,14 @@ public class OpportunityMasterResource {
 	private final NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository;
 	private final OpportunitySummaryDataRepository opportunitySummaryDataRepository;
 	private final OpportunityAutomationRepository opportunityAutomationRepository;
+	private final OpportunityQuestionRepository opportunityQuestionRepository;
+	private final AnswerCommentRepository answerCommentRepository;
+
+    @Autowired
+	NotificationServiceResource notificationServiceResource;
+
+    @Autowired
+    UserResource userResource;
 
 
 	public OpportunityMasterResource(OpportunityMasterRepository opportunityMasterRepository,
@@ -120,7 +128,8 @@ public class OpportunityMasterResource {
 			StrategyMappingRepository strategyMappingRepository,StrategyMasterRepository strategyMasterRepository,
 			AdditionalFileUploadRepository additionalFileUploadRepository,OpportunityMasterContactRepository opportunityMasterContactRepository,FinancialSummaryDataRepository financialSummaryDataRepository
     ,NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository, OpportunitySummaryDataRepository opportunitySummaryDataRepository,
-    OpportunityAutomationRepository opportunityAutomationRepository) {
+    OpportunityAutomationRepository opportunityAutomationRepository,OpportunityQuestionRepository opportunityQuestionRepository,
+    AnswerCommentRepository answerCommentRepository) {
 		this.opportunityMasterRepository = opportunityMasterRepository;
 		this.fileUploadRepository = fileUploadRepository;
 		this.fileUploadCommentsRepository = fileUploadCommentsRepository;
@@ -132,6 +141,8 @@ public class OpportunityMasterResource {
 		this.nonFinancialSummaryDataRepository=nonFinancialSummaryDataRepository;
 		this.opportunitySummaryDataRepository=opportunitySummaryDataRepository;
 		this.opportunityAutomationRepository=opportunityAutomationRepository;
+		this.opportunityQuestionRepository=opportunityQuestionRepository;
+		this.answerCommentRepository=answerCommentRepository;
 	}
 
 	/**
@@ -224,10 +235,10 @@ public class OpportunityMasterResource {
 		//System.out.println(opportunityMaster.getStrategyMasterId());
 		List<OpportunityMasterContact> addContact=new ArrayList<>();
 		FinancialSummaryData addFinance=new FinancialSummaryData();
-		NonFinancialSummaryData addNonFinance=new NonFinancialSummaryData();	
+		NonFinancialSummaryData addNonFinance=new NonFinancialSummaryData();
 		List<StrategyMapping> addStrategy=new ArrayList<>();
 		OpportunityMaster master=new OpportunityMaster();
-		
+
 	      if (opportunityMaster != null) {
 	            master=opportunityMasterRepository.findByMasterName(opportunityMaster.getMasterName());
 	            if(master !=null){
@@ -257,7 +268,7 @@ public class OpportunityMasterResource {
              }
       addContact=opportunityMasterContactRepository.findByOpportunityMasterId(result);
       result.setSelectedoppContanct(addContact);
-    
+
       if(opportunityMaster.getMasterName().getSegment().equals("Finance")){
 
       	FinancialSummaryData summaryData = opportunityMaster.getFinancialSummaryData();
@@ -363,6 +374,13 @@ public class OpportunityMasterResource {
 
 		}
 		System.out.println(result.getId().toString());
+
+      String page="Opportunity";
+
+      String name = String.valueOf(result.getMasterName().getOppName());
+
+        Long id =  userResource.getUserId(result.getCreatedBy());
+      notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"",page,"",id);
 //return null;
 		return ResponseEntity.ok()
 				.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
@@ -560,6 +578,16 @@ public class OpportunityMasterResource {
 
 
         OpportunityMaster result = opportunityMasterRepository.save(opportunityMasters);
+
+        String name = result.getMasterName().getOppName();
+
+        String page="Opportunity";
+
+        Long id =  userResource.getUserId(result.getCreatedBy());
+
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),result.getOppStatus(),page,"",id);
+
+
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, opportunityMaster.getId().toString()))
             .body(result);
@@ -628,10 +656,10 @@ public class OpportunityMasterResource {
 		String role=SecurityUtils.getCurrentRoleLogin();
 		String username=SecurityUtils.getCurrentUserLogin();
 		//List<OpportunityMaster> opportunityMaster=opportunityMasterRepository.findByCreatedBy(username);
-		
-		
+
+
 			page = opportunityMasterRepository.findAll(pageable);	
-		
+
 		List<StrategyMaster> strategyMapMaster;
 
 		for(OpportunityMaster opportunityMaster:page)
@@ -762,7 +790,25 @@ public class OpportunityMasterResource {
 		opportunityMasterRepository.delete(id);
 		return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
 	}
+	@GetMapping("/opportunity-masters/get-Question/{id}")
+	@Timed
+	public ResponseEntity<List<OpportunityQuestion>> getQuestionAnswer(@PathVariable Long id) {
+		log.debug("REST request to get OpportunityMaster : {}", id);
 
+		OpportunityMaster opportunityMasters =opportunityMasterRepository.findOne(id);
+		List<OpportunityQuestion> opportunityQuestions=opportunityQuestionRepository.findByOpportunityMaster(opportunityMasters);
+		List<OpportunityQuestion> commentReply=new ArrayList<>();
+		List<AnswerComment> answerComments;
+		
+		for(OpportunityQuestion question: opportunityQuestions)
+		{
+			answerComments=answerCommentRepository.findByOpportunityQuestion(question);
+			question.setAnswerComments(answerComments);
+			commentReply.add(question);
+		}
+		
+		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(commentReply));
+	}
 
 
 	public String convertHTMLToDoc(String xhtml, String destinationPath, String fileName) {

@@ -2,12 +2,11 @@ package com.unify.rrls.web.rest;
 
 
 import com.codahale.metrics.annotation.Timed;
-import com.unify.rrls.domain.HistoryLogs;
-import com.unify.rrls.domain.OpportunityMaster;
-import com.unify.rrls.domain.StrategyMapping;
-import com.unify.rrls.domain.StrategyMaster;
+import com.unify.rrls.domain.*;
+import com.unify.rrls.repository.DeleteNotificationRepository;
 import com.unify.rrls.repository.HistoryLogsRepository;
 import com.unify.rrls.security.SecurityUtils;
+import com.unify.rrls.web.rest.util.HeaderUtil;
 import com.unify.rrls.web.rest.util.PaginationUtil;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
@@ -18,11 +17,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -34,19 +36,54 @@ public class NotificationServiceResource {
     private final Logger log = LoggerFactory.getLogger(NotificationServiceResource.class);
 
     @Autowired
-    private final HistoryLogsRepository historyLogsRepository;
+   HistoryLogsRepository historyLogsRepository;
 
-    public NotificationServiceResource(HistoryLogsRepository historyLogsRepository){
+    DeleteNotificationRepository deleteNotificationRepository;
+
+    public NotificationServiceResource(HistoryLogsRepository historyLogsRepository,DeleteNotificationRepository deleteNotificationRepository){
         this.historyLogsRepository=historyLogsRepository;
+        this.deleteNotificationRepository=deleteNotificationRepository;
     }
 
-    @GetMapping("/history-logs")
+    public String notificationHistorysave(String name,String createdBy, String modifiedBy, Instant createdDate, String action, String page,String fileName,Long userId){
+
+
+
+        HistoryLogs historyLogs = new HistoryLogs();
+
+        historyLogs.setOppname(name);
+
+        historyLogs.setCreatedBy(createdBy);
+        historyLogs.setLastModifiedBy(modifiedBy);
+        historyLogs.setCreatedDate(createdDate);
+        historyLogs.setAction(action);
+        historyLogs.setPage(page);
+        historyLogs.setFileNamecontent(fileName);
+        historyLogs.setUserId(userId);
+        historyLogsRepository.save(historyLogs);
+
+        return null;
+
+
+     }
+
+
+    @PersistenceContext
+    EntityManager em;
+
+
+    @GetMapping("/history-logs/{userId}")
     @Timed
-    public ResponseEntity<List<HistoryLogs>> getAllHistoryLogs() {
+    public ResponseEntity<List<HistoryLogs>> getAllHistoryLogs(@PathVariable Integer userId) {
         log.debug("REST request to get a page of OpportunityMasters");
         List<HistoryLogs> list = null;
 
-        list = historyLogsRepository.findAll();
+        System.out.println("id--->"+userId);
+
+        Query q = em.createNativeQuery("select * from history_logs where id not in(select noti_id from delete_notification where user_id="+userId+") order by id desc limit 5",HistoryLogs.class);
+
+        list   = q.getResultList();
+
 
 
         System.out.println(list);
@@ -54,6 +91,27 @@ public class NotificationServiceResource {
 
         return new ResponseEntity<>(list,HttpStatus.OK);
     }
+
+
+    @PostMapping("/store_noti_user_id")
+    @Timed
+    public ResponseEntity<DeleteNotification> storeNotiUserId(@RequestBody DeleteNotification deleteNotification) {
+        log.debug("REST request to get a page of OpportunityMasters");
+        List<DeleteNotification> list = null;
+        System.out.println(deleteNotification.getNotiId());
+        System.out.println(deleteNotification.getUserId());
+
+        DeleteNotification result = deleteNotificationRepository.save(deleteNotification);
+
+
+
+        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
+
+        return new ResponseEntity<>(result,HttpStatus.OK);
+
+    }
+
+
 
 
 

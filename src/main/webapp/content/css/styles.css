@@ -125,3 +125,12 @@ dl {
     margin-bottom: -10px; }
 
 
+/*notifications*/
+.notification .dropdown-messages {
+    height: 215px;
+    overflow: auto;
+    width: 700px;
+
+}
+
+

@@ -13,6 +13,38 @@
    }
 
 
+    a.glyphicon-bell {
+        position: relative;
+        font-size: 1.5em;
+        color: grey;
+        cursor: pointer;
+    }
+    span.fa-comment {
+        position: absolute;
+        font-size: 1.0em;
+        top: 4px;
+        color: red;
+        right: 6px;
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        border-radius: 50%;
+
+    }
+    span.num {
+        position: absolute;
+        font-size: 1.2rem;
+        top: 2px;
+        color: #fff;
+        width: 20px;
+        height: 20px;
+        right: 6px;
+        text-align: center;
+
+    }
+
+
+
 </style>
 
 
@@ -113,20 +145,27 @@
                 </li>
 
 
-                <li uib-dropdown class="dropdown pointer">
+                <li uib-dropdown class="dropdown pointer notification" ng-switch-when="true">
 
-                    <a class="dropdown-toggle" uib-dropdown-toggle href="" id="noti_menu">
+                 <!--   <a class="dropdown-toggle" uib-dropdown-toggle href="" id="noti_menu">
 
-                      <notification-icon animation="my-custom-animation" ng-init="vm.customPending = 0" count=vm.count>
+                      <notification-icon animation="my-custom-animation" ng-init="vm.customPending = 0" count=vm.count style="width:10px;height: 10px">
                         <i class="glyphicon glyphicon-bell"></i>
                     </notification-icon>
-                            <!--<span class="glyphicon glyphicon-bell"></span>-->
+                            &lt;!&ndash;<span class="glyphicon glyphicon-bell"></span>&ndash;&gt;
 
-                            <b class="caret"></b>
+
+
+                    </a>-->
+
+                    <a uib-dropdown-toggle href="" class="dropdown-toggle glyphicon glyphicon-bell">
+                       <!-- <span class="fa fa-comment"></span>
+                        <span class="num">{{vm.notificationValues.length}}</span>-->
 
                     </a>
 
-                    <ul class="dropdown-menu dropdown-messages" style="width: 310px;" uib-dropdown-menu>
+
+                    <ul class="dropdown-menu dropdown-messages" uib-dropdown-menu>
                         <div class="primary-aligned">
 
                         <span ng-repeat="noti in vm.notificationValues">
@@ -134,7 +173,11 @@
 
                                 <div>
                                     <span>A new {{noti.page}} <strong>"{{noti.oppname}}"</strong> was created by {{noti.createdBy}}</span>
-                                    <span class="pull-right text-muted small">{{noti.createdDate | date :"MMM d, y h:mm:ss a" }}</span>
+                                    <span class="pull-right text-muted small">{{noti.createdDate | date :"MMM d, y h:mm:ss a" }}&nbsp;&nbsp;
+                                    <button type="button" class="close" aria-label="Close" ng-click="vm.close(noti.id,vm.account.id,$index)">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </span>
                                 </div>
 
                         </li>

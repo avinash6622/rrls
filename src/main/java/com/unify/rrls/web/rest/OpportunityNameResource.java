@@ -10,6 +10,7 @@ import com.unify.rrls.repository.OpportunitySectorRepository;
 import com.unify.rrls.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -28,6 +29,12 @@ import io.swagger.annotations.ApiParam;
 @RestController
 @RequestMapping("/api")
 public class OpportunityNameResource {
+
+    @Autowired
+    NotificationServiceResource notificationServiceResource;
+
+    @Autowired
+    UserResource userResource;
 
 	private final Logger log = LoggerFactory.getLogger(OpportunityNameResource.class);
 
@@ -68,6 +75,12 @@ public class OpportunityNameResource {
 
         OpportunityName result = opportunityNameRepository.save(opportunityName);
         System.out.println("sdfsdfsd--->"+result);
+
+
+        String page = "Opportunity Name";
+        Long id =  userResource.getUserId(result.getCreatedBy());
+        notificationServiceResource.notificationHistorysave(result.getOppName(),result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"",page,"",id);
+
 
         return ResponseEntity.created(new URI("/api/opportunity-masters/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
