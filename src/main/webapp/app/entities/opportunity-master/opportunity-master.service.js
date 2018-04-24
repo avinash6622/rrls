@@ -150,15 +150,8 @@
 
             },
             'notification':{
-
                 url:'api/store_noti_user_id',
-                method:'POST',
-                transformResponse: function(data){
-                    return data;
-
-                }
-
-
+                method:'POST'
             },
 
             /*,
