@@ -375,7 +375,7 @@ public class OpportunityMasterResource {
       String name = String.valueOf(result.getMasterName().getOppName());
 
         Long id =  userResource.getUserId(result.getCreatedBy());
-      notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"",page,"",id);
+      notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"created",page,"",id);
 //return null;
 		return ResponseEntity.ok()
 				.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);

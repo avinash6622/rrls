@@ -172,7 +172,8 @@
                             <li>
 
                                 <div>
-                                    <span ng-click="vm.readstatus(noti.id,vm.account.id,'Read', noti)"  ng-disabled="noti.dStatus === 'Read'">A new {{noti.page}} <strong>"{{noti.oppname}}"</strong> was created by {{noti.createdBy}}</span>
+                                    <span ng-click="vm.readstatus(noti.id,vm.account.id,'Read', noti)"  ng-disabled="noti.dStatus === 'Read'"> {{noti.createdBy | capitalize}} {{noti.action}} <span ng-if="noti.fileNamecontent"><strong>"{{noti.fileNamecontent}}"</strong></span> {{noti.page}} <strong>"{{noti.oppname}}"</strong>
+                                    </span>
                                     <span class="pull-right text-muted small">{{noti.createdDate | date :"MMM d, y h:mm:ss a" }}&nbsp;&nbsp;
                                     <button type="button" class="close" aria-label="Close" ng-click="vm.close(noti.id,vm.account.id,$index,'deleted')">
                                     <span aria-hidden="true">&times;</span>
@@ -180,7 +181,7 @@
                                     </span>
                                 </div>
 
-                        </li>
+                             </li>
 
 
                         <li class="divider"></li>

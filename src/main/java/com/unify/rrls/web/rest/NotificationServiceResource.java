@@ -118,18 +118,24 @@ public class NotificationServiceResource {
 
         for(HistoryLogs hl:list){
 
-            Query q2 = em.createNativeQuery("select history_log_id from delete_notification where status !='deleted' and user_id ="+userId+"");
+            System.out.println(hl.getdStatus());
 
-           Integer id= Integer.parseInt(q2.getSingleResult().toString());
+            if(hl.getdStatus() != null){
 
-           if(hl.getId() == id )
-           {
-               hl.setdStatus("Read");
-           }
-           else
-           {
-               hl.setdStatus("UnRead");
-           }
+                Query q2 = em.createNativeQuery("select history_log_id from delete_notification where status !='deleted' and user_id ="+userId+"");
+
+                Integer id= Integer.parseInt(q2.getSingleResult().toString());
+
+                if(hl.getId() == id )
+                {
+                    hl.setdStatus("Read");
+                }
+                else
+                {
+                    hl.setdStatus("UnRead");
+                }
+
+            }
 
         }
 

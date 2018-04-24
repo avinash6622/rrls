@@ -116,7 +116,7 @@ public class UserResource {
 
             String page="User";
             Long id = getUserId(newUser.getCreatedBy());
-            notificationServiceResource.notificationHistorysave(newUser.getLogin(),newUser.getCreatedBy(),newUser.getLastModifiedBy(),newUser.getCreatedDate(),"",page,"",id);
+            notificationServiceResource.notificationHistorysave(newUser.getLogin(),newUser.getCreatedBy(),newUser.getLastModifiedBy(),newUser.getCreatedDate(),"created",page,"",id);
 
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
                 .headers(HeaderUtil.createAlert( "A user is created with identifier " + newUser.getLogin(), newUser.getLogin()))
