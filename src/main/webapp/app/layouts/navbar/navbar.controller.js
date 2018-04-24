@@ -126,6 +126,7 @@
             if (item.dStatus !== 'Read') {
                 OpportunityMaster.notification({notiId :id,userId:userid,status:status}, function(resp){
                     console.log(resp);
+
                 });
             }
 
