@@ -101,9 +101,7 @@
         function close(id,userid,index,status){
 
             vm.notificationValues.splice(index, 1);
-            console.log(id);
-            console.log(userid);
-            console.log(status);
+
 
          OpportunityMaster.notification({notiId :id,userId:userid,status:status}, function(resp){
 
@@ -113,10 +111,7 @@
         }
 
         function readstatus(id,userid,status,item){
-            console.log(id);
-            console.log(userid);
-            console.log(status);
-            console.log(item);
+
 
             if (item.dStatus !== 'Read') {
                 OpportunityMaster.notification({notiId :id,userId:userid,status:status}, function(resp){
