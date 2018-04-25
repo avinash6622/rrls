@@ -163,7 +163,8 @@
 
             },
             'notification':{
-    			 url:'api/store_noti_user_id',
+
+                url:'api/store_noti_user_id',
                 method:'POST'
             },
 

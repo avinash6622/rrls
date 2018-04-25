@@ -200,7 +200,7 @@ public class FileUploadResource {
 
           Long id =  userResource.getUserId(result.getCreatedBy());
 
-      notificationServiceResource.notificationHistorysave(oppName,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"",page,result.getFileName(),id);
+      notificationServiceResource.notificationHistorysave(oppName,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"uploaded",page,result.getFileName(),id);
 
 
 
@@ -783,3 +783,4 @@ public class FileUploadResource {
 		System.out.println("File Uploading is Completed");
 	}
 }
+
