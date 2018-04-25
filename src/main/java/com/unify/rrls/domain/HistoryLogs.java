@@ -1,5 +1,6 @@
 package com.unify.rrls.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -7,6 +8,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -36,7 +38,9 @@ public class HistoryLogs {
     @Column(name="user_id")
     private Long userId;
 
-
+    @Transient
+    @JsonProperty
+   String dStatus;
 
     public Integer getId() {
         return id;
@@ -109,6 +113,14 @@ public class HistoryLogs {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getdStatus() {
+        return dStatus;
+    }
+
+    public void setdStatus(String dStatus) {
+        this.dStatus = dStatus;
     }
 
     @Override

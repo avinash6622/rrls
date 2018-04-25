@@ -18,8 +18,10 @@ public class DeleteNotification {
     private Integer id;
     @Column(name = "user_id")
     private Integer userId;
-    @Column(name = "noti_id")
+    @Column(name = "history_log_id")
     private Integer notiId;
+    @Column(name = "status")
+    private String status;
 
     public Integer getId() {
         return id;
@@ -45,6 +47,14 @@ public class DeleteNotification {
         this.notiId = notiId;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,13 +62,14 @@ public class DeleteNotification {
         DeleteNotification that = (DeleteNotification) o;
         return Objects.equals(id, that.id) &&
             Objects.equals(userId, that.userId) &&
-            Objects.equals(notiId, that.notiId);
+            Objects.equals(notiId, that.notiId) &&
+            Objects.equals(status, that.status);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, userId, notiId);
+        return Objects.hash(id, userId, notiId, status);
     }
 
     @Override
@@ -67,6 +78,7 @@ public class DeleteNotification {
             "id=" + id +
             ", userId=" + userId +
             ", notiId=" + notiId +
+            ", status='" + status + '\'' +
             '}';
     }
 }

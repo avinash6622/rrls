@@ -540,6 +540,8 @@ public class OpportunityMasterResource {
 
         }
 
+
+
 		return ResponseEntity.ok()
 				.headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, result.getId().toString()))
 				.body(result);
@@ -658,7 +660,7 @@ public class OpportunityMasterResource {
 		//List<OpportunityMaster> opportunityMaster=opportunityMasterRepository.findByCreatedBy(username);
 
 
-			page = opportunityMasterRepository.findAll(pageable);	
+			page = opportunityMasterRepository.findAll(pageable);
 
 		List<StrategyMaster> strategyMapMaster;
 

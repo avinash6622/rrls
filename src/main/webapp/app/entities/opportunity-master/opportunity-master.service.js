@@ -163,15 +163,8 @@
 
             },
             'notification':{
-
-                url:'api/store_noti_user_id',
-                method:'POST',
-                transformResponse: function(data){
-                    return data;
-
-                }
-
-
+    			 url:'api/store_noti_user_id',
+                method:'POST'
             },
 
             /*,

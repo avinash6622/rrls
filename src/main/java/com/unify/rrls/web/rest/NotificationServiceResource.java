@@ -20,8 +20,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -77,17 +79,72 @@ public class NotificationServiceResource {
     public ResponseEntity<List<HistoryLogs>> getAllHistoryLogs(@PathVariable Integer userId) {
         log.debug("REST request to get a page of OpportunityMasters");
         List<HistoryLogs> list = null;
+        List<HistoryLogs> historyLogs = new ArrayList<>();
 
         System.out.println("id--->"+userId);
 
-        Query q = em.createNativeQuery("select * from history_logs where id not in(select noti_id from delete_notification where user_id="+userId+") order by id desc limit 5",HistoryLogs.class);
+        Query q = em.createNativeQuery("select * from history_logs where id not in(select history_log_id from delete_notification where user_id="+userId+" and status = 'deleted') order by id desc limit 5",HistoryLogs.class);
+
+
+
+
+       /* Query q = em.createNativeQuery("\n" +
+            "select id,name,opp_created_by,opp_last_modified_by,opp_created_date,action,page,sub_content,user_id,'Read' from history_logs where id not in(select noti_id from delete_notification where user_id="+userId+" and status='deleted') order by id desc limit 5");
+
+
+
+        rows = q.getResultList();
+        for(Object[] row : rows){
+            HistoryLogs emp = new HistoryLogs();
+            emp.setId(Integer.parseInt(row[0].toString()));
+            emp.setOppname(row[1].toString());
+            emp.setCreatedBy(row[2].toString());
+            emp.setLastModifiedBy(row[3].toString());
+            emp.setCreatedDate(row[4]);
+            emp.setAction(row[5].toString());
+            emp.setPage(row[6].toString());
+            emp.setFileNamecontent(row[7].toString());
+            emp.setUserId(Long.valueOf(row[8].toString()));
+            emp.setdStatus(row[9].toString());
+            historyLogs.add(emp);
+
+
+        }*/
+
+
+
 
         list   = q.getResultList();
+
+        for(HistoryLogs hl:list){
+
+            System.out.println(hl.getdStatus());
+
+            if(hl.getdStatus() != null){
+
+                Query q2 = em.createNativeQuery("select history_log_id from delete_notification where status !='deleted' and user_id ="+userId+"");
+
+                Integer id= Integer.parseInt(q2.getSingleResult().toString());
+
+                if(hl.getId() == id )
+                {
+                    hl.setdStatus("Read");
+                }
+                else
+                {
+                    hl.setdStatus("UnRead");
+                }
+
+            }
+
+        }
 
 
 
         System.out.println(list);
-        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
+
+
+        // System.out.println("jhdsfjsjkdh"+statusList);
 
         return new ResponseEntity<>(list,HttpStatus.OK);
     }
@@ -100,14 +157,26 @@ public class NotificationServiceResource {
         List<DeleteNotification> list = null;
         System.out.println(deleteNotification.getNotiId());
         System.out.println(deleteNotification.getUserId());
+        System.out.println(deleteNotification.getStatus());
 
-        DeleteNotification result = deleteNotificationRepository.save(deleteNotification);
+        DeleteNotification result1 = null;
 
 
+        DeleteNotification result = deleteNotificationRepository.findByUserIdAndNotiId(deleteNotification.getUserId(),deleteNotification.getNotiId());
+        System.out.println("hjksahdkj--->"+result);
+        if(result == null)
+        {
+          result1 = deleteNotificationRepository.save(deleteNotification);
+        }
+        else{
+           // System.out.println("entered else");
 
-        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
+            result.setStatus(deleteNotification.getStatus());
 
-        return new ResponseEntity<>(result,HttpStatus.OK);
+            result1 = deleteNotificationRepository.save(result);
+        }
+
+        return new ResponseEntity<>(result1,HttpStatus.OK);
 
     }
 
