@@ -10,13 +10,13 @@
     function OpportunityQuestionController(OpportunityQuestion,AnswerComment, ParseLinks, $uibModalInstance, AlertService, paginationConstants, options,$filter) {
 
         var $ctrl=this;
-        
+
         $ctrl.clear = clear;
         $ctrl.clearDialog = dialog;
-        $ctrl.answerSubmit=submit; 
+        $ctrl.answerSubmit=submit;
         $ctrl.save=save;
-        
-        
+
+
         console.log(options);
         OpportunityQuestion.questionAnswer({id: options.id}, function(response) {
         	console.log(response);
@@ -38,15 +38,21 @@
         	$ctrl.answerText.clear();
             $uibModalInstance.dismiss('cancel');
         }
-        function submit(id, parentId, index,index1){ 
+        function submit(id, parentId, index,index1){
         	console.log(index);
         	console.log(index1);
+
         	AnswerComment.save({answerText : $ctrl.answerText,opportunityQuestion :id,answerComment:parentId}, function(resp) {
-        		if(index1==null)   			
-        		$ctrl.questions[index].answerComments.push(resp);
-        		else
-        		$ctrl.questions[index].answerComments.push(resp);
-        		
+        		if(index !== null) {
+                    if($ctrl.questions[index].answerComments !== null) {
+                        $ctrl.questions[index].answerComments.push(resp);
+                    } else {
+                        $ctrl.questions[index].answerComments = [];
+                        $ctrl.questions[index].answerComments.push(resp)
+                    }
+                }
+
+
         		$ctrl.answerText='';
         	console.log('answer',$ctrl.questions);
         	}, function(err) {
