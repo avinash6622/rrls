@@ -45,6 +45,7 @@
 
 
 
+
 </style>
 
 
@@ -165,10 +166,10 @@
                     </a>
 
 
-                    <ul class="dropdown-menu dropdown-messages" uib-dropdown-menu>
+                    <ul class="dropdown-menu dropdown-messages" uib-dropdown-menu ng-style="{'height': vm.notificationValues.length > 5 ? '215px': 'auto'}">
                         <div class="primary-aligned">
 
-                        <span ng-repeat="noti in vm.notificationValues">
+                        <span ng-show="vm.notificationValues.length" ng-repeat="noti in vm.notificationValues">
                             <li>
 
                                 <div>
@@ -188,9 +189,19 @@
 
                         </span>
 
+
+                            <li ng-hide="vm.notificationValues.length">
+                                <div>
+                                    No notifications
+                                </div>
+                            </li>
                         </div>
 
+
+
                     </ul>
+
+
                 </li>
 
 

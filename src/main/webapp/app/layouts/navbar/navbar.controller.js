@@ -26,6 +26,7 @@
         vm.count = null;
         vm.close = close;
         vm.readstatus= readstatus;
+        vm.nonotification = null;
 
 
 
@@ -57,16 +58,10 @@
 
                         console.log(len.length);
 
-                        if(len.length == 0){
-                            vm.notificationValues.push("No Notifications");
-                        }
-
-                        else{
 
                             for (var i = 0; i < len.length; i++) {
                                 vm.notificationValues.push(len[i]);
                             }
-                        }
 
 
 
