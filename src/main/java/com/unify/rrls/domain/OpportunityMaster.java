@@ -79,6 +79,9 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	@ManyToOne
 	@JoinColumn(name = "master_name")
 	private OpportunityName masterName;
+	
+	 @OneToMany(mappedBy="opportunityMaster")
+	 private List<OpportunityQuestion> opportunityQuestions;
 
 
 
@@ -87,6 +90,14 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
         cascade =  CascadeType.ALL,
         mappedBy = "OpportunityMasterID")
     private OpportunityMasterContact opportunityMasterContact;*/
+
+	public List<OpportunityQuestion> getOpportunityQuestions() {
+		return opportunityQuestions;
+	}
+
+	public void setOpportunityQuestions(List<OpportunityQuestion> opportunityQuestions) {
+		this.opportunityQuestions = opportunityQuestions;
+	}
 
 	/*@OneToMany(mappedBy = "strategyMaster",cascade={CascadeType.PERSIST},fetch = FetchType.EAGER)
 	private List<StrategyMapping> strategyMapping;*/

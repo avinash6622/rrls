@@ -69,7 +69,10 @@ div.scrollmenu {
     <div class="page-header" style="margin:0">
     <div class="row">
 
-        <div class="col-md-3"><h4><strong>{{vm.opportunityMaster.masterName.oppName}}<span class="text-danger font-weight-bold" ng-if="vm.opportunityMaster.oppStatus"><strong> - {{vm.opportunityMaster.oppStatus}}</strong></span></strong></h4></div>
+        <div class="col-md-3"><h4><strong>{{vm.opportunityMaster.masterName.oppName}}<span class="text-danger font-weight-bold" ng-if="vm.opportunityMaster.oppStatus"><strong> - {{vm.opportunityMaster.oppStatus}}</strong></span></strong>
+       </h4>
+        </div>
+        <div class="col-xs-5"> <a ui-sref="opportunity-master.comments">Comments</a>&nbsp;&nbsp;&nbsp;<a ng-click="question('Approved')">Questions & Answer</a>&nbsp;&nbsp;&nbsp;<a>Learnings</a></div>
         <div class="pull-right">
  <div class="col-xs-4">
                 <button type="button"
@@ -423,7 +426,7 @@ div.scrollmenu {
 			<!--<button class="btn btn-warning" ng-if="!isDisabled"
 				ng-click="cancel()">Cancel</button>-->
             <button class="btn btn-primary" style="padding: 2px;padding-right: 12px;padding-left: 12px" ng-if="!isDisabled" ng-click="submitTable()">Submit</button>
-            </div>
+            <input type="number" class="form-control" name="myDecimal" placeholder="Decimal" ng-model="myDecimal" ng-pattern="/^[0-2]{0}/" step="0" required /></div>
 		</dd>
 		<div>
 

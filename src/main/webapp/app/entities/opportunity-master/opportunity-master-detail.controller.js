@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('OpportunityMasterDetailController', OpportunityMasterDetailController);
 
-    OpportunityMasterDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'OpportunityMaster', 'StrategyMaster', 'Upload', 'FileUploadComments','FileUpload','$uibModal','$filter','$http'];
+    OpportunityMasterDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'OpportunityMaster', 'StrategyMaster', 'Upload', 'FileUploadComments','FileUpload','$uibModal','$filter','$http','OpportunityQuestion'];
 
-    function OpportunityMasterDetailController($scope, $rootScope, $stateParams, previousState, entity, OpportunityMaster, StrategyMaster, Upload, FileUploadComments,FileUpload,$uibModal,$filter,$http) {
+    function OpportunityMasterDetailController($scope, $rootScope, $stateParams, previousState, entity, OpportunityMaster, StrategyMaster, Upload, FileUploadComments,FileUpload,$uibModal,$filter,$http,OpportunityQuestion) {
         var vm = this;
 
         vm.opportunityMaster = entity;
@@ -29,6 +29,7 @@
         /*vm.additionalFile=additionalFile;*/
         vm.addFileName='';
         vm.summaryData='';
+        vm.questions=[];
 
 
       //  vm.submiTable=submitTable;
@@ -93,7 +94,7 @@
 
             OpportunityMaster.summarydatavalues(vm.opportunityMaster, function (resp) {
 
-                isDisabled=true;
+            	 $scope.isDisabled=true;
             }, function (err) {
                 console.log(err);
             });
@@ -482,6 +483,23 @@
                 }
             });
 
+
+        };
+        
+        $scope.question = function () {
+
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/entities/opportunity-master/opportunity-question-answer.html',
+                controllerAs: '$ctrl',
+                controller: 'OpportunityQuestionController',
+                size: 'lg',
+                resolve: {
+                	options: function() {
+                		return vm.opportunityMaster;
+                	}
+                }
+            });
+          
 
         };
 
