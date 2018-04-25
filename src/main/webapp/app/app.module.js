@@ -17,7 +17,7 @@
             'angular-loading-bar',
             'ckeditor',
             'autoCompleteModule',
-            'xyScroll',
+           // 'xyScroll',
             'angular-notification-icons'
            // 'angucomplete-alt'
         ])
