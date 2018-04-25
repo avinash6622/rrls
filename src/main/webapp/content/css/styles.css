@@ -133,6 +133,16 @@ dl {
 
 }
 
+/* Button styles */
+.btn.btn-sm {
+	padding: 3px !important;
+	line-height: 1 !important;
+}
+
+.btn.btn-md {
+	padding: 3px 6px !important;
+}
+
 
 /** ====================
  * Comments CSS
@@ -255,6 +265,10 @@ li.answer-list.level-1{
 li.answer-list.level-2{
 	margin-left:50px;
 }
+
+li.answer-list.level-3{
+	margin-left:75px;
+}
 /**
  * Avatar
  ---------------------------*/
@@ -311,7 +325,7 @@ li.answer-list.level-2{
 	display: block;
 	border-width: 10px 12px 10px 0;
 	border-style: solid;
-	border-color: transparent #FCFCFC;
+	border-color: transparent #f5f5f5;
 	top: 8px;
 	left: -11px;
 }
@@ -326,7 +340,7 @@ li.answer-list.level-2{
 	
 }
 .comment-box .comment-head {
-	background: #FCFCFC;
+	background: #f5f5f5;
 	padding: 3px 3px;
 	border-bottom: 1px solid #E5E5E5;
 	overflow: hidden;
@@ -365,7 +379,7 @@ li.answer-list.level-2{
 
 .comment-box .comment-head span {
 	float: left;
-	color: #999;
+	color: #666;
 	font-size: 13px;
 	position: relative;
 	top: 1px;
