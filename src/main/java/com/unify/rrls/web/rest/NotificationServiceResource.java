@@ -89,7 +89,7 @@ public class NotificationServiceResource {
 
         for(HistoryLogs hl:list){
 
-            System.out.println(hl.getdStatus());
+           // System.out.println(hl.getdStatus());
 
             if(hl.getdStatus() != null){
 

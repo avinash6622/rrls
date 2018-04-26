@@ -113,12 +113,12 @@
         </div>
 
         <div class="form-group">
+
             <label for="field_opportunityMaster">Strategy</label>
              <select class="form-control" id="field_opportunityMaster" multiple name="selectedStrategyMaster" ng-value="selectedStrategyMaster" ng-model="vm.opportunityMaster.selectedStrategyMaster"
-                    ng-options="strategyMaster as strategyMaster.strategyName for strategyMaster in vm.strategymasters track by strategyMaster.id">
+                    ng-options="strategyMaster as strategyMaster.strategyName for strategyMaster in vm.strategymasters  | filter: {strategyName: '!Unallocated Strategy'} track by strategyMaster.id">
 
-
-            </select>
+             </select>
 
             <!--  <select class="form-control" id="field_opportunityMaster" multiple name="selectedStrategyMaster" ng-model="vm.opportunityMaster.strategyMapping"
                     ng-options="selectedStrategyMaster as strategyMaster.strategyName for strategyMaster in vm.strategymasters track by strategyMaster.id">
@@ -333,7 +333,7 @@
                     <td><input name="peFour" ng-model="vm.opportunityMaster.financialSummaryData.peFour" ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.patFour,9)" ng-disabled="true" style="text-align: right"/></td>
                     <td><input name="peFive" ng-model="vm.opportunityMaster.financialSummaryData.peFive" ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.patFive,10)" ng-disabled="true" style="text-align: right"/></td>
                 </tr>
-                
+
                 <!--   <tr>
                     <td scope="col">Weight</td>
                     <td><input name="weightOne"  ng-disabled="true" style="text-align: right"/> </td>
@@ -571,7 +571,7 @@
                             <td><input name="depRateFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.depRateFour" ng-disabled="" style="text-align: right"/></td>
                             <td><input name="depRateFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.depRateFive" ng-disabled="" style="text-align: right"/></td>
                         </tr>
-                        
+
                            <tr>
                     <td scope="col">Weight</td>
                     <td><input name="weightOne"  ng-disabled="true" style="text-align: right"/> </td>

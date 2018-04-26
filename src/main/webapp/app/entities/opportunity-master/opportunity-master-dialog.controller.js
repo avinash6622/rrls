@@ -38,7 +38,7 @@
 
 		vm.selectedOpportunity = null;
 
-		console.log("SELECTED------>", vm.opportunityNames);
+		console.log("SELECTED------>", vm.strategymasters);
 
 		// var name= vm.opportunityNames;
 		vm.autoCompleteOptions = {
