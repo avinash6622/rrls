@@ -43,6 +43,8 @@ div.scrollmenu {
     padding:2px !important;
 
 }
+.replies .btn{
+padding :none !important}
 .col-xs-4 .btn{
     padding:2px !important;
 
@@ -69,32 +71,45 @@ div.scrollmenu {
     <div class="page-header" style="margin:0">
     <div class="row">
 
-        <div class="col-md-3"><h4><strong>{{vm.opportunityMaster.masterName.oppName}}<span class="text-danger font-weight-bold" ng-if="vm.opportunityMaster.oppStatus"><strong> - {{vm.opportunityMaster.oppStatus}}</strong></span></strong>
+        <div class="col-md-4"><h4><strong>{{vm.opportunityMaster.masterName.oppName}}<span class="text-danger font-weight-bold" ng-if="vm.opportunityMaster.oppStatus"><strong> - {{vm.opportunityMaster.oppStatus}}</strong></span></strong>
        </h4>
         </div>
-        <div class="col-xs-5"> <a ui-sref="opportunity-master.comments">Comments</a>&nbsp;&nbsp;&nbsp;<a ng-click="question('Approved')">Questions & Answer</a>&nbsp;&nbsp;&nbsp;<a>Learnings</a></div>
+    <!--   <div class="col-xs-5"> <a ui-sref="opportunity-master.comments">Comments</a>&nbsp;&nbsp;&nbsp;<a ng-click="question('Approved')">Questions & Answer</a>&nbsp;&nbsp;&nbsp;<a>Learnings</a></div> -->
+        <div class="col-md-8">
         <div class="pull-right">
- <div class="col-xs-4">
+        <button type="button" ng-click="question('Approved')" class="btn btn-md btn-primary">
+                  <span class="hidden-sm-down"> Comments</span>
+                </button>
+
+
+                <button type="button"
+                        ng-click="question('Approved')"
+                        class="btn btn-md btn-primary">
+                   <span
+                    class="hidden-sm-down"> Questions & Answer</span>
+                </button>
+
+
+                <button type="button"
+                        ng-click="question('Approved')"
+                        class="btn btn-md btn-primary">
+                   <span
+                    class="hidden-sm-down"> Learning</span>
+                </button>
+
                 <button type="button"
                         ui-sref="opportunity-master.edit({id:vm.opportunityMaster.id})"
-                        class="btn btn-primary pull-right">
+                        class="btn btn-md btn-primary">
                     <span class="glyphicon glyphicon-pencil"></span> <span
                     class="hidden-sm-down"> Edit</span>
                 </button>
-                </div>
 
-            <!--</div>
-        </div>
-        <div class="pull-right">
-            <div class="col-md-2">-->
-           <div class="col-xs-6">
                 <button type="submit" ui-sref="{{ vm.previousState }}"
-                        class="btn btn-info pull-right">
+                        class="btn btn-md btn-info">
                     <span class="glyphicon glyphicon-arrow-left"></span><span>
 		Back</span>
                 </button>
-                </div>
-
+</div>
     </div>
 </div>
     </div>

@@ -4,7 +4,8 @@
     <h3 class="modal-title" text-align="center">Questions & Answer</h3>
 </div>
 
- <div class="row" style="height: 500px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">	
+ <div class="row"  style="height: 500px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">	
+
     <div class="comments-container">
 				<ul id="comments-list" class="comments-list">
 			<li>
@@ -37,7 +38,7 @@
 							<div class="comment-head">
 								<span class="comment-name">{{answer.createdBy}}</span>
 								<span>{{answer.createdDate | date :"MMM d, y h:mm:ss a"}}</span>
-								<button class="btn btn-sm btn-info pull-right" ng-click="showReplyText=true">Reply</button>
+								<button class="btn btn-sm btn-info pull-right" ng-click="showReplyText=true" ng-show="$index <3">Reply</button>
 							</div>
 							<div class="comment-content">
 								{{answer.answerText}}
@@ -61,6 +62,7 @@
 		</ul>
 	</div>
 	</div>
+	
 
 <div class="modal-footer">
 <textarea ng-model="$ctrl.question" placeholder="Enter question" style="width:80%; float:left;"></textarea>
