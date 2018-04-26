@@ -40,7 +40,7 @@ public class HistoryLogs {
 
     @Transient
     @JsonProperty
-   String dStatus;
+    String dStatus;
 
     public Integer getId() {
         return id;
