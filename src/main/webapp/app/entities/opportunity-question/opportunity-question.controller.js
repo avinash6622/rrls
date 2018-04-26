@@ -41,8 +41,12 @@
         function submit(id, parentId, index,index1){
         	console.log(index);
         	console.log(index1);
-
-        	AnswerComment.save({answerText : $ctrl.answerText,opportunityQuestion :id,answerComment:parentId}, function(resp) {
+        	if(index1==null)
+        		var name='Answered';
+        	else
+        		var name='Replied';
+        	console.log(name);
+        		AnswerComment.save({answerText : $ctrl.answerText,opportunityQuestion :id,answerComment:parentId,commentStatus:name}, function(resp) {
         		if(index !== null) {
                     if($ctrl.questions[index].answerComments !== null) {
                         $ctrl.questions[index].answerComments.push(resp);

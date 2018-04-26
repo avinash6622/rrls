@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,12 @@ private final AnswerCommentRepository answerCommentRepository;
 	private final Logger log = LoggerFactory.getLogger(AnswerCommentResource.class);
 
 	private static final String ENTITY_NAME = "answerComment";
+	
+	  @Autowired
+	  NotificationServiceResource notificationServiceResource;	
+	  
+	  @Autowired
+	  UserResource userResource;
 
 	public AnswerCommentResource(AnswerCommentRepository answerCommentRepository) {
 		this.answerCommentRepository = answerCommentRepository;		
@@ -52,7 +59,15 @@ private final AnswerCommentRepository answerCommentRepository;
         }
 
         AnswerComment result = answerCommentRepository.save(answerComment);
-       
+        String status=answerComment.getCommentStatus();
+        String page="Opportunity";
+        String subContent=answerComment.getAnswerText();
+
+        String name = String.valueOf(result.getOpportunityQuestion().getOpportunityMaster().getMasterName().getOppName());
+         Long id =  userResource.getUserId(result.getCreatedBy());
+
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),status,page,subContent,id);
+
 
         return ResponseEntity.created(new URI("/api/answer-comment/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);

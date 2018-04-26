@@ -15,7 +15,7 @@
 						<div class="comment-head">
 							<span class="comment-name">{{questions.createdBy}}</span>
 							<span>{{questions.createdDate | date :"MMM d, y h:mm:ss a"}}</span>
-							<button class="btn btn-sm btn-info pull-right" ng-click="showTextArea=true">Answer</button>
+							<button class="btn btn-sm btn-info pull-right" ng-click="showTextArea=true" ng-show="questions.answerComments==null">Answer</button>
 							
 							<!-- <i class="fa fa-heart"></i> -->
 						</div>
@@ -38,7 +38,7 @@
 							<div class="comment-head">
 								<span class="comment-name">{{answer.createdBy}}</span>
 								<span>{{answer.createdDate | date :"MMM d, y h:mm:ss a"}}</span>
-								<button class="btn btn-sm btn-info pull-right" ng-click="showReplyText=true" ng-show="$index <3">Reply</button>
+								<button class="btn btn-sm btn-info pull-right" ng-click="showReplyText=true" ng-show="$last && $index<2">Reply</button>
 							</div>
 							<div class="comment-content">
 								{{answer.answerText}}
