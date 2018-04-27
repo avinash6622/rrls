@@ -1,6 +1,7 @@
 package com.unify.rrls.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -28,6 +29,10 @@ public class ReplyComment extends AbstractAuditingEntity implements Serializable
     @ManyToOne
     @JoinColumn(name = "parent_reply_id")
     private ReplyComment replyComment;
+
+    @Transient
+    @JsonProperty
+    private String commentStatuscol;
 
 
     public Long getId() {
@@ -60,5 +65,13 @@ public class ReplyComment extends AbstractAuditingEntity implements Serializable
 
     public void setReplyComment(ReplyComment replyComment) {
         this.replyComment = replyComment;
+    }
+
+    public String getCommentStatuscol() {
+        return commentStatuscol;
+    }
+
+    public void setCommentStatuscol(String commentStatuscol) {
+        this.commentStatuscol = commentStatuscol;
     }
 }

@@ -9,6 +9,7 @@ import com.unify.rrls.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,12 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 public class ReplyCommentResource {
+
+    @Autowired
+    NotificationServiceResource notificationServiceResource;
+
+    @Autowired
+    UserResource userResource;
 
     private final ReplyCommentRepository replyCommentRepository;
 
@@ -48,6 +55,15 @@ public class ReplyCommentResource {
         }
 
         ReplyComment result = replyCommentRepository.save(replyComment);
+
+        String status=replyComment.getCommentStatuscol();
+        String page="Opportunity";
+        String subContent=replyComment.getReplyText();
+
+        String name = String.valueOf(result.getCommentOpportunity().getOpportunityMaster().getMasterName().getOppName());
+        Long id =  userResource.getUserId(result.getCreatedBy());
+
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),status,page,subContent,id);
 
 
         return ResponseEntity.created(new URI("/api/answer-comment/" + result.getId()))

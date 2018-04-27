@@ -8,6 +8,7 @@ import com.unify.rrls.web.rest.util.HeaderUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,12 @@ public class CommentOpportunityResource {
 
     private static final String ENTITY_NAME = "commentOpportunity";
 
+    @Autowired
+    NotificationServiceResource notificationServiceResource;
+
+    @Autowired
+    UserResource userResource;
+
 
     public CommentOpportunityResource(CommentOpportunityRepository commentOpportunityRepository) {
         this.commentOpportunityRepository = commentOpportunityRepository;
@@ -49,6 +56,16 @@ public class CommentOpportunityResource {
         }
 
         CommentOpportunity result = commentOpportunityRepository.save(commentOpportunity);
+
+        String page="Opportunity";
+        String subContent="Comment:"+commentOpportunity.getCommentText();
+
+        String name =String.valueOf(result.getOpportunityMaster().getMasterName().getOppName());
+        Long id =  userResource.getUserId(result.getCreatedBy());
+
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"added",page,subContent,id);
+
+
 
 
         return ResponseEntity.created(new URI("/api/opportunity-comment/" + result.getId()))
