@@ -485,7 +485,7 @@
 
 
         };
-        
+
         $scope.question = function () {
 
             var modalInstance = $uibModal.open({
@@ -499,9 +499,27 @@
                 	}
                 }
             });
-          
+
 
         };
+
+        $scope.commentstemp = function(){
+
+            var modalInstance = $uibModal.open({
+
+                templateUrl: 'app/entities/opportunity-master/opportunity-comment.html',
+                controllerAs: '$ctrl',
+                controller: 'OpportunityCommentController',
+                size: 'lg',
+                resolve: {
+                    options: function() {
+                        return vm.opportunityMaster;
+                    }
+                }
+
+            });
+
+        }
 
 
         function load() {

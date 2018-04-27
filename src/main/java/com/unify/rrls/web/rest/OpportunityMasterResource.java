@@ -115,6 +115,8 @@ public class OpportunityMasterResource {
 	private final OpportunityAutomationRepository opportunityAutomationRepository;
 	private final OpportunityQuestionRepository opportunityQuestionRepository;
 	private final AnswerCommentRepository answerCommentRepository;
+	private final CommentOpportunityRepository commentOpportunityRepository;
+	private final ReplyCommentRepository replyCommentRepository;
 
     @Autowired
 	NotificationServiceResource notificationServiceResource;
@@ -128,7 +130,7 @@ public class OpportunityMasterResource {
 			AdditionalFileUploadRepository additionalFileUploadRepository,OpportunityMasterContactRepository opportunityMasterContactRepository,FinancialSummaryDataRepository financialSummaryDataRepository
     ,NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository, OpportunitySummaryDataRepository opportunitySummaryDataRepository,
     OpportunityAutomationRepository opportunityAutomationRepository,OpportunityQuestionRepository opportunityQuestionRepository,
-    AnswerCommentRepository answerCommentRepository) {
+    AnswerCommentRepository answerCommentRepository,CommentOpportunityRepository commentOpportunityRepository,ReplyCommentRepository replyCommentRepository) {
 		this.opportunityMasterRepository = opportunityMasterRepository;
 		this.fileUploadRepository = fileUploadRepository;
 		this.fileUploadCommentsRepository = fileUploadCommentsRepository;
@@ -142,6 +144,8 @@ public class OpportunityMasterResource {
 		this.opportunityAutomationRepository=opportunityAutomationRepository;
 		this.opportunityQuestionRepository=opportunityQuestionRepository;
 		this.answerCommentRepository=answerCommentRepository;
+		this.commentOpportunityRepository=commentOpportunityRepository;
+		this.replyCommentRepository=replyCommentRepository;
 	}
 
 	/**
@@ -840,6 +844,26 @@ public class OpportunityMasterResource {
 
 		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(commentReply));
 	}
+
+    @GetMapping("/opportunity-masters/get-comment/{id}")
+    @Timed
+    public ResponseEntity<List<CommentOpportunity>> getComment(@PathVariable Long id) {
+        log.debug("REST request to get OpportunityMaster : {}", id);
+
+        OpportunityMaster opportunityMasters =opportunityMasterRepository.findOne(id);
+        List<CommentOpportunity> commentOpportunity=commentOpportunityRepository.findByOpportunityMaster(opportunityMasters);
+        List<CommentOpportunity> commentReply=new ArrayList<>();
+        List<ReplyComment> replyComments;
+
+        for(CommentOpportunity comment: commentOpportunity)
+        {
+            replyComments=replyCommentRepository.findByCommentOpportunity(comment);
+            comment.setCommentList(replyComments);
+            commentReply.add(comment);
+        }
+
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(commentReply));
+    }
 
 
 	public String convertHTMLToDoc(String xhtml, String destinationPath, String fileName) {
