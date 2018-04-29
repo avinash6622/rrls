@@ -426,4 +426,18 @@ li.answer-list.level-3{
 	}
 }
 
+/*Learning Modal*/
+.learning-modal .panel,
+.learning-modal .panel-group {
+	margin-bottom: 2px !important;
+}
+.learning-modal .panel-heading{
+	padding: 1px 1px !important;
+}
+   
+.learning-modal .panel-body {
+   padding: 3px !important;
+}
+
+
 

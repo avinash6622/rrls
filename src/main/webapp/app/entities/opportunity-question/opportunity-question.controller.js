@@ -22,9 +22,7 @@
         	console.log(response);
         	$ctrl.questions = response;
         });
-        function save(){
-        	console.log('opp',options);
-        	console.log('REplya',$ctrl.question);
+        function save(){        	
         	OpportunityQuestion.save({questionText:$ctrl.question,opportunityMaster:options},function(response){
         	console.log(response)
         	$ctrl.questions.push(response);

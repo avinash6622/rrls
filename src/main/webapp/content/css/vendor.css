@@ -618,6 +618,9 @@ td, th {
 
 .glyphicon-chevron-right:before {
 	content: "\e080";
+	font-size:11px;
+	margin-top:2px;
+	float:left;
 }
 
 .glyphicon-plus-sign:before {
@@ -742,6 +745,9 @@ td, th {
 
 .glyphicon-chevron-down:before {
 	content: "\e114";
+	font-size:11px;
+	float:left;
+	margin-top:3px;
 }
 
 .glyphicon-retweet:before {

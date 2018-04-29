@@ -115,6 +115,7 @@ public class OpportunityMasterResource {
 	private final OpportunityAutomationRepository opportunityAutomationRepository;
 	private final OpportunityQuestionRepository opportunityQuestionRepository;
 	private final AnswerCommentRepository answerCommentRepository;
+	private final OpportunityLearningRepository opportunityLearningRepository;
 
     @Autowired
 	NotificationServiceResource notificationServiceResource;
@@ -128,7 +129,7 @@ public class OpportunityMasterResource {
 			AdditionalFileUploadRepository additionalFileUploadRepository,OpportunityMasterContactRepository opportunityMasterContactRepository,FinancialSummaryDataRepository financialSummaryDataRepository
     ,NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository, OpportunitySummaryDataRepository opportunitySummaryDataRepository,
     OpportunityAutomationRepository opportunityAutomationRepository,OpportunityQuestionRepository opportunityQuestionRepository,
-    AnswerCommentRepository answerCommentRepository) {
+    AnswerCommentRepository answerCommentRepository,OpportunityLearningRepository opportunityLearningRepository) {
 		this.opportunityMasterRepository = opportunityMasterRepository;
 		this.fileUploadRepository = fileUploadRepository;
 		this.fileUploadCommentsRepository = fileUploadCommentsRepository;
@@ -142,6 +143,7 @@ public class OpportunityMasterResource {
 		this.opportunityAutomationRepository=opportunityAutomationRepository;
 		this.opportunityQuestionRepository=opportunityQuestionRepository;
 		this.answerCommentRepository=answerCommentRepository;
+		this.opportunityLearningRepository=opportunityLearningRepository;
 	}
 
 	/**
@@ -812,6 +814,18 @@ public class OpportunityMasterResource {
 		
 		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(commentReply));
 	}
+	
+	@GetMapping("/opportunity-masters/get-learning/{id}")
+	@Timed
+	public ResponseEntity<List<OpportunityLearning>> getLearningAnswer(@PathVariable Long id) {
+		log.debug("REST request to get OpportunityLearning : {}", id);
+
+		OpportunityMaster opportunityMasters =opportunityMasterRepository.findOne(id);
+		List<OpportunityLearning> opportunityLearnings=opportunityLearningRepository.findByOpportunityMaster(opportunityMasters);		
+		
+		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(opportunityLearnings));
+	}
+	
 
 
 	public String convertHTMLToDoc(String xhtml, String destinationPath, String fileName) {

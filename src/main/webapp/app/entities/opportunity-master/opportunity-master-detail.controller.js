@@ -502,6 +502,23 @@
           
 
         };
+        
+        $scope.learning = function () {
+
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/entities/opportunity-learning/opportunity-master-learning.html',
+                controllerAs: '$ctrl',
+                controller: 'OpportunityLearningController',
+              size: 'lg',
+               resolve: {
+                	options: function() {
+                		return vm.opportunityMaster;
+                	}
+                }
+            });
+          
+
+        };
 
 
         function load() {
@@ -569,22 +586,13 @@
         	OpportunityMaster.wordCreation({fileContent: doc,fileName:vm.fileName,oppId:vm.opportunityMaster.id,
         		oppName:vm.opportunityMaster.masterName.oppName,oppId:vm.opportunityMaster.id}, function(result){
 
-
         			vm.opportunityMaster.fileUploads.push(result);
-
-
-
         			clear();
         		}, onSaveError);
 
 
         }
-
-
-
-
-
-
+        
         function saveComment() {
             vm.isSaving = true;
             var inputData = {};
@@ -601,9 +609,6 @@
         }
 
        function approveFile(status){
-
-
-
 
         	vm.opportunityMaster.oppStatus = status;
 
