@@ -117,6 +117,7 @@ public class OpportunityMasterResource {
 	private final AnswerCommentRepository answerCommentRepository;
 	private final CommentOpportunityRepository commentOpportunityRepository;
 	private final ReplyCommentRepository replyCommentRepository;
+	private final OpportunityLearningRepository opportunityLearningRepository;
 
     @Autowired
 	NotificationServiceResource notificationServiceResource;
@@ -130,7 +131,7 @@ public class OpportunityMasterResource {
 			AdditionalFileUploadRepository additionalFileUploadRepository,OpportunityMasterContactRepository opportunityMasterContactRepository,FinancialSummaryDataRepository financialSummaryDataRepository
     ,NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository, OpportunitySummaryDataRepository opportunitySummaryDataRepository,
     OpportunityAutomationRepository opportunityAutomationRepository,OpportunityQuestionRepository opportunityQuestionRepository,
-    AnswerCommentRepository answerCommentRepository,CommentOpportunityRepository commentOpportunityRepository,ReplyCommentRepository replyCommentRepository) {
+    AnswerCommentRepository answerCommentRepository,CommentOpportunityRepository commentOpportunityRepository,ReplyCommentRepository replyCommentRepository, OpportunityLearningRepository opportunityLearningRepository) {
 		this.opportunityMasterRepository = opportunityMasterRepository;
 		this.fileUploadRepository = fileUploadRepository;
 		this.fileUploadCommentsRepository = fileUploadCommentsRepository;
@@ -146,6 +147,7 @@ public class OpportunityMasterResource {
 		this.answerCommentRepository=answerCommentRepository;
 		this.commentOpportunityRepository=commentOpportunityRepository;
 		this.replyCommentRepository=replyCommentRepository;
+		this.opportunityLearningRepository=opportunityLearningRepository;
 	}
 
 	/**
@@ -844,6 +846,18 @@ public class OpportunityMasterResource {
 
 		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(commentReply));
 	}
+
+	@GetMapping("/opportunity-masters/get-learning/{id}")
+	@Timed
+	public ResponseEntity<List<OpportunityLearning>> getLearningAnswer(@PathVariable Long id) {
+		log.debug("REST request to get OpportunityLearning : {}", id);
+
+		OpportunityMaster opportunityMasters =opportunityMasterRepository.findOne(id);
+		List<OpportunityLearning> opportunityLearnings=opportunityLearningRepository.findByOpportunityMaster(opportunityMasters);
+
+		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(opportunityLearnings));
+	}
+
 
     @GetMapping("/opportunity-masters/get-comment/{id}")
     @Timed

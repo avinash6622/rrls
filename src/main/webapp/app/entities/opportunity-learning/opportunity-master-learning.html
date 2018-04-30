@@ -1,0 +1,46 @@
+<style>
+</style>
+<div class="modal-headers">
+	<h3 class="modal-title" text-align="center">Learning</h3>
+</div>
+
+<div class="model-body learning-modal">
+	<div class="row"
+		style="height: 550px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
+		<div class="col-md-12">			
+			<div ng-repeat="learn in $ctrl.learnings">
+
+				<!-- <div class="panel panel-default">
+					<div class="panel-heading">
+						<strong>Learning {{$index+1}}: </strong>{{learn.subject}}
+					</div>
+					<div class="panel-body">
+						<p ng-bind-html="learn.description"></p>
+					</div>
+				</div> -->
+				
+				 <uib-accordion close-others="oneAtATime">
+    <div uib-accordion-group class="panel-default" is-open="status.open">
+    <uib-accordion-heading><strong>Learning {{$index+1}}: </strong>{{learn.subject}}
+     <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i></uib-accordion-heading>
+   
+     <span ng-bind-html="learn.description"></span>
+    </div>
+    </uib-accordion>
+			</div>
+	
+			<button class="btn btn-md btn-warning"
+		type="button" ng-click="$ctrl.showLearning=true" ng-show="$ctrl.learnings.length!=0">Add Learning</button>
+			<input type="text" class="form-control" name="subject"
+				placeholder="Enter Subject" ng-model="$ctrl.subject" ng-show="$ctrl.showLearning || $ctrl.learnings.length==0">
+				<div ng-show="$ctrl.showLearning || $ctrl.learnings.length==0">
+			<div ckeditor="options" ng-model="$ctrl.description"
+				ready="onReady()" ng-change="changeCKeditor()" readonly=""></div></div>
+		</div></div>
+	
+<div class="modal-footer">
+	<button class="btn btn-md btn-primary" ng-click="$ctrl.save()"
+		ng-disabled="">Submit</button>
+	<button class="btn btn-md btn-warning" data-dismiss="modal"
+		type="button" ng-click="$ctrl.clear()">Cancel</button>
+</div>
