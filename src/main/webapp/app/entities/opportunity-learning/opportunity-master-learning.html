@@ -1,13 +1,14 @@
 <style>
 </style>
 <div class="modal-headers">
-	<h3 class="modal-title" text-align="center">Learning</h3>
+	<h3 class="modal-title" text-align="center">Learnings</h3>
 </div>
 
 <div class="model-body learning-modal">
 	<div class="row"
 		style="height: 550px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
-		<div class="col-md-12">			
+		<div class="col-md-12">	
+		
 			<div ng-repeat="learn in $ctrl.learnings">
 
 				<!-- <div class="panel panel-default">
@@ -30,11 +31,11 @@
 			</div>
 	
 			<button class="btn btn-md btn-warning"
-		type="button" ng-click="$ctrl.showLearning=true" ng-show="$ctrl.learnings.length!=0">Add Learning</button>
+		type="button" ng-click="$ctrl.showLearning=true" ng-show="$ctrl.learnings.length !== 0 && $ctrl.account.login === $ctrl.opportunityMaster.createdBy">Add Learning</button>
 			<input type="text" class="form-control" name="subject"
-				placeholder="Enter Subject" ng-model="$ctrl.subject" ng-show="$ctrl.showLearning || $ctrl.learnings.length==0">
-				<div ng-show="$ctrl.showLearning || $ctrl.learnings.length==0">
-			<div ckeditor="options" ng-model="$ctrl.description"
+				placeholder="Enter Subject" ng-model="$ctrl.subject" ng-show="($ctrl.showLearning || $ctrl.learnings.length==0) && $ctrl.account.login === $ctrl.opportunityMaster.createdBy">
+				<div ng-show="($ctrl.showLearning || $ctrl.learnings.length==0) && $ctrl.account.login === $ctrl.opportunityMaster.createdBy">
+			<div ckeditor="ckOptions" ng-model="$ctrl.description"
 				ready="onReady()" ng-change="changeCKeditor()" readonly=""></div></div>
 		</div></div>
 	
