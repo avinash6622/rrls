@@ -85,6 +85,7 @@ background-color: #9bbd85;}
             <tr class="headborder">
 
                 <th rowspan="2"  style="vertical-align: middle;">Opportunity</th>
+                 <th rowspan="2"  style="vertical-align: middle;">Status</th>
                 <th rowspan="2"  style="vertical-align: middle;">Weight</th>
                 <th rowspan="2"  style="vertical-align: middle;">Prev. close</th>
                 <th rowspan="2"  style="vertical-align: middle;">M.Cap</th>
@@ -164,6 +165,7 @@ background-color: #9bbd85;}
             <tbody>
             <tr ng-repeat="value in vm.strategyMaster.opportunitySummaryData | orderBy:predicate:reverse | filter:paginate">
                 <td scope="col" style="text-align: left"><a ui-sref="opportunity-master-detail({id:value.opportunityMasterid.id})">{{value.opportunityMasterid.masterName.oppName}}</a></td>
+                      <td ng-class="value.opportunityMasterid.status == 'Open' ? 'text-success' : 'text-danger'" scope="col" style="text-align: left">{{value.opportunityMasterid.status}}</td>
                       <td style="text-align: right">{{value.bWeight | number:0}}</td>
                       <td style="text-align: right">{{value.cmp | number:0}}</td>
                       <td style="text-align: right">{{value.marketCap | number:0}}</td>

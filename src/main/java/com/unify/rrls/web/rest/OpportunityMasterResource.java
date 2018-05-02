@@ -52,6 +52,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.codahale.metrics.annotation.Timed;
 import com.unify.rrls.domain.AnswerComment;
 import com.unify.rrls.domain.CommentOpportunity;
+import com.unify.rrls.domain.DecimalConfiguration;
 import com.unify.rrls.domain.DocumentCreationBean;
 import com.unify.rrls.domain.FileUpload;
 import com.unify.rrls.domain.FileUploadComments;
@@ -66,6 +67,7 @@ import com.unify.rrls.domain.OpportunitySummaryData;
 import com.unify.rrls.domain.ReplyComment;
 import com.unify.rrls.domain.StrategyMapping;
 import com.unify.rrls.domain.StrategyMaster;
+import com.unify.rrls.domain.User;
 import com.unify.rrls.repository.AdditionalFileUploadRepository;
 import com.unify.rrls.repository.AnswerCommentRepository;
 import com.unify.rrls.repository.CommentOpportunityRepository;
@@ -83,6 +85,7 @@ import com.unify.rrls.repository.OpportunitySummaryDataRepository;
 import com.unify.rrls.repository.ReplyCommentRepository;
 import com.unify.rrls.repository.StrategyMappingRepository;
 import com.unify.rrls.repository.StrategyMasterRepository;
+import com.unify.rrls.repository.UserRepository;
 import com.unify.rrls.security.SecurityUtils;
 import com.unify.rrls.web.rest.util.HeaderUtil;
 import com.unify.rrls.web.rest.util.PaginationUtil;
@@ -143,6 +146,7 @@ public class OpportunityMasterResource {
 	private final ReplyCommentRepository replyCommentRepository;
 	private final OpportunityLearningRepository opportunityLearningRepository;
 	private final DecimalConfigurationRepository decimalConfigurationRepository;
+	private final UserRepository userRepository;
 
 	@Autowired
 	NotificationServiceResource notificationServiceResource;
@@ -163,7 +167,7 @@ public class OpportunityMasterResource {
 			AnswerCommentRepository answerCommentRepository, CommentOpportunityRepository commentOpportunityRepository,
 			ReplyCommentRepository replyCommentRepository,
 			OpportunityLearningRepository opportunityLearningRepository,
-			DecimalConfigurationRepository decimalConfigurationRepository) {
+			DecimalConfigurationRepository decimalConfigurationRepository,UserRepository userRepository) {
 		this.opportunityMasterRepository = opportunityMasterRepository;
 		this.fileUploadRepository = fileUploadRepository;
 		this.fileUploadCommentsRepository = fileUploadCommentsRepository;
@@ -180,7 +184,8 @@ public class OpportunityMasterResource {
 		this.commentOpportunityRepository = commentOpportunityRepository;
 		this.replyCommentRepository = replyCommentRepository;
 		this.opportunityLearningRepository = opportunityLearningRepository;
-		this.decimalConfigurationRepository=decimalConfigurationRepository;
+		this.decimalConfigurationRepository = decimalConfigurationRepository;
+		this.userRepository=userRepository;
 	}
 
 	/**
@@ -791,6 +796,9 @@ public class OpportunityMasterResource {
 		OpportunityMaster opportunityMaster = opportunityMasterRepository.findOne(id);
 		NonFinancialSummaryData nonFinancialSummaryData = new NonFinancialSummaryData();
 		FinancialSummaryData summaryData = new FinancialSummaryData();
+		/*User user=userRepository.findByLogin(opportunityMaster.getCreatedBy());
+		DecimalConfiguration decimalValue=decimalConfigurationRepository.findByUser(user);
+		opportunityMaster.setDecimalPoint(decimalValue.getDecimalValue());*/
 		List<FileUpload> fileUploads = fileUploadRepository.findByOpportunityMasterId(opportunityMaster);
 		List<StrategyMapping> strategyMappings = strategyMappingRepository.findByOpportunityMaster(opportunityMaster);
 		opportunityAutomation = opportunityAutomationRepository.findByOpportunityMaster(opportunityMaster);

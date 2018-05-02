@@ -35,6 +35,9 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 
 	@Column(name = "description")
     private String statusDes;
+	
+	@Column(name = "status")
+    private String status;
 
 	@Transient
 	@JsonProperty
@@ -217,6 +220,14 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 
 	public void setDecimalPoint(Integer decimalPoint) {
 		this.decimalPoint = decimalPoint;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	@Override

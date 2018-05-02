@@ -32,7 +32,7 @@
         vm.questions=[];
         vm.account = null;
 
-
+        console.log('Decimal value',vm.opportunityMaster.decimalPoint);
       //  vm.submiTable=submitTable;
         $scope.$on('authenticationSuccess', function() {
             getAccount();
