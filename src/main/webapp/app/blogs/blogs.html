@@ -1,29 +1,14 @@
-
-<div class="col-md-3">
-<div class="panel panel-default" has-any-authority="Admin,Research,CIO">
-    <div class="panel-heading"><a ui-sref="opportunity-master">Opportunity Master
-    </a></div>
-
-        <div class="panel-body">
-            <a ui-sref="opportunity-master">
-            <img src="content/images/opportunity.png" style="height:167px;width: 301px" alt="" class="img-responsive center-block" />
-            </a>
-        </div>
-
-</div>
-</div>
-
-<div class="col-md-3">
-    <div class="panel panel-default" has-any-authority="Admin,Research,CIO">
-        <div class="panel-heading"><a ui-sref="strategy-master">Strategy Master
+<div class="col-md-3" has-authority="Research">
+    <div class="panel panel-default">
+        <div class="panel-heading" style="text-align: center"><a ui-sref="home">Dashboard
         </a></div>
 
 
-                <div class="panel-body">
-                    <a ui-sref="strategy-master">
-                    <img src="content/images/strategy.png" style="height:167px;width: 301px" alt="" class="img-responsive center-block" />
-                    </a>
-                </div>
+        <div class="panel-body">
+            <a ui-sref="home">
+                <img src="content/images/Dashboard.png" style="height:167px;width: 301px" alt="" class="img-responsive center-block" />
+            </a>
+        </div>
 
 
     </div>
@@ -31,33 +16,67 @@
 
 <div class="col-md-3"  has-authority="Admin">
     <div class="panel panel-default">
-        <div class="panel-heading"><a ui-sref="user-management">User Management
+        <div class="panel-heading" style="text-align: center"><a ui-sref="user-management">Dashboard
         </a></div>
 
 
-                <div class="panel-body">
-                    <a ui-sref="user-management">
-                    <img src="content/images/User.png" style="height:167px;width: 301px" alt="" class="img-responsive center-block" />
-                    </a>
-                </div>
+        <div class="panel-body">
+            <a ui-sref="user-management">
+                <img src="content/images/User.png" style="height:167px;width: 301px" alt="" class="img-responsive center-block" />
+            </a>
+        </div>
 
     </div>
 </div>
-<div class="col-md-3">
-    <div class="panel panel-default" has-authority="Research">
-        <div class="panel-heading"><a ui-sref="home">Dashboard
+
+<div class="col-md-3" has-any-authority="Admin,Research,CIO">
+    <div class="panel panel-default">
+        <div class="panel-heading" style="text-align: center" has-any-authority="!CIO,Admin,Research"><a ui-sref="strategy-master">Strategy Master
+        </a></div>
+
+        <div class="panel-heading" style="text-align: center" has-any-authority="CIO,!Research,!Admin"><a ui-sref="strategy-master">Dashboard
         </a></div>
 
 
-                <div class="panel-body">
-                    <a ui-sref="home">
-                    <img src="content/images/Dashboard.png" style="height:167px;width: 301px" alt="" class="img-responsive center-block" />
-                    </a>
-                </div>
+        <div class="panel-body" has-any-authority="!CIO,!Admin,Research">
+            <a ui-sref="strategy-master">
+                <img src="content/images/strategy.png" style="height:167px;width: 301px" alt="" class="img-responsive center-block" />
+            </a>
+        </div>
+
+        <div class="panel-body" has-any-authority="CIO,Admin,!Research">
+            <a ui-sref="strategy-master">
+                <img src="content/images/strategy_admin.png" style="height:167px;width: 301px" alt="" class="img-responsive center-block" />
+            </a>
+        </div>
 
 
     </div>
 </div>
+
+<div class="col-md-3" has-any-authority="Admin,Research,CIO">
+<div class="panel panel-default">
+    <div class="panel-heading" style="text-align: center"><a ui-sref="opportunity-master">Opportunity Master
+    </a></div>
+
+        <div class="panel-body" has-any-authority="!CIO,!Admin,Research">
+            <a ui-sref="opportunity-master">
+            <img src="content/images/opportunity.png" style="height:167px;width: 301px" alt="" class="img-responsive center-block" />
+            </a>
+        </div>
+
+        <div class="panel-body" has-any-authority="CIO,Admin,!Research">
+            <a ui-sref="opportunity-master">
+                <img src="content/images/opp_admin.png" style="height:167px;width: 301px" alt="" class="img-responsive center-block" />
+            </a>
+        </div>
+
+</div>
+</div>
+
+
+
+
 
 
 

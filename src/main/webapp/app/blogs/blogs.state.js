@@ -10,7 +10,7 @@
     function stateConfig($stateProvider) {
         $stateProvider.state('blogs', {
             parent: 'app',
-            url: '/blog',
+            url: '/index',
             data: {
                 authorities: [],
                 pageTitle: 'Research Repository & Learning System'

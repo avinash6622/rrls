@@ -4,9 +4,7 @@
 
     <jhi-alert></jhi-alert>
 
-             <div class="row">
-             <div ng-include src="'app/blogs/blogs.html'"></div>
-             </div>
+
         <div class="row">
         <div class="col-md-2">
           <button class="btn btn-primary" ui-sref="user-management.new">
@@ -35,7 +33,12 @@
             <tbody>
             <tr ng-repeat="user in vm.users track by user.id">
                 <!--<td><a ui-sref="user-management-detail({login:user.login})">{{user.id}}</a></td>-->
-                <td><a ui-sref="user-management-detail({login:user.login})">{{user.login}}</a></td>
+                <td><button type="submit"
+                                  ui-sref="user-management.edit({login:user.login})"
+                                  class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <span class="hidden-xs hidden-sm"></span>
+                </button> <a ui-sref="user-management-detail({login:user.login})">{{user.login}}</a></td>
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
                 <td>{{user.email}}</td>
@@ -59,18 +62,13 @@
                <!--  <td>{{user.userId.login}}</td> -->
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
+                  <!--      <button type="submit"
                                 ui-sref="user-management-detail({login:user.login})"
                                 class="btn btn-info btn-sm">
                             <span class="glyphicon glyphicon-eye-open"></span>
                             <span class="hidden-xs hidden-sm"></span>
-                        </button>
-                        <button type="submit"
-                                ui-sref="user-management.edit({login:user.login})"
-                                class="btn btn-primary btn-sm">
-                            <span class="glyphicon glyphicon-pencil"></span>
-                            <span class="hidden-xs hidden-sm"></span>
-                        </button>
+                        </button>-->
+
                         <!--<button type="submit"
                                 ui-sref="user-management.delete({login:user.login})"
                                 class="btn btn-danger btn-sm" ng-disabled="vm.currentAccount.login === user.login">
