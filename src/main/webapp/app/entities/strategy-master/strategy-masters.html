@@ -13,10 +13,7 @@
 
 <div>
     <div class="well">
-        <div class="row">
 
-        <div ng-include src="'app/blogs/blogs.html'"></div>
-        </div>
 
     <jhi-alert></jhi-alert>
 
@@ -63,29 +60,29 @@
             <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
                 <tr ng-repeat="strategyMaster in vm.strategyMasters track by strategyMaster.id">
 
-                    <td><a ui-sref="strategy-master-detail({id:strategyMaster.id})">{{strategyMaster.strategyName}}</a></td>
+                    <td><button type="submit"
+                                      ui-sref="strategy-master.edit({id:strategyMaster.id})"
+                                      class="btn btn-primary btn-sm"
+                                      tooltip="edit"
+                                      tooltip-placement="bottom" has-authority="Research">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        <span class="hidden-sm-down"></span>
+                    </button> <a ui-sref="strategy-master-detail({id:strategyMaster.id})">{{strategyMaster.strategyName}}</a></td>
                     <td>{{strategyMaster.aum}}</td>
 
                     <td>{{strategyMaster.totalStocks}}</td>
 
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
-                            <button type="submit"
+                        <!--    <button type="submit"
                                     ui-sref="strategy-master-detail({id:strategyMaster.id})"
                                     class="btn btn-info btn-sm" data-toggle="tooltip"
                                      tooltip="view"
          							 tooltip-placement="bottom">
                                 <span class="glyphicon glyphicon-eye-open"></span>
                                 <span class="hidden-sm-down"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="strategy-master.edit({id:strategyMaster.id})"
-                                    class="btn btn-primary btn-sm"
-                                     tooltip="edit"
-         							 tooltip-placement="bottom">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="hidden-sm-down"></span>
-                            </button>
+                            </button>-->
+
                     <!--        <button type="submit"
                                     ui-sref="strategy-master.delete({id:strategyMaster.id})"
                                     class="btn btn-danger btn-sm"
