@@ -16,9 +16,8 @@
     	  $ctrl.account = null;
     	  $ctrl.opportunityMaster = options;
     	  
-    	  console.log(options);
-    	  OpportunityLearning.learningComment({id: options.id}, function(response) {
-          	console.log(response);
+    	
+    	  OpportunityLearning.learningComment({id: options.id}, function(response) {          	
           	$ctrl.learnings = response;
           });
     	  $scope.ckOptions = {
@@ -37,7 +36,7 @@
               Principal.identity().then(function(account) {
                   $ctrl.account = account;
                   $ctrl.isAuthenticated = Principal.isAuthenticated;
-                  console.log('Acoount name', $ctrl.account);
+               
               });
 
           }

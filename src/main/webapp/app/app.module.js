@@ -18,8 +18,10 @@
             'ckeditor',
             'autoCompleteModule',
            // 'xyScroll',
-            'angular-notification-icons'
+            'angular-notification-icons',
            // 'angucomplete-alt'
+            'rzModule',
+            'ngSanitize'
         ])
         .run(run);
 

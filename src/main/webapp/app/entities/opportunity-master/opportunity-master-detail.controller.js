@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('OpportunityMasterDetailController', OpportunityMasterDetailController);
 
-    OpportunityMasterDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'OpportunityMaster', 'StrategyMaster', 'Upload', 'FileUploadComments','FileUpload','$uibModal','$filter','$http','OpportunityQuestion'];
+    OpportunityMasterDetailController.$inject = ['$scope', '$rootScope','Principal', '$stateParams', 'previousState', 'entity', 'OpportunityMaster', 'StrategyMaster', 'Upload', 'FileUploadComments','FileUpload','$uibModal','$filter','$http','OpportunityQuestion'];
 
-    function OpportunityMasterDetailController($scope, $rootScope, $stateParams, previousState, entity, OpportunityMaster, StrategyMaster, Upload, FileUploadComments,FileUpload,$uibModal,$filter,$http,OpportunityQuestion) {
+    function OpportunityMasterDetailController($scope, $rootScope,Principal, $stateParams, previousState, entity, OpportunityMaster, StrategyMaster, Upload, FileUploadComments,FileUpload,$uibModal,$filter,$http,OpportunityQuestion) {
         var vm = this;
 
         vm.opportunityMaster = entity;
@@ -30,10 +30,24 @@
         vm.addFileName='';
         vm.summaryData='';
         vm.questions=[];
+        vm.account = null;
 
 
       //  vm.submiTable=submitTable;
+        $scope.$on('authenticationSuccess', function() {
+            getAccount();
+        });
+  	  
+  	  getAccount();
 
+        function getAccount() {
+            Principal.identity().then(function(account) {
+                vm.account = account;
+                vm.isAuthenticated = Principal.isAuthenticated;
+             console.log('Account',account)
+            });
+
+        }
 
 
 

@@ -59,7 +59,7 @@
                             </button>
                             <button type="submit"
                                     ui-sref="opportunity-master.edit({id:opportunityMaster.id})"
-                                    class="btn btn-primary btn-sm">
+                                    class="btn btn-primary btn-sm" ng-if="vm.account.login==opportunityMaster.createdBy || opportunityMaster.createdBy==vm.account.userId.login">
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 <span class="hidden-sm-down"></span>
                             </button>

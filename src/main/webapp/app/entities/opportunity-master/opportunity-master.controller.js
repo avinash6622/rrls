@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('OpportunityMasterController', OpportunityMasterController);
 
-    OpportunityMasterController.$inject = ['OpportunityMaster', 'ParseLinks', 'AlertService', 'paginationConstants','$scope','$filter','pagingParams','$state'];
+    OpportunityMasterController.$inject = ['OpportunityMaster', 'ParseLinks','Principal', 'AlertService', 'paginationConstants','$scope','$filter','pagingParams','$state'];
 
-    function OpportunityMasterController(OpportunityMaster, ParseLinks, AlertService, paginationConstants,$scope,$filter,pagingParams,$state) {
+    function OpportunityMasterController(OpportunityMaster, ParseLinks,Principal, AlertService, paginationConstants,$scope,$filter,pagingParams,$state) {
 
         var vm = this;
 
@@ -25,9 +25,23 @@
         vm.reverse = true;
         vm.transition = transition;
         vm.itemsValue = 'Opportunities';
+        vm.account = null;
 
         loadAll();
+        $scope.$on('authenticationSuccess', function() {
+            getAccount();
+        });
+  	  
+  	  getAccount();
 
+        function getAccount() {
+            Principal.identity().then(function(account) {
+                vm.account = account;
+                vm.isAuthenticated = Principal.isAuthenticated;
+             console.log('Account',account)
+            });
+
+        }
 
 
         var myDate=new Date();

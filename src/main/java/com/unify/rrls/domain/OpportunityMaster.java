@@ -83,8 +83,9 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	 @OneToMany(mappedBy="opportunityMaster")
 	 private List<OpportunityQuestion> opportunityQuestions;
 
-
-
+	 @Transient
+	 @JsonProperty
+	 private Integer decimalPoint;
 
  /*   @OneToOne(fetch = FetchType.LAZY,
         cascade =  CascadeType.ALL,
@@ -208,9 +209,17 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 
     public void setNonFinancialSummaryData(NonFinancialSummaryData nonFinancialSummaryData) {
         this.nonFinancialSummaryData = nonFinancialSummaryData;
-    }
+    }    
+    
+    public Integer getDecimalPoint() {
+		return decimalPoint;
+	}
 
-    @Override
+	public void setDecimalPoint(Integer decimalPoint) {
+		this.decimalPoint = decimalPoint;
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
 			return true;

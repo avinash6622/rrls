@@ -16,5 +16,5 @@ import java.util.List;
 public interface StrategyMasterRepository extends JpaRepository<StrategyMaster, Long> {
 
     List<StrategyMaster> findByStrategyName(String s);
-
+   
 }
