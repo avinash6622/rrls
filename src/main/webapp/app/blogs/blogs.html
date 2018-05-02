@@ -1,6 +1,6 @@
 
 <div class="col-md-3">
-<div class="panel panel-default">
+<div class="panel panel-default" has-any-authority="Admin,Research,CIO">
     <div class="panel-heading"><a ui-sref="opportunity-master">Opportunity Master
     </a></div>
 
@@ -14,7 +14,7 @@
 </div>
 
 <div class="col-md-3">
-    <div class="panel panel-default">
+    <div class="panel panel-default" has-any-authority="Admin,Research,CIO">
         <div class="panel-heading"><a ui-sref="strategy-master">Strategy Master
         </a></div>
 
@@ -29,7 +29,7 @@
     </div>
 </div>
 
-<div class="col-md-3">
+<div class="col-md-3"  has-authority="Admin">
     <div class="panel panel-default">
         <div class="panel-heading"><a ui-sref="user-management">User Management
         </a></div>
@@ -44,7 +44,7 @@
     </div>
 </div>
 <div class="col-md-3">
-    <div class="panel panel-default">
+    <div class="panel panel-default" has-authority="Research">
         <div class="panel-heading"><a ui-sref="home">Dashboard
         </a></div>
 

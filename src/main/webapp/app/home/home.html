@@ -35,7 +35,7 @@ border:none !important;
 		border-right-style: none !important;
 		border-left-style: none !important;
 }
-<style>
+
     .table-responsive>.fixed-column {
         position: absolute!important;
         display: inline-block!important;
@@ -55,8 +55,9 @@ border:none !important;
     }
 </style>
 
-</style>
+
  <div ng-cloak>
+
      <div class="row">
          <div class="col-md-3 col-sm-6 col-xs-12">
 
@@ -74,7 +75,10 @@ border:none !important;
 
          </div>
      </div>
+
     <div class="row">
+
+        <div ng-include src="'app/blogs/blogs.html'"></div>
         <div class="col-md-12">
          <!--   <h1>Welcome!</h1>-->
 
@@ -237,5 +241,5 @@ $(window).on('load',function(){
     $fixedColumn.find('tr').each(function (i, elem) {
         $(this).height($table.find('tr:eq(' + i + ')').height());
     });
-});    
+});
 </script>
