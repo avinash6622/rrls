@@ -62,6 +62,8 @@ public class CacheConfiguration {
             cm.createCache(com.unify.rrls.domain.ReplyComment.class.getName(),jcacheConfiguration);
             cm.createCache(com.unify.rrls.domain.CommentOpportunity.class.getName(),jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
+            cm.createCache(com.unify.rrls.domain.OpportunityLearning.class.getName(),jcacheConfiguration);
+           // jhipster-needle-ehcache-add-entry
         };
     }
 }
