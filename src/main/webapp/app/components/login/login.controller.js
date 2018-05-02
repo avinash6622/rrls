@@ -57,7 +57,9 @@
                 else {
 
                     if (vm.roles.authorities[1] == 'Admin') {
+
                         $state.go('user-management');
+                      /*  $state.go('blogs');*/
                     }
                     else {
                         $state.go('home');
@@ -107,7 +109,8 @@
 
                             if(vm.roles.authorities[1] == 'Admin')
                             {
-                                $state.go('user-management');
+                              /*  $state.go('user-management');*/
+                                $state.go('blogs');
                             }
                             else{
                                 $state.go('home');
