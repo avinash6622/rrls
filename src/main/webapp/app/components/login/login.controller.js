@@ -41,7 +41,6 @@
         var myDate=new Date();
 
         $scope.currentYear = $filter('date')(myDate,'yyyy');
-/*
         Principal.identity().then(function(account) {
            // console.log("njdsnnkskj--->",account);
             vm.roles = account;
@@ -49,12 +48,12 @@
 
             if(Principal.isAuthenticated()) {
 
-
+/*
                 if (vm.roles.authorities[1] == 'CIO') {
                     console.log("hii");
                     $state.go('strategy-master');
-                }
-                else {
+                }*/
+            /*    else {
 
                     if (vm.roles.authorities[1] == 'Admin') {
 
@@ -65,9 +64,11 @@
                         $state.go('home');
                     }
 
-                }
+                }*/
+
+                $state.go('blogs');
             }
-            });*/
+            });
 
            console.log("djfsjfjsd--->",vm.roles);
 
@@ -119,10 +120,10 @@
                    }*/
 
 
-
+                        $state.go('blogs');
 
                     });
-                    $state.go('blogs');
+
                     }
 
             }).catch(function () {
