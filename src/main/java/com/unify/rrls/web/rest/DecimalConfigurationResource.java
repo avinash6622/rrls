@@ -55,24 +55,30 @@ public class DecimalConfigurationResource {
 
 
 	        if (decimalConfiguration.getId() != null) {
-	            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists",
-	                "A new OpportunityLearning cannot already have an ID")).body(null);
+	        	 DecimalConfiguration result = decimalConfigurationRepository.save(decimalConfiguration);
+	        	return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, result.getId().toString()))
+	    				.body(result);
 	        }
+	        else{
 	        DecimalConfiguration result = decimalConfigurationRepository.save(decimalConfiguration);
 	     
 	        return ResponseEntity.created(new URI("/api/decimal-config/" + result.getId()))
-	            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
+	            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);}
 	    }
 	  
-	  @GetMapping("/decimal-config/{name}")
+	  	@GetMapping("/decimal-config/{id}")
 	    @Timed
-	    public ResponseEntity<DecimalConfiguration> DecimalConfiguration(@PathVariable String name) {
-	        log.debug("REST request to get StrategyMaster : {}", name);
+	    public ResponseEntity<DecimalConfiguration> DecimalConfiguration(@PathVariable Long id) {
+	        log.debug("REST request to get StrategyMaster : {}", id);
 	      
-	        User user=userRepository.findByLogin(name);
+	        User user=userRepository.findOne(id);
 	        DecimalConfiguration result = decimalConfigurationRepository.findByUser(user);
-	    
-	        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(result));
+	        System.out.println("Decimal Config"+result);
+	        if(result==null){
+	        	return null;
+	        }
+	        else{
+	        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(result));}
 	    }
 
 

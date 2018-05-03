@@ -198,7 +198,7 @@
 <div ng-switch-when="data">
         <div  class="form-group" ng-if="vm.opportunityMaster.masterName.segment == 'Finance'">
 
-            <label class="control-label">Summary Data</label>
+            <label class="control-label">Summary Data (INR Cr) </label>
             <table id="mytable3" class="table table-bordered">
                 <thead>
 
@@ -358,7 +358,7 @@
 
                 <div class="form-group" ng-if="vm.opportunityMaster.masterName.segment != 'Finance'">
 
-                    <label class="control-label">Summary Data</label>
+                    <label class="control-label">Summary Data (INR Cr)</label>
                     <table id="mytable4" class="table table-bordered">
                         <thead>
 
@@ -583,7 +583,7 @@
                     <td scope="col">Weight</td>
                     <td><input name="weightOne"  ng-disabled="true" style="text-align: right"/> </td>
                     <td><input name="weightTwo"   ng-disabled="true" style="text-align: right"/> </td>
-                    <td><input name="weightThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.weight"  ng-disabled="true" style="text-align: right"/></td>
+                    <td><input name="weightThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.weight"  style="text-align: right"/></td>
                     <td><input name="weightFour"   ng-disabled="true" style="text-align: right"/></td>
                     <td><input name="weightFive"  ng-disabled="true" style="text-align: right"/></td>
                 </tr>

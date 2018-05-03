@@ -42,10 +42,6 @@
         text-align: center;
 
     }
-
-
-
-
 </style>
 
 
@@ -123,10 +119,10 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-left" uib-dropdown-menu>
                     
-                      <li ui-sref-active="active">
-                            <a ui-sref="decimal-configuration" ng-click="vm.collapseNavbar()">
+                     <li ui-sref-active="active">
+                            <a ui-sref="decimal-configuration.get({id:vm.account.id})" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span>Configuration</span>
+                                <span>Configuration{{vm.account.id}}</span>
                             </a>
                         </li>
 
