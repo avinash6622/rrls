@@ -213,9 +213,9 @@ padding :none !important}
 		<dt>
 			<span>Status:</span>
 		</dt>
-		<dd>           
+		<dd>
 			<span>{{vm.opportunityMaster.status}}</span>
-           
+
 		</dd>
 		<dt>
 			<span>Contact Details:</span>
@@ -362,7 +362,7 @@ padding :none !important}
 		</dt>
 		<dd has-authority="Research">
 			<input type="text" class="col-sm-6" id="fileid" name="fileid"
-				ng-model="vm.uploadfileName" />
+				ng-model="vm.uploadfileName" style="padding-left: 0px;padding-right: 0px"/>
 		</dd>
 
 		<dt has-authority="Research">
@@ -370,7 +370,10 @@ padding :none !important}
 		</dt>
 		<dd has-authority="Research">
 			<div class="form-group">
-				<input type="file" ngf-select="vm.selectFile($file)" name="file"
+                <div>
+                <label for="file_upload" class="btn btn-md btn-primary col-md-1">Choose File</label>
+                    <div class="col-md-4">{{vm.opportunityMaster.fileUpload.name}}</div></div>
+				<input type="file" ngf-select="vm.selectFile($file)" name="file" style="display: none;"
 					id="file_upload"
 					ngf-pattern=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx,.docx,.doc,.log,.msg,.rtf,.txt,.csv,.dat,.pptx,.xml,.aif,.tif,.zip,.zipx,.rar,.pdf"
 					accept=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx,.docx,.doc,.log,.msg,.rtf,.txt,.csv,.dat,.pptx,.xml,.aif,.tif,.zip,.zipx,.rar,.pdf" required="">
@@ -764,10 +767,11 @@ padding :none !important}
                             </tr>
 						</thead>
 						<tbody>
+
 							<tr>
 								<td scope="col" style="text-align: left">Revenues</td>
 								<td><input name="netIntOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueOne | number: {{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="netIntTwo"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueTwo"

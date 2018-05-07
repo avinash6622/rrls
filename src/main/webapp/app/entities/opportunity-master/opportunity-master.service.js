@@ -103,7 +103,7 @@
                 url:'api/opportunity-masters/get-Question/:id',
                 method:'GET',
 
-                transformResponse: function(data){ 
+                transformResponse: function(data){
                 	console.log('questiondata',data);
                 	var data1=data
                 	return data1;
@@ -111,7 +111,7 @@
 
 
             },
-            
+
 */
             'downloadfilecontent':{
                 url:'api/opportunity-masters/download-file/',
@@ -167,6 +167,8 @@
                 url:'api/store_noti_user_id',
                 method:'POST'
             },
+
+           
 
             /*,
             'addWordCreation':{

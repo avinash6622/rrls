@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('OpportunityMasterDetailController', OpportunityMasterDetailController);
 
-    OpportunityMasterDetailController.$inject = ['$scope', '$rootScope','Principal', '$stateParams', 'previousState', 'entity', 'OpportunityMaster', 'StrategyMaster', 'Upload', 'FileUploadComments','FileUpload','$uibModal','$filter','$http','OpportunityQuestion'];
+    OpportunityMasterDetailController.$inject = ['$scope', '$rootScope','Principal', '$stateParams', 'previousState', 'entity', 'OpportunityMaster', 'StrategyMaster', 'Upload', 'FileUploadComments','FileUpload','$uibModal','$filter','$http','OpportunityQuestion','DecimalConfiguration'];
 
-    function OpportunityMasterDetailController($scope, $rootScope,Principal, $stateParams, previousState, entity, OpportunityMaster, StrategyMaster, Upload, FileUploadComments,FileUpload,$uibModal,$filter,$http,OpportunityQuestion) {
+    function OpportunityMasterDetailController($scope, $rootScope,Principal, $stateParams, previousState, entity, OpportunityMaster, StrategyMaster, Upload, FileUploadComments,FileUpload,$uibModal,$filter,$http,OpportunityQuestion,DecimalConfiguration) {
         var vm = this;
 
         vm.opportunityMaster = entity;
@@ -31,13 +31,15 @@
         vm.summaryData='';
         vm.questions=[];
         vm.account = null;
+        vm.decimalValue = 4;
+        vm.userid=null;
 
         console.log('Decimal value',vm.opportunityMaster.decimalPoint);
       //  vm.submiTable=submitTable;
         $scope.$on('authenticationSuccess', function() {
             getAccount();
         });
-  	  
+
   	  getAccount();
 
         function getAccount() {
@@ -45,6 +47,8 @@
                 vm.account = account;
                 vm.isAuthenticated = Principal.isAuthenticated;
              console.log('Account',account)
+
+                vm.userid = vm.account.id;
             });
 
         }
@@ -97,6 +101,13 @@
         $scope.prevYearBefore = $filter('date')(previousYearBefore,'yyyy');
         $scope.neYearNext = $filter('date')(nextYearNext,'yyyy');
 
+
+
+        DecimalConfiguration.get(vm.userid,function (resp) {
+
+            console.log(resp);
+
+        })
 
 
 
@@ -516,7 +527,7 @@
 
 
         };
-        
+
         $scope.learning = function () {
 
             var modalInstance = $uibModal.open({
@@ -530,7 +541,7 @@
                 	}
                 }
             });
-          
+
 
         };
 
@@ -608,6 +619,8 @@
         }
         function selectFile (file) {
 
+
+
             vm.opportunityMaster.fileUpload = file;
         }
 
@@ -624,7 +637,7 @@
 
 
         }
-        
+
         function saveComment() {
             vm.isSaving = true;
             var inputData = {};

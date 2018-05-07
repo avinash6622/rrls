@@ -35,9 +35,10 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 
 	@Column(name = "description")
     private String statusDes;
-	
+
 	@Column(name = "status")
     private String status;
+
 
 	@Transient
 	@JsonProperty
@@ -82,7 +83,7 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	@ManyToOne
 	@JoinColumn(name = "master_name")
 	private OpportunityName masterName;
-	
+
 	 @OneToMany(mappedBy="opportunityMaster")
 	 private List<OpportunityQuestion> opportunityQuestions;
 
@@ -212,8 +213,8 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 
     public void setNonFinancialSummaryData(NonFinancialSummaryData nonFinancialSummaryData) {
         this.nonFinancialSummaryData = nonFinancialSummaryData;
-    }    
-    
+    }
+
     public Integer getDecimalPoint() {
 		return decimalPoint;
 	}
@@ -221,7 +222,7 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	public void setDecimalPoint(Integer decimalPoint) {
 		this.decimalPoint = decimalPoint;
 	}
-	
+
 	public String getStatus() {
 		return status;
 	}
@@ -245,30 +246,18 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 		return Objects.equals(getId(), opportunityMaster.getId());
 	}
 
+
     @Override
-    public String toString() {
-        return "OpportunityMaster{" +
-            "selectedStrategyMaster=" + selectedStrategyMaster +
-            /*", strategyMapping=" + strategyMapping +*/
-            '}';
-    }
-/*    @Override
     public String toString() {
         return "OpportunityMaster{" +
             "id=" + id +
             ", oppDescription='" + oppDescription + '\'' +
             ", oppStatus='" + oppStatus + '\'' +
             ", statusDes='" + statusDes + '\'' +
-            ", htmlContent='" + htmlContent + '\'' +
-            ", fileUploadCommentList=" + fileUploadCommentList +
-            ", selectedStrategyMaster=" + selectedStrategyMaster +
-            ", selectedoppContanct=" + selectedoppContanct +
-            ", financialSummaryData=" + financialSummaryData +
-            ", fileUploads=" + fileUploads +
+            ", status='" + status + '\'' +
             ", masterName=" + masterName +
-            ", strategyMapping=" + strategyMapping +
             '}';
-    }*/
+    }
 
     @Override
 	public int hashCode() {

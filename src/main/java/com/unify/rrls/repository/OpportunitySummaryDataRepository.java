@@ -15,6 +15,7 @@ public interface OpportunitySummaryDataRepository extends JpaRepository<Opportun
     List<OpportunitySummaryData>  findByOpportunityMasterid(OpportunityMaster opportunityMaster);
     List<OpportunitySummaryData> findByStrategyMasterId(StrategyMaster strategyMaster);
 
+
 /*    List<OpportunitySummaryData> findAllGroupByOpportunityMasterid();*/
 }
 

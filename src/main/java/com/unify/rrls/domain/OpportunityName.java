@@ -136,4 +136,16 @@ public class OpportunityName extends AbstractAuditingEntity implements Serializa
 
         return Objects.hash(id, oppName, sectorType, securityCode, segment, securityId);
     }
+
+    @Override
+    public String toString() {
+        return "OpportunityName{" +
+            "id=" + id +
+            ", oppName='" + oppName + '\'' +
+            ", sectorType='" + sectorType + '\'' +
+            ", securityCode='" + securityCode + '\'' +
+            ", segment='" + segment + '\'' +
+            ", securityId='" + securityId + '\'' +
+            '}';
+    }
 }

@@ -105,6 +105,7 @@
                             </a>
                         </li>
 
+
                     </ul>
                 </li>
                 <li ng-class="{active: vm.$state.includes('account')}" uib-dropdown class="dropdown pointer" ng-switch-when="true">
@@ -118,11 +119,18 @@
                         </span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-left" uib-dropdown-menu>
-                    
+
                      <li ui-sref-active="active">
                             <a ui-sref="decimal-configuration.get({id:vm.account.id})" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span>Configuration{{vm.account.id}}</span>
+                                <span>Configuration</span>
+                            </a>
+                        </li>
+
+                        <li ui-sref-active="active">
+                            <a ui-sref="opportunity-delegation" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span>User Delegation</span>
                             </a>
                         </li>
 
@@ -176,7 +184,9 @@
                             <li>
 
                                 <div>
-                                    <span ng-click="vm.readstatus(noti.id,vm.account.id,'Read', noti)"  ng-disabled="noti.dStatus === 'Read'"> {{noti.createdBy | capitalize}} {{noti.action}} <span ng-if="noti.fileNamecontent"><strong>"{{noti.fileNamecontent}}"</strong></span> {{noti.page}} <strong>"{{noti.oppname}}"</strong>
+                                    <span ng-click="vm.readstatus(noti.id,vm.account.id,'Read', noti)"  ng-disabled="noti.dStatus === 'Read'">
+                                        <span ng-if="noti.action !== 'delegated'">{{noti.createdBy | capitalize}} {{noti.action}} <span ng-if="noti.fileNamecontent"><strong>"{{noti.fileNamecontent}}"</strong></span> {{noti.page}} <strong>"{{noti.oppname}}"</strong></span>
+                                        <span ng-if="noti.action === 'delegated'">{{noti.createdBy | capitalize}} {{noti.action}} {{noti.page}} <strong>"{{noti.oppname}}"</strong> <span ng-if="noti.fileNamecontent">to {{noti.fileNamecontent}}</span> </span>
                                     </span>
                                     <span class="pull-right text-muted small">{{noti.createdDate | date :"MMM d, y h:mm:ss a" }}&nbsp;&nbsp;
                                     <button type="button" class="close" ng-click="vm.close(noti.id,vm.account.id,$index,'deleted');$event.stopPropagation()">

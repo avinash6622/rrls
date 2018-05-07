@@ -13,5 +13,5 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface OpportunityNameRepository extends JpaRepository<OpportunityName, Long> {
-
+    OpportunityName findByOppName(String oppname);
 }
