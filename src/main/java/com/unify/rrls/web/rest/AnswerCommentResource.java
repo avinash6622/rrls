@@ -28,23 +28,23 @@ import io.github.jhipster.web.util.ResponseUtil;
 @RestController
 @RequestMapping("/api")
 public class AnswerCommentResource {
-	
+
 private final AnswerCommentRepository answerCommentRepository;
-	
+
 	private final Logger log = LoggerFactory.getLogger(AnswerCommentResource.class);
 
 	private static final String ENTITY_NAME = "answerComment";
-	
+
 	  @Autowired
-	  NotificationServiceResource notificationServiceResource;	
-	  
+	  NotificationServiceResource notificationServiceResource;
+
 	  @Autowired
 	  UserResource userResource;
 
 	public AnswerCommentResource(AnswerCommentRepository answerCommentRepository) {
-		this.answerCommentRepository = answerCommentRepository;		
+		this.answerCommentRepository = answerCommentRepository;
 	}
-	
+
 
     @PostMapping("/answer-comment")
     @Timed
@@ -66,20 +66,20 @@ private final AnswerCommentRepository answerCommentRepository;
         String name = String.valueOf(result.getOpportunityQuestion().getOpportunityMaster().getMasterName().getOppName());
          Long id =  userResource.getUserId(result.getCreatedBy());
 
-        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),status,page,subContent,id);
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),status,page,subContent,id,result.getOpportunityQuestion().getOpportunityMaster().getId());
 
 
         return ResponseEntity.created(new URI("/api/answer-comment/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
-    
+
     @GetMapping("/answer-comment/{id}")
 	@Timed
 	public ResponseEntity<AnswerComment> getAnswerComment(@PathVariable Long id) {
 		log.debug("REST request to get CommentReply : {}", id);
-		
+
 		AnswerComment answerComment = answerCommentRepository.findOne(id);
-		
+
 		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(answerComment));
 	}
 

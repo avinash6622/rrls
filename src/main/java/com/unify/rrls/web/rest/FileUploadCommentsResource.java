@@ -72,7 +72,7 @@ public class FileUploadCommentsResource {
        Long id =  userResource.getUserId(result.getCreatedBy());
 
 
-        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"commented",page,result.getOpportunityComments(),id);
+       /* notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"commented",page,result.getOpportunityComments(),id,result.getOpportunityMaster().getId());*/
 
 
         return ResponseEntity.created(new URI("/api/file-upload-comments/" + result.getId()))

@@ -37,6 +37,8 @@ public class HistoryLogs {
     private String fileNamecontent;
     @Column(name="user_id")
     private Long userId;
+    @Column(name="opp_id")
+    private Long oppId;
 
     @Transient
     @JsonProperty
@@ -123,6 +125,14 @@ public class HistoryLogs {
         this.dStatus = dStatus;
     }
 
+    public Long getOppId() {
+        return oppId;
+    }
+
+    public void setOppId(Long oppId) {
+        this.oppId = oppId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -136,13 +146,15 @@ public class HistoryLogs {
             Objects.equals(action, that.action) &&
             Objects.equals(page, that.page) &&
             Objects.equals(fileNamecontent, that.fileNamecontent) &&
-            Objects.equals(userId, that.userId);
+            Objects.equals(userId, that.userId) &&
+            Objects.equals(oppId, that.oppId) &&
+            Objects.equals(dStatus, that.dStatus);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, oppname, createdBy, lastModifiedBy, createdDate, action, page, fileNamecontent, userId);
+        return Objects.hash(id, oppname, createdBy, lastModifiedBy, createdDate, action, page, fileNamecontent, userId, oppId, dStatus);
     }
 
     @Override
@@ -157,6 +169,8 @@ public class HistoryLogs {
             ", page='" + page + '\'' +
             ", fileNamecontent='" + fileNamecontent + '\'' +
             ", userId=" + userId +
+            ", oppId=" + oppId +
+            ", dStatus='" + dStatus + '\'' +
             '}';
     }
 }

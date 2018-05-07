@@ -185,8 +185,8 @@
 
                                 <div>
                                     <span ng-click="vm.readstatus(noti.id,vm.account.id,'Read', noti)"  ng-disabled="noti.dStatus === 'Read'">
-                                        <span ng-if="noti.action !== 'delegated'">{{noti.createdBy | capitalize}} {{noti.action}} <span ng-if="noti.fileNamecontent"><strong>"{{noti.fileNamecontent}}"</strong></span> {{noti.page}} <strong>"{{noti.oppname}}"</strong></span>
-                                        <span ng-if="noti.action === 'delegated'">{{noti.createdBy | capitalize}} {{noti.action}} {{noti.page}} <strong>"{{noti.oppname}}"</strong> <span ng-if="noti.fileNamecontent">to {{noti.fileNamecontent}}</span> </span>
+                                        <span ng-if="noti.action !== 'delegated'"><a ui-sref="home-research({createdBy:noti.createdBy})">{{noti.createdBy | capitalize}}</a> {{noti.action}} <span ng-if="noti.fileNamecontent"><strong>"{{noti.fileNamecontent}}"</strong></span> {{noti.page}} <strong>"{{noti.oppname}}"</strong></span>
+                                        <span ng-if="noti.action === 'delegated'"><a ui-sref="home-research({createdBy:noti.createdBy})">{{noti.createdBy | capitalize}}</a> {{noti.action}} {{noti.page}} <strong>"{{noti.oppname}}"</strong> <span ng-if="noti.fileNamecontent">to {{noti.fileNamecontent}}</span> </span>
                                     </span>
                                     <span class="pull-right text-muted small">{{noti.createdDate | date :"MMM d, y h:mm:ss a" }}&nbsp;&nbsp;
                                     <button type="button" class="close" ng-click="vm.close(noti.id,vm.account.id,$index,'deleted');$event.stopPropagation()">

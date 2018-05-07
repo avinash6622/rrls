@@ -771,7 +771,8 @@ padding :none !important}
 							<tr>
 								<td scope="col" style="text-align: left">Revenues</td>
 								<td><input name="netIntOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueOne | number: {{vm.decimalValue}}"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueOne"
+                                           ng-value="vm.opportunityMaster.nonFinancialSummaryData.revenueOne | number : vm.decimalValue"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="netIntTwo"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueTwo"

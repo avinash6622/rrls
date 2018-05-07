@@ -31,8 +31,8 @@
         vm.summaryData='';
         vm.questions=[];
         vm.account = null;
-        vm.decimalValue = 4;
-        vm.userid=null;
+        vm.decimalValue = null;
+
 
         console.log('Decimal value',vm.opportunityMaster.decimalPoint);
       //  vm.submiTable=submitTable;
@@ -41,14 +41,34 @@
         });
 
   	  getAccount();
+  	  setTimeout(function() {
+          getDecimalConfig();
+      }, 3000);
+
+
 
         function getAccount() {
             Principal.identity().then(function(account) {
                 vm.account = account;
                 vm.isAuthenticated = Principal.isAuthenticated;
-             console.log('Account',account)
 
-                vm.userid = vm.account.id;
+
+            });
+
+        }
+
+        function getDecimalConfig() {
+
+
+            DecimalConfiguration.get({id:vm.account.id},function (resp) {
+
+
+
+                vm.decimalValue = resp.decimalValue;
+
+
+            },function (err) {
+                console.log(err);
             });
 
         }
@@ -103,11 +123,7 @@
 
 
 
-        DecimalConfiguration.get(vm.userid,function (resp) {
 
-            console.log(resp);
-
-        })
 
 
 

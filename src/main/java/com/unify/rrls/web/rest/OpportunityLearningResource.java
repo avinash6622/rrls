@@ -31,20 +31,20 @@ import io.github.jhipster.web.util.ResponseUtil;
 public class OpportunityLearningResource {
 
 	private final OpportunityLearningRepository opportunityLearningRepository;
-	
+
 	private final Logger log = LoggerFactory.getLogger(OpportunityQuestionResource.class);
 
 	private static final String ENTITY_NAME = "opportunityLearning";
-	
+
 	 @Autowired
-	  NotificationServiceResource notificationServiceResource;	
-	  
+	  NotificationServiceResource notificationServiceResource;
+
 	  @Autowired
 	  UserResource userResource;
 
-	
+
 	public OpportunityLearningResource(OpportunityLearningRepository opportunityLearningRepository) {
-		this.opportunityLearningRepository = opportunityLearningRepository;		
+		this.opportunityLearningRepository = opportunityLearningRepository;
 	}
 
 
@@ -59,33 +59,33 @@ public class OpportunityLearningResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists",
                 "A new OpportunityLearning cannot already have an ID")).body(null);
         }
-     
+
         String sDescription=opportunityLearning.getDescription().replaceAll("////", "\\");
         opportunityLearning.setDescription(sDescription);
-        
+
         OpportunityLearning result = opportunityLearningRepository.save(opportunityLearning);
-        
+
         String page="Opportunity";
         String subContent="Learning:"+opportunityLearning.getSubject();
 
         String name =String.valueOf(result.getOpportunityMaster().getMasterName().getOppName());
          Long id =  userResource.getUserId(result.getCreatedBy());
 
-        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"added",page,subContent,id);
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"added",page,subContent,id,result.getOpportunityMaster().getId());
 
-       
+
 
         return ResponseEntity.created(new URI("/api/opportunity-learnings/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
-    
+
     @GetMapping("/opportunity-learnings/{id}")
 	@Timed
 	public ResponseEntity<OpportunityLearning> getOpportunityLearning(@PathVariable Long id) {
 		log.debug("REST request to get OpportunityLearning : {}", id);
-		
+
 		OpportunityLearning opportunityLearning = opportunityLearningRepository.findOne(id);
-		
+
 		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(opportunityLearning));
 	}
 }
