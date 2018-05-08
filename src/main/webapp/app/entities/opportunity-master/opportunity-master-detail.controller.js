@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('OpportunityMasterDetailController', OpportunityMasterDetailController);
 
-    OpportunityMasterDetailController.$inject = ['$scope', '$rootScope','Principal', '$stateParams', 'previousState', 'entity', 'OpportunityMaster', 'StrategyMaster', 'Upload', 'FileUploadComments','FileUpload','$uibModal','$filter','$http','OpportunityQuestion','DecimalConfiguration'];
+    OpportunityMasterDetailController.$inject = ['$scope', '$rootScope','Principal', '$stateParams', 'previousState', 'entity', 'OpportunityMaster', 'StrategyMaster', 'Upload', 'FileUploadComments','FileUpload','$uibModal','$filter','$http','OpportunityQuestion','DecimalConfiguration','CommentOpportunity'];
 
-    function OpportunityMasterDetailController($scope, $rootScope,Principal, $stateParams, previousState, entity, OpportunityMaster, StrategyMaster, Upload, FileUploadComments,FileUpload,$uibModal,$filter,$http,OpportunityQuestion,DecimalConfiguration) {
+    function OpportunityMasterDetailController($scope, $rootScope,Principal, $stateParams, previousState, entity, OpportunityMaster, StrategyMaster, Upload, FileUploadComments,FileUpload,$uibModal,$filter,$http,OpportunityQuestion,DecimalConfiguration,CommentOpportunity) {
         var vm = this;
 
         vm.opportunityMaster = entity;
@@ -560,11 +560,11 @@
                         });
                         var inputData = {};
 
-                        inputData.opportunityComments = val +" - "+status;
+                        inputData.commentText = val +" - "+status;
                         inputData.opportunityMaster=vm.opportunityMaster;
 
-                        FileUploadComments.save(inputData, function(resp) {
-                            vm.opportunityMaster.fileUploadCommentList.push(resp);},
+                        CommentOpportunity.save(inputData, function(resp) {
+                           /* vm.opportunityMaster.fileUploadCommentList.push(resp);*/},
                             function(err) {
                                 console.log(err);
                             });
