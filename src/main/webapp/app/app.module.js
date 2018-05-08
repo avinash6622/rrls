@@ -21,7 +21,8 @@
             'angular-notification-icons',
            // 'angucomplete-alt'
             'rzModule',
-            'ngSanitize'
+            'ngSanitize',
+            'angular-decimals'
         ])
         .run(run);
 
