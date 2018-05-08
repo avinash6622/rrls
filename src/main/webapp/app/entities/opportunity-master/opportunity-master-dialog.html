@@ -554,20 +554,20 @@
 
                           <tr>
                             <td scope="col">Tax Rate</td>
-                            <td><input name="taxRateOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateOne" ng-disabled="" style="text-align: right" /> </td>
-                            <td><input name="taxRateTwo" ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateTwo" ng-disabled="" style="text-align: right"/> </td>
-                            <td><input name="taxRateThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateThree" ng-disabled="" style="text-align: right"/></td>
-                            <td><input name="taxRateFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateFour" ng-disabled="" style="text-align: right"/></td>
-                            <td><input name="taxRateFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateFive" ng-disabled="" style="text-align: right"/></td>
+                            <td><input name="taxRateOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateOne" ng-value="getNonTaxRat(vm.opportunityMaster.nonFinancialSummaryData.taxOne,vm.opportunityMaster.nonFinancialSummaryData.pbtOne,1)" ng-disabled="true" style="text-align: right" /> </td>
+                            <td><input name="taxRateTwo" ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateTwo" ng-value="getNonTaxRat(vm.opportunityMaster.nonFinancialSummaryData.taxTwo,vm.opportunityMaster.nonFinancialSummaryData.pbtTwo,2)" ng-disabled="true" style="text-align: right"/> </td>
+                            <td><input name="taxRateThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateThree" ng-value="getNonTaxRat(vm.opportunityMaster.nonFinancialSummaryData.taxThree,vm.opportunityMaster.nonFinancialSummaryData.pbtThree,3)" ng-disabled="true" style="text-align: right"/></td>
+                            <td><input name="taxRateFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateFour" ng-value="getNonTaxRat(vm.opportunityMaster.nonFinancialSummaryData.taxFour,vm.opportunityMaster.nonFinancialSummaryData.pbtFour,4)" ng-disabled="true" style="text-align: right"/></td>
+                            <td><input name="taxRateFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateFive" ng-value="getNonTaxRat(vm.opportunityMaster.nonFinancialSummaryData.taxFive,vm.opportunityMaster.nonFinancialSummaryData.pbtFive,5)" ng-disabled="true" style="text-align: right"/></td>
                         </tr>
 
                           <tr>
                             <td scope="col">Interest Rate</td>
-                            <td><input name="taxRateOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateOne" ng-disabled="" style="text-align: right" /> </td>
-                            <td><input name="taxRateTwo" ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateTwo" ng-disabled="" style="text-align: right"/> </td>
-                            <td><input name="taxRateThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateThree" ng-disabled="" style="text-align: right"/></td>
-                            <td><input name="taxRateFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateFour" ng-disabled="" style="text-align: right"/></td>
-                            <td><input name="taxRateFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateFive" ng-disabled="" style="text-align: right"/></td>
+                            <td><input name="taxRateOne" ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateOne" ng-value="getNonIntRat(vm.opportunityMaster.nonFinancialSummaryData.intExpOne,vm.opportunityMaster.nonFinancialSummaryData.totDebOne,1)" ng-disabled="true" style="text-align: right" /> </td>
+                            <td><input name="taxRateTwo" ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateTwo" ng-value="getNonIntRat(vm.opportunityMaster.nonFinancialSummaryData.intExpTwo,vm.opportunityMaster.nonFinancialSummaryData.totDebTwo,2)" ng-disabled="true" style="text-align: right"/> </td>
+                            <td><input name="taxRateThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateThree" ng-value="getNonIntRat(vm.opportunityMaster.nonFinancialSummaryData.intExpThree,vm.opportunityMaster.nonFinancialSummaryData.totDebThree,3)" ng-disabled="true" style="text-align: right"/></td>
+                            <td><input name="taxRateFour" ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateFour" ng-value="getNonIntRat(vm.opportunityMaster.nonFinancialSummaryData.intExpFour,vm.opportunityMaster.nonFinancialSummaryData.totDebFour,4)" ng-disabled="true" style="text-align: right"/></td>
+                            <td><input name="taxRateFive" ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateFive" ng-value="getNonIntRat(vm.opportunityMaster.nonFinancialSummaryData.intExpFive,vm.opportunityMaster.nonFinancialSummaryData.totDebFive,5)" ng-disabled="true" style="text-align: right"/></td>
                         </tr>
 
                           <tr>
