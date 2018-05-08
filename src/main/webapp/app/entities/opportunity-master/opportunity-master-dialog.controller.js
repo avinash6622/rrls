@@ -441,6 +441,61 @@
 			}
 			return result;
 		};
+		$scope.getNonTaxRat = function(val1, val2, val3) {
+			
+			var result = parseFloat(val1)/parseFloat(val2);
+			result = (result * 100);    			
+		result = (isNaN(result)) ? '' : result;
+		if(result!=''){
+		switch (val3) {
+		case 1:
+			vm.opportunityMaster.nonFinancialSummaryData.taxRateOne = result;
+			break;
+		case 2:
+			vm.opportunityMaster.nonFinancialSummaryData.taxRateTwo = result;
+			break;
+		case 3:
+			vm.opportunityMaster.nonFinancialSummaryData.taxRateThree = result;
+			break;
+		case 4:
+			vm.opportunityMaster.nonFinancialSummaryData.taxRateFour = result;
+			break;
+		case 5:
+			vm.opportunityMaster.nonFinancialSummaryData.taxRateFive = result;
+			break;
+		default:
+			break;
+		}}
+		return result;
+	};
+	
+	$scope.getNonIntRat = function(val1, val2, val3) {
+		
+		var result = parseFloat(val1)/parseFloat(val2);
+		result = (result * 100);    			
+	result = (isNaN(result)) ? '' : result;
+	if(result!=''){
+	switch (val3) {
+	case 1:
+		vm.opportunityMaster.nonFinancialSummaryData.intRateOne = result;
+		break;
+	case 2:
+		vm.opportunityMaster.nonFinancialSummaryData.intRateTwo = result;
+		break;
+	case 3:
+		vm.opportunityMaster.nonFinancialSummaryData.intRateThree = result;
+		break;
+	case 4:
+		vm.opportunityMaster.nonFinancialSummaryData.intRateFour = result;
+		break;
+	case 5:
+		vm.opportunityMaster.nonFinancialSummaryData.intRateFive = result;
+		break;
+	default:
+		break;
+	}}
+	return result;
+};
 		// Editor options.
 		$scope.options = {
 			language : 'en',
