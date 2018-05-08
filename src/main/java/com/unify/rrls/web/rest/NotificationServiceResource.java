@@ -47,7 +47,7 @@ public class NotificationServiceResource {
         this.deleteNotificationRepository=deleteNotificationRepository;
     }
 
-    public String notificationHistorysave(String name,String createdBy, String modifiedBy, Instant createdDate, String action, String page,String fileName,Long userId){
+    public String notificationHistorysave(String name,String createdBy, String modifiedBy, Instant createdDate, String action, String page,String fileName,Long userId,Long oppId){
 
 
 
@@ -62,6 +62,7 @@ public class NotificationServiceResource {
         historyLogs.setPage(page);
         historyLogs.setFileNamecontent(fileName);
         historyLogs.setUserId(userId);
+        historyLogs.setOppId(oppId);
         historyLogsRepository.save(historyLogs);
 
         return null;

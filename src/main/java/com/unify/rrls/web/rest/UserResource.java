@@ -117,7 +117,7 @@ public class UserResource {
             String page="User";
             Long id = getUserId(newUser.getCreatedBy());
 
-            notificationServiceResource.notificationHistorysave(newUser.getLogin(),newUser.getCreatedBy(),newUser.getLastModifiedBy(),newUser.getCreatedDate(),"created",page,"",id);
+            notificationServiceResource.notificationHistorysave(newUser.getLogin(),newUser.getCreatedBy(),newUser.getLastModifiedBy(),newUser.getCreatedDate(),"created",page,"",id,Long.parseLong("0"));
 
 
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))

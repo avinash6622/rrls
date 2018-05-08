@@ -26,11 +26,11 @@ public abstract class AbstractAuditingEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @CreatedBy
-    @Column(name = "created_by", nullable = false, length = 50, updatable = false)   
+    @Column(name = "created_by", nullable = false, length = 50)
     private String createdBy;
 
     @CreatedDate
-    @Column(name = "created_date", nullable = false)  
+    @Column(name = "created_date", nullable = false)
     private Instant createdDate = Instant.now();
 
     @LastModifiedBy
@@ -73,5 +73,15 @@ public abstract class AbstractAuditingEntity implements Serializable {
 
     public void setLastModifiedDate(Instant lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    @Override
+    public String toString() {
+        return "AbstractAuditingEntity{" +
+            "createdBy='" + createdBy + '\'' +
+            ", createdDate=" + createdDate +
+            ", lastModifiedBy='" + lastModifiedBy + '\'' +
+            ", lastModifiedDate=" + lastModifiedDate +
+            '}';
     }
 }

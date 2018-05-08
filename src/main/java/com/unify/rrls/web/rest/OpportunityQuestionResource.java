@@ -29,18 +29,18 @@ import io.github.jhipster.web.util.ResponseUtil;
 public class OpportunityQuestionResource {
 
 	private final OpportunityQuestionRepository opportunityQuestionRepository;
-	
+
 	private final Logger log = LoggerFactory.getLogger(OpportunityQuestionResource.class);
 
 	private static final String ENTITY_NAME = "opportunityQuestion";
 	 @Autowired
-	  NotificationServiceResource notificationServiceResource;	
-	  
+	  NotificationServiceResource notificationServiceResource;
+
 	  @Autowired
 	  UserResource userResource;
-	
+
 	public OpportunityQuestionResource(OpportunityQuestionRepository opportunityQuestionRepository) {
-		this.opportunityQuestionRepository = opportunityQuestionRepository;		
+		this.opportunityQuestionRepository = opportunityQuestionRepository;
 	}
 
 
@@ -63,21 +63,21 @@ public class OpportunityQuestionResource {
         String name =String.valueOf(result.getOpportunityMaster().getMasterName().getOppName());
          Long id =  userResource.getUserId(result.getCreatedBy());
 
-        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"added",page,subContent,id);
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"added",page,subContent,id,result.getOpportunityMaster().getId());
 
 
 
         return ResponseEntity.created(new URI("/api/opportunity-questions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
-    
+
     @GetMapping("/opportunity-question/{id}")
 	@Timed
 	public ResponseEntity<OpportunityQuestion> getOpportunityQuestion(@PathVariable Long id) {
 		log.debug("REST request to get OpportunityQuestion : {}", id);
-		
+
 		OpportunityQuestion opportunityQuestion = opportunityQuestionRepository.findOne(id);
-		
+
 		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(opportunityQuestion));
 	}
 }

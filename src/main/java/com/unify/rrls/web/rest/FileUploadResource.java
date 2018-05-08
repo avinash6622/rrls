@@ -200,7 +200,7 @@ public class FileUploadResource {
 
           Long id =  userResource.getUserId(result.getCreatedBy());
 
-      notificationServiceResource.notificationHistorysave(oppName,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"uploaded",page,result.getFileName(),id);
+      notificationServiceResource.notificationHistorysave(oppName,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"uploaded",page,result.getFileName(),id,result.getOpportunityMasterId().getId());
 
 
 
@@ -435,7 +435,7 @@ public class FileUploadResource {
 
                       XSSFWorkbook workbook = new XSSFWorkbook(fis);
 
-                      XSSFSheet sheet = workbook.getSheetAt(1);
+                      XSSFSheet sheet = workbook.getSheetAt(0);
                       int iPutNxtDetailsToDB = 0;
 
                       Iterator<Row> rowIterator = sheet.iterator();
@@ -564,24 +564,24 @@ public class FileUploadResource {
                                   nonFinance.setMarketCapThree(row.getCell(3).getNumericCellValue());
                                  /* nonFinance.setMarketCapFour(row.getCell(4).getNumericCellValue());
                                   nonFinance.setMarketCapFive(row.getCell(5).getNumericCellValue()); */}
-                                  if (finColumn.equals("PE"))
+                               /*   if (finColumn.equals("PE"))
                                   {  nonFinance.setPeOne(row.getCell(1).getNumericCellValue());
                                   nonFinance.setPeTwo(row.getCell(2).getNumericCellValue());
                                   nonFinance.setPethree(row.getCell(3).getNumericCellValue());
                                   nonFinance.setPeFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setPeFive(row.getCell(5).getNumericCellValue());}
+                                  nonFinance.setPeFive(row.getCell(5).getNumericCellValue());}*/
                                   if (finColumn.equals("Networth"))
                                   {  nonFinance.setNetworthOne(row.getCell(1).getNumericCellValue());
                                   nonFinance.setNetworthTwo(row.getCell(2).getNumericCellValue());
                                   nonFinance.setNetworthThree(row.getCell(3).getNumericCellValue());
                                   nonFinance.setNetworthFour(row.getCell(4).getNumericCellValue());
                                   nonFinance.setNetworthFive(row.getCell(5).getNumericCellValue());}
-                                  if (finColumn.equals("PB"))
+                               /*   if (finColumn.equals("PB"))
                                   {  nonFinance.setPbOne(row.getCell(1).getNumericCellValue());
                                   nonFinance.setPbTwo(row.getCell(2).getNumericCellValue());
                                   nonFinance.setPbThree(row.getCell(3).getNumericCellValue());
                                   nonFinance.setPbFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setPbFive(row.getCell(5).getNumericCellValue());}
+                                  nonFinance.setPbFive(row.getCell(5).getNumericCellValue());}*/
                                   if (finColumn.equals("ROE(%)"))
                                   {  nonFinance.setRoeOne(row.getCell(1).getNumericCellValue());
                                   nonFinance.setRoeTwo(row.getCell(2).getNumericCellValue());
@@ -600,7 +600,7 @@ public class FileUploadResource {
                                   nonFinance.setDeThree(row.getCell(3).getNumericCellValue());
                                   nonFinance.setDeFour(row.getCell(4).getNumericCellValue());
                                   nonFinance.setDeFive(row.getCell(5).getNumericCellValue());}
-                                  if (finColumn.equals("Tax Rate"))
+                                /*  if (finColumn.equals("Tax Rate"))
                                   {  nonFinance.setTaxRateOne(row.getCell(1).getNumericCellValue());
                                   nonFinance.setTaxRateTwo(row.getCell(2).getNumericCellValue());
                                   nonFinance.setTaxRateThree(row.getCell(3).getNumericCellValue());
@@ -611,7 +611,7 @@ public class FileUploadResource {
                                   nonFinance.setIntRateTwo(row.getCell(2).getNumericCellValue());
                                   nonFinance.setIntRateThree(row.getCell(3).getNumericCellValue());
                                   nonFinance.setIntRateFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setIntRateFive(row.getCell(5).getNumericCellValue());}
+                                  nonFinance.setIntRateFive(row.getCell(5).getNumericCellValue());}*/
                                   if (finColumn.equals("Deprciation Rate"))
                                   {  nonFinance.setDepRateOne(row.getCell(1).getNumericCellValue());
                                   nonFinance.setDepRateTwo(row.getCell(2).getNumericCellValue());
@@ -619,17 +619,35 @@ public class FileUploadResource {
                                   nonFinance.setDepRateFour(row.getCell(4).getNumericCellValue());
                                   nonFinance.setDepRateFive(row.getCell(5).getNumericCellValue());}
                                   if (finColumn.equals("Weight")){
-
                                       nonFinance.setWeight(row.getCell(3).getNumericCellValue());
 
-
                                   }
-
-                          }
+                          }                             
 
                           }
                       }
 
+                      nonFinance.setPeOne(nonFinance.getMarketCapThree()/nonFinance.getPatOne());
+                      nonFinance.setPeTwo(nonFinance.getMarketCapThree()/nonFinance.getPatTwo());
+                      nonFinance.setPethree(nonFinance.getMarketCapThree()/nonFinance.getPatthree());
+                      nonFinance.setPeFour(nonFinance.getMarketCapThree()/nonFinance.getPatfour());
+                      nonFinance.setPeFive(nonFinance.getMarketCapThree()/nonFinance.getPatFive());
+                      nonFinance.setPbOne(nonFinance.getMarketCapThree()/nonFinance.getNetworthOne());
+                      nonFinance.setPbTwo(nonFinance.getMarketCapThree()/nonFinance.getNetworthTwo());
+                      nonFinance.setPbThree(nonFinance.getMarketCapThree()/nonFinance.getNetworthThree());
+                      nonFinance.setPbFour(nonFinance.getMarketCapThree()/nonFinance.getNetworthFour());
+                      nonFinance.setPbFive(nonFinance.getMarketCapThree()/nonFinance.getNetworthFive());
+                      nonFinance.setTaxRateOne((nonFinance.getTaxOne()/nonFinance.getPbtOne())*100);
+                      nonFinance.setTaxRateTwo((nonFinance.getTaxTwo()/nonFinance.getPbtTwo())*100);
+                      nonFinance.setTaxRateThree((nonFinance.getTaxThree()/nonFinance.getPbtThree())*100);
+                      nonFinance.setTaxRateFour((nonFinance.getTaxFour()/nonFinance.getPbtFour())*100);
+                      nonFinance.setTaxRateFive((nonFinance.getTaxFive()/nonFinance.getPbtFive())*100);
+                      nonFinance.setIntRateOne((nonFinance.getIntExpOne()/nonFinance.getTotDebOne())*100);
+                      nonFinance.setIntRateTwo((nonFinance.getIntExpTwo()/nonFinance.getTotDebTwo())*100);
+                      nonFinance.setIntRateThree((nonFinance.getIntExpThree()/nonFinance.getTotDebThree())*100);
+                      nonFinance.setIntRateFour((nonFinance.getIntExpFour()/nonFinance.getTotDebFour())*100);
+                      nonFinance.setIntRateFive((nonFinance.getIntExpFive()/nonFinance.getTotDebFive())*100);
+                      
                       nonFinancialSummaryDataRepository.save(nonFinance);
                       List<OpportunitySummaryData> opportunitySummaryDataList = opportunitySummaryDataRepository.findByOpportunityMasterid(opportunityMaster);
                       System.out.println(opportunitySummaryDataList);

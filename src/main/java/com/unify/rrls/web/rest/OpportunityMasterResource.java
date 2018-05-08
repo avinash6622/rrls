@@ -314,13 +314,13 @@ public class OpportunityMasterResource {
 				strategyMappingRepository.save(strategyMapping);
 			}
 			System.out.println(strategyMaster);
-		
+
 			opportunityMaster.setSelectedStrategyMaster(strategyMaster);
 			List<StrategyMapping> countStrategy=strategyMappingRepository.findByStrategyMaster(strategyMaster.get(0));
 			StrategyMaster updateTot=strategyMasterRepository.findOne(strategyMaster.get(0).getId());
 			updateTot.setTotalStocks((double) countStrategy.size());
 			strategyMasterRepository.save(updateTot);
-			
+
 
 
 		}
@@ -461,7 +461,7 @@ public class OpportunityMasterResource {
 		Long id = userResource.getUserId(result.getCreatedBy());
 
 		notificationServiceResource.notificationHistorysave(name, result.getCreatedBy(), result.getLastModifiedBy(),
-				result.getCreatedDate(), "created", page, "", id);
+				result.getCreatedDate(), "created", page, "", id,result.getId());
 
 		// return null;
 		return ResponseEntity.ok().headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -507,7 +507,7 @@ public class OpportunityMasterResource {
 				StrategyMaster updateTot=strategyMasterRepository.findOne(sm.getId());
 				updateTot.setTotalStocks((double) countStrategy.size());
 				strategyMasterRepository.save(updateTot);
-				
+
 
 			}
 		}
@@ -684,7 +684,7 @@ public class OpportunityMasterResource {
 		Long id = userResource.getUserId(result.getCreatedBy());
 
 		notificationServiceResource.notificationHistorysave(name, result.getCreatedBy(), result.getLastModifiedBy(),
-				result.getCreatedDate(), result.getOppStatus(), page, "", id);
+				result.getCreatedDate(), result.getOppStatus(), page, "", id,result.getId());
 
 		return ResponseEntity.ok()
 				.headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, opportunityMaster.getId().toString()))
