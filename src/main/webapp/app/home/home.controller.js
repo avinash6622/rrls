@@ -6,9 +6,9 @@
         .controller('HomeController', HomeController);
 
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'AlertService', 'OpportunityMaster','ParseLinks','paginationConstants','$state','$http','$filter','pagingParams'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'AlertService', 'OpportunityMaster','ParseLinks','paginationConstants','$state','$http','$filter','pagingParams','DecimalConfiguration'];
 
-    function HomeController ($scope, Principal, LoginService, AlertService, OpportunityMaster,ParseLinks,paginationConstants,$state,$http,$filter,pagingParams) {
+    function HomeController ($scope, Principal, LoginService, AlertService, OpportunityMaster,ParseLinks,paginationConstants,$state,$http,$filter,pagingParams,DecimalConfiguration) {
         var vm = this;
 
         vm.account = null;
@@ -34,6 +34,8 @@
         vm.predicate = 'id';
 
         vm.dashboardvalues = [];
+
+        vm.multiplevalue = null;
 
         $scope.$on('authenticationSuccess', function() {
             getAccount();
@@ -78,6 +80,10 @@
 
         getAccount();
 
+        setTimeout(function() {
+            getDecimalConfig();
+        }, 3000);
+
         function getAccount() {
             Principal.identity().then(function(account) {
                 vm.account = account;
@@ -88,9 +94,50 @@
             $state.go('register');
         }
 
-      /*  loadAll();*/
 
-      /*  function loadAll () {*/
+        function getDecimalConfig() {
+
+
+            DecimalConfiguration.get({id:vm.account.id},function (resp) {
+
+                console.log(resp);
+
+                console.log(resp.rupee);
+
+                console.log(vm.account.login);
+
+
+
+
+/*
+                if(vm.account.login == vm.opportunityMaster.createdBy)
+                {
+                    vm.decimalValue = resp.decimalValue;
+                }*/
+
+
+                if(resp.rupee == 'Millions')
+                {
+                    if(vm.account.login == resp.user.login)
+                    {
+                        if(!$state.params.createdBy)
+                        {
+                            vm.multiplevalue = 10;
+                        }
+
+                    }
+
+
+                }
+
+
+            },function (err) {
+                console.log(err);
+            });
+
+        }
+
+
         	console.log($state.params);
 
 
@@ -128,7 +175,7 @@
                 };
 
             }
-else{
+       else{
                 $http.get('api/opportunity-summary/getdata')
                     .then(function(response) {
                         console.log("RESPONSEs");

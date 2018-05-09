@@ -126,25 +126,25 @@ padding :none !important}
 				ng-if="vm.opportunityMaster.nonFinancialSummaryData == null">
                 <div class="pull-left">{{vm.opportunityMaster.masterName.sectorType}}</div>
 				<div class="pull-right">
-					<div class="col-md-1 pr-md-1">
+					<div class="col-md-1 pr-md-1" style="padding-right: 30px;">
                         <div><strong>CMP</strong></div>
-						<div>{{vm.opportunityMaster.financialSummaryData.cmp}}</div>
+						<div>{{vm.opportunityMaster.financialSummaryData.cmp | number : vm.decimalValue}}</div>
 					</div>
-					<div class="col-sm-offset-1 col-md-1 pl-md-1">
+					<div class="col-sm-offset-1 col-md-1 pl-md-1" style="padding-right: 30px;">
 						<div><strong>MCAP</strong></div>
-						<div>{{vm.opportunityMaster.financialSummaryData.marCapThree}}</div>
+						<div>{{vm.opportunityMaster.financialSummaryData.marCapThree | number : vm.decimalValue}}</div>
 					</div>
-					<div class="col-sm-offset-1 col-md-1 pl-md-1">
+					<div class="col-sm-offset-1 col-md-1 pl-md-1" style="padding-right: 30px;">
 						<div><strong>P/E</strong></div>
-						<div>{{vm.opportunityMaster.financialSummaryData.peThree}}</div>
+						<div>{{vm.opportunityMaster.financialSummaryData.peThree | number : vm.decimalValue}}</div>
 					</div>
-					<div class="col-sm-offset-1 col-md-1 pl-md-1">
+					<div class="col-sm-offset-1 col-md-1 pl-md-1" style="padding-right: 30px;">
 						<div><strong>ROE</strong></div>
-						<div>{{vm.opportunityMaster.financialSummaryData.roeThree}}</div>
+						<div>{{vm.opportunityMaster.financialSummaryData.roeThree | number : vm.decimalValue}}</div>
 					</div>
 					<div class="col-sm-offset-1 col-md-1 pl-md-1">
 						<div><strong>P/BV</strong></div>
-						<div>{{vm.opportunityMaster.financialSummaryData.pbvThree}}</div>
+						<div>{{vm.opportunityMaster.financialSummaryData.pbvThree | number : vm.decimalValue}}</div>
 					</div>
 					<!-- <div class="col-sm-offset-1 col-md-1 pl-md-1">
 						<div><strong>D/E</strong></div>
@@ -157,25 +157,25 @@ padding :none !important}
 				ng-if="vm.opportunityMaster.financialSummaryData == null">
 				 <div class="pull-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{vm.opportunityMaster.masterName.sectorType}}</div>
 				<div class="pull-right">
-					<div class="col-md-1 pr-md-1">
+					<div class="col-md-1 pr-md-1" style="padding-right: 30px;">
 
                         <div><strong>CMP</strong></div>
 
-						<div>{{vm.opportunityMaster.nonFinancialSummaryData.cmp}}</div>
+						<div>{{vm.opportunityMaster.nonFinancialSummaryData.cmp | number : vm.decimalValue}}</div>
 					</div>
-					<div class="col-sm-offset-1 col-md-1 pl-md-1">
+					<div class="col-sm-offset-1 col-md-1 pl-md-1" style="padding-right: 30px;">
 
                         <div><strong>MCAP</strong></div>
-				<div>{{vm.opportunityMaster.nonFinancialSummaryData.marketCapThree}}</div>
+				<div>{{vm.opportunityMaster.nonFinancialSummaryData.marketCapThree | number : vm.decimalValue}}</div>
 					</div>
-					<div class="col-sm-offset-1 col-md-1 pl-md-1">
+					<div class="col-sm-offset-1 col-md-1 pl-md-1" style="padding-right: 30px;">
 
                         <div><strong>P/E</strong></div>
-						<div>{{vm.opportunityMaster.nonFinancialSummaryData.pethree}}</div>
+						<div>{{vm.opportunityMaster.nonFinancialSummaryData.pethree | number : vm.decimalValue}}</div>
 					</div>
-					<div class="col-sm-offset-1 col-md-1 pl-md-1">
+					<div class="col-sm-offset-1 col-md-1 pl-md-1" style="padding-right: 30px;">
 						<div><strong>ROE</strong></div>
-						<div>{{vm.opportunityMaster.nonFinancialSummaryData.roeThree}}</div>
+						<div>{{vm.opportunityMaster.nonFinancialSummaryData.roeThree | number : vm.decimalValue}}</div>
 					</div>
 				<!-- 	<div class="col-sm-offset-1 col-md-1 pl-md-1">
 						<div><strong>P/BV</strong></div>
@@ -183,7 +183,7 @@ padding :none !important}
 					</div> -->
 					<div class="col-sm-offset-1 col-md-1 pl-md-1">
 						<div><strong>D/E</strong></div>
-						<div>{{vm.opportunityMaster.nonFinancialSummaryData.deThree}}</div>
+						<div>{{vm.opportunityMaster.nonFinancialSummaryData.deThree | number : vm.decimalValue}}</div>
 					</div>
 				</div>
 			</div>
@@ -382,7 +382,7 @@ padding :none !important}
 			</div>
 		</dd>
 
-<!-- 
+<!--
 		<dt>
 			<span>Comments:</span>
 		</dt>
@@ -449,61 +449,61 @@ padding :none !important}
 							<tr>
 								<td scope="col" style="text-align: left">Net Interest Income</td>
 								<td><input name="netIntOne"
-									ng-model="vm.opportunityMaster.financialSummaryData.netIntOne"
+									ng-model="vm.opportunityMaster.financialSummaryData.netIntOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right" /></td>
 								<td><input name="netIntTwo"
-									ng-model="vm.opportunityMaster.financialSummaryData.netIntTwo"
+									ng-model="vm.opportunityMaster.financialSummaryData.netIntTwo" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right" /></td>
 								<td><input name="netIntThree"
-									ng-model="vm.opportunityMaster.financialSummaryData.netIntThree"
+									ng-model="vm.opportunityMaster.financialSummaryData.netIntThree" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right" /></td>
 								<td><input name="netIntFour"
-									ng-model="vm.opportunityMaster.financialSummaryData.netIntFour"
+									ng-model="vm.opportunityMaster.financialSummaryData.netIntFour" decimals="{{vm.decimalValue}}"
 									 ng-disabled="isDisabled" style="text-align: right" /></td>
 								<td><input name="netIntFive"
-									ng-model="vm.opportunityMaster.financialSummaryData.netIntFive"
+									ng-model="vm.opportunityMaster.financialSummaryData.netIntFive" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right" /></td>
 							</tr>
 
 							<tr>
 								<td scope="col" style="text-align: left">Non Interest Income</td>
 								<td><input name="nonIntOne"
-									ng-model="vm.opportunityMaster.financialSummaryData.nonIntOne"
+									ng-model="vm.opportunityMaster.financialSummaryData.nonIntOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="nonIntTwo"
-									ng-model="vm.opportunityMaster.financialSummaryData.nonIntTwo"
+									ng-model="vm.opportunityMaster.financialSummaryData.nonIntTwo" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="nonIntThree"
-									ng-model="vm.opportunityMaster.financialSummaryData.nonIntThree"
+									ng-model="vm.opportunityMaster.financialSummaryData.nonIntThree" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="nonIntFour"
-									ng-model="vm.opportunityMaster.financialSummaryData.nonIntFour"
+									ng-model="vm.opportunityMaster.financialSummaryData.nonIntFour" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="nonIntFive"
-									ng-model="vm.opportunityMaster.financialSummaryData.nonIntFive"
+									ng-model="vm.opportunityMaster.financialSummaryData.nonIntFive" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 							</tr>
 
 							<tr>
 								<td scope="col"  style="text-align: left">Total Income</td>
 								<td><input name="totIncOne"
-									ng-model="vm.opportunityMaster.financialSummaryData.totIncOne"
+									ng-model="vm.opportunityMaster.financialSummaryData.totIncOne" decimals="{{vm.decimalValue}}"
 									ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntOne, vm.opportunityMaster.financialSummaryData.nonIntOne,1)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="totIncTwo"
-									ng-model="vm.opportunityMaster.financialSummaryData.totIncTwo"
+									ng-model="vm.opportunityMaster.financialSummaryData.totIncTwo" decimals="{{vm.decimalValue}}"
 									ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntTwo, vm.opportunityMaster.financialSummaryData.nonIntTwo,2)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="totIncThree"
-									ng-model="vm.opportunityMaster.financialSummaryData.totIncThree"
+									ng-model="vm.opportunityMaster.financialSummaryData.totIncThree" decimals="{{vm.decimalValue}}"
 									ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntThree, vm.opportunityMaster.financialSummaryData.nonIntThree,3)"
 									ng-disabled="true" style="text-align: right" /></td>
 								<td><input name="totIncFour"
-									ng-model="vm.opportunityMaster.financialSummaryData.totIncFour"
+									ng-model="vm.opportunityMaster.financialSummaryData.totIncFour" decimals="{{vm.decimalValue}}"
 									ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntFour, vm.opportunityMaster.financialSummaryData.nonIntFour,4)"
 									ng-disabled="true" style="text-align: right" /></td>
 								<td><input name="totIncFive"
-									ng-model="vm.opportunityMaster.financialSummaryData.totIncFive"
+									ng-model="vm.opportunityMaster.financialSummaryData.totIncFive" decimals="{{vm.decimalValue}}"
 									ng-value="getTotal(vm.opportunityMaster.financialSummaryData.netIntFive, vm.opportunityMaster.financialSummaryData.nonIntFive,5)"
 									ng-disabled="true" style="text-align: right" /></td>
 							</tr>
@@ -511,38 +511,38 @@ padding :none !important}
 							<tr>
 								<td scope="col" style="text-align: left">Operating Expenses</td>
 								<td><input name="opExpOne"
-									ng-model="vm.opportunityMaster.financialSummaryData.opExpOne"
+									ng-model="vm.opportunityMaster.financialSummaryData.opExpOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="opExpTwo"
-									ng-model="vm.opportunityMaster.financialSummaryData.opExpTwo"
+									ng-model="vm.opportunityMaster.financialSummaryData.opExpTwo" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="opExpThree"
-									ng-model="vm.opportunityMaster.financialSummaryData.opExpThree"
+									ng-model="vm.opportunityMaster.financialSummaryData.opExpThree" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="opExpFour"
-									ng-model="vm.opportunityMaster.financialSummaryData.opExpFour"
+									ng-model="vm.opportunityMaster.financialSummaryData.opExpFour" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="opExpFive"
-									ng-model="vm.opportunityMaster.financialSummaryData.opExpFive"
+									ng-model="vm.opportunityMaster.financialSummaryData.opExpFive" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 							</tr>
 
 							<tr>
 								<td scope="col" style="text-align: left">Operating Profit</td>
 								<td><input name="opProOne"
-									ng-model="vm.opportunityMaster.financialSummaryData.opProOne"
+									ng-model="vm.opportunityMaster.financialSummaryData.opProOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="opProTwo"
-									ng-model="vm.opportunityMaster.financialSummaryData.opProTwo"
+									ng-model="vm.opportunityMaster.financialSummaryData.opProTwo" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="opProThree"
-									ng-model="vm.opportunityMaster.financialSummaryData.opProThree"
+									ng-model="vm.opportunityMaster.financialSummaryData.opProThree" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="opProFour"
-									ng-model="vm.opportunityMaster.financialSummaryData.opProFour"
+									ng-model="vm.opportunityMaster.financialSummaryData.opProFour" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="opProFive"
-									ng-model="vm.opportunityMaster.financialSummaryData.opProFive"
+									ng-model="vm.opportunityMaster.financialSummaryData.opProFive" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 							</tr>
 
@@ -550,137 +550,137 @@ padding :none !important}
 							<tr>
 								<td scope="col" style="text-align: left">Provisions</td>
 								<td><input name="provisionsOne"
-									ng-model="vm.opportunityMaster.financialSummaryData.provisionsOne"
+									ng-model="vm.opportunityMaster.financialSummaryData.provisionsOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="provisionsTwo"
-									ng-model="vm.opportunityMaster.financialSummaryData.provisionsTwo"
+									ng-model="vm.opportunityMaster.financialSummaryData.provisionsTwo" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="provisionsThree"
-									ng-model="vm.opportunityMaster.financialSummaryData.provisionsThree"
+									ng-model="vm.opportunityMaster.financialSummaryData.provisionsThree" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="provisionsFour"
-									ng-model="vm.opportunityMaster.financialSummaryData.provisionsFour"
+									ng-model="vm.opportunityMaster.financialSummaryData.provisionsFour" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="provisionsFive"
-									ng-model="vm.opportunityMaster.financialSummaryData.provisionsFive"
+									ng-model="vm.opportunityMaster.financialSummaryData.provisionsFive" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 							</tr>
 
 							<tr>
 								<td scope="col" style="text-align: left">PAT</td>
 								<td><input name="patOne"
-									ng-model="vm.opportunityMaster.financialSummaryData.patOne"
+									ng-model="vm.opportunityMaster.financialSummaryData.patOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="patTwo"
-									ng-model="vm.opportunityMaster.financialSummaryData.patTwo"
+									ng-model="vm.opportunityMaster.financialSummaryData.patTwo" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="patThree"
-									ng-model="vm.opportunityMaster.financialSummaryData.patThree"
+									ng-model="vm.opportunityMaster.financialSummaryData.patThree" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="patFour"
-									ng-model="vm.opportunityMaster.financialSummaryData.patFour"
+									ng-model="vm.opportunityMaster.financialSummaryData.patFour" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="patFive"
-									ng-model="vm.opportunityMaster.financialSummaryData.patFive"
+									ng-model="vm.opportunityMaster.financialSummaryData.patFive" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 							</tr>
 
 							<tr>
 								<td scope="col" style="text-align: left">EPS</td>
 								<td><input name="epsOne"
-									ng-model="vm.opportunityMaster.financialSummaryData.epsOne"
+									ng-model="vm.opportunityMaster.financialSummaryData.epsOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="epsTwo"
-									ng-model="vm.opportunityMaster.financialSummaryData.epsTwo"
+									ng-model="vm.opportunityMaster.financialSummaryData.epsTwo" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="epsThree"
-									ng-model="vm.opportunityMaster.financialSummaryData.epsThree"
+									ng-model="vm.opportunityMaster.financialSummaryData.epsThree" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="epsFour"
-									ng-model="vm.opportunityMaster.financialSummaryData.epsFour"
+									ng-model="vm.opportunityMaster.financialSummaryData.epsFour" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="epsFive"
-									ng-model="vm.opportunityMaster.financialSummaryData.epsFive"
+									ng-model="vm.opportunityMaster.financialSummaryData.epsFive" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 							</tr>
 
 							<tr>
 								<td scope="col" style="text-align: left">Market Cap</td>
 								<td><input name="marCapOne"
-									ng-model="vm.opportunityMaster.financialSummaryData.marCapOne"
+									ng-model="vm.opportunityMaster.financialSummaryData.marCapOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="marCapTwo"
-									ng-model="vm.opportunityMaster.financialSummaryData.marCapTwo"
+									ng-model="vm.opportunityMaster.financialSummaryData.marCapTwo" decimals="{{vm.decimalValue}}"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="marCapThree"
-									ng-model="vm.opportunityMaster.financialSummaryData.marCapThree"
+									ng-model="vm.opportunityMaster.financialSummaryData.marCapThree" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="marCapFour"
-									ng-model="vm.opportunityMaster.financialSummaryData.marCapFour"
+									ng-model="vm.opportunityMaster.financialSummaryData.marCapFour" decimals="{{vm.decimalValue}}"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="marCapFive"
-									ng-model="vm.opportunityMaster.financialSummaryData.marCapFive"
+									ng-model="vm.opportunityMaster.financialSummaryData.marCapFive" decimals="{{vm.decimalValue}}"
 									ng-disabled="true" style="text-align: right"/></td>
 							</tr>
 
 							<tr>
 								<td scope="col" style="text-align: left">AUM</td>
 								<td><input name="aumOne"
-									ng-model="vm.opportunityMaster.financialSummaryData.aumOne"
+									ng-model="vm.opportunityMaster.financialSummaryData.aumOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="aumTwo"
-									ng-model="vm.opportunityMaster.financialSummaryData.aumTwo"
+									ng-model="vm.opportunityMaster.financialSummaryData.aumTwo" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="aumThree"
-									ng-model="vm.opportunityMaster.financialSummaryData.aumThree"
+									ng-model="vm.opportunityMaster.financialSummaryData.aumThree" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="aumFour"
-									ng-model="vm.opportunityMaster.financialSummaryData.aumFour"
+									ng-model="vm.opportunityMaster.financialSummaryData.aumFour" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="aumFive"
-									ng-model="vm.opportunityMaster.financialSummaryData.aumFive"
+									ng-model="vm.opportunityMaster.financialSummaryData.aumFive" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 							</tr>
 
 							<tr>
 								<td scope="col" style="text-align: left">Networth</td>
 								<td><input name="networthOne"
-									ng-model="vm.opportunityMaster.financialSummaryData.networthOne"
+									ng-model="vm.opportunityMaster.financialSummaryData.networthOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="networthTwo"
-									ng-model="vm.opportunityMaster.financialSummaryData.networthTwo"
+									ng-model="vm.opportunityMaster.financialSummaryData.networthTwo" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="networthThree"
-									ng-model="vm.opportunityMaster.financialSummaryData.networthThree"
+									ng-model="vm.opportunityMaster.financialSummaryData.networthThree" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="networthFour"
-									ng-model="vm.opportunityMaster.financialSummaryData.networthFour"
+									ng-model="vm.opportunityMaster.financialSummaryData.networthFour" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="networthfive"
-									ng-model="vm.opportunityMaster.financialSummaryData.networthfive"
+									ng-model="vm.opportunityMaster.financialSummaryData.networthfive" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 							</tr>
 
 							<tr>
 								<td scope="col" style="text-align: left">ROE</td>
 								<td><input name="roeOne"
-									ng-model="vm.opportunityMaster.financialSummaryData.roeOne"
+									ng-model="vm.opportunityMaster.financialSummaryData.roeOne" decimals="{{vm.decimalValue}}"
 									ng-value="getFinRoe(vm.opportunityMaster.financialSummaryData.patOne,0,vm.opportunityMaster.financialSummaryData.networthOne,1)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="roeTwo"
-									ng-model="vm.opportunityMaster.financialSummaryData.roeTwo"
+									ng-model="vm.opportunityMaster.financialSummaryData.roeTwo" decimals="{{vm.decimalValue}}"
 									ng-value="getFinRoe(vm.opportunityMaster.financialSummaryData.patTwo,vm.opportunityMaster.financialSummaryData.networthOne,vm.opportunityMaster.financialSummaryData.networthTwo,2)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="roeThree"
-									ng-model="vm.opportunityMaster.financialSummaryData.roeThree"
+									ng-model="vm.opportunityMaster.financialSummaryData.roeThree" decimals="{{vm.decimalValue}}"
 									ng-value="getFinRoe(vm.opportunityMaster.financialSummaryData.patThree,vm.opportunityMaster.financialSummaryData.networthTwo,vm.opportunityMaster.financialSummaryData.networthThree,3)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="roeFour"
-									ng-model="vm.opportunityMaster.financialSummaryData.roeFour"
+									ng-model="vm.opportunityMaster.financialSummaryData.roeFour" decimals="{{vm.decimalValue}}"
 									ng-value="getFinRoe(vm.opportunityMaster.financialSummaryData.patFour,vm.opportunityMaster.financialSummaryData.networthThree,vm.opportunityMaster.financialSummaryData.networthFour,4)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="roeFive"
-									ng-model="vm.opportunityMaster.financialSummaryData.roeFive"
+									ng-model="vm.opportunityMaster.financialSummaryData.roeFive" decimals="{{vm.decimalValue}}"
 									ng-value="getFinRoe(vm.opportunityMaster.financialSummaryData.patFive,vm.opportunityMaster.financialSummaryData.networthFour,vm.opportunityMaster.financialSummaryData.networthfive,5)"
 									ng-disabled="true" style="text-align: right"/></td>
 							</tr>
@@ -688,23 +688,23 @@ padding :none !important}
 							<tr>
 								<td scope="col" style="text-align: left">P/BV</td>
 								<td><input name="pbvOne"
-									ng-model="vm.opportunityMaster.financialSummaryData.pbvOne"
+									ng-model="vm.opportunityMaster.financialSummaryData.pbvOne" decimals="{{vm.decimalValue}}"
 									ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.networthOne,1)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="pbvTwo"
-									ng-model="vm.opportunityMaster.financialSummaryData.pbvTwo"
+									ng-model="vm.opportunityMaster.financialSummaryData.pbvTwo" decimals="{{vm.decimalValue}}"
 									ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.networthTwo,2)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="pbvThree"
-									ng-model="vm.opportunityMaster.financialSummaryData.pbvThree"
+									ng-model="vm.opportunityMaster.financialSummaryData.pbvThree" decimals="{{vm.decimalValue}}"
 									ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.networthThree,3)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="pbvFour"
-									ng-model="vm.opportunityMaster.financialSummaryData.pbvFour"
+									ng-model="vm.opportunityMaster.financialSummaryData.pbvFour" decimals="{{vm.decimalValue}}"
 									ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.networthFour,4)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="pbvFive"
-									ng-model="vm.opportunityMaster.financialSummaryData.pbvFive"
+									ng-model="vm.opportunityMaster.financialSummaryData.pbvFive" decimals="{{vm.decimalValue}}"
 									ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.networthfive,5)"
 									ng-disabled="true" style="text-align: right"/></td>
 							</tr>
@@ -713,23 +713,23 @@ padding :none !important}
 							<tr>
 								<td scope="col" style="text-align: left">P/E</td>
 								<td><input name="peOne"
-									ng-model="vm.opportunityMaster.financialSummaryData.peOne"
+									ng-model="vm.opportunityMaster.financialSummaryData.peOne" decimals="{{vm.decimalValue}}"
 									ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.patOne,6)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="peTwo"
-									ng-model="vm.opportunityMaster.financialSummaryData.peTwo"
+									ng-model="vm.opportunityMaster.financialSummaryData.peTwo" decimals="{{vm.decimalValue}}"
 									ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.patTwo,7)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="peThree"
-									ng-model="vm.opportunityMaster.financialSummaryData.peThree"
+									ng-model="vm.opportunityMaster.financialSummaryData.peThree" decimals="{{vm.decimalValue}}"
 									ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.patThree,8)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="peFour"
-									ng-model="vm.opportunityMaster.financialSummaryData.peFour"
+									ng-model="vm.opportunityMaster.financialSummaryData.peFour" decimals="{{vm.decimalValue}}"
 									ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.patFour,9)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="peFive"
-									ng-model="vm.opportunityMaster.financialSummaryData.peFive"
+									ng-model="vm.opportunityMaster.financialSummaryData.peFive" decimals="{{vm.decimalValue}}"
 									ng-value="getFinPbv(vm.opportunityMaster.financialSummaryData.marCapThree, vm.opportunityMaster.financialSummaryData.patFive,10)"
 									ng-disabled="true" style="text-align: right"/></td>
 							</tr>
@@ -771,42 +771,41 @@ padding :none !important}
 							<tr>
 								<td scope="col" style="text-align: left">Revenues</td>
 								<td><input name="netIntOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueOne"
-                                           ng-value="vm.opportunityMaster.nonFinancialSummaryData.revenueOne | number : vm.decimalValue"
-									ng-disabled="isDisabled" style="text-align: right"/></td>
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueOne" decimals="{{vm.decimalValue}}"
+                                           ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="netIntTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueTwo" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="netIntThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueThree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueThree" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="netIntFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueFour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueFour" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="netIntFive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueFive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revenueFive" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 							</tr>
 
 							<tr>
 								<td scope="col" style="text-align: left">Growth(%)</td>
 								<td><input name="revGrowthOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revGrowthOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revGrowthOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="revGrowthTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revGrowthTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revGrowthTwo" decimals="{{vm.decimalValue}}"
 									ng-value="getNonGrowth(vm.opportunityMaster.nonFinancialSummaryData.revenueOne, vm.opportunityMaster.nonFinancialSummaryData.revenueTwo,1)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="revGrowthThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revGrowthThree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revGrowthThree" decimals="{{vm.decimalValue}}"
 									ng-value="getNonGrowth(vm.opportunityMaster.nonFinancialSummaryData.revenueTwo, vm.opportunityMaster.nonFinancialSummaryData.revenueThree,2)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="revGrowthFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revGrowthFour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revGrowthFour" decimals="{{vm.decimalValue}}"
 									ng-value="getNonGrowth(vm.opportunityMaster.nonFinancialSummaryData.revenueThree, vm.opportunityMaster.nonFinancialSummaryData.revenueFour,3)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="revGrowthFive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revGrowthFive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.revGrowthFive" decimals="{{vm.decimalValue}}"
 									ng-value="getNonGrowth(vm.opportunityMaster.nonFinancialSummaryData.revenueFour, vm.opportunityMaster.nonFinancialSummaryData.revenueFive,4)"
 									ng-disabled="true" style="text-align: right"/></td>
 							</tr>
@@ -815,42 +814,42 @@ padding :none !important}
 							<tr>
 								<td scope="col" style="text-align: left">EBITDA</td>
 								<td><input name="totIncOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="totIncTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaTwo" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="totIncThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaThree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaThree" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="totIncFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaFour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaFour" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="totIncFive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaFive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaFive" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 							</tr>
 
 							<tr>
 								<td scope="col" style="text-align: left">Margin(%)</td>
 								<td><input name="marginOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marginOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marginOne" decimals="{{vm.decimalValue}}"
 									ng-value="getNonMargin(vm.opportunityMaster.nonFinancialSummaryData.ebitdaOne, vm.opportunityMaster.nonFinancialSummaryData.revenueOne,1)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="marginTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marginTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marginTwo" decimals="{{vm.decimalValue}}"
 									ng-value="getNonMargin(vm.opportunityMaster.nonFinancialSummaryData.ebitdaTwo, vm.opportunityMaster.nonFinancialSummaryData.revenueTwo,2)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="marginThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marginThree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marginThree" decimals="{{vm.decimalValue}}"
 									ng-value="getNonMargin(vm.opportunityMaster.nonFinancialSummaryData.ebitdaThree, vm.opportunityMaster.nonFinancialSummaryData.revenueThree,3)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="marginFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marginFour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marginFour" decimals="{{vm.decimalValue}}"
 									ng-value="getNonMargin(vm.opportunityMaster.nonFinancialSummaryData.ebitdaFour, vm.opportunityMaster.nonFinancialSummaryData.revenueFour,4)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="marginFive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marginFive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marginFive" decimals="{{vm.decimalValue}}"
 									ng-value="getNonMargin(vm.opportunityMaster.nonFinancialSummaryData.ebitdaFive, vm.opportunityMaster.nonFinancialSummaryData.revenueFive,5)"
 									ng-disabled="true" style="text-align: right"/></td>
 							</tr>
@@ -858,102 +857,102 @@ padding :none !important}
 							<tr>
 								<td scope="col" style="text-align: left">Growth(%)</td>
 								<td><input name="ebitdaGrowthOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaGrowthOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaGrowthOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="ebitdaGrowthTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaGrowthTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaGrowthTwo" decimals="{{vm.decimalValue}}"
 									ng-value="getNonGrowth(vm.opportunityMaster.nonFinancialSummaryData.ebitdaOne, vm.opportunityMaster.nonFinancialSummaryData.ebitdaTwo,5)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="ebitdaGrowthThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaGrowthThree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaGrowthThree" decimals="{{vm.decimalValue}}"
 									ng-value="getNonGrowth(vm.opportunityMaster.nonFinancialSummaryData.ebitdaTwo, vm.opportunityMaster.nonFinancialSummaryData.ebitdaThree,6)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="ebitdaGrowthFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaGrowthFour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaGrowthFour" decimals="{{vm.decimalValue}}"
 									ng-value="getNonGrowth(vm.opportunityMaster.nonFinancialSummaryData.ebitdaThree, vm.opportunityMaster.nonFinancialSummaryData.ebitdaFour,7)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="ebitdaGrowthFive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaGrowthFive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.ebitdaGrowthFive" decimals="{{vm.decimalValue}}"
 									ng-value="getNonGrowth(vm.opportunityMaster.nonFinancialSummaryData.ebitdaFour, vm.opportunityMaster.nonFinancialSummaryData.ebitdaFive,8)"
 									ng-disabled="true" style="text-align: right"/></td>
 							</tr>
 							<tr>
 								<td scope="col" style="text-align: left">Other Income</td>
 								<td><input name="otherIncOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.otherIncOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.otherIncOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="otherIncTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.otherIncTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.otherIncTwo" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="otherIncThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.otherIncThree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.otherIncThree" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="otherIncFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.otherIncFour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.otherIncFour" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="otherIncFive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.otherIncFive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.otherIncFive" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 							</tr>
 
 							<tr>
 								<td scope="col" style="text-align: left">Interest Exp</td>
 								<td><input name="intExpOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intExpOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intExpOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="intExpTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intExpTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intExpTwo" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="intExpThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intExpThree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intExpThree" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="intExpFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intExpFour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intExpFour" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="intExpFive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intExpFive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intExpFive" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 							</tr>
 
 							<tr>
 								<td scope="col" style="text-align: left">Depreciation</td>
 								<td><input name="depOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="depTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depTwo" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="depThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depThree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depThree" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="depFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depFour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depFour" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="depFive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depFive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depFive" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 							</tr>
 
 							<tr>
 								<td scope="col" style="text-align: left">PBT</td>
 								<td><input name="pbtOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbtOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbtOne" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPbt(vm.opportunityMaster.nonFinancialSummaryData.ebitdaOne, vm.opportunityMaster.nonFinancialSummaryData.otherIncOne,vm.opportunityMaster.nonFinancialSummaryData.intExpOne,vm.opportunityMaster.nonFinancialSummaryData.depOne,1)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="pbtTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbtTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbtTwo" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPbt(vm.opportunityMaster.nonFinancialSummaryData.ebitdaTwo, vm.opportunityMaster.nonFinancialSummaryData.otherIncTwo,vm.opportunityMaster.nonFinancialSummaryData.intExpTwo,vm.opportunityMaster.nonFinancialSummaryData.depTwo,2)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="pbtThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbtThree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbtThree" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPbt(vm.opportunityMaster.nonFinancialSummaryData.ebitdaThree, vm.opportunityMaster.nonFinancialSummaryData.otherIncThree,vm.opportunityMaster.nonFinancialSummaryData.intExpThree,vm.opportunityMaster.nonFinancialSummaryData.depThree,3)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="pbtFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbtFour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbtFour" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPbt(vm.opportunityMaster.nonFinancialSummaryData.ebitdaFour, vm.opportunityMaster.nonFinancialSummaryData.otherIncFour,vm.opportunityMaster.nonFinancialSummaryData.intExpFour,vm.opportunityMaster.nonFinancialSummaryData.depFour,4)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="pbtFive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbtFive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbtFive" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPbt(vm.opportunityMaster.nonFinancialSummaryData.ebitdaFive, vm.opportunityMaster.nonFinancialSummaryData.otherIncFive,vm.opportunityMaster.nonFinancialSummaryData.intExpFive,vm.opportunityMaster.nonFinancialSummaryData.depFive,5)"
 									ng-disabled="true" style="text-align: right"/></td>
 							</tr>
@@ -961,42 +960,42 @@ padding :none !important}
 							<tr>
 								<td scope="col" style="text-align: left">Tax</td>
 								<td><input name="taxOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="taxTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxTwo" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="taxThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxThree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxThree" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="taxFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxFour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxFour" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="taxFive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxFive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxFive" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 							</tr>
 
 							<tr>
 								<td scope="col" style="text-align: left">PAT</td>
 								<td><input name="provisionsOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patOne" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPat(vm.opportunityMaster.nonFinancialSummaryData.pbtOne, vm.opportunityMaster.nonFinancialSummaryData.taxOne,1)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="provisionsTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patTwo" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPat(vm.opportunityMaster.nonFinancialSummaryData.pbtTwo, vm.opportunityMaster.nonFinancialSummaryData.taxTwo,2)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="provisionsThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patthree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patthree" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPat(vm.opportunityMaster.nonFinancialSummaryData.pbtThree, vm.opportunityMaster.nonFinancialSummaryData.taxThree,3)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="provisionsFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patfour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patfour" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPat(vm.opportunityMaster.nonFinancialSummaryData.pbtFour, vm.opportunityMaster.nonFinancialSummaryData.taxFour,4)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="provisionsFive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patFive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patFive" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPat(vm.opportunityMaster.nonFinancialSummaryData.pbtFive, vm.opportunityMaster.nonFinancialSummaryData.taxFive,5)"
 									ng-disabled="true" style="text-align: right"/></td>
 							</tr>
@@ -1004,22 +1003,22 @@ padding :none !important}
 							<tr>
 								<td scope="col" style="text-align: left">Growth(%)</td>
 								<td><input name="patGrowthOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patGrowthOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patGrowthOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="patGrowthTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patGrowthTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patGrowthTwo" decimals="{{vm.decimalValue}}"
 									ng-value="getNonGrowth(vm.opportunityMaster.nonFinancialSummaryData.patOne, vm.opportunityMaster.nonFinancialSummaryData.patTwo,9)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="patGrowthThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patGrowthThree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patGrowthThree" decimals="{{vm.decimalValue}}"
 									ng-value="getNonGrowth(vm.opportunityMaster.nonFinancialSummaryData.patTwo, vm.opportunityMaster.nonFinancialSummaryData.patthree,10)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="patGrowthFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patGrowthFour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patGrowthFour" decimals="{{vm.decimalValue}}"
 									ng-value="getNonGrowth(vm.opportunityMaster.nonFinancialSummaryData.patthree, vm.opportunityMaster.nonFinancialSummaryData.patfour,11)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="patGrowthFive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patGrowthFive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patGrowthFive" decimals="{{vm.decimalValue}}"
 									ng-value="getNonGrowth(vm.opportunityMaster.nonFinancialSummaryData.patfour, vm.opportunityMaster.nonFinancialSummaryData.patFive,12)"
 									ng-disabled="true" style="text-align: right"/></td>
 							</tr>
@@ -1027,42 +1026,42 @@ padding :none !important}
 							<tr>
 								<td scope="col" style="text-align: left">Market Cap</td>
 								<td><input name="epsOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="epsTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapTwo" decimals="{{vm.decimalValue}}"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="epsThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapThree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapThree" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="epsFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapFour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapFour" decimals="{{vm.decimalValue}}"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="epsFive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapFive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapFive" decimals="{{vm.decimalValue}}"
 									ng-disabled="true" style="text-align: right"/></td>
 							</tr>
 
 							<tr>
 								<td scope="col" style="text-align: left">P/E</td>
 								<td><input name="peOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.peOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.peOne" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPe(vm.opportunityMaster.nonFinancialSummaryData.marketCapThree, vm.opportunityMaster.nonFinancialSummaryData.patOne,1)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="peTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.peTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.peTwo" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPe(vm.opportunityMaster.nonFinancialSummaryData.marketCapThree, vm.opportunityMaster.nonFinancialSummaryData.patTwo,2)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="peThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pethree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pethree" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPe(vm.opportunityMaster.nonFinancialSummaryData.marketCapThree, vm.opportunityMaster.nonFinancialSummaryData.patthree,3)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="peFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.peFour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.peFour" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPe(vm.opportunityMaster.nonFinancialSummaryData.marketCapThree, vm.opportunityMaster.nonFinancialSummaryData.patfour,4)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="peFive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.peFive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.peFive" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPe(vm.opportunityMaster.nonFinancialSummaryData.marketCapThree, vm.opportunityMaster.nonFinancialSummaryData.patFive,5)"
 									ng-disabled="true" style="text-align: right"/></td>
 							</tr>
@@ -1070,42 +1069,42 @@ padding :none !important}
 							<tr>
 								<td scope="col" style="text-align: left">Networth</td>
 								<td><input name="aumOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.networthOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.networthOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="aumTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.networthTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.networthTwo" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="aumThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.networthThree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.networthThree" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="aumFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.networthFour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.networthFour" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="aumFive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.networthFive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.networthFive" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 							</tr>
 
 							<tr>
 								<td scope="col" style="text-align: left">P/B</td>
 								<td><input name="pbOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbOne" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPe(vm.opportunityMaster.nonFinancialSummaryData.marketCapThree, vm.opportunityMaster.nonFinancialSummaryData.networthOne,6)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="pbTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbTwo" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPe(vm.opportunityMaster.nonFinancialSummaryData.marketCapThree, vm.opportunityMaster.nonFinancialSummaryData.networthTwo,7)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="pbThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbThree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbThree" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPe(vm.opportunityMaster.nonFinancialSummaryData.marketCapThree, vm.opportunityMaster.nonFinancialSummaryData.networthThree,8)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="pbFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbFour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbFour" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPe(vm.opportunityMaster.nonFinancialSummaryData.marketCapThree, vm.opportunityMaster.nonFinancialSummaryData.networthFour,9)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="pbfive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbFive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.pbFive" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPe(vm.opportunityMaster.nonFinancialSummaryData.marketCapThree, vm.opportunityMaster.nonFinancialSummaryData.networthFive,10)"
 									ng-disabled="true" style="text-align: right"/></td>
 							</tr>
@@ -1114,23 +1113,23 @@ padding :none !important}
 							<tr>
 								<td scope="col" style="text-align: left">ROE(%)</td>
 								<td><input name="roeOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.roeOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.roeOne" decimals="{{vm.decimalValue}}"
 									ng-value="getNonRoe(vm.opportunityMaster.nonFinancialSummaryData.patOne,0, vm.opportunityMaster.nonFinancialSummaryData.networthOne,1)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="roeTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.roeTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.roeTwo" decimals="{{vm.decimalValue}}"
 									ng-value="getNonRoe(vm.opportunityMaster.nonFinancialSummaryData.patTwo,vm.opportunityMaster.nonFinancialSummaryData.networthOne, vm.opportunityMaster.nonFinancialSummaryData.networthTwo,2)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="roeThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.roeThree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.roeThree" decimals="{{vm.decimalValue}}"
 									ng-value="getNonRoe(vm.opportunityMaster.nonFinancialSummaryData.patthree,vm.opportunityMaster.nonFinancialSummaryData.networthTwo, vm.opportunityMaster.nonFinancialSummaryData.networthThree,3)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="roeFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.roeFour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.roeFour" decimals="{{vm.decimalValue}}"
 									ng-value="getNonRoe(vm.opportunityMaster.nonFinancialSummaryData.patfour,vm.opportunityMaster.nonFinancialSummaryData.networthThree, vm.opportunityMaster.nonFinancialSummaryData.networthFour,4)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="roeFive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.roefive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.roefive" decimals="{{vm.decimalValue}}"
 									ng-value="getNonRoe(vm.opportunityMaster.nonFinancialSummaryData.patFive,vm.opportunityMaster.nonFinancialSummaryData.networthFour, vm.opportunityMaster.nonFinancialSummaryData.networthFive,5)"
 									ng-disabled="true" style="text-align: right"/></td>
 							</tr>
@@ -1138,89 +1137,94 @@ padding :none !important}
 							<tr>
 								<td scope="col"  style="text-align: left">Total Debt</td>
 								<td><input name="pbvOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.totDebOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.totDebOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="pbvTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.totDebTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.totDebTwo" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="pbvThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.totDebThree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.totDebThree" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="pbvFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.totDebFour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.totDebFour" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="pbvFive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.totDebFive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.totDebFive" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 							</tr>
 
 							<tr>
 								<td scope="col" style="text-align: left">D/E</td>
 								<td><input name="peOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.deOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.deOne" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPe(vm.opportunityMaster.nonFinancialSummaryData.totDebOne, vm.opportunityMaster.nonFinancialSummaryData.networthOne,11)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="peTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.deTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.deTwo" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPe(vm.opportunityMaster.nonFinancialSummaryData.totDebTwo, vm.opportunityMaster.nonFinancialSummaryData.networthTwo,12)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="peThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.deThree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.deThree" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPe(vm.opportunityMaster.nonFinancialSummaryData.totDebThree, vm.opportunityMaster.nonFinancialSummaryData.networthThree,13)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="peFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.deFour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.deFour" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPe(vm.opportunityMaster.nonFinancialSummaryData.totDebFour, vm.opportunityMaster.nonFinancialSummaryData.networthFour,14)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="peFive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.deFive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.deFive" decimals="{{vm.decimalValue}}"
 									ng-value="getNonPe(vm.opportunityMaster.nonFinancialSummaryData.totDebFive, vm.opportunityMaster.nonFinancialSummaryData.networthFive,15)"
 									ng-disabled="true" style="text-align: right"/></td>
 							</tr>
 							<tr>
 								<td scope="col" style="text-align: left">Tax Rate</td>
 								<td><input name="taxRateOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateOne" decimals="{{vm.decimalValue}}"
 									ng-value="getNonTaxRat(vm.opportunityMaster.nonFinancialSummaryData.taxOne,vm.opportunityMaster.nonFinancialSummaryData.pbtOne,1)"
 									ng-disabled="true" style="text-align: right"/></td>
+
 								<td><input name="taxRateTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateTwo" decimals="{{vm.decimalValue}}"
 									ng-value="getNonTaxRat(vm.opportunityMaster.nonFinancialSummaryData.taxTwo,vm.opportunityMaster.nonFinancialSummaryData.pbtTwo,2)"
 									ng-disabled="true" style="text-align: right"/></td>
+
 								<td><input name="taxRateThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateThree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateThree" decimals="{{vm.decimalValue}}"
 									ng-value="getNonTaxRat(vm.opportunityMaster.nonFinancialSummaryData.taxThree,vm.opportunityMaster.nonFinancialSummaryData.pbtThree,3)"
 									ng-disabled="true" style="text-align: right"/></td>
+
 								<td><input name="taxRateFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateFour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateFour" decimals="{{vm.decimalValue}}"
 									ng-value="getNonTaxRat(vm.opportunityMaster.nonFinancialSummaryData.taxFour,vm.opportunityMaster.nonFinancialSummaryData.pbtFour,4)"
 									ng-disabled="true" style="text-align: right"/></td>
+
 								<td><input name="taxRateFive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateFive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxRateFive" decimals="{{vm.decimalValue}}"
 									ng-value="getNonTaxRat(vm.opportunityMaster.nonFinancialSummaryData.taxFive,vm.opportunityMaster.nonFinancialSummaryData.pbtFive,5)"
 									ng-disabled="true" style="text-align: right"/></td>
+
 							</tr>
 
 							<tr>
 								<td scope="col" style="text-align: left">Interest Rate</td>
 								<td><input name="taxRateOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateOne" decimals="{{vm.decimalValue}}"
 									ng-value="getNonIntRat(vm.opportunityMaster.nonFinancialSummaryData.intExpOne,vm.opportunityMaster.nonFinancialSummaryData.totDebOne,1)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="taxRateTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateTwo" decimals="{{vm.decimalValue}}"
 									ng-value="getNonIntRat(vm.opportunityMaster.nonFinancialSummaryData.intExpTwo,vm.opportunityMaster.nonFinancialSummaryData.totDebTwo,2)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="taxRateThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateThree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateThree" decimals="{{vm.decimalValue}}"
 									ng-value="getNonIntRat(vm.opportunityMaster.nonFinancialSummaryData.intExpThree,vm.opportunityMaster.nonFinancialSummaryData.totDebThree,3)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="taxRateFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateFour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateFour" decimals="{{vm.decimalValue}}"
 									ng-value="getNonIntRat(vm.opportunityMaster.nonFinancialSummaryData.intExpFour,vm.opportunityMaster.nonFinancialSummaryData.totDebFour,4)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="taxRateFive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateFive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.intRateFive" decimals="{{vm.decimalValue}}"
 									ng-value="getNonIntRat(vm.opportunityMaster.nonFinancialSummaryData.intExpFive,vm.opportunityMaster.nonFinancialSummaryData.totDebFive,5)"
 									ng-disabled="true" style="text-align: right"/></td>
 							</tr>
@@ -1228,26 +1232,26 @@ padding :none !important}
 							<tr>
 								<td scope="col" style="text-align: left">Depreciation Rate</td>
 								<td><input name="depRateOne"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depRateOne"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depRateOne" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="depRateTwo"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depRateTwo"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depRateTwo" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="depRateThree"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depRateThree"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depRateThree" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="depRateFour"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depRateFour"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depRateFour" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 								<td><input name="depRateFive"
-									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depRateFive"
+									ng-model="vm.opportunityMaster.nonFinancialSummaryData.depRateFive" decimals="{{vm.decimalValue}}"
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 							</tr>
 							  <tr>
                     <td scope="col"  style="text-align: left">Weight</td>
                     <td><input name="weightOne"  ng-disabled="true" style="text-align: right"/> </td>
                     <td><input name="weightTwo"   ng-disabled="true" style="text-align: right"/> </td>
-                    <td><input name="weightThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.weight"  ng-disabled="isDisabled" style="text-align: right"/></td>
+                    <td><input name="weightThree" ng-model="vm.opportunityMaster.nonFinancialSummaryData.weight" decimals="{{vm.decimalValue}}"  ng-disabled="isDisabled" style="text-align: right"/></td>
                     <td><input name="weightFour"   ng-disabled="true" style="text-align: right"/></td>
                     <td><input name="weightFive"  ng-disabled="true" style="text-align: right"/></td>
                 </tr>

@@ -162,34 +162,34 @@ border:none !important;
                                      </span>
                                  </td>
                                  <td scope="col" ng-class="value.opportunityMasterid.status == 'Open' ? 'text-success' : 'text-danger'"  style="text-align: left">{{value.opportunityMasterid.status}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.cmp | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.marketCap | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.patFirstYear | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.patSecondYear | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.patThirdYear | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.patFourthYear | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.patFifthYear | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.peFirstYear | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.peSecondYear | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.peThirdYear | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.peFourthYear | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.peFifthYear | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.roeFirstYear | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.roeSecondYear | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.roeThirdYear | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.roeFourthYear | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.roeFifthYear | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.deFirstYear | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.deSecondYear | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.deThirdColour | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.deFourthYear | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.deFifthYear | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthFirst | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthSecond | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthThird | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthFourth | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthFifth | number:0}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.pegOj | number:0}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.cmp | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.marketCap | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patFirstYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patSecondYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patThirdYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patFourthYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patFifthYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.peFirstYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.peSecondYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.peThirdYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.peFourthYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.peFifthYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.roeFirstYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.roeSecondYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.roeThirdYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.roeFourthYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.roeFifthYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.deFirstYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.deSecondYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.deThirdColour | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.deFourthYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.deFifthYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthFirst | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthSecond | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthThird | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthFourth | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthFifth | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.pegOj | thousandSuffix:0:vm.multiplevalue}}</td>
 
 
                              </tr>

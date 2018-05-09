@@ -103,6 +103,12 @@
             getAccount();
         });
 
+        var myDate=new Date();
+
+        $scope.currentYear = $filter('date')(myDate,'yyyy');
+
+
+
         getAccount();
 
         function getAccount() {

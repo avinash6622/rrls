@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('DecimalConfigurationController', DecimalConfigurationController);
 
-    DecimalConfigurationController.$inject = ['DecimalConfiguration','Principal','entity','$scope','ParseLinks', 'AlertService'];
+    DecimalConfigurationController.$inject = ['DecimalConfiguration','Principal','entity','$scope','ParseLinks', 'AlertService','$filter'];
 
-    function DecimalConfigurationController(DecimalConfiguration,Principal,entity,$scope, ParseLinks, AlertService) {
+    function DecimalConfigurationController(DecimalConfiguration,Principal,entity,$scope, ParseLinks, AlertService,$filter) {
     	  var vm=this;
     	  vm.decimalConfiguration=entity;
     	  vm.account='';
@@ -19,6 +19,11 @@
               getAccount();
               getDescription();
           });
+
+
+        var myDate=new Date();
+
+        $scope.currentYear = $filter('date')(myDate,'yyyy');
 
     	  getAccount();
     	  getDescription();
@@ -45,7 +50,7 @@
     		   /* vm.decimalConfiguration.decimalValue = vm.slider.value;*/
     		  };
     	 vm.slider = {
-                  value:2,
+
     			  options: {
     				  showTicksValues: true,
     				  id: 'sliderA',

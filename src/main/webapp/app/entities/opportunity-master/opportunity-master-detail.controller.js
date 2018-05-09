@@ -62,12 +62,19 @@
 
             DecimalConfiguration.get({id:vm.account.id},function (resp) {
 
+                console.log(resp);
 
+                console.log(resp.rupee);
 
-                vm.decimalValue = resp.decimalValue;
+                console.log(vm.account.login);
 
+                console.log(vm.opportunityMaster);
 
-            },function (err) {
+                if(vm.account.login == vm.opportunityMaster.createdBy)
+                {
+                    vm.decimalValue = resp.decimalValue;
+                }
+               },function (err) {
                 console.log(err);
             });
 
@@ -188,7 +195,7 @@
             };
             $scope.getFinPbv = function(val1, val2, val3) {
 
-            	var result = (parseFloat(val1) / parseFloat(val2)).toFixed(2);
+            	var result = (parseFloat(val1) / parseFloat(val2));
             	result=(isNaN(result)) ? '':result;
             	if(result!=''){
             	 switch(val3){
@@ -230,10 +237,10 @@
             $scope.getFinRoe = function(val1, val2,val3,val4) {
           	  if(val2==0)
               	 {	var result = parseFloat(val1) / parseFloat(val3);
-               	result=(result*100).toFixed(2);  }
+               	result=(result*100);  }
              	 else{
               		var result = parseFloat(val1) / ((parseFloat(val2)+parseFloat(val3))/2);
-               	result=(result*100).toFixed(2);
+               	result=(result*100);
              	 }
           		result=(isNaN(result)) ? '':result;
           		if(result!=''){
@@ -262,7 +269,7 @@
           	$scope.getNonGrowth = function(val1, val2, val3) {
 
     			var result = (parseFloat(val2) / parseFloat(val1)) - 1;
-    			result = (result * 100).toFixed(2);
+    			result = (result * 100);
     			result = (isNaN(result)) ? '' : result;
     			if(result!=''){
     			switch (val3) {
@@ -310,7 +317,7 @@
     		$scope.getNonMargin = function(val1, val2, val3) {
 
     			var result = parseFloat(val1) / parseFloat(val2);
-    			result = (result * 100).toFixed(2);
+    			result = (result * 100);
     			result = (isNaN(result)) ? '' : result;
     			if(result!=''){
     			switch (val3) {
@@ -338,7 +345,7 @@
     		$scope.getNonPbt = function(val1, val2, val3, val4, val5) {
 
     			var result = (parseFloat(val1) + parseFloat(val2) - parseFloat(val3)
-    					- parseFloat(val4)).toFixed(2);
+    					- parseFloat(val4));
     			result = (isNaN(result)) ? '' : result;
     			if(result!=''){
     			switch (val5) {
@@ -365,7 +372,7 @@
 
     		$scope.getNonPat = function(val1, val2, val3) {
 
-    			var result = (parseFloat(val1) - parseFloat(val2)).toFixed(2);
+    			var result = (parseFloat(val1) - parseFloat(val2));
     			result = (isNaN(result)) ? '' : result;
     			if(result!=''){
     			switch (val3) {
@@ -391,7 +398,7 @@
     		};
     		$scope.getNonPe = function(val1, val2, val3) {
 
-    			var result = (parseFloat(val1) / parseFloat(val2)).toFixed(2);
+    			var result = (parseFloat(val1) / parseFloat(val2));
     			result = (isNaN(result)) ? '' : result;
     			if(result!=''){
     			switch (val3) {
@@ -450,11 +457,11 @@
 
     			if (val2 == 0) {
     				var result = parseFloat(val1) / parseFloat(val3);
-    				result = (result * 100).toFixed(2);
+    				result = (result * 100);
     			} else {
     				var result = parseFloat(val1)
     						/ ((parseFloat(val2) + parseFloat(val3)) / 2);
-    				result = (result * 100).toFixed(2);
+    				result = (result * 100);
     			}
     			result = (isNaN(result)) ? '' : result;
     			if(result!=''){
@@ -480,11 +487,11 @@
     			}}
     			return result;
     		};
-    	
+
     		$scope.getNonTaxRat = function(val1, val2, val3) {
-    			
+
     				var result = parseFloat(val1)/parseFloat(val2);
-    				result = (result * 100);    			
+    				result = (result * 100);
     			result = (isNaN(result)) ? '' : result;
     			if(result!=''){
     			switch (val3) {
@@ -508,11 +515,11 @@
     			}}
     			return result;
     		};
-    		
+
     		$scope.getNonIntRat = function(val1, val2, val3) {
-    			
+
 				var result = parseFloat(val1)/parseFloat(val2);
-				result = (result * 100);    			
+				result = (result * 100);
 			result = (isNaN(result)) ? '' : result;
 			if(result!=''){
 			switch (val3) {

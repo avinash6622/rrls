@@ -40,10 +40,7 @@
         function submit(id, parentId, index,index1){
             console.log(index);
             console.log(index1);
-            if(index1==null)
-                var name='Answered';
-            else
-                var name='Replied';
+            var name='Replied';
             console.log(name);
 
             ReplyComment.save({replyText : $ctrl.answerText,commentOpportunity :id,replyComment:parentId,commentStatuscol:name}, function(resp) {
