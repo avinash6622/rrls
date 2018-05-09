@@ -22,7 +22,7 @@
 				
 				 <uib-accordion close-others="oneAtATime">
     <div uib-accordion-group class="panel-default" is-open="status.open">
-    <uib-accordion-heading><strong>Learning {{$index+1}}: </strong>{{learn.subject}}
+    <uib-accordion-heading><strong>{{learn.subject}}</strong>
      <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i></uib-accordion-heading>
    
      <span ng-bind-html="learn.description"></span>

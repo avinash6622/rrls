@@ -13,5 +13,6 @@ import com.unify.rrls.domain.OpportunityMaster;
 public interface OpportunityLearningRepository extends JpaRepository<OpportunityLearning, Long>  {
 	
 	 List<OpportunityLearning> findByOpportunityMaster(OpportunityMaster opportunityMaster);
+	 List<OpportunityLearning> findBySubject(String subject);
 
 }

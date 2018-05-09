@@ -14,6 +14,17 @@
                 method:'GET',
                 isArray: true
             },
+         'consolidatedLearning':{
+        	 	url:'api/opportunity-learnings',
+                method:'GET',
+                isArray: true
+            },
+            'subjectLearning':{
+        	 	url:'api/opportunity-learnings-subject',
+                method:'POST',
+                isArray: true
+             
+            },
         'save':{
         	url:'api/opportunity-learnings',
             method:'POST',

@@ -1,0 +1,75 @@
+<style>
+    .col-xs-3 .btn{
+    padding:0px !important;
+
+}
+    .col-xs-3{
+        padding-right: 0px !important;
+    }
+
+</style>
+
+
+
+<div>
+    <div class="well">
+
+
+    <jhi-alert></jhi-alert>
+
+        <div>
+        <div class="row">
+
+
+        </div>
+    </div>
+       <!-- <div style="margin-bottom: 5px"></div>-->
+
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
+
+                    <th jh-sort-by="subject"><span>Subject</span> <span class="glyphicon glyphicon-sort"></span></th>
+                  
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="learning in vm.opportunityLearnings">
+
+              			 <td ng-click="vm.subject(learning.subject)"><a><strong>{{learning.subject}}</strong></a></td>
+              			 
+              			 </tr>
+              			
+              			 
+              			<!--   <tr collapse="isCollapsed" ng-repeat-end="">
+            <td>
+              <h3>Pet details</h3>
+              <p>some details about this pet.</p>
+            </td> -->
+          </tr>
+  <!--  <tr collapse="!isCollapsed[$index]">
+   <td>
+    Testing
+     </td> -->
+     
+                  <!--   <td><a ng-click="vm.subject(learning.subject)">{{learning.subject}}</a></td> -->
+                  
+              <!--   </tr> -->
+               
+              
+            </tbody>
+
+
+        </table>
+
+</div>
+
+    </div>
+    <footer class="footer footer-dark" ng-cloak>
+        <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.</p>
+    </footer>
+
+</div>
+
+
