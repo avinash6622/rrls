@@ -80,6 +80,12 @@
                         </span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-left" uib-dropdown-menu>
+                      <li ui-sref-active="active">
+                            <a ui-sref="consolidated-learning" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span>Consolidated Learnings</span>
+                            </a>
+                        </li>
                         <li has-authority="Admin">
                             <a ui-sref="user-management" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-user"></span>&nbsp;
@@ -170,7 +176,7 @@
 
                     </a>-->
 
-                    <a uib-dropdown-toggle href="" class="dropdown-toggle glyphicon glyphicon-bell">
+                    <a uib-dropdown-toggle href="" class="dropdown-toggle glyphicon glyphicon-bell" ng-style="{'color': vm.notificationValues.length > 0 ? '#da251c':''}">
                        <!-- <span class="fa fa-comment"></span>
                         <span class="num">{{vm.notificationValues.length}}</span>-->
 
@@ -185,8 +191,10 @@
 
                                 <div>
                                     <span ng-click="vm.readstatus(noti.id,vm.account.id,'Read', noti)"  ng-disabled="noti.dStatus === 'Read'">
-                                        <span ng-if="noti.action !== 'delegated'"><a ui-sref="home-research({createdBy:noti.createdBy})">{{noti.createdBy | capitalize}}</a> {{noti.action}} <span ng-if="noti.fileNamecontent"><strong>"{{noti.fileNamecontent}}"</strong></span> {{noti.page}} <strong>"{{noti.oppname}}"</strong></span>
-                                        <span ng-if="noti.action === 'delegated'"><a ui-sref="home-research({createdBy:noti.createdBy})">{{noti.createdBy | capitalize}}</a> {{noti.action}} {{noti.page}} <strong>"{{noti.oppname}}"</strong> <span ng-if="noti.fileNamecontent">to {{noti.fileNamecontent}}</span> </span>
+                                        <span ng-if="noti.action !== 'delegated'"><a ui-sref="home-research({createdBy:noti.createdBy})">{{noti.createdBy | capitalize}}</a> {{noti.action}} <span ng-if="noti.fileNamecontent"><strong>"{{noti.fileNamecontent}}"</strong></span> {{noti.page}} <a ui-sref="{{noti.page == 'Strategy' ? 'strategy-master-detail({id:noti.oppId})' : noti.page == 'Opportunity' ? 'opportunity-master-detail({id:noti.oppId})' : 'user-management-detail({login:noti.oppname})'}}">{{noti.oppname}}</a></span>
+                                        <span ng-if="noti.action === 'delegated'"><a ui-sref="home-research({createdBy:noti.createdBy})">{{noti.createdBy | capitalize}}</a> {{noti.action}} {{noti.page}} <a ui-sref="opportunity-master-detail({id:noti.oppId})">{{noti.oppname}} </a><span ng-if="noti.fileNamecontent">to {{noti.fileNamecontent}}</span> </span>
+                                        <!--<span ng-if="noti.page === 'Strategy'"><a ui-sref="home-research({createdBy:noti.createdBy})">{{noti.createdBy | capitalize}}</a> {{noti.action}} {{noti.page}} <a ui-sref="strategy-master-detail({id:noti.oppId})">{{noti.oppname}}</a></span>-->
+
                                     </span>
                                     <span class="pull-right text-muted small">{{noti.createdDate | date :"MMM d, y h:mm:ss a" }}&nbsp;&nbsp;
                                     <button type="button" class="close" ng-click="vm.close(noti.id,vm.account.id,$index,'deleted');$event.stopPropagation()">
