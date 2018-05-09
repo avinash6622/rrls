@@ -18,8 +18,8 @@ app.directive("decimals", ['$filter', function ($filter) {
 
             // Run when the model is first rendered and when the model is changed from code
             ngModel.$render = function() {
-                console.log(ngModel.$modelValue);
-                if (ngModel.$modelValue != null && ngModel.$modelValue >= 0) {
+                /*console.log(ngModel.$modelValue);*/
+                if (ngModel.$modelValue != null && ngModel.$modelValue) {
                     if (typeof decimalCount === "number") {
                         element.val(ngModel.$modelValue.toFixed(decimalCount).toString());
                     } else {
@@ -57,3 +57,23 @@ app.directive("decimals", ['$filter', function ($filter) {
         }
     }
 }]);
+
+/* Number format Crore, Million */
+var utilsApp = angular.module('Utils', []);
+utilsApp.filter('thousandSuffix', function () {
+    return function (input, decimals, multiples) {
+       /* console.log(decimals);*/
+        var exp, rounded,
+            suffixes = ['Cr', 'M'],
+            multiple = multiples || 1;
+
+
+        if(window.isNaN(input)) {
+            return '';
+        }
+
+        exp = Math.floor(Math.log(input) / Math.log(1000));
+
+        return input != null ? input.toFixed(decimals) * multiple : ''; // + ' ' + suffixes[exp - 1];
+    };
+});

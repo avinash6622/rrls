@@ -50,7 +50,7 @@
     		   /* vm.decimalConfiguration.decimalValue = vm.slider.value;*/
     		  };
     	 vm.slider = {
-                  value:2,
+
     			  options: {
     				  showTicksValues: true,
     				  id: 'sliderA',

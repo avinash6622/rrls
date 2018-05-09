@@ -22,7 +22,8 @@
            // 'angucomplete-alt'
             'rzModule',
             'ngSanitize',
-            'angular-decimals'
+            'angular-decimals',
+            'Utils'
         ])
         .run(run);
 

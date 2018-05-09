@@ -7,11 +7,11 @@
 
 	OpportunityMasterDialogController.$inject = [ '$timeout', '$scope', '$sce',
 			'$state', '$stateParams', '$http', 'entity', 'Upload',
-			'OpportunityMaster', 'StrategyMaster', 'OpportunityName','$filter' ];
+			'OpportunityMaster', 'StrategyMaster', 'OpportunityName','$filter','Principal','DecimalConfiguration' ];
 
 	function OpportunityMasterDialogController($timeout, $scope, $sce, $state,
 			$stateParams, $http, entity, Upload, OpportunityMaster,
-			StrategyMaster, OpportunityName, $filter) {
+			StrategyMaster, OpportunityName, $filter,Principal,DecimalConfiguration) {
 		var vm = this;
 
 		vm.opportunityMaster = entity;
@@ -37,6 +37,7 @@
 		vm.readOnly = false;
 
 		vm.selectedOpportunity = null;
+        vm.decimalValue = null;
 
 		console.log("SELECTED------>", vm.strategymasters);
 
@@ -120,6 +121,47 @@
 
 
 
+        getAccount();
+        setTimeout(function() {
+            getDecimalConfig();
+        }, 3000);
+
+
+
+        function getAccount() {
+            Principal.identity().then(function(account) {
+                vm.account = account;
+                vm.isAuthenticated = Principal.isAuthenticated;
+
+
+            });
+
+        }
+
+        function getDecimalConfig() {
+
+
+            DecimalConfiguration.get({id:vm.account.id},function (resp) {
+
+                console.log(resp);
+
+                console.log(vm.account.login);
+
+                console.log(vm.opportunityMaster.createdBy);
+
+                if(vm.account.login == vm.opportunityMaster.createdBy)
+                {
+                    vm.decimalValue = resp.decimalValue;
+                }
+
+            },function (err) {
+                console.log(err);
+            });
+
+        }
+
+
+
 
         $scope.addContact = function() {
 			vm.opportunityMaster.selectedoppContanct.push({})
@@ -158,7 +200,7 @@
 		};
 		$scope.getFinPbv = function(val1, val2, val3) {
 
-			var result = (parseFloat(val1) / parseFloat(val2)).toFixed(2);
+			var result = (parseFloat(val1) / parseFloat(val2));
 			result = (isNaN(result)) ? '' : result;
 			switch (val3) {
 			case 1:
@@ -199,11 +241,11 @@
 		$scope.getFinRoe = function(val1, val2, val3, val4) {
 			if (val2 == 0) {
 				var result = parseFloat(val1) / parseFloat(val3);
-				result = (result * 100).toFixed(2);
+				result = (result * 100);
 			} else {
 				var result = parseFloat(val1)
 						/ ((parseFloat(val2) + parseFloat(val3)) / 2);
-				result = (result * 100).toFixed(2);
+				result = (result * 100);
 			}
 			result = (isNaN(result)) ? '' : result;
 			switch (val4) {
@@ -230,7 +272,7 @@
 		$scope.getNonGrowth = function(val1, val2, val3) {
 
 			var result = (parseFloat(val2) / parseFloat(val1)) - 1;
-			result = (result * 100).toFixed(2);
+			result = (result * 100);
 			result = (isNaN(result)) ? '' : result;
 			switch (val3) {
 			case 1:
@@ -277,7 +319,7 @@
 		$scope.getNonMargin = function(val1, val2, val3) {
 
 			var result = parseFloat(val1) / parseFloat(val2);
-			result = (result * 100).toFixed(2);
+			result = (result * 100);
 			result = (isNaN(result)) ? '' : result;
 			switch (val3) {
 			case 1:
@@ -304,7 +346,7 @@
 		$scope.getNonPbt = function(val1, val2, val3, val4, val5) {
 
 			var result = (parseFloat(val1) + parseFloat(val2) - parseFloat(val3)
-					- parseFloat(val4)).toFixed(2);
+					- parseFloat(val4));
 			result = (isNaN(result)) ? '' : result;
 			switch (val5) {
 			case 1:
@@ -330,7 +372,7 @@
 
 		$scope.getNonPat = function(val1, val2, val3) {
 
-			var result = (parseFloat(val1) - parseFloat(val2)).toFixed(2);
+			var result = (parseFloat(val1) - parseFloat(val2));
 			result = (isNaN(result)) ? '' : result;
 			switch (val3) {
 			case 1:
@@ -355,7 +397,7 @@
 		};
 		$scope.getNonPe = function(val1, val2, val3) {
 
-			var result = (parseFloat(val1) / parseFloat(val2)).toFixed(2);
+			var result = (parseFloat(val1) / parseFloat(val2));
 			result = (isNaN(result)) ? '' : result;
 			switch (val3) {
 			case 1:
@@ -412,12 +454,12 @@
 
 			if (val2 == 0) {
 				var result = parseFloat(val1) / parseFloat(val3);
-				result = (result * 100).toFixed(2);
+				result = (result * 100);
 				console.log('ROE',result,val1,val3)
 			} else {
 				var result = parseFloat(val1)
 						/ ((parseFloat(val2) + parseFloat(val3)) / 2);
-				result = (result * 100).toFixed(2);
+				result = (result * 100);
 			}
 			result = (isNaN(result)) ? '' : result;
 			switch (val4) {
@@ -442,9 +484,9 @@
 			return result;
 		};
 		$scope.getNonTaxRat = function(val1, val2, val3) {
-			
+
 			var result = parseFloat(val1)/parseFloat(val2);
-			result = (result * 100);    			
+			result = (result * 100);
 		result = (isNaN(result)) ? '' : result;
 		if(result!=''){
 		switch (val3) {
@@ -468,11 +510,11 @@
 		}}
 		return result;
 	};
-	
+
 	$scope.getNonIntRat = function(val1, val2, val3) {
-		
+
 		var result = parseFloat(val1)/parseFloat(val2);
-		result = (result * 100);    			
+		result = (result * 100);
 	result = (isNaN(result)) ? '' : result;
 	if(result!=''){
 	switch (val3) {

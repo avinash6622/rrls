@@ -33,20 +33,20 @@ import io.github.jhipster.web.util.ResponseUtil;
 @RestController
 @RequestMapping("/api")
 public class DecimalConfigurationResource {
-	
+
 	private final DecimalConfigurationRepository decimalConfigurationRepository;
 	private final UserRepository userRepository;
-	
+
 	private static final String ENTITY_NAME = "decimalConfiguration";
-	
+
 	private final Logger log = LoggerFactory.getLogger(DecimalConfigurationResource.class);
-	
+
 	public DecimalConfigurationResource(DecimalConfigurationRepository decimalConfigurationRepository,
 			UserRepository userRepository) {
 		this.decimalConfigurationRepository = decimalConfigurationRepository;
 		this.userRepository=userRepository;
 	}
-	
+
 	  @PostMapping("/decimal-config")
 	    @Timed
 	    public ResponseEntity<DecimalConfiguration> createDecimalConfiguration(@RequestBody DecimalConfiguration decimalConfiguration)
@@ -61,21 +61,24 @@ public class DecimalConfigurationResource {
 	        }
 	        else{
 	        DecimalConfiguration result = decimalConfigurationRepository.save(decimalConfiguration);
-	     
+
 	        return ResponseEntity.created(new URI("/api/decimal-config/" + result.getId()))
 	            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);}
 	    }
-	  
+
 	  	@GetMapping("/decimal-config/{id}")
 	    @Timed
 	    public ResponseEntity<DecimalConfiguration> DecimalConfiguration(@PathVariable Long id) {
 	        log.debug("REST request to get StrategyMaster : {}", id);
-	      
+
 	        User user=userRepository.findOne(id);
 	        DecimalConfiguration result = decimalConfigurationRepository.findByUser(user);
 	        System.out.println("Decimal Config"+result);
 	        if(result==null){
-	        	return null;
+	            DecimalConfiguration decimalConfiguration = new DecimalConfiguration();
+	            decimalConfiguration.setDecimalValue(2);
+	            decimalConfiguration.setRupee("Crores");
+	            return ResponseUtil.wrapOrNotFound(Optional.ofNullable(decimalConfiguration));
 	        }
 	        else{
 	        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(result));}
