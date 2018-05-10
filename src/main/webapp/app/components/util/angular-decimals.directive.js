@@ -74,6 +74,6 @@ utilsApp.filter('thousandSuffix', function () {
 
         exp = Math.floor(Math.log(input) / Math.log(1000));
 
-        return input != null ? input.toFixed(decimals) * multiple : ''; // + ' ' + suffixes[exp - 1];
+        return input != null ? (input.toFixed(decimals) * multiple).toLocaleString('en') : ''; // + ' ' + suffixes[exp - 1];
     };
 });
