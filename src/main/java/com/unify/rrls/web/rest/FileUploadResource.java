@@ -627,27 +627,86 @@ public class FileUploadResource {
                           }
                       }
 
+                      if(nonFinance.getMarketCapThree()!=0 && nonFinance.getPatOne()!=0)
                       nonFinance.setPeOne(nonFinance.getMarketCapThree()/nonFinance.getPatOne());
+                      else
+                    	  nonFinance.setPeOne(0.00);
+                      if(nonFinance.getMarketCapThree()!=0 && nonFinance.getPatTwo()!=0)
                       nonFinance.setPeTwo(nonFinance.getMarketCapThree()/nonFinance.getPatTwo());
+                      else
+                    	  nonFinance.setPeTwo(0.00);  
+                      if(nonFinance.getMarketCapThree()!=0 && nonFinance.getPatthree()!=0)
                       nonFinance.setPethree(nonFinance.getMarketCapThree()/nonFinance.getPatthree());
+                      else
+                    	  nonFinance.setPethree(0.00);
+                      if(nonFinance.getMarketCapThree()!=0 && nonFinance.getPatfour()!=0)
                       nonFinance.setPeFour(nonFinance.getMarketCapThree()/nonFinance.getPatfour());
+                      else
+                    	  nonFinance.setPeFour(0.00);	
+                      if(nonFinance.getMarketCapThree()!=0 && nonFinance.getPatFive()!=0)
                       nonFinance.setPeFive(nonFinance.getMarketCapThree()/nonFinance.getPatFive());
+                      else
+                    	  nonFinance.setPeFive(0.00);
+                      if(nonFinance.getMarketCapThree()!=0 && nonFinance.getNetworthOne()!=0)
                       nonFinance.setPbOne(nonFinance.getMarketCapThree()/nonFinance.getNetworthOne());
+                      else
+                    	  nonFinance.setPbOne(0.00);
+                      if(nonFinance.getMarketCapThree()!=0 && nonFinance.getNetworthTwo()!=0)
                       nonFinance.setPbTwo(nonFinance.getMarketCapThree()/nonFinance.getNetworthTwo());
+                      else
+                    	  nonFinance.setPbTwo(0.00);
+                      if(nonFinance.getMarketCapThree()!=0 && nonFinance.getNetworthThree()!=0)
                       nonFinance.setPbThree(nonFinance.getMarketCapThree()/nonFinance.getNetworthThree());
+                      else
+                    	  nonFinance.setPbThree(0.00);  
+                      if(nonFinance.getMarketCapThree()!=0 && nonFinance.getNetworthFour()!=0)
                       nonFinance.setPbFour(nonFinance.getMarketCapThree()/nonFinance.getNetworthFour());
+                      else
+                    	  nonFinance.setPbFour(0.00); 
+                      if(nonFinance.getMarketCapThree()!=0 && nonFinance.getNetworthFive()!=0)
                       nonFinance.setPbFive(nonFinance.getMarketCapThree()/nonFinance.getNetworthFive());
+                      else
+                    	  nonFinance.setPbFive(0.00);  
+                      if(nonFinance.getTaxOne()!=0 && nonFinance.getPbtOne()!=0)
                       nonFinance.setTaxRateOne((nonFinance.getTaxOne()/nonFinance.getPbtOne())*100);
+                      else
+                      nonFinance.setTaxRateOne(0.00);
+                      if(nonFinance.getTaxTwo()!=0 && nonFinance.getPbtTwo()!=0)
                       nonFinance.setTaxRateTwo((nonFinance.getTaxTwo()/nonFinance.getPbtTwo())*100);
+                      else
+                    	  nonFinance.setTaxRateTwo(0.00);
+                      if(nonFinance.getTaxThree()!=0 && nonFinance.getPbtThree()!=0)
                       nonFinance.setTaxRateThree((nonFinance.getTaxThree()/nonFinance.getPbtThree())*100);
+                      else
+                    	  nonFinance.setTaxRateThree(0.00);
+                      if(nonFinance.getTaxFour()!=0 && nonFinance.getPbtFour()!=0)
                       nonFinance.setTaxRateFour((nonFinance.getTaxFour()/nonFinance.getPbtFour())*100);
+                      else
+                    	  nonFinance.setTaxRateFour(0.00);  
+                      if(nonFinance.getTaxFive()!=0 && nonFinance.getPbtFive()!=0)
                       nonFinance.setTaxRateFive((nonFinance.getTaxFive()/nonFinance.getPbtFive())*100);
+                      else
+                    	  nonFinance.setTaxRateFive(0.00);	 
+                      if(nonFinance.getIntExpOne()!=0 && nonFinance.getTotDebOne()!=0)
                       nonFinance.setIntRateOne((nonFinance.getIntExpOne()/nonFinance.getTotDebOne())*100);
+                      else
+                    	  nonFinance.setIntRateOne(0.00); 
+                      if(nonFinance.getIntExpTwo()!=0 && nonFinance.getTotDebTwo()!=0)
                       nonFinance.setIntRateTwo((nonFinance.getIntExpTwo()/nonFinance.getTotDebTwo())*100);
+                      else
+                    	  nonFinance.setIntRateTwo(0.00);
+                      if(nonFinance.getIntExpThree()!=0 && nonFinance.getTotDebThree()!=0)
                       nonFinance.setIntRateThree((nonFinance.getIntExpThree()/nonFinance.getTotDebThree())*100);
+                      else
+                    	  nonFinance.setIntRateThree(0.00); 
+                      if(nonFinance.getIntExpFour()!=0 && nonFinance.getTotDebFour()!=0)
                       nonFinance.setIntRateFour((nonFinance.getIntExpFour()/nonFinance.getTotDebFour())*100);
+                      else
+                    	  nonFinance.setIntRateFour(0.00);  
+                      if(nonFinance.getIntExpFive()!=0 && nonFinance.getTotDebFive()!=0)
                       nonFinance.setIntRateFive((nonFinance.getIntExpFive()/nonFinance.getTotDebFive())*100);
-                      
+                      else{
+                    	  nonFinance.setIntRateFive(0.00);  }
                       nonFinancialSummaryDataRepository.save(nonFinance);
                       List<OpportunitySummaryData> opportunitySummaryDataList = opportunitySummaryDataRepository.findByOpportunityMasterid(opportunityMaster);
                       System.out.println(opportunitySummaryDataList);

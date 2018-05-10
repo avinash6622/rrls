@@ -31,31 +31,28 @@
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
 
                     <th jh-sort-by="subject"><span>Subject</span> <span class="glyphicon glyphicon-sort"></span></th>
-                  
+                    <th jh-sort-by="opportunityMaster.masterName.oppName"><span>Opportunity Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+                  <th jh-sort-by="createdBy"><span>Created By</span> <span class="glyphicon glyphicon-sort"></span></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="learning in vm.opportunityLearnings">
+                <tr ng-repeat-start="learning in vm.opportunityLearnings">
 
-              			 <td ng-click="vm.subject(learning.subject)"><a><strong>{{learning.subject}}</strong></a></td>
+              			 <td><a><strong>{{learning.subject}}</strong></a></td>
+              			 <td>{{learning.opportunityMaster.masterName.oppName}}</td>
+              			  <td>{{learning.createdBy}}</td>
               			 
               			 </tr>
               			
-              			 
-              			<!--   <tr collapse="isCollapsed" ng-repeat-end="">
-            <td>
-              <h3>Pet details</h3>
-              <p>some details about this pet.</p>
-            </td> -->
-          </tr>
-  <!--  <tr collapse="!isCollapsed[$index]">
-   <td>
-    Testing
-     </td> -->
+              		
+<tr ng-repeat-end="">
+   <td colspan="3">
+  <span ng-bind-html="learning.description"></span>
+     </td> 
      
                   <!--   <td><a ng-click="vm.subject(learning.subject)">{{learning.subject}}</a></td> -->
                   
-              <!--   </tr> -->
+             </tr> 
                
               
             </tbody>

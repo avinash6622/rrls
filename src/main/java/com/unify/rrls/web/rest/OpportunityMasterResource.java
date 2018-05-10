@@ -599,6 +599,7 @@ public class OpportunityMasterResource {
 				sm.setPatGrowthFourth(opportunityMasters.getNonFinancialSummaryData().getPatGrowthFour());
 				sm.setPatGrowthFifth(opportunityMasters.getNonFinancialSummaryData().getPatGrowthFive());
 				sm.setOpportunityMasterid(opportunityMasters);
+				System.out.println(opportunityMasters.getNonFinancialSummaryData().getPeFive());
 				if (opportunityMasters.getNonFinancialSummaryData().getWeight() != null) {
 					sm.setbWeight(opportunityMasters.getNonFinancialSummaryData().getWeight());
 					sm.setPegOj(opportunityMasters.getNonFinancialSummaryData().getPethree()
