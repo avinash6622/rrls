@@ -29,23 +29,35 @@
         <table class="jh-table table table-striped">
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
-
+					<th></th>
                     <th jh-sort-by="subject"><span>Subject</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="opportunityMaster.masterName.oppName"><span>Opportunity Name</span> <span class="glyphicon glyphicon-sort"></span></th>
                   <th jh-sort-by="createdBy"><span>Created By</span> <span class="glyphicon glyphicon-sort"></span></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat-start="learning in vm.opportunityLearnings">
-
-              			 <td><a><strong>{{learning.subject}}</strong></a></td>
-              			 <td>{{learning.opportunityMaster.masterName.oppName}}</td>
-              			  <td>{{learning.createdBy}}</td>
+               <!--  <tr ng-repeat-start="learning in vm.opportunityLearnings">
+ 		<td><button class="btn btn-md btn-primary" ng-if="expanded">-</button>
+              <button class="btn btn-md btn-primary" ng-if="!expanded">+</button></td>
+            
+              			 <td><a ng-click="expanded = !expanded;vm.selectIndex($index)"><strong>{{learning.subject}}</strong></a></td>
+              			 <td><a ui-sref="opportunity-master-detail({id:learning.opportunityMaster.id})">{{learning.opportunityMaster.masterName.oppName}}</a></td>
+              			  <td><a ui-sref="home-research({createdBy:learning.opportunityMaster.createdBy})">{{learning.createdBy}}</a></td>
+              			 
+              			 </tr> -->
+              			 
+            <tr ng-repeat-start="learning in vm.opportunityLearnings">
+ 		<td><button class="btn btn-md btn-primary" ng-if="learning.expanded" ng-click="learning.expanded==false">-</button>
+              <button class="btn btn-md btn-primary" ng-if="!learning.expanded" ng-click="learning.expanded==true">+</button></td>
+            
+              			 <td><a ng-click="learning.expanded = !learning.expanded"><strong>{{learning.subject}}</strong></a></td>
+              			 <td><a ui-sref="opportunity-master-detail({id:learning.opportunityMaster.id})">{{learning.opportunityMaster.masterName.oppName}}</a></td>
+              			  <td><a ui-sref="home-research({createdBy:learning.opportunityMaster.createdBy})">{{learning.createdBy}}</a></td>
               			 
               			 </tr>
               			
               		
-<tr ng-repeat-end="">
+<tr ng-if="learning.expanded" ng-repeat-end="">
    <td colspan="3">
   <span ng-bind-html="learning.description"></span>
      </td> 
@@ -61,7 +73,10 @@
         </table>
 
 </div>
-
+  <div class="text-center" style="margin-bottom: -5px">
+            <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
+            <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+        </div>
     </div>
     <footer class="footer footer-dark" ng-cloak>
         <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.</p>

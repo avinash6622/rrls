@@ -25,6 +25,10 @@
                 isArray: true
              
             },
+            'get':{
+            	url:'api/opportunity-learnings/:id',
+                method:'GET'
+            },
         'save':{
         	url:'api/opportunity-learnings',
             method:'POST',

@@ -15,6 +15,7 @@
     	  $ctrl.showLearning=false;
     	  $ctrl.account = null;
     	  $ctrl.opportunityMaster = options;
+    	  $ctrl.display=display;
     	  
     	
     	  OpportunityLearning.learningComment({id: options.id}, function(response) {          	
@@ -53,5 +54,11 @@
     		  $ctrl.learnings=[];
               $uibModalInstance.dismiss('cancel');
           }
+    	  function display(id){
+    		  console.log('learn ',id);
+    		  OpportunityLearning.get({id:id},function(resp){
+    			  console.log(resp);
+    		  });
+    	  }
     }
 })();

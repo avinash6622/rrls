@@ -27,11 +27,11 @@
    
      <span ng-bind-html="learn.description"></span>
      <button class="btn btn-md btn-warning pull-right"
-		type="button"  ng-show="$ctrl.account.login === $ctrl.opportunityMaster.createdBy">Edit</button>
+		type="button"  ng-show="$ctrl.account.login === $ctrl.opportunityMaster.createdBy" ng-click="$ctrl.display({id:learn.id})">Edit</button>
     </div>
     </uib-accordion>
 			</div>
-	
+	<div></div>
 			<button class="btn btn-md btn-warning"
 		type="button" ng-click="$ctrl.showLearning=true" ng-show="$ctrl.learnings.length !== 0 && $ctrl.account.login === $ctrl.opportunityMaster.createdBy">Add Learning</button>
 			<input type="text" class="form-control" name="subject"

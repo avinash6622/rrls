@@ -28,7 +28,10 @@
         vm.account = null;
         vm.subject=subject;
         vm.subjectLearnings=[];
+       /* vm.selectIndex=selectIndex;*/
         $scope.isCollapsed = true;
+       /* $scope.expanded=false;*/
+      
 
         loadAll();
      /*   $scope.$on('authenticationSuccess', function() {
@@ -60,6 +63,26 @@
 
         $scope.currentYear = $filter('date')(myDate,'yyyy');
 
+      /*  function selectIndex(index){
+        	console.log('index',index);
+        	angular.forEach(vm.opportunityLearnings, function(value, key) {
+        		console.log(key);
+        		
+        		if(key==index)
+        			{
+        			console.log(key,index);
+        			 vm.opportunityLearning[index]=$scope.expanded=true;
+        			}
+        		else{
+        			console.log('false',key,index);
+        			 vm.opportunityLearning[index]=$scope.expanded=false;
+        		}
+        	
+        		  console.log(key + ': ' + value);
+        		});
+      
+        	
+        }*/
         function loadAll () {
             OpportunityLearning.consolidatedLearning({
                 page: pagingParams.page - 1,
