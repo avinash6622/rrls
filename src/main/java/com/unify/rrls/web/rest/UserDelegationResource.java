@@ -92,7 +92,7 @@ public class UserDelegationResource {
 
         UserDelegationAudit result =userDelegationAuditRepository.save(userDelegationAudit);
 
-        System.out.println(result.getCretedBy());
+        System.out.println(result.getCreatedBy());
 
         OpportunityName opportunityName = opportunityNameRepository.findByOppName(result.getOppName());
 
@@ -112,10 +112,10 @@ public class UserDelegationResource {
 
         String page = "Opportunity";
 
-        Long id = userResource.getUserId(result.getCretedBy());
+        Long id = userResource.getUserId(result.getCreatedBy());
 
 
-        notificationServiceResource.notificationHistorysave(result.getOppName(), result.getCretedBy(), "",
+        notificationServiceResource.notificationHistorysave(result.getOppName(), result.getCreatedBy(), "",
             result.getCreatedDate(), "delegated", page, result.getDeleUserName(), id,master.getId());
 
         return ResponseEntity.created(new URI("/api/oppName_userName/" + result.getId()))

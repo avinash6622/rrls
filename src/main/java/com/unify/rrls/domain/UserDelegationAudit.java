@@ -13,7 +13,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "user_delegation_audit")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class UserDelegationAudit implements Serializable {
+public class UserDelegationAudit extends AbstractAuditingEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
@@ -30,11 +30,7 @@ public class UserDelegationAudit implements Serializable {
     @Column(name="delegated_user_name")
     private String deleUserName;
 
-    @Column(name = "created_date", nullable = false)
-    private Instant createdDate = Instant.now();
 
-    @Column(name="created_by")
-    private String cretedBy;
 
 
 
@@ -70,19 +66,5 @@ public class UserDelegationAudit implements Serializable {
         this.deleUserName = deleUserName;
     }
 
-    public Instant getCreatedDate() {
-        return createdDate;
-    }
 
-    public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getCretedBy() {
-        return cretedBy;
-    }
-
-    public void setCretedBy(String cretedBy) {
-        this.cretedBy = cretedBy;
-    }
 }

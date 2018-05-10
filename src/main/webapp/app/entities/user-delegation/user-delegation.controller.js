@@ -121,7 +121,7 @@
         }
 
         function save(){
-            UserDelegationAudit.save({deleUserName:vm.deleUserName,oppName:vm.oppName,loginName:vm.account.login,cretedBy:vm.account.login},function(response){
+            UserDelegationAudit.save({deleUserName:vm.deleUserName,oppName:vm.oppName,loginName:vm.account.login},function(response){
                 console.log(response)
                 /*$ctrl.learnings.push(response);
                 $ctrl.showLearning=false;
