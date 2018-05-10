@@ -18,6 +18,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -78,6 +79,31 @@ public class OpportunityLearningResource {
          Long id =  userResource.getUserId(result.getCreatedBy());
 
         notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"added",page,subContent,id,result.getOpportunityMaster().getId());
+
+
+
+        return ResponseEntity.created(new URI("/api/opportunity-learnings/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
+    }
+    
+    @PutMapping("/opportunity-learnings")
+    @Timed
+    public ResponseEntity<OpportunityLearning> updateOpportunityLearning(@RequestBody OpportunityLearning opportunityLearning)
+        throws URISyntaxException, IOException, MissingServletRequestParameterException {
+        log.debug("REST request to update OpportunityLearning : {}", opportunityLearning);
+      
+        String sDescription=opportunityLearning.getDescription().replaceAll("////", "\\");
+        opportunityLearning.setDescription(sDescription);
+
+        OpportunityLearning result = opportunityLearningRepository.save(opportunityLearning);
+
+        String page="Opportunity";
+        String subContent="Learning:"+opportunityLearning.getSubject();
+
+        String name =String.valueOf(result.getOpportunityMaster().getMasterName().getOppName());
+         Long id =  userResource.getUserId(result.getCreatedBy());
+
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"updated",page,subContent,id,result.getOpportunityMaster().getId());
 
 
 
