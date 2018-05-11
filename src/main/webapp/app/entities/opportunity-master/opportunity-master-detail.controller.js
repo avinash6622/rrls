@@ -318,7 +318,7 @@
 
     			var result = parseFloat(val1) / parseFloat(val2);
     			result = (result * 100);
-    			result = (isNaN(result)) ? '' : result;
+    			result = (isNaN(result) || result==Infinity) ? '' : result;
     			if(result!=''){
     			switch (val3) {
     			case 1:
@@ -346,7 +346,7 @@
 
     			var result = (parseFloat(val1) + parseFloat(val2) - parseFloat(val3)
     					- parseFloat(val4));
-    			result = (isNaN(result)) ? '' : result;
+    			result = (isNaN(result) && result==Infinity) ? '' : result;
     			if(result!=''){
     			switch (val5) {
     			case 1:
@@ -373,7 +373,7 @@
     		$scope.getNonPat = function(val1, val2, val3) {
 
     			var result = (parseFloat(val1) - parseFloat(val2));
-    			result = (isNaN(result)) ? '' : result;
+    			result = (isNaN(result) || result==Infinity) ? '' : result;
     			if(result!=''){
     			switch (val3) {
     			case 1:
@@ -400,7 +400,7 @@
 
     			var result = (parseFloat(val1) / parseFloat(val2));
     			console.log('result PE',result);
-    			result = (isNaN(result)) ? '' : result;
+    			result = (isNaN(result) || result==Infinity) ? '' : result;
     			if(result!=''){
     			switch (val3) {
     			case 1:
@@ -464,7 +464,7 @@
     						/ ((parseFloat(val2) + parseFloat(val3)) / 2);
     				result = (result * 100);
     			}
-    			result = (isNaN(result)) ? '' : result;
+    			result = (isNaN(result) || result==Infinity) ? '' : result;
     			if(result!=''){
     			switch (val4) {
     			case 1:
