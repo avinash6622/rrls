@@ -399,6 +399,7 @@
     		$scope.getNonPe = function(val1, val2, val3) {
 
     			var result = (parseFloat(val1) / parseFloat(val2));
+    			console.log('result PE',result);
     			result = (isNaN(result)) ? '' : result;
     			if(result!=''){
     			switch (val3) {

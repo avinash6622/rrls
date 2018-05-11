@@ -16,17 +16,30 @@
     	  $ctrl.account = null;
     	  $ctrl.opportunityMaster = options;
     	  $ctrl.display=display;
+    	  $ctrl.updateLearning='';
+    	  $ctrl.editLearning=false;
+    	  $ctrl.modifiedLearn=modify;    	 
     	  
     	
     	  OpportunityLearning.learningComment({id: options.id}, function(response) {          	
           	$ctrl.learnings = response;
           });
-    	  $scope.ckOptions = {
+    	  $scope.ckOptionsAdd = {
     	            language: 'en',
     	            allowedContent: true,
     	            entities: false,
     	          
     	        };
+    	  $scope.ckOptionsUpdate = {
+  	            language: 'en',
+  	            allowedContent: true,
+  	            entities: false,
+  	          
+  	        };
+    	  $scope.onReady = function () {
+              
+          };
+          
     	  $scope.$on('authenticationSuccess', function() {
               getAccount();
           });
@@ -54,11 +67,20 @@
     		  $ctrl.learnings=[];
               $uibModalInstance.dismiss('cancel');
           }
-    	  function display(ids){
-    		  console.log(ids);
-    		  OpportunityLearning.get({id:ids},function(resp){
-    			  console.log(resp);
+    	  function display(learn){
+    		  console.log(learn);
+    		  OpportunityLearning.get({id:learn.id},function(resp){
+    			  $ctrl.updateLearning=resp;
     		  });
     	  }
+    	  
+    	  function modify(uData,index){
+    		  console.log(uData);    		
+    		  OpportunityLearning.update(uData,function(resp){
+    			  $ctrl.learnings[index].description=resp.description;
+    		  });    		 
+    		 
+    	  }
+    		
     }
 })();

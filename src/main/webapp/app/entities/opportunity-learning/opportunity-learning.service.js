@@ -27,10 +27,18 @@
             },
             'get':{
             	url:'api/opportunity-learnings/:id',
-                method:'GET',
-                	transformResponse: function(data){
-                		return data;
-                	}
+                method:'GET'
+                
+                	
+            },
+            'update':{
+            	url:'api/opportunity-learnings',
+            	  method: 'PUT',
+                  transformRequest: function (data) {
+                      var copy = angular.copy(data);
+                    
+                      return angular.toJson(copy);
+                  }
             },
         'save':{
         	url:'api/opportunity-learnings',
