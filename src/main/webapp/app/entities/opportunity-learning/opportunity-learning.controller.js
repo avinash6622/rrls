@@ -54,9 +54,9 @@
     		  $ctrl.learnings=[];
               $uibModalInstance.dismiss('cancel');
           }
-    	  function display(id){
-    		  console.log('learn ',id);
-    		  OpportunityLearning.get({id:id},function(resp){
+    	  function display(ids){
+    		  console.log(ids);
+    		  OpportunityLearning.get({id:ids},function(resp){
     			  console.log(resp);
     		  });
     	  }

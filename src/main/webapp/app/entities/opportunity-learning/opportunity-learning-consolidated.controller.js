@@ -28,6 +28,7 @@
         vm.account = null;
         vm.subject=subject;
         vm.subjectLearnings=[];
+        vm.expandCollapse = expandCollapse;
        /* vm.selectIndex=selectIndex;*/
         $scope.isCollapsed = true;
        /* $scope.expanded=false;*/
@@ -62,27 +63,18 @@
         var myDate=new Date();
 
         $scope.currentYear = $filter('date')(myDate,'yyyy');
-
-      /*  function selectIndex(index){
-        	console.log('index',index);
-        	angular.forEach(vm.opportunityLearnings, function(value, key) {
-        		console.log(key);
-        		
-        		if(key==index)
-        			{
-        			console.log(key,index);
-        			 vm.opportunityLearning[index]=$scope.expanded=true;
-        			}
-        		else{
-        			console.log('false',key,index);
-        			 vm.opportunityLearning[index]=$scope.expanded=false;
+        
+        function expandCollapse(index, state) {
+        	console.log(index, state);
+        	vm.opportunityLearnings.forEach(function(value, key) {
+        		if (key === index) {
+        			value.expanded = state;
+        		} else {
+        			value.expanded = false;
         		}
-        	
-        		  console.log(key + ': ' + value);
-        		});
-      
-        	
-        }*/
+        	});
+        }
+        
         function loadAll () {
             OpportunityLearning.consolidatedLearning({
                 page: pagingParams.page - 1,

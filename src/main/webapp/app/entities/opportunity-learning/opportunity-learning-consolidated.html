@@ -46,11 +46,11 @@
               			 
               			 </tr> -->
               			 
-            <tr ng-repeat-start="learning in vm.opportunityLearnings">
- 		<td><button class="btn btn-md btn-primary" ng-if="learning.expanded" ng-click="learning.expanded==false">-</button>
-              <button class="btn btn-md btn-primary" ng-if="!learning.expanded" ng-click="learning.expanded==true">+</button></td>
+            <tr ng-repeat-start="learning in vm.opportunityLearnings" ng-click="vm.expandCollapse($index, !learning.expanded)">
+ 		<td><button class="btn btn-md btn-primary" ng-if="learning.expanded" ng-click="vm.expandCollapse($index, !learning.expanded)">-</button>
+              <button class="btn btn-md btn-primary" ng-if="!learning.expanded" ng-click="vm.expandCollapse($index, !learning.expanded)">+</button></td>
             
-              			 <td><a ng-click="learning.expanded = !learning.expanded"><strong>{{learning.subject}}</strong></a></td>
+              			 <td><a><strong>{{learning.subject}}</strong></a></td>
               			 <td><a ui-sref="opportunity-master-detail({id:learning.opportunityMaster.id})">{{learning.opportunityMaster.masterName.oppName}}</a></td>
               			  <td><a ui-sref="home-research({createdBy:learning.opportunityMaster.createdBy})">{{learning.createdBy}}</a></td>
               			 

@@ -27,7 +27,10 @@
             },
             'get':{
             	url:'api/opportunity-learnings/:id',
-                method:'GET'
+                method:'GET',
+                	transformResponse: function(data){
+                		return data;
+                	}
             },
         'save':{
         	url:'api/opportunity-learnings',
