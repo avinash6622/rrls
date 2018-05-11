@@ -162,7 +162,7 @@ border:none !important;
                                          <a ui-sref="strategy-master-detail({id:strategy.id})" class="ng-binding" >{{strategy.strategyName}}</br></a>
                                      </span>
                                  </td>
-                                 <td ng-class="value.opportunityMasterid.status == 'Open' ? 'text-success' : 'text-danger'"  style="text-align: left">{{value.opportunityMasterid.status ? value.opportunityMasterid.status: 'Open'}}</td>
+                                 <td ng-class="value.opportunityMasterid.status == 'Open' ? 'text-success' : 'text-danger'"  style="text-align: left">{{value.opportunityMasterid.status ? value.opportunityMasterid.status: '&nbsp'}}</td>
                                  <td style="text-align: right" class="ng-binding">{{value.cmp | thousandSuffix:0:vm.multiplevalue}}</td>
                                  <td style="text-align: right" class="ng-binding">{{value.marketCap | thousandSuffix:0:vm.multiplevalue}}</td>
                                  <td style="text-align: right" class="ng-binding">{{value.patFirstYear | thousandSuffix:0:vm.multiplevalue}}</td>
