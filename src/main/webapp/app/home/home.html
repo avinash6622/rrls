@@ -88,9 +88,10 @@ border:none !important;
                     You are logged in as user "{{vm.account.login |capitalize}}".
                     <br>
                     </div>-->
-                     <div class="scrollmenu table-scroll" id="table-scroll">
-                      <div class="table-responsive">
-                         <table id="mytable" class="table table-striped table-bordered table-hover table-condensed">
+
+                <div class="scrollmenu table-scroll" id="table-scroll">
+                    <div class="table-responsive" style="width: 100%; height: 80vh;">
+                         <table id="mytable" class="table table-striped table-bordered table-hover table-condensed fht-table">
                              <thead>
 
                              <tr class="headborder">
@@ -161,7 +162,7 @@ border:none !important;
                                          <a ui-sref="strategy-master-detail({id:strategy.id})" class="ng-binding" >{{strategy.strategyName}}</br></a>
                                      </span>
                                  </td>
-                                 <td scope="col" ng-class="value.opportunityMasterid.status == 'Open' ? 'text-success' : 'text-danger'"  style="text-align: left">{{value.opportunityMasterid.status}}</td>
+                                 <td ng-class="value.opportunityMasterid.status == 'Open' ? 'text-success' : 'text-danger'"  style="text-align: left">{{value.opportunityMasterid.status ? value.opportunityMasterid.status: 'Open'}}</td>
                                  <td style="text-align: right" class="ng-binding">{{value.cmp | thousandSuffix:0:vm.multiplevalue}}</td>
                                  <td style="text-align: right" class="ng-binding">{{value.marketCap | thousandSuffix:0:vm.multiplevalue}}</td>
                                  <td style="text-align: right" class="ng-binding">{{value.patFirstYear | thousandSuffix:0:vm.multiplevalue}}</td>
@@ -232,8 +233,8 @@ border:none !important;
 </footer>
 
 <script>
-$(window).on('load',function(){
-    var $table = $('#mytable');
+    $(function() {
+/*    var $table = $('#mytable');
     var $fixedColumn = $table.clone().insertBefore($table).addClass('fixed-column');
 
     //$fixedColumn.find('th:not(:lt(4)),tbody > .tbody-class td:not(:lt(4))').remove();
@@ -242,6 +243,12 @@ $(window).on('load',function(){
 
     $fixedColumn.find('tr').each(function (i, elem) {
         $(this).height($table.find('tr:eq(' + i + ')').height());
+    });*/
+
     });
-});
+
+
+
+
+
 </script>
