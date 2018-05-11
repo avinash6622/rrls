@@ -117,9 +117,7 @@ h4 {
     margin-top: 0px !important;
     margin-bottom: 0px !important;
 }
-.table{
-    margin-bottom: 3px !important;
-}
+
 dl {
     margin-top: 0;
     margin-bottom: -10px; }
@@ -158,7 +156,7 @@ dl {
  }
  .reply btn-info{
     display: inline-block;
-    margin-bottom: 0;   
+    margin-bottom: 0;
     font-weight: normal;
     text-align: center;
     vertical-align: middle;
@@ -195,10 +193,10 @@ dl {
 
 .comments-list {
 	margin-top: 5px;
-	padding-left:5px;	
+	padding-left:5px;
 }
 .answer-list{
-	
+
 }
 
 /**
@@ -209,7 +207,7 @@ dl {
 	width: 2px;
 	height: 100%;
 	background: #c7cacb;
-	
+
 	left: 32px;
 	top: 0;
 }
@@ -234,7 +232,7 @@ dl {
 	width: 60px;
 	height: 2px;
 	background: #c7cacb;
-	
+
 	top: 25px;
 	left: -55px;
 }
@@ -337,7 +335,7 @@ li.answer-list.level-3{
 }
 
 .reply-list .comment-box {
-	
+
 }
 .comment-box .comment-head {
 	background: #f5f5f5;
@@ -434,7 +432,7 @@ li.answer-list.level-3{
 .learning-modal .panel-heading{
 	padding: 1px 1px !important;
 }
-   
+
 .learning-modal .panel-body {
    padding: 3px !important;
 }

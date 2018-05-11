@@ -82,6 +82,7 @@
 
         setTimeout(function() {
             getDecimalConfig();
+
         }, 3000);
 
         function getAccount() {
@@ -134,6 +135,14 @@
             },function (err) {
                 console.log(err);
             });
+
+            setTimeout(function() {
+                $("#mytable").CongelarFilaColumna({
+                    Columnas: 5,
+                    width: '100%',
+                    height: '100%'
+                });
+            }, 2000);
 
         }
 
@@ -203,7 +212,7 @@
                 };
 
             }
-            }
+        }
 
         function sort() {
             var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
@@ -226,6 +235,7 @@
             vm.page = page;
             vm.transition();
         }
+
 
 
     /*    function transition () {
