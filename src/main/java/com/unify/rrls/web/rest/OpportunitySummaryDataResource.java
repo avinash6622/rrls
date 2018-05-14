@@ -144,7 +144,7 @@ public class OpportunitySummaryDataResource {
             if(opportunityMaster.getNonFinancialSummaryData().getPethree()!=null || opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree()!=null){
             sm.setPegOj(opportunityMaster.getNonFinancialSummaryData().getPethree()/opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree());}
           //  System.out.println("OJ value"+opportunityMaster.getNonFinancialSummaryData().getPethree()/opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree());
-            if(opportunityMaster.getNonFinancialSummaryData().getWeight()!=null){
+            if(opportunityMaster.getNonFinancialSummaryData().getWeight()!=null && opportunityMaster.getNonFinancialSummaryData().getWeight()!=0.0){
             sm.setPortPeFirst(opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPeOne());
             sm.setPortPeSecond(opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPeTwo());
             sm.setPortPeThird(opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPethree());
@@ -163,7 +163,7 @@ public class OpportunitySummaryDataResource {
             {
             	sm.setCmp(opportunityAutomation.getPrevClose());
             } 
-
+System.out.println(sm);
             opportunitySummaryDataRepository.save(sm);
         }
 
