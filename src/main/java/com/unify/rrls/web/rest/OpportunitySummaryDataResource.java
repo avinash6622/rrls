@@ -18,8 +18,12 @@ import com.unify.rrls.repository.OpportunityMasterRepository;
 import com.unify.rrls.repository.StrategyMasterRepository;
 import com.unify.rrls.security.SecurityUtils;
 
+import com.unify.rrls.web.rest.util.PaginationUtil;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -44,12 +48,12 @@ public class OpportunitySummaryDataResource {
 
 	private final FinancialSummaryDataRepository financialSummaryDataRepository;
 
-	private final NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository;	
+	private final NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository;
 
 	private final StrategyMasterRepository strategyMasterRepository;
-	
+
 	private final OpportunityAutomationRepository opportunityAutomationRepository;
-	
+
 	private final OpportunityMasterRepository opportunityMasterRepository;
 
 	public OpportunitySummaryDataResource(OpportunitySummaryDataRepository opportunitySummaryDataRepository,FinancialSummaryDataRepository financialSummaryDataRepository,
@@ -104,7 +108,7 @@ public class OpportunitySummaryDataResource {
             if((opportunityAutomation!=null) && (opportunityAutomation.getPrevClose()!=null))
             {
             	sm.setCmp(opportunityAutomation.getPrevClose());
-            } 
+            }
             opportunitySummaryDataRepository.save(sm);
 
         }
@@ -165,7 +169,7 @@ public class OpportunitySummaryDataResource {
             if((opportunityAutomation!=null) && (opportunityAutomation.getPrevClose()!=null))
             {
             	sm.setCmp(opportunityAutomation.getPrevClose());
-            } 
+            }
 System.out.println(sm);
             opportunitySummaryDataRepository.save(sm);
         }
@@ -186,67 +190,75 @@ System.out.println(sm);
     public ResponseEntity<List<OpportunitySummaryData>> getAllOpportunitySummaryData(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of OpportunityMasters");
 
-        Query q = em.createNativeQuery("select * from opportunity_summary_data group by opp_master",OpportunitySummaryData.class);
-
-        List<OpportunitySummaryData> page =  q.getResultList();
-        
         String userName=SecurityUtils.getCurrentUserLogin();
-        
+        /*Query q = em.createNativeQuery("select * from opportunity_summary_data group by opp_master",OpportunitySummaryData.class);
 
-        List<OpportunitySummaryData> summaryData = null;
+        List<OpportunitySummaryData> page =  q.getResultList();*/
+        Page<OpportunitySummaryData> page = opportunitySummaryDataRepository.findAllGroupByOpportunityMasterid(userName,pageable);
 
-        for (OpportunitySummaryData opportunitySummaryData:page) {
-           // if(opportunitySummaryData.getOpportunityMasterid().getOppStatus() != null) {
-               // if (opportunitySummaryData.getOpportunityMasterid().getCreatedBy().equals(createdBy)) {                
-                	System.out.println(opportunitySummaryData.getOpportunityMasterid());
-                	if(opportunitySummaryData.getCreatedBy().equals(userName)){                  
-                    List<StrategyMaster> strategyMasterList = getStrategyList(opportunitySummaryData.getOpportunityMasterid().getId());
-                    opportunitySummaryData.setStrategyMasterList(strategyMasterList);
-                    summaryData.add(opportunitySummaryData);}
-                 
-                //}
-            //}
-        }
 
-        System.out.println(page);
-        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
-        HttpHeaders headers=new HttpHeaders();
-       // HttpHeaders headers = new HttpHeaders();
-        headers.add("X-Total-Count", Long.toString(summaryData.size()));
-        return new ResponseEntity<>(summaryData, headers, HttpStatus.OK);
-    }
-    @GetMapping("/opportunity-summary/getdata/{createdBy}")
-    @Timed
-    public ResponseEntity<List<OpportunitySummaryData>> getParticularSummaryData(@PathVariable String createdBy) {
-        log.debug("REST request to get a page of OpportunityMasters");
-
-        Query q = em.createNativeQuery("select * from opportunity_summary_data group by opp_master",OpportunitySummaryData.class);
-
-        List<OpportunitySummaryData> page =  q.getResultList();
-        String userName=SecurityUtils.getCurrentUserLogin();
-        
 
         List<OpportunitySummaryData> summaryData = new ArrayList<OpportunitySummaryData>();
 
         for (OpportunitySummaryData opportunitySummaryData:page) {
            // if(opportunitySummaryData.getOpportunityMasterid().getOppStatus() != null) {
-                if (opportunitySummaryData.getOpportunityMasterid().getCreatedBy().equals(createdBy)) {                
+              //  if (opportunitySummaryData.getOpportunityMasterid().getCreatedBy().equals(createdBy)) {
                 	System.out.println(opportunitySummaryData.getOpportunityMasterid());
-                	//if(opportunitySummaryData.getCreatedBy().equals(userName)){                  
+                	//if(opportunitySummaryData.getCreatedBy().equals(userName)){
+                    List<StrategyMaster> strategyMasterList = getStrategyList(opportunitySummaryData.getOpportunityMasterid().getId());
+                    opportunitySummaryData.setStrategyMasterList(strategyMasterList);
+                    summaryData.add(opportunitySummaryData);
+                	//}
+
+                //}
+            //}
+        }
+
+      //  System.out.println("LIST---->"+page);
+     /*   //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
+        HttpHeaders headers=new HttpHeaders();
+       // HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Total-Count", Long.toString(summaryData.size()));
+        return new ResponseEntity<>(summaryData, headers, HttpStatus.OK);*/
+
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
+
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+    @GetMapping("/opportunity-summary/getdata/{createdBy}")
+    @Timed
+    public ResponseEntity<List<OpportunitySummaryData>> getParticularSummaryData(@PathVariable String createdBy,@ApiParam Pageable pageable) {
+        log.debug("REST request to get a page of OpportunityMasters");
+/*
+        Query q = em.createNativeQuery("select * from opportunity_summary_data group by opp_master",OpportunitySummaryData.class);
+
+        List<OpportunitySummaryData> page =  q.getResultList();*/
+        String userName=SecurityUtils.getCurrentUserLogin();
+        Page<OpportunitySummaryData> page = opportunitySummaryDataRepository.findAllGroupByOpportunityMasterid(createdBy,pageable);
+
+
+        List<OpportunitySummaryData> summaryData = new ArrayList<OpportunitySummaryData>();
+
+        for (OpportunitySummaryData opportunitySummaryData:page) {
+           // if(opportunitySummaryData.getOpportunityMasterid().getOppStatus() != null) {
+                if (opportunitySummaryData.getOpportunityMasterid().getCreatedBy().equals(createdBy)) {
+                	System.out.println(opportunitySummaryData.getOpportunityMasterid());
+                	//if(opportunitySummaryData.getCreatedBy().equals(userName)){
                     List<StrategyMaster> strategyMasterList = getStrategyList(opportunitySummaryData.getOpportunityMasterid().getId());
                     opportunitySummaryData.setStrategyMasterList(strategyMasterList);
                     summaryData.add(opportunitySummaryData);}
-                 
+
                // }
             //}
         }
 
         System.out.println(page);
         //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
-        HttpHeaders headers=new HttpHeaders();
+      //  HttpHeaders headers=new HttpHeaders();
        // HttpHeaders headers = new HttpHeaders();
-        headers.add("X-Total-Count", Long.toString(summaryData.size()));
-        return new ResponseEntity<>(summaryData, headers, HttpStatus.OK);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
+
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     private List<StrategyMaster> getStrategyList(Long id) {

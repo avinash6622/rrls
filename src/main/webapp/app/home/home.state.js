@@ -54,7 +54,7 @@
             views: {
                 'content@': {
                     templateUrl: 'app/home/home.html',
-                    controller: 'HomeController',
+                    controller: 'HomeCreatedController',
                     controllerAs: 'vm'
                 }
             },
@@ -67,9 +67,9 @@
                     value: 'id,asc',
                     squash: true
                 }
-               
+
             },
-            resolve: {            	 
+            resolve: {
                 pagingParams: ['$stateParams', 'PaginationUtil', function ($stateParams, PaginationUtil) {
                     return {
                         page: PaginationUtil.parsePage($stateParams.page),

@@ -155,7 +155,7 @@ border:none !important;
                              </tr>
                              </thead>
                         <tbody>
-                             <tr ng-repeat="value in vm.dashboardvalues | orderBy:predicate:reverse | filter:paginate" class="ng-scope tbody-class">
+                             <tr ng-repeat="value in vm.dashboardvalues | orderBy:predicate:reverse" class="ng-scope tbody-class">
                                  <td scope="col" style="text-align: left"><a class="ng-binding" ui-sref="opportunity-master-detail({id:value.opportunityMasterid.id})">{{value.opportunityMasterid.masterName.oppName}}</a></td>
                                  <td style="text-align: left">
                                      <span ng-repeat="strategy in value.strategyMasterList" class="ng-scope">
@@ -210,6 +210,8 @@ border:none !important;
                 <div class="text-center">
 
 
+
+
                     <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
                     <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
                 </div></div>
@@ -232,23 +234,4 @@ border:none !important;
     <p data-translate="footer" style="font-size: 12px">&copy;{{currentYear}}, All rights reserved.</p>
 </footer>
 
-<script>
-    $(function() {
-/*    var $table = $('#mytable');
-    var $fixedColumn = $table.clone().insertBefore($table).addClass('fixed-column');
 
-    //$fixedColumn.find('th:not(:lt(4)),tbody > .tbody-class td:not(:lt(4))').remove();
-
-    $fixedColumn.find('th:not(:lt(4)), tbody tr td:not(:nth-child(-n+4))').remove();
-
-    $fixedColumn.find('tr').each(function (i, elem) {
-        $(this).height($table.find('tr:eq(' + i + ')').height());
-    });*/
-
-    });
-
-
-
-
-
-</script>

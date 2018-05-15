@@ -168,7 +168,18 @@
                 method:'POST'
             },
 
-           
+           'opportunitysummaryData':{
+                url:'api/opportunity-summary/getdata',
+                method:'GET',
+               isArray: true
+           },
+
+            'opportunitysummaryDataCreatedBy':{
+                url:'api/opportunity-summary/getdata/:createdBy',
+                method:'GET',
+                isArray: true
+
+            }
 
             /*,
             'addWordCreation':{

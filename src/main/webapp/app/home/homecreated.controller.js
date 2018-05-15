@@ -3,12 +3,12 @@
 
     angular
         .module('researchRepositoryLearningSystemApp')
-        .controller('HomeController', HomeController);
+        .controller('HomeCreatedController', HomeCreatedController);
 
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'AlertService', 'OpportunityMaster','ParseLinks','paginationConstants','$http','$filter','pagingParams','DecimalConfiguration','$state'];
+    HomeCreatedController.$inject = ['$scope', 'Principal', 'LoginService', 'AlertService', 'OpportunityMaster','ParseLinks','paginationConstants','$http','$filter','pagingParams','DecimalConfiguration','$state'];
 
-    function HomeController ($scope, Principal, LoginService, AlertService, OpportunityMaster,ParseLinks,paginationConstants,$http,$filter,pagingParams,DecimalConfiguration,$state) {
+    function HomeCreatedController ($scope, Principal, LoginService, AlertService, OpportunityMaster,ParseLinks,paginationConstants,$http,$filter,pagingParams,DecimalConfiguration,$state) {
         var vm = this;
 
         vm.account = null;
@@ -25,18 +25,19 @@
         vm.links = {
             last: 0
         };
-       vm.predicate = 'id';
+        vm.predicate = 'id';
         vm.reset = reset;
         vm.reverse = true;
         vm.reverse = pagingParams.ascending;
         vm.predicate = pagingParams.predicate;
-      vm.transition = transition;
+        vm.transition = transition;
 
-      //  vm.predicate = 'id';
+        //  vm.predicate = 'id';
 
         vm.dashboardvalues = [];
 
         vm.multiplevalue = null;
+        vm.createdby=null;
 
         $scope.$on('authenticationSuccess', function() {
             getAccount();
@@ -77,7 +78,7 @@
 
         $scope.neYearNext = $filter('date')(nextYearNext,'yyyy');
 
-       // vm.loadPage(vm.page);
+        // vm.loadPage(vm.page);
 
         getAccount();
 
@@ -113,11 +114,11 @@
 
 
 
-/*
-                if(vm.account.login == vm.opportunityMaster.createdBy)
-                {
-                    vm.decimalValue = resp.decimalValue;
-                }*/
+                /*
+                                if(vm.account.login == vm.opportunityMaster.createdBy)
+                                {
+                                    vm.decimalValue = resp.decimalValue;
+                                }*/
 
 
                 if(resp.rupee == 'Millions')
@@ -150,30 +151,23 @@
         }
 
 
-        	//console.log($state.params);
+        //console.log($state.params);
 
         function loadAll(){
-                   console.log($state.params);
+            console.log($state.params);
 
+            vm.createdby = $state.params.createdBy;
 
-            if ($state.params && $state.params.createdBy){
+            console.log(vm.createdby);
+
                 OpportunityMaster.opportunitysummaryDataCreatedBy({
                     page: pagingParams.page - 1,
                     size: vm.itemsPerPage,
-                    createdBy:$state.params.createdBy
+                    createdBy:vm.createdby
                 },onSuccess, onError)
-            }
-
-            else{
-
-                OpportunityMaster.opportunitysummaryData({
-                    page: pagingParams.page - 1,
-                    size: vm.itemsPerPage,
 
 
-                }, onSuccess, onError);
 
-            }
 
 
 
@@ -186,6 +180,8 @@
             vm.queryCount = vm.totalItems;
             vm.page = pagingParams.page;
             vm.dashboardvalues = data;
+            console.log($state.params.createdBy);
+
 
         }
         function onError(error) {
@@ -193,57 +189,57 @@
         }
 
 
-/*
-        function onSuccess1(data, headers) {
-            vm.links = ParseLinks.parse(headers('link'));
-            vm.totalItems = headers('X-Total-Count');
-            vm.queryCount = vm.totalItems;
-            vm.page = pagingParams.page;
-            vm.dashboardvalues = data;
+        /*
+                function onSuccess1(data, headers) {
+                    vm.links = ParseLinks.parse(headers('link'));
+                    vm.totalItems = headers('X-Total-Count');
+                    vm.queryCount = vm.totalItems;
+                    vm.page = pagingParams.page;
+                    vm.dashboardvalues = data;
 
-        }
-        function onError1(error) {
-            AlertService.error(error.data.message);
-        }*/
-
-
+                }
+                function onError1(error) {
+                    AlertService.error(error.data.message);
+                }*/
 
 
 
 
 
 
- /*           if ($state.params && $state.params.createdBy) {
 
-	           $http.get('api/opportunity-summary/getdata/' + $state.params.createdBy)
-	            .then(function(response) {
-	            	vm.dashboardvalues = [];
-	                console.log("RESPONSE");
-	                var len = response.data;
 
-	               // vm.dashboardvalues =  response.data;
-	                for (var i = 0; i < len.length; i++) {
-	                    vm.dashboardvalues.push(len[i]);
-	                }
-	                vm.totalItems =  vm.dashboardvalues.length;
-	                vm.queryCount = vm.totalItems;
+        /*           if ($state.params && $state.params.createdBy) {
 
-	            });
-                $scope.order = function (predicate) {
-                    vm.reverse = (vm.predicate === vm.predicate) ? !vm.reverse : false;
-                    vm.predicate = predicate;
-                };
+                      $http.get('api/opportunity-summary/getdata/' + $state.params.createdBy)
+                       .then(function(response) {
+                           vm.dashboardvalues = [];
+                           console.log("RESPONSE");
+                           var len = response.data;
 
-                $scope.paginate = function (value) {
-                    console.log(value);
-                    var begin, end, index;
-                    begin = (vm.page - 1) * vm.itemsPerPage;
-                    end = begin + vm.itemsPerPage;
-                    index = vm.dashboardvalues.indexOf(value);
-                    return (begin <= index && index < end);
-                };
+                          // vm.dashboardvalues =  response.data;
+                           for (var i = 0; i < len.length; i++) {
+                               vm.dashboardvalues.push(len[i]);
+                           }
+                           vm.totalItems =  vm.dashboardvalues.length;
+                           vm.queryCount = vm.totalItems;
 
-            }*/
+                       });
+                       $scope.order = function (predicate) {
+                           vm.reverse = (vm.predicate === vm.predicate) ? !vm.reverse : false;
+                           vm.predicate = predicate;
+                       };
+
+                       $scope.paginate = function (value) {
+                           console.log(value);
+                           var begin, end, index;
+                           begin = (vm.page - 1) * vm.itemsPerPage;
+                           end = begin + vm.itemsPerPage;
+                           index = vm.dashboardvalues.indexOf(value);
+                           return (begin <= index && index < end);
+                       };
+
+                   }*/
 
 
         /*    function onsuccess(data,headers)
@@ -281,13 +277,13 @@
             loadAll();
 
 
-        /*    setTimeout(function() {
-                $("#mytable").CongelarFilaColumna({
-                    Columnas: 5,
-                    width: '100%',
-                    height: '100%'
-                });
-            }, 2000);*/
+            /*    setTimeout(function() {
+                    $("#mytable").CongelarFilaColumna({
+                        Columnas: 5,
+                        width: '100%',
+                        height: '100%'
+                    });
+                }, 2000);*/
 
 
         }
@@ -306,13 +302,13 @@
 
 
 
-        }
+    }
 
 
 
 
 
-/*    }*/
+    /*    }*/
 })();
 
 
