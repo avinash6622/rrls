@@ -791,6 +791,15 @@ public class OpportunityMasterResource {
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 	}
 
+		@GetMapping("/opportunity-masters/search/{id}")		   
+		@Timed
+		public ResponseEntity<List<OpportunityMaster>> searchOpportunities(@PathVariable Long id, Pageable pageable) throws URISyntaxException {
+		    Page<OpportunityMaster> page = opportunityMasterRepository.findById(id,pageable);
+		    HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
+		    return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+		}
+	
+
 	/**
 	 * GET /opportunity-masters/:id : get the "id" opportunityMaster.
 	 *

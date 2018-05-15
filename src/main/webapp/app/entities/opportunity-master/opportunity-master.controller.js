@@ -3,7 +3,16 @@
 
     angular
         .module('researchRepositoryLearningSystemApp')
-        .controller('OpportunityMasterController', OpportunityMasterController);
+        .controller('OpportunityMasterController', OpportunityMasterController)
+        .filter('startFrom', function () {
+        return function (input, start) {
+            if (input) {
+                start = +start;
+                return input.slice(start);
+            }
+            return [];
+        };
+    });
 
     OpportunityMasterController.$inject = ['OpportunityMaster', 'ParseLinks','Principal', 'AlertService', 'paginationConstants','$scope','$filter','pagingParams','$state','$http','$sce'];
 

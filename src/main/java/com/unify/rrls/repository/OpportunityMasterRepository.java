@@ -2,6 +2,7 @@ package com.unify.rrls.repository;
 
 import com.unify.rrls.domain.OpportunityMaster;
 import com.unify.rrls.domain.OpportunityName;
+import com.unify.rrls.domain.OpportunitySummaryData;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.Page;
@@ -22,7 +23,6 @@ public interface OpportunityMasterRepository extends JpaRepository<OpportunityMa
 	List<OpportunityMaster>findByCreatedBy(String name);
 	OpportunityMaster findByMasterName(OpportunityName opportunityName);
 	List<OpportunityMaster> findAllByCreatedBy(String name);
-
-
-
+	Page<OpportunityMaster> findById(Long id,Pageable pageable);
+	
 }

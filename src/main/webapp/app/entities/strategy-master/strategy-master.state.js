@@ -60,10 +60,28 @@
                 }
             },
 
+            params: {
+                page: {
+                    value: '1',
+                    squash: true
+                },
+                sort: {
+                    value: 'id,asc',
+                    squash: true
+                }
 
+            },
             resolve: {
-                entity: ['$stateParams', 'StrategyMaster', function($stateParams, StrategyMaster) {
+               /* entity: ['$stateParams', 'StrategyMaster', function($stateParams, StrategyMaster) {
                     return StrategyMaster.get({id : $stateParams.id}).$promise;
+                }],*/
+                pagingParams: ['$stateParams', 'PaginationUtil', function ($stateParams, PaginationUtil) {
+                    return {
+                        page: PaginationUtil.parsePage($stateParams.page),
+                        sort: $stateParams.sort,
+                        predicate: PaginationUtil.parsePredicate($stateParams.sort),
+                        ascending: PaginationUtil.parseAscending($stateParams.sort)
+                    };
                 }],
                 previousState: ["$state", function ($state) {
                     var currentStateData = {

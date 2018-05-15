@@ -34,7 +34,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="opportunityMaster in vm.opportunityMasters">
+
+            <tr ng-repeat="opportunityMaster in filterData = vm.opportunityMasters | filter: paginate |orderBy:predicate:reverse">
+
 
             <td> <button type="submit"
                                  ui-sref="opportunity-master.edit({id:opportunityMaster.id})"

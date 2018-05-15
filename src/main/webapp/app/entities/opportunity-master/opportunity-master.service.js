@@ -179,7 +179,7 @@
                 method:'GET',
                 isArray: true
 
-            }
+            },
 
             /*,
             'addWordCreation':{
@@ -195,6 +195,11 @@
                 }
 
             }*/
+           'getSearchOpportunity': {
+           	url: 'api/opportunity-masters/search/:id',
+               method: 'GET',
+             
+           }
         });
 
 

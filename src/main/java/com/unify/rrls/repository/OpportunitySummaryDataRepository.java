@@ -17,7 +17,7 @@ import java.util.List;
 @Repository
 public interface OpportunitySummaryDataRepository extends JpaRepository<OpportunitySummaryData, Long> {
     List<OpportunitySummaryData>  findByOpportunityMasterid(OpportunityMaster opportunityMaster);
-    List<OpportunitySummaryData> findByStrategyMasterId(StrategyMaster strategyMaster);
+    Page<OpportunitySummaryData> findByStrategyMasterId(StrategyMaster strategyMaster,Pageable pageable);
 
     @Query(value="select * from opportunity_summary_data  where created_by = ?1 group by opp_master  ORDER BY ?#{#pageable}", nativeQuery = true)
     Page<OpportunitySummaryData> findAllGroupByOpportunityMasterid(String username,Pageable pageable);
