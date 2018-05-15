@@ -137,14 +137,19 @@ public class StrategyMasterResource {
      */
     @GetMapping("/strategy-masters/{id}")
     @Timed
-    public ResponseEntity<StrategyMaster> getStrategyMaster(@PathVariable Long id) {
+    public ResponseEntity<List<OpportunitySummaryData>> getStrategyMaster(@PathVariable Long id,@ApiParam Pageable pageable) {
         log.debug("REST request to get StrategyMaster : {}", id);
         StrategyMaster strategyMaster = strategyMasterRepository.findOne(id);
 
-        List<OpportunitySummaryData> opportunitySummaryData = opportunitySummaryDataRepository.findByStrategyMasterId(strategyMaster);
-        strategyMaster.setOpportunitySummaryData(opportunitySummaryData);
+        Page<OpportunitySummaryData> page = opportunitySummaryDataRepository.findByStrategyMasterId(strategyMaster,pageable);
+      //  strategyMaster.setOpportunitySummaryData(opportunitySummaryData);
 
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(strategyMaster));
+
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/strategy-masters");
+
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+
+       // return ResponseUtil.wrapOrNotFound(Optional.ofNullable(strategyMaster));
     }
 
     /**

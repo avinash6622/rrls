@@ -3,7 +3,16 @@
 
     angular
         .module('researchRepositoryLearningSystemApp')
-        .controller('OpportunityMasterController', OpportunityMasterController);
+        .controller('OpportunityMasterController', OpportunityMasterController)
+        .filter('startFrom', function () {
+        return function (input, start) {
+            if (input) {
+                start = +start;
+                return input.slice(start);
+            }
+            return [];
+        };
+    });
 
     OpportunityMasterController.$inject = ['OpportunityMaster', 'ParseLinks','Principal', 'AlertService', 'paginationConstants','$scope','$filter','pagingParams','$state'];
 
@@ -14,7 +23,7 @@
         vm.opportunityMasters = [];
         vm.loadPage = loadPage;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
-        vm.predicate = pagingParams.predicate;     
+        vm.predicate = pagingParams.predicate;
         vm.reverse = pagingParams.ascending;
         vm.page = 1;
         vm.links = {
@@ -31,7 +40,7 @@
         $scope.$on('authenticationSuccess', function() {
             getAccount();
         });
-  	  
+
   	  getAccount();
 
         function getAccount() {
@@ -54,32 +63,36 @@
                 size: vm.itemsPerPage,
                 sort: sort()
             }, onSuccess, onError);
-            function sort() {
-                var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
-                console.log(vm.predicate);
-                if (vm.predicate !== 'id') {
-                    result.push('id');
-                }
-                console.log(result);
-                return result;
+
+
+        }
+
+
+        function onSuccess(data, headers) {
+
+            vm.links = ParseLinks.parse(headers('link'));
+            vm.totalItems = headers('X-Total-Count');
+            for (var i = 0; i < data.length; i++) {
+                vm.opportunityMasters.push(data[i]);
             }
-
-            function onSuccess(data, headers) {
-
-                vm.links = ParseLinks.parse(headers('link'));
-                vm.totalItems = headers('X-Total-Count');
-                for (var i = 0; i < data.length; i++) {
-                    vm.opportunityMasters.push(data[i]);
-                }
-                vm.queryCount = vm.totalItems;
-                vm.page = pagingParams.page;
+            vm.queryCount = vm.totalItems;
+            vm.page = pagingParams.page;
 
 
+        }
+
+        function onError(error) {
+            AlertService.error(error.data.message);
+        }
+
+        function sort() {
+            var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
+            console.log(vm.predicate);
+            if (vm.predicate !== 'id') {
+                result.push('id');
             }
-
-            function onError(error) {
-                AlertService.error(error.data.message);
-            }
+            console.log(result);
+            return result;
         }
 
         function reset () {

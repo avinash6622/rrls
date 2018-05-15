@@ -34,9 +34,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="opportunityMaster in vm.opportunityMasters | filter: searchKeyword">
+            <tr ng-repeat="opportunityMaster in filterData = vm.opportunityMasters | filter: paginate |orderBy:predicate:reverse">
 
-                    <td> <button type="submit"
+            <td> <button type="submit"
                                  ui-sref="opportunity-master.edit({id:opportunityMaster.id})"
                                  class="btn btn-primary btn-sm" ng-if="vm.account.login==opportunityMaster.createdBy">
 
@@ -86,7 +86,7 @@
 
         <div class="text-center" style="margin-bottom: -5px">
             <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
-            <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+            <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()" previous-text="&lsaquo;" next-text="&rsaquo;"></uib-pagination>
         </div>
 </div>
 

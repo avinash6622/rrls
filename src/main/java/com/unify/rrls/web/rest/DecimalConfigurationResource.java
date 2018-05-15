@@ -52,18 +52,18 @@ public class DecimalConfigurationResource {
 	    public ResponseEntity<DecimalConfiguration> createDecimalConfiguration(@RequestBody DecimalConfiguration decimalConfiguration)
 	        throws URISyntaxException, IOException, MissingServletRequestParameterException {
 	        log.debug("REST request to save DecimalConfiguration : {}", decimalConfiguration);
-
+          DecimalConfiguration result = null;
 
 	        if (decimalConfiguration.getId() != null) {
-	        	 DecimalConfiguration result = decimalConfigurationRepository.save(decimalConfiguration);
+	        	  result = decimalConfigurationRepository.save(decimalConfiguration);
 	        	return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, result.getId().toString()))
 	    				.body(result);
 	        }
 	        else{
-	        DecimalConfiguration result = decimalConfigurationRepository.save(decimalConfiguration);
+	         result = decimalConfigurationRepository.save(decimalConfiguration);}
 
 	        return ResponseEntity.created(new URI("/api/decimal-config/" + result.getId()))
-	            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);}
+	            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
 	    }
 
 	  	@GetMapping("/decimal-config/{id}")
