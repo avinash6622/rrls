@@ -168,7 +168,7 @@
         $scope.getTotal = function(val1, val2, val3) {
 
             var	result = parseFloat(val1) + parseFloat(val2);
-            result=(isNaN(result)) ? '':result;
+            result=(isNaN(result) || result==Infinity) ? 0:result;
             if(result!=''){
             switch(val3){
       	  case 1:
@@ -196,7 +196,7 @@
             $scope.getFinPbv = function(val1, val2, val3) {
 
             	var result = (parseFloat(val1) / parseFloat(val2));
-            	result=(isNaN(result)) ? '':result;
+            	result=(isNaN(result) || result==Infinity) ? 0:result;
             	if(result!=''){
             	 switch(val3){
          	  case 1:
@@ -242,7 +242,7 @@
               		var result = parseFloat(val1) / ((parseFloat(val2)+parseFloat(val3))/2);
                	result=(result*100);
              	 }
-          		result=(isNaN(result)) ? '':result;
+          		result=(isNaN(result) || result==Infinity) ? 0:result;
           		if(result!=''){
           		 switch(val4){
           		  case 1:
@@ -270,7 +270,7 @@
 
     			var result = (parseFloat(val2) / parseFloat(val1)) - 1;
     			result = (result * 100);
-    			result = (isNaN(result)) ? '' : result;
+    			result = (isNaN(result) || result==Infinity) ? 0 : result;
     			if(result!=''){
     			switch (val3) {
     			case 1:
@@ -314,15 +314,27 @@
     			}}
     			return result;
     		};
-    		$scope.getNonMargin = function(val1, val2, val3) {
-
+    		$scope.getNonMargin = function(val1, val2, val3) { 			
+    			val1 = (isNaN(val1)) ? null:val1;
+    			val2 = (isNaN(val2)) ? null:val2;
+    			//console.log('EBITDA',val1,val2,val3);
     			var result = parseFloat(val1) / parseFloat(val2);
-    			result = (result * 100);
-    			result = (isNaN(result) || result==Infinity) ? '' : result;
-    			if(result!=''){
+    			result = (result * 100);    			
+    			result = (isNaN(result) || result==Infinity) ? 0 : result;
+    			//console.log('result',result);
+    			if(val1 == null || val1 == 0 ){
+    					console.log("val1 is null ",val1);
+    			}
+    			if(val2 == null || val2 == 0 ){
+					console.log("val2 is null ",val2);
+			}
     			switch (val3) {
     			case 1:
     				vm.opportunityMaster.nonFinancialSummaryData.marginOne = result;
+    				if(val1 == null || val1 == null ){
+    					vm.opportunityMaster.nonFinancialSummaryData.marginOne = 0;
+    					result == 0;
+    				}
     				break;
     			case 2:
     				vm.opportunityMaster.nonFinancialSummaryData.marginTwo = result;
@@ -338,15 +350,28 @@
     				break;
     			default:
     				break;
-    			}}
+    			}
+    			console.log("margin one ", vm.opportunityMaster.nonFinancialSummaryData.marginOne);
+    			/*console.log("margin two ", vm.opportunityMaster.nonFinancialSummaryData.marginTwo);
+    			console.log("margin Three ", vm.opportunityMaster.nonFinancialSummaryData.marginThree);
+    			console.log("margin Four ",vm.opportunityMaster.nonFinancialSummaryData.marginFour);
+    			console.log("margin Five ", vm.opportunityMaster.nonFinancialSummaryData.marginFive);*/
+    			
+    			/*if(result=='') {
+    				console.log("result else ");
+    				result = 0;
+    				console.log('val 3',val3);
+    				return result;
+    			}	*/	
     			return result;
+    			
     		};
 
     		$scope.getNonPbt = function(val1, val2, val3, val4, val5) {
 
     			var result = (parseFloat(val1) + parseFloat(val2) - parseFloat(val3)
     					- parseFloat(val4));
-    			result = (isNaN(result) && result==Infinity) ? '' : result;
+    			result = (isNaN(result) || result==Infinity) ? 0 : result;
     			if(result!=''){
     			switch (val5) {
     			case 1:
@@ -373,7 +398,7 @@
     		$scope.getNonPat = function(val1, val2, val3) {
 
     			var result = (parseFloat(val1) - parseFloat(val2));
-    			result = (isNaN(result) || result==Infinity) ? '' : result;
+    			result = (isNaN(result) || result==Infinity) ? 0 : result;
     			if(result!=''){
     			switch (val3) {
     			case 1:
@@ -398,9 +423,8 @@
     		};
     		$scope.getNonPe = function(val1, val2, val3) {
 
-    			var result = (parseFloat(val1) / parseFloat(val2));
-    			console.log('result PE',result);
-    			result = (isNaN(result) || result==Infinity) ? '' : result;
+    			var result = (parseFloat(val1) / parseFloat(val2));    		
+    			result = (isNaN(result) || result==Infinity) ? 0 : result;
     			if(result!=''){
     			switch (val3) {
     			case 1:
@@ -464,7 +488,7 @@
     						/ ((parseFloat(val2) + parseFloat(val3)) / 2);
     				result = (result * 100);
     			}
-    			result = (isNaN(result) || result==Infinity) ? '' : result;
+    			result = (isNaN(result) || result==Infinity) ? 0 : result;
     			if(result!=''){
     			switch (val4) {
     			case 1:
@@ -493,7 +517,7 @@
 
     				var result = parseFloat(val1)/parseFloat(val2);
     				result = (result * 100);
-    			result = (isNaN(result)) ? '' : result;
+    			result = (isNaN(result) || result==Infinity) ? 0 : result;
     			if(result!=''){
     			switch (val3) {
     			case 1:
@@ -521,7 +545,7 @@
 
 				var result = parseFloat(val1)/parseFloat(val2);
 				result = (result * 100);
-			result = (isNaN(result)) ? '' : result;
+			result = (isNaN(result) || result==Infinity) ? 0 : result;
 			if(result!=''){
 			switch (val3) {
 			case 1:

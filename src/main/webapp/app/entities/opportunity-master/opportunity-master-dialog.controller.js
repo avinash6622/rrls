@@ -174,7 +174,7 @@
 		$scope.getTotal = function(val1, val2, val3) {
 
 			var result = parseFloat(val1) + parseFloat(val2);
-			result = (isNaN(result)) ? '' : result;
+			result = (isNaN(result) || result==Infinity) ? 0 : result;
 
 			switch (val3) {
 			case 1:
@@ -201,7 +201,7 @@
 		$scope.getFinPbv = function(val1, val2, val3) {
 
 			var result = (parseFloat(val1) / parseFloat(val2));
-			result = (isNaN(result)) ? '' : result;
+			result = (isNaN(result) || result==Infinity) ? 0 : result;
 			switch (val3) {
 			case 1:
 				vm.opportunityMaster.financialSummaryData.pbvOne = result;
@@ -247,7 +247,7 @@
 						/ ((parseFloat(val2) + parseFloat(val3)) / 2);
 				result = (result * 100);
 			}
-			result = (isNaN(result)) ? '' : result;
+			result = (isNaN(result) || result==Infinity) ? 0 : result;
 			switch (val4) {
 			case 1:
 				vm.opportunityMaster.financialSummaryData.roeOne = result;
@@ -273,7 +273,7 @@
 
 			var result = (parseFloat(val2) / parseFloat(val1)) - 1;
 			result = (result * 100);
-			result = (isNaN(result)) ? '' : result;
+			result = (isNaN(result) || result==Infinity) ? 0 : result;
 			switch (val3) {
 			case 1:
 				vm.opportunityMaster.nonFinancialSummaryData.revGrowthTwo = result;
@@ -320,7 +320,7 @@
 
 			var result = parseFloat(val1) / parseFloat(val2);
 			result = (result * 100);
-			result = (isNaN(result)) ? '' : result;
+			result = (isNaN(result) || result==Infinity) ? 0 : result;
 			switch (val3) {
 			case 1:
 				vm.opportunityMaster.nonFinancialSummaryData.marginOne = result;
@@ -347,7 +347,7 @@
 
 			var result = (parseFloat(val1) + parseFloat(val2) - parseFloat(val3)
 					- parseFloat(val4));
-			result = (isNaN(result)) ? '' : result;
+			result = (isNaN(result) || result==Infinity) ? 0 : result;
 			switch (val5) {
 			case 1:
 				vm.opportunityMaster.nonFinancialSummaryData.pbtOne = result;
@@ -373,7 +373,7 @@
 		$scope.getNonPat = function(val1, val2, val3) {
 
 			var result = (parseFloat(val1) - parseFloat(val2));
-			result = (isNaN(result)) ? '' : result;
+			result = (isNaN(result) || result==Infinity) ? 0 : result;
 			switch (val3) {
 			case 1:
 				vm.opportunityMaster.nonFinancialSummaryData.patOne = result;
@@ -398,7 +398,7 @@
 		$scope.getNonPe = function(val1, val2, val3) {
 
 			var result = (parseFloat(val1) / parseFloat(val2));
-			result = (isNaN(result)) ? '' : result;
+			result = (isNaN(result) || result==Infinity) ? 0 : result;
 			switch (val3) {
 			case 1:
 				vm.opportunityMaster.nonFinancialSummaryData.peOne = result;
@@ -461,7 +461,7 @@
 						/ ((parseFloat(val2) + parseFloat(val3)) / 2);
 				result = (result * 100);
 			}
-			result = (isNaN(result)) ? '' : result;
+			result = (isNaN(result) || result==Infinity) ? 0 : result;
 			switch (val4) {
 			case 1:
 				vm.opportunityMaster.nonFinancialSummaryData.roeOne = result;
@@ -487,7 +487,7 @@
 
 			var result = parseFloat(val1)/parseFloat(val2);
 			result = (result * 100);
-		result = (isNaN(result)) ? '' : result;
+		result = (isNaN(result) || result==Infinity) ? 0 : result;
 		if(result!=''){
 		switch (val3) {
 		case 1:
@@ -515,7 +515,7 @@
 
 		var result = parseFloat(val1)/parseFloat(val2);
 		result = (result * 100);
-	result = (isNaN(result)) ? '' : result;
+	result = (isNaN(result) || result==Infinity) ? 0 : result;
 	if(result!=''){
 	switch (val3) {
 	case 1:

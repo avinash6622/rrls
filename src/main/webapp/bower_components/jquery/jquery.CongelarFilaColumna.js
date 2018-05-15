@@ -13,7 +13,7 @@
 * Licensed under MIT
 * http://www.opensource.org/licenses/mit-license.php
 *
-*/
+
 
 (function($)
 {
@@ -89,12 +89,12 @@
 						height: settings.height
 					});
 
-					/*Agregamos la tabla completa a fht-tbody-conten*/
+					Agregamos la tabla completa a fht-tbody-conten
 					$lobTable.wrap('<div class="fht-tbody"><div class="fht-tbody-conten"></div></div>');
 					$lobTable.closest('.fht-tbody-conten').css({'width':lnuWidthTable});
 					$lobDivBody  = $wrapper.find('div.fht-tbody');
 
-					/*Agregamos el encabesado clonado al div fht-thead*/
+					Agregamos el encabesado clonado al div fht-thead
 					$lobDivTHead = $('<div class="fht-thead"></div>').prependTo($fixedBody).css({'width':lnuWidthTable});
 					lobTableThead.css({'width':lnuWidthTable});
 					$lobDivTHead.append(lobTableThead).css({'width':lnuWidthTable});
@@ -240,10 +240,10 @@
 		};
 		var helpers  =
 		{
-			/*
+			
 				* return boolean
 				* valida si el elemento tien un thead y un tbody.
-			*/
+			
 			_EsUnaTabla: function($obj)
 			{
 				var $tabla = $obj,
@@ -635,3 +635,4 @@
 
 	}
 })(jQuery);
+*/

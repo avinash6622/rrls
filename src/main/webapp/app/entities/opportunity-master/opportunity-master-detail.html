@@ -614,7 +614,7 @@ padding :none !important}
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="marCapThree"
 									ng-model="vm.opportunityMaster.financialSummaryData.marCapThree" decimals="{{vm.decimalValue}}"
-									ng-disabled="isDisabled" style="text-align: right"/></td>
+									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="marCapFour"
 									ng-model="vm.opportunityMaster.financialSummaryData.marCapFour" decimals="{{vm.decimalValue}}"
 									ng-disabled="true" style="text-align: right"/></td>
@@ -834,8 +834,8 @@ padding :none !important}
 								<td scope="col" style="text-align: left">Margin(%)</td>
 								<td><input name="marginOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marginOne" decimals="{{vm.decimalValue}}"
-									ng-value="getNonMargin(vm.opportunityMaster.nonFinancialSummaryData.ebitdaOne, vm.opportunityMaster.nonFinancialSummaryData.revenueOne,1)"
-									ng-disabled="true" style="text-align: right"/></td>
+									ng-change="getNonMargin(vm.opportunityMaster.nonFinancialSummaryData.ebitdaOne, vm.opportunityMaster.nonFinancialSummaryData.revenueOne,1)"									
+									 ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="marginTwo"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marginTwo" decimals="{{vm.decimalValue}}"
 									ng-value="getNonMargin(vm.opportunityMaster.nonFinancialSummaryData.ebitdaTwo, vm.opportunityMaster.nonFinancialSummaryData.revenueTwo,2)"
@@ -1033,7 +1033,7 @@ padding :none !important}
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="epsThree"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapThree" decimals="{{vm.decimalValue}}"
-									ng-disabled="isDisabled" style="text-align: right"/></td>
+									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="epsFour"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marketCapFour" decimals="{{vm.decimalValue}}"
 									ng-disabled="true" style="text-align: right"/></td>

@@ -380,6 +380,16 @@ public class OpportunityMasterResource {
 
 			NonFinancialSummaryData nonFinancialSummaryData = opportunityMaster.getNonFinancialSummaryData();
 			nonFinancialSummaryData.setOpportunityMaster(result);
+			nonFinancialSummaryData.setPethree(0.0);
+			nonFinancialSummaryData.setPatGrowthThree(0.0);
+			nonFinancialSummaryData.setPeOne(0.0);
+			nonFinancialSummaryData.setPeTwo(0.0);
+			nonFinancialSummaryData.setPeFour(0.0);
+			nonFinancialSummaryData.setPeFive(0.0);
+			nonFinancialSummaryData.setPatGrowthTwo(0.0);
+			nonFinancialSummaryData.setPatGrowthFour(0.0);
+			nonFinancialSummaryData.setPatGrowthFive(0.0);
+			nonFinancialSummaryData.setMarketCapThree(0.0);
 			nonFinancialSummaryDataRepository.save(nonFinancialSummaryData);
 
 			for (StrategyMaster sm : opportunityMaster.getSelectedStrategyMaster()) {

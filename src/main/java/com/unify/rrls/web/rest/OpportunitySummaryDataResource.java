@@ -20,6 +20,7 @@ import com.unify.rrls.security.SecurityUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,8 @@ import org.springframework.web.bind.annotation.*;
 import com.codahale.metrics.annotation.Timed;
 import com.unify.rrls.repository.OpportunitySummaryDataRepository;
 import com.unify.rrls.web.rest.util.HeaderUtil;
+
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/api")
@@ -180,16 +183,17 @@ System.out.println(sm);
 
     @GetMapping("/opportunity-summary/getdata")
     @Timed
-    public ResponseEntity<List<OpportunitySummaryData>> getAllOpportunitySummaryData() {
+    public ResponseEntity<List<OpportunitySummaryData>> getAllOpportunitySummaryData(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of OpportunityMasters");
 
         Query q = em.createNativeQuery("select * from opportunity_summary_data group by opp_master",OpportunitySummaryData.class);
 
         List<OpportunitySummaryData> page =  q.getResultList();
+        
         String userName=SecurityUtils.getCurrentUserLogin();
         
 
-        List<OpportunitySummaryData> summaryData = new ArrayList<OpportunitySummaryData>();
+        List<OpportunitySummaryData> summaryData = null;
 
         for (OpportunitySummaryData opportunitySummaryData:page) {
            // if(opportunitySummaryData.getOpportunityMasterid().getOppStatus() != null) {
