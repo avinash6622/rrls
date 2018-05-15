@@ -22,7 +22,7 @@
     <div class="table-responsive">
         <table class="jh-table table table-striped">
             <thead>
-                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
                  <!--    <th jh-sort-by="oppCode"><span>Opp Code</span> <span class="glyphicon glyphicon-sort"></span></th> -->
                  <th jh-sort-by="masterName.oppName"><span>Opportunity</span> <span class="glyphicon glyphicon-sort"></span></th>
 
@@ -35,7 +35,7 @@
             </thead>
             <tbody>
 
-            <tr ng-repeat="opportunityMaster in filterData = vm.opportunityMasters | filter: paginate |orderBy:predicate:reverse">
+            <tr ng-repeat="opportunityMaster in vm.opportunityMasters | orderBy:predicate:reverse">
 
 
             <td> <button type="submit"
