@@ -15,7 +15,7 @@
                 </button>
             </div>
 
-             <div class="col-md-4"><input class="form-control ng-pristine ng-valid" ng-model="searchKeyword" type="text" placeholder="Search"> </div>
+             <div class="col-md-4"><input class="form-control ng-pristine ng-valid" ng-model="vm.name" ng-selected="vm.filterName(vm.opportunityMaster)"auto-complete="vm.autoCompleteOpportunity" type="text" placeholder="Search"> </div>
         </div>
     </div>
      <div style="margin-bottom: 5px"></div>
@@ -27,16 +27,16 @@
                  <th jh-sort-by="masterName.oppName"><span>Opportunity</span> <span class="glyphicon glyphicon-sort"></span></th>
 
                   	<th jh-sort-by="masterName.sectorType"><span>Sector</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="oppDescription"><span>Description</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th><span>Description</span></th>
                     <th><span>Strategy</span></th>
                   <th jh-sort-by="createdBy"><span>Created By</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="opportunityMaster in vm.opportunityMasters | filter: searchKeyword">
+                <tr ng-repeat="opportunityMaster in vm.opportunityMasters">
 
-                    <td> <button type="submit"
+            <td> <button type="submit"
                                  ui-sref="opportunity-master.edit({id:opportunityMaster.id})"
                                  class="btn btn-primary btn-sm" ng-if="vm.account.login==opportunityMaster.createdBy">
 
@@ -86,7 +86,7 @@
 
         <div class="text-center" style="margin-bottom: -5px">
             <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
-            <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+            <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()" previous-text="&lsaquo;" next-text="&rsaquo;"></uib-pagination>
         </div>
 </div>
 

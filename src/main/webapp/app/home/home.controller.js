@@ -268,9 +268,6 @@
         }
 
 
-        function onError(error) {
-            AlertService.error(error.data.message);
-        }
         function reset () {
             vm.page = 0;
             vm.opportunityMasters = [];
@@ -298,7 +295,8 @@
             $state.transitionTo($state.$current, {
                 page: vm.page,
                 sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
-                search: vm.currentSearch
+                search: vm.currentSearch,
+                createdBy:$state.params.createdBy
             });
 
 
