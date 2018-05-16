@@ -53,7 +53,7 @@ function filterName(id){
                 minimumChars : 1,
                 dropdownHeight : '200px',
                 data : function(searchText) {
-                    return $http.get('api/opportunity-masters').then(
+                    return $http.get('api/opportunity-masters/all').then(
                         function(response) {
                             searchText = searchText.toLowerCase();
 
@@ -86,8 +86,21 @@ function filterName(id){
                     vm.name = e.item.masterName.oppName;
                     vm.opportunityMaster=e.item;
                     console.log(vm.opportunityMaster,'NAme');
-                    // state.airport = e.item;
+                    OpportunityMaster.getSearchOpportunity({
+                        id:vm.opportunityMaster.id
+
+                    },onSuccess1,onError1)
                 }
+            }
+        function onSuccess1(data, headers){
+
+            console.log(data);
+                vm.opportunityMasters = data;
+
+            }
+
+            function onError1() {
+
             }
 
         var myDate=new Date();

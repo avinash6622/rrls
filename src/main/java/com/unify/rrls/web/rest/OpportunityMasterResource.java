@@ -790,6 +790,23 @@ public class OpportunityMasterResource {
 
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 	}
+	
+	@GetMapping("/opportunity-masters/all")
+    @Timed
+    public ResponseEntity<List<OpportunityMaster>> getAllOpportunityMastersforauto() {
+        log.debug("REST request to get a page of OpportunityMasters");
+        List<OpportunityMaster> page = null;
+       // String role = SecurityUtils.getCurrentRoleLogin();
+       // String username = SecurityUtils.getCurrentUserLogin();
+
+
+        page = opportunityMasterRepository.findAll();
+        System.out.println(page);
+
+        HttpHeaders headers=new HttpHeaders();
+        return new ResponseEntity<>(page, headers,HttpStatus.OK);
+
+    }
 
 		@GetMapping("/opportunity-masters/search/{id}")
 		@Timed

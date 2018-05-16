@@ -198,7 +198,7 @@
            'getSearchOpportunity': {
            	url: 'api/opportunity-masters/search/:id',
                method: 'GET',
-             
+               isArray: true
            }
         });
 
