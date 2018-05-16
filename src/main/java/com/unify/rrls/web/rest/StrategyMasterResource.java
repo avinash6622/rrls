@@ -100,6 +100,7 @@ public class StrategyMasterResource {
         if (strategyMaster.getId() == null) {
             return createStrategyMaster(strategyMaster);
         }
+        strategyMaster.setTotalStocks(0.0);
         StrategyMaster result = strategyMasterRepository.save(strategyMaster);
 
         String name = "Strategy:"+result.getStrategyName()+","+"AUM :"+result.getAum()+","+"Total stocks:"+result.getTotalStocks();
@@ -135,7 +136,7 @@ public class StrategyMasterResource {
      * @param id the id of the strategyMaster to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the strategyMaster, or with status 404 (Not Found)
      */
-    @GetMapping("/strategy-masters/{id}")
+    @GetMapping("/strategy-masters-detail/{id}")
     @Timed
     public ResponseEntity<List<OpportunitySummaryData>> getStrategyMaster(@PathVariable Long id,@ApiParam Pageable pageable) {
         log.debug("REST request to get StrategyMaster : {}", id);
@@ -150,6 +151,19 @@ public class StrategyMasterResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 
        // return ResponseUtil.wrapOrNotFound(Optional.ofNullable(strategyMaster));
+    }
+
+
+    @GetMapping("/strategy-masters/{id}")
+    @Timed
+    public ResponseEntity<StrategyMaster> getStrategyMaster(@PathVariable Long id) {
+        log.debug("REST request to get StrategyMaster : {}", id);
+        StrategyMaster strategyMaster = strategyMasterRepository.findOne(id);
+
+        List<OpportunitySummaryData> opportunitySummaryData = opportunitySummaryDataRepository.findByStrategyMasterId(strategyMaster);
+        strategyMaster.setOpportunitySummaryData(opportunitySummaryData);
+
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(strategyMaster));
     }
 
     /**
