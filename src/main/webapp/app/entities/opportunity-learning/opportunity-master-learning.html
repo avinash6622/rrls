@@ -27,7 +27,7 @@
    
      <span ng-bind-html="learn.description"></span>
      <button class="btn btn-md btn-warning pull-right"
-		type="button"  ng-show="$ctrl.account.login === $ctrl.opportunityMaster.createdBy && !$ctrl.editLearning" ng-click="$ctrl.display(learn); $ctrl.editLearning=true">Edit</button>
+		type="button"  ng-show="($ctrl.account.login === $ctrl.opportunityMaster.createdBy || $ctrl.account.authorities[0]=='Master') && !$ctrl.editLearning" ng-click="$ctrl.display(learn); $ctrl.editLearning=true">Edit</button>
 	<button class="btn btn-md btn-warning pull-right"
 		type="button"  ng-show="$ctrl.editLearning" ng-click="$ctrl.modifiedLearn($ctrl.updateLearning,$index); $ctrl.editLearning=false">Save</button>
    <div ng-show="$ctrl.editLearning">
@@ -42,10 +42,10 @@
 			<!-- </div> -->
 	<div></div>
 			<button class="btn btn-md btn-warning"
-		type="button" ng-click="$ctrl.showLearning=true" ng-show="$ctrl.learnings.length !== 0 && $ctrl.account.login === $ctrl.opportunityMaster.createdBy">Add Learning</button>
+		type="button" ng-click="$ctrl.showLearning=true" ng-show="$ctrl.learnings.length !== 0 && ($ctrl.account.login === $ctrl.opportunityMaster.createdBy || $ctrl.account.authorities[0]=='Master')">Add Learning</button>
 			<input type="text" class="form-control" name="subject"
-				placeholder="Enter Subject" ng-model="$ctrl.subject" ng-show="($ctrl.showLearning || $ctrl.learnings.length==0) && $ctrl.account.login === $ctrl.opportunityMaster.createdBy">
-				<div ng-show="($ctrl.showLearning || $ctrl.learnings.length==0) && $ctrl.account.login === $ctrl.opportunityMaster.createdBy">
+				placeholder="Enter Subject" ng-model="$ctrl.subject" ng-show="($ctrl.showLearning || $ctrl.learnings.length==0) && ($ctrl.account.login === $ctrl.opportunityMaster.createdBy || $ctrl.account.authorities[0]=='Master')">
+				<div ng-show="($ctrl.showLearning || $ctrl.learnings.length==0) && ($ctrl.account.login === $ctrl.opportunityMaster.createdBy || $ctrl.account.authorities[0]=='Master')">
 			<div ckeditor="ckOptionsAdd" ng-model="$ctrl.description"
 				ready="onReady()" ng-change="changeCKeditor()"></div></div>
 		</div></div>

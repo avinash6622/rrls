@@ -47,7 +47,7 @@
                     <th>
                         <div class="pull-right">
                         <div class="col-xs-3">
-                            <button class="btn btn-primary" ui-sref="strategy-master.new" has-authority="Research">
+                            <button class="btn btn-primary" ui-sref="strategy-master.new" has-any-authority="Research,Master">
                                 <span></span>
                                 <span style="padding: 10px">Create New Strategy</span>
                             </button>
@@ -64,7 +64,7 @@
                                       ui-sref="strategy-master.edit({id:strategyMaster.id})"
                                       class="btn btn-primary btn-sm"
                                       tooltip="edit"
-                                      tooltip-placement="bottom" has-authority="Research">
+                                      tooltip-placement="bottom" has-any-authority="Research,Master">
                         <span class="glyphicon glyphicon-pencil"></span>
                         <span class="hidden-sm-down"></span>
                     </button> <a ui-sref="strategy-master-detail({id:strategyMaster.id})">{{strategyMaster.strategyName}}</a></td>

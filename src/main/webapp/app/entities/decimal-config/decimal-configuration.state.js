@@ -13,7 +13,7 @@
             parent: 'entity',
             url: '/decimal-configuration',
             data: {
-                authorities: ['Research'],
+                authorities: ['Research','Master'],
                 pageTitle: 'Decimal Configuration'
             },
             views: {
@@ -38,7 +38,7 @@
             parent: 'opportunity-master',
             url: '/decimal-configuration/{id}',
             data: {
-                authorities: ['Research'],
+                authorities: ['Research','Master'],
                 pageTitle: 'Decimal Configuration'
             },
             views: {

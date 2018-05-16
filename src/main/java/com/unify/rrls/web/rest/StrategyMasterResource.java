@@ -67,6 +67,7 @@ public class StrategyMasterResource {
         if (strategyMaster.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new strategyMaster cannot already have an ID")).body(null);
         }
+        strategyMaster.setTotalStocks(0.0);
         StrategyMaster result = strategyMasterRepository.save(strategyMaster);
 
         String page="Strategy";
@@ -100,8 +101,7 @@ public class StrategyMasterResource {
         if (strategyMaster.getId() == null) {
             return createStrategyMaster(strategyMaster);
         }
-        strategyMaster.setTotalStocks(0.0);
-        StrategyMaster result = strategyMasterRepository.save(strategyMaster);
+       StrategyMaster result = strategyMasterRepository.save(strategyMaster);
 
         String name = "Strategy:"+result.getStrategyName()+","+"AUM :"+result.getAum()+","+"Total stocks:"+result.getTotalStocks();
         String page = "Strategy";

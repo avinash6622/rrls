@@ -488,6 +488,7 @@ public class FileUploadResource {
                     	  sm.setPeThirdYear(finance.getPeThree());
                     	  sm.setPeFourthYear(finance.getPeFour());
                     	  sm.setPeFifthYear(finance.getPeFive());
+                    	  sm.setCreatedBy(opportunityMaster.getCreatedBy());
                       opportunitySummaryDataRepository.save(opportunitySummaryDataList);
 
                        }
@@ -1102,7 +1103,7 @@ public class FileUploadResource {
                     		  if(nonFinance.getWeight()!=0.0 && nonFinance.getPethree()!=0.0 && nonFinance.getPatGrowthThree()!=0.0)
                     	  sm.setPegYearPeg(nonFinance.getWeight()*(nonFinance.getPethree()/nonFinance.getPatGrowthThree()));
                     	  }
-
+                    	  sm.setCreatedBy(opportunityMaster.getCreatedBy());
                       opportunitySummaryDataRepository.save(sm);
                       }
                       log.info("In financial uploadFinancial" + iTotRowInserted + " inserted");

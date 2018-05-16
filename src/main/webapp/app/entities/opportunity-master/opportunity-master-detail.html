@@ -99,7 +99,7 @@ padding :none !important}
 
                 <button type="button"
                         ui-sref="opportunity-master.edit({id:vm.opportunityMaster.id})"
-                        class="btn btn-md btn-primary" ng-if="vm.account.login==vm.opportunityMaster.createdBy">
+                        class="btn btn-md btn-primary" ng-if="(vm.account.login==vm.opportunityMaster.createdBy || vm.account.authorities[0]=='Master')">
                     <span class="glyphicon glyphicon-pencil"></span> <span
                     class="hidden-sm-down"> Edit</span>
                 </button>
@@ -323,7 +323,7 @@ padding :none !important}
 		<dt>
 			<button type="button" class="btn btn-primary"
 				ng-click="showdocument(); vm.htmlContent = null;" ng-show="!myvar"
-				has-authority="Research" style="padding: 2px;padding-right: 12px;padding-left: 12px">
+				has-any-authority="Research,Master" style="padding: 2px;padding-right: 12px;padding-left: 12px">
 				<span class="hidden-sm-down">CreateDocument</span>
 			</button>
 
@@ -346,29 +346,29 @@ padding :none !important}
 		</dd>
 		</dd>
 
-		<dt has-authority="Research">
+		<dt has-any-authority="Research,Master">
 			<span>Select File Format:</span>
 		</dt>
 
 
-		<dd has-authority="Research">
+		<dd has-any-authority="Research,Master">
 			<select ng-model="selitem" ng-change="getselectval()">
 				<option ng-repeat="x in fileformat">{{x}}</option>
 			</select>
 		</dd>
 
-		<dt has-authority="Research">
+		<dt has-any-authority="Research,Master">
 			<span>Description:</span>
 		</dt>
-		<dd has-authority="Research">
+		<dd has-any-authority="Research,Master">
 			<input type="text" class="col-sm-6" id="fileid" name="fileid"
 				ng-model="vm.uploadfileName" style="padding-left: 0px;padding-right: 0px"/>
 		</dd>
 
-		<dt has-authority="Research">
+		<dt has-any-authority="Research,Master">
 			<span>Upload:</span>
 		</dt>
-		<dd has-authority="Research">
+		<dd has-any-authority="Research,Master">
 			<div class="form-group">
                 <div>
                 <label for="file_upload" class="btn btn-md btn-primary col-md-1">Choose File</label>
@@ -418,10 +418,10 @@ padding :none !important}
 		</dt>
 		<dd>
             <div>
-			<button class="btn btn-primary" style="padding: 2px;padding-right: 12px;padding-left: 12px" ng-if="isDisabled && vm.account.login==vm.opportunityMaster.createdBy" ng-click="ok()">Edit</button>
+			<button class="btn btn-primary" style="padding: 2px;padding-right: 12px;padding-left: 12px" ng-if="isDisabled && (vm.account.login==vm.opportunityMaster.createdBy || vm.account.authorities[0]=='Master')" ng-click="ok()">Edit</button>
 			<!--<button class="btn btn-warning" ng-if="!isDisabled"
 				ng-click="cancel()">Cancel</button>-->
-            <button class="btn btn-primary" style="padding: 2px;padding-right: 12px;padding-left: 12px" ng-if="!isDisabled  && vm.account.login==vm.opportunityMaster.createdBy" ng-click="submitTable()">Submit</button>
+            <button class="btn btn-primary" style="padding: 2px;padding-right: 12px;padding-left: 12px" ng-if="!isDisabled  && (vm.account.login==vm.opportunityMaster.createdBy || vm.account.authorities[0]=='Master')" ng-click="submitTable()">Submit</button>
            <!-- <input type="number" class="form-control" name="myDecimal" placeholder="Decimal" ng-model="myDecimal" ng-pattern="/^[0-2]{0}/" step="0" required />-->
             </div>
 		</dd>
