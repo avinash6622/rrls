@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import com.unify.rrls.domain.*;
 import org.apache.commons.io.FileUtils;
 import org.docx4j.Docx4J;
 import org.docx4j.Docx4jProperties;
@@ -50,24 +51,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.codahale.metrics.annotation.Timed;
-import com.unify.rrls.domain.AnswerComment;
-import com.unify.rrls.domain.CommentOpportunity;
-import com.unify.rrls.domain.DecimalConfiguration;
-import com.unify.rrls.domain.DocumentCreationBean;
-import com.unify.rrls.domain.FileUpload;
-import com.unify.rrls.domain.FileUploadComments;
-import com.unify.rrls.domain.FinancialSummaryData;
-import com.unify.rrls.domain.NonFinancialSummaryData;
-import com.unify.rrls.domain.OpportunityAutomation;
-import com.unify.rrls.domain.OpportunityLearning;
-import com.unify.rrls.domain.OpportunityMaster;
-import com.unify.rrls.domain.OpportunityMasterContact;
-import com.unify.rrls.domain.OpportunityQuestion;
-import com.unify.rrls.domain.OpportunitySummaryData;
-import com.unify.rrls.domain.ReplyComment;
-import com.unify.rrls.domain.StrategyMapping;
-import com.unify.rrls.domain.StrategyMaster;
-import com.unify.rrls.domain.User;
 import com.unify.rrls.repository.AdditionalFileUploadRepository;
 import com.unify.rrls.repository.AnswerCommentRepository;
 import com.unify.rrls.repository.CommentOpportunityRepository;
@@ -790,7 +773,7 @@ public class OpportunityMasterResource {
 
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/opportunity-masters/all")
     @Timed
     public ResponseEntity<List<OpportunityMaster>> getAllOpportunityMastersforauto() {
@@ -808,10 +791,10 @@ public class OpportunityMasterResource {
 
     }
 
-		@GetMapping("/opportunity-masters/search/{id}")
+		@PostMapping("/opportunity-masters/search")
 		@Timed
-		public ResponseEntity<List<OpportunityMaster>> searchOpportunities(@PathVariable Long id, Pageable pageable) throws URISyntaxException {
-		    Page<OpportunityMaster> page = opportunityMasterRepository.findById(id,pageable);
+		public ResponseEntity<List<OpportunityMaster>> searchOpportunities(@RequestBody OpportunityName opportunityName, Pageable pageable) throws URISyntaxException {
+		    Page<OpportunityMaster> page = opportunityMasterRepository.findByMasterName(opportunityName,pageable);
 		    HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
 		    return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 		}

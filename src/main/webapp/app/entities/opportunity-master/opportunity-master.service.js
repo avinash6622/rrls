@@ -196,8 +196,8 @@
 
             }*/
            'getSearchOpportunity': {
-           	url: 'api/opportunity-masters/search/:id',
-               method: 'GET',
+           	url: 'api/opportunity-masters/search',
+               method: 'POST',
                isArray: true
            }
         });

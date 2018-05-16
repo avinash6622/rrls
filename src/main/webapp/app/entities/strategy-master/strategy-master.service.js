@@ -41,7 +41,14 @@
                     copy.createdDate = DateUtils.convertLocalDateToServer(copy.createdDate);
                     return angular.toJson(copy);
                 }
+            },
+
+            'getStrategyDetail': {
+                url: 'api/strategy-masters-detail/:id',
+                method: 'GET',
+                isArray: true
             }
         });
+
     }
 })();
