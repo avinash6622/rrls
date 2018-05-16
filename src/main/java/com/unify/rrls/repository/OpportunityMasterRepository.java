@@ -23,6 +23,6 @@ public interface OpportunityMasterRepository extends JpaRepository<OpportunityMa
 	List<OpportunityMaster>findByCreatedBy(String name);
 	OpportunityMaster findByMasterName(OpportunityName opportunityName);
 	List<OpportunityMaster> findAllByCreatedBy(String name);
-	Page<OpportunityMaster> findById(Long id,Pageable pageable);
-	
+	Page<OpportunityMaster> findByMasterName(OpportunityName opportunityName,Pageable pageable);
+
 }

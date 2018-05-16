@@ -175,7 +175,7 @@
 
 
 
-              StrategyMaster.query({
+              StrategyMaster.getStrategyDetail({
                     page: pagingParams.page - 1,
                     size: vm.itemsPerPage,
                     id: $stateParams.id

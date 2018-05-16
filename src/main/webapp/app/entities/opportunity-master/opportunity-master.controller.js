@@ -27,9 +27,10 @@
         vm.transition = transition;
         vm.itemsValue = 'Opportunities';
         vm.account = null;
-        vm.opportunityMaster='';
+        vm.opportunityName='';
         vm.name='';
         vm.filterName=filterName;
+        vm.clear = clear;
 
        vm.loadAll();
         $scope.$on('authenticationSuccess', function() {
@@ -52,56 +53,72 @@ function filterName(id){
         vm.autoCompleteOpportunity = {
                 minimumChars : 1,
                 dropdownHeight : '200px',
+
                 data : function(searchText) {
-                    return $http.get('api/opportunity-masters/all').then(
+                    return $http.get('api/opportunity-names').then(
                         function(response) {
                             searchText = searchText.toLowerCase();
-
+                          //  console.log(searchText);
+                           // console.log(response);
 
 
                             // ideally filtering should be done on the server
                             var states = _.filter(response.data,
                                 function(state) {
-                                    return (state.masterName.oppName).toLowerCase()
+                               // console.log(state);
+                                    return (state.oppName).toLowerCase()
                                         .startsWith(searchText);
 
                                 });
 
-                           /*  return _.pluck(states, 'sectorType');*/
-                            return states;
+                          return states;
                         });
                 },
                 renderItem : function(item) {
                     return {
                         value : item,
                         label : $sce.trustAsHtml("<p class='auto-complete'>"
-                            + item.masterName.oppName + "</p>")
+                            + item.oppName + "</p>")
                     };
                 },
 
                 itemSelected : function(e) {
 
-
+                    console.log(e);
                 	vm.selectedName = e;
-                    vm.name = e.item.masterName.oppName;
-                    vm.opportunityMaster=e.item;
-                    console.log(vm.opportunityMaster,'NAme');
-                    OpportunityMaster.getSearchOpportunity({
-                        id:vm.opportunityMaster.id
+                    vm.name = e.item.oppName;
+                    vm.opportunityName=e.item;
+                    console.log(vm.opportunityName.id,'NAme');
 
-                    },onSuccess1,onError1)
+
+                    OpportunityMaster.getSearchOpportunity(vm.opportunityName,onSuccess1,onError1);
                 }
             }
+
+
+
+
         function onSuccess1(data, headers){
 
             console.log(data);
+
+            console.log(vm.name);
+
+
                 vm.opportunityMasters = data;
 
-            }
+        }
+         function onError1() {
 
-            function onError1() {
 
-            }
+         }
+
+         function clear() {
+             vm.name = '';
+             loadAll();
+         }
+
+
 
         var myDate=new Date();
 
