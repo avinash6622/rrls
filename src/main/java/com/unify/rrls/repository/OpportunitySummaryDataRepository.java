@@ -22,5 +22,8 @@ public interface OpportunitySummaryDataRepository extends JpaRepository<Opportun
 
     @Query(value="select * from opportunity_summary_data  where created_by = ?1 group by opp_master  ORDER BY ?#{#pageable}", nativeQuery = true)
     Page<OpportunitySummaryData> findAllGroupByOpportunityMasterid(String username,Pageable pageable);
+
+    @Query(value="select * from opportunity_summary_data group by opp_master  ORDER BY ?#{#pageable}", nativeQuery = true)
+    Page<OpportunitySummaryData> findAllGroupby(Pageable pageable);
 }
 

@@ -191,10 +191,22 @@ System.out.println(sm);
         log.debug("REST request to get a page of OpportunityMasters");
 
         String userName=SecurityUtils.getCurrentUserLogin();
+        String role = SecurityUtils.getCurrentRoleLogin();
         /*Query q = em.createNativeQuery("select * from opportunity_summary_data group by opp_master",OpportunitySummaryData.class);
 
         List<OpportunitySummaryData> page =  q.getResultList();*/
-        Page<OpportunitySummaryData> page = opportunitySummaryDataRepository.findAllGroupByOpportunityMasterid(userName,pageable);
+        Page<OpportunitySummaryData> page = null;
+
+        System.out.println("ROLE---->"+role);
+
+        if(role.equals("Master"))
+        {
+             page = opportunitySummaryDataRepository.findAllGroupby(pageable);
+        }
+        else{
+              page = opportunitySummaryDataRepository.findAllGroupByOpportunityMasterid(userName,pageable);
+        }
+
 
 
 
