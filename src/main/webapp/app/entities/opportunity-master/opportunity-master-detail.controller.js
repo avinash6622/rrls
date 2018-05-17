@@ -128,12 +128,6 @@
         $scope.prevYearBefore = $filter('date')(previousYearBefore,'yyyy');
         $scope.neYearNext = $filter('date')(nextYearNext,'yyyy');
 
-
-
-
-
-
-
         $scope.submitTable = function() {
 
 
@@ -166,10 +160,13 @@
           }
 
         $scope.getTotal = function(val1, val2, val3) {
-
+            console.log(val1, val2, val3);
+            val1 = isNaN(val1) ? 0: val1;
+            val2 = isNaN(val2) ? 0: val2;
             var	result = parseFloat(val1) + parseFloat(val2);
-            result=(isNaN(result) || result==Infinity) ? 0:result;
-            if(result!=''){
+
+            //result=(isNaN(result) || result==Infinity) ? 0:result;
+
             switch(val3){
       	  case 1:
       		  vm.opportunityMaster.financialSummaryData.totIncOne = result;
@@ -188,7 +185,7 @@
       		break;
       	default:
       			  break;
-      	  }}
+      	  }
 
 
             return result;
@@ -314,12 +311,12 @@
     			}}
     			return result;
     		};
-    		$scope.getNonMargin = function(val1, val2, val3) { 			
+    		$scope.getNonMargin = function(val1, val2, val3) {
     			val1 = (isNaN(val1)) ? null:val1;
     			val2 = (isNaN(val2)) ? null:val2;
     			//console.log('EBITDA',val1,val2,val3);
     			var result = parseFloat(val1) / parseFloat(val2);
-    			result = (result * 100);    			
+    			result = (result * 100);
     			result = (isNaN(result) || result==Infinity) ? 0 : result;
     			//console.log('result',result);
     			if(val1 == null || val1 == 0 ){
@@ -356,15 +353,15 @@
     			console.log("margin Three ", vm.opportunityMaster.nonFinancialSummaryData.marginThree);
     			console.log("margin Four ",vm.opportunityMaster.nonFinancialSummaryData.marginFour);
     			console.log("margin Five ", vm.opportunityMaster.nonFinancialSummaryData.marginFive);*/
-    			
+
     			/*if(result=='') {
     				console.log("result else ");
     				result = 0;
     				console.log('val 3',val3);
     				return result;
-    			}	*/	
+    			}	*/
     			return result;
-    			
+
     		};
 
     		$scope.getNonPbt = function(val1, val2, val3, val4, val5) {
@@ -423,7 +420,7 @@
     		};
     		$scope.getNonPe = function(val1, val2, val3) {
 
-    			var result = (parseFloat(val1) / parseFloat(val2));    		
+    			var result = (parseFloat(val1) / parseFloat(val2));
     			result = (isNaN(result) || result==Infinity) ? 0 : result;
     			if(result!=''){
     			switch (val3) {
