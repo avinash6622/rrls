@@ -539,6 +539,7 @@ public class OpportunityMasterResource {
 				sm.setPeFifthYear(opportunityMasters.getFinancialSummaryData().getPeFive());
 				sm.setOpportunityMasterid(opportunityMasters);
 				sm.setCreatedBy(opportunityMasters.getCreatedBy());
+				sm.setLastModifiedBy(opportunityMasters.getCreatedBy());
 				sm.setStrategyMasterId(sm1);
 				/*
 				 * sm.setbWeight(opportunityMasters.getFinancialSummaryData().
@@ -627,6 +628,7 @@ public class OpportunityMasterResource {
 				}
 				sm.setStrategyMasterId(sm1);
 				sm.setCreatedBy(opportunityMasters.getCreatedBy());
+				sm.setLastModifiedBy(opportunityMasters.getCreatedBy());
 				if ((opportunityAutomation != null) && (opportunityAutomation.getPrevClose() == null)) {
 					sm.setCmp(opportunityAutomation.getPrevClose());
 				}

@@ -1,19 +1,25 @@
 package com.unify.rrls.domain;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 @Table(name = "opportunity_summary_data")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class OpportunitySummaryData extends AbstractAuditingEntity implements Serializable {
+public class OpportunitySummaryData implements Serializable {
 
 	/**
 	 *
@@ -150,6 +156,23 @@ public class OpportunitySummaryData extends AbstractAuditingEntity implements Se
 
 	@Column(name = "peg_year_peg")
 	private Double pegYearPeg;
+	
+	@Column(name = "created_by", nullable = false, length = 50)
+	private String createdBy;
+
+	@CreatedDate
+	@Column(name = "created_date", nullable = false)
+	private Instant createdDate = Instant.now();
+
+	@LastModifiedBy
+	@Column(name = "last_modified_by", length = 50)
+	@JsonIgnore
+	    private String lastModifiedBy;
+
+	@LastModifiedDate
+	@Column(name = "last_modified_date")
+	@JsonIgnore
+	private Instant lastModifiedDate = Instant.now();
 
 
 	@Transient
@@ -535,9 +558,41 @@ public class OpportunitySummaryData extends AbstractAuditingEntity implements Se
 
     public void setStrategyMasterList(List<StrategyMaster> strategyMasterList) {
         this.strategyMasterList = strategyMasterList;
-    }
+    }    
 
-    @Override
+    public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Instant getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Instant createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
+
+	public Instant getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(Instant lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
+	@Override
 	    public boolean equals(Object o) {
 	        if (this == o) {
 	            return true;
