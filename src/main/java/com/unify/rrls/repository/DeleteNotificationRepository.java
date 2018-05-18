@@ -2,6 +2,9 @@ package com.unify.rrls.repository;
 
 import com.unify.rrls.domain.DeleteNotification;
 import com.unify.rrls.domain.HistoryLogs;
+
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +13,6 @@ import org.springframework.stereotype.Repository;
 public interface DeleteNotificationRepository extends JpaRepository<DeleteNotification,Integer> {
 
     DeleteNotification findByUserIdAndNotiId(Integer userId,Integer notiId);
+    List<DeleteNotification> findByUserId(Integer userId);
 
 }

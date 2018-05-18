@@ -1074,33 +1074,33 @@ public class FileUploadResource {
                     	  sm.setPatGrowthFourth(nonFinance.getPatGrowthFour());
                     	  sm.setPatGrowthFifth(nonFinance.getPatGrowthFive());
                     	  sm.setbWeight(nonFinance.getWeight());
-                    	  if(nonFinance.getPethree()!=0.0 && nonFinance.getPatGrowthThree()!=0.0)
+                    	  if((nonFinance.getPethree()!=0.0 && nonFinance.getPatGrowthThree()!=0.0) && (nonFinance.getPethree()!=null && nonFinance.getPatGrowthThree()!=null))
                     	  sm.setPegOj((nonFinance.getPethree()/nonFinance.getPatGrowthThree()));
-                    	  if(nonFinance.getWeight()!=0.0){
-                    		  if(nonFinance.getWeight()!=0.0 && nonFinance.getPeOne()!=0.0)
+                    	  if(nonFinance.getWeight()!=0.0 && nonFinance.getWeight()!=null){
+                    		  if(nonFinance.getPeOne()!=null && nonFinance.getPeOne()!=0.0)
                     	  sm.setPortPeFirst(nonFinance.getWeight()*nonFinance.getPeOne());
-                    		  if(nonFinance.getWeight()!=0.0 && nonFinance.getPeTwo()!=0.0)
+                    		  if(nonFinance.getPeTwo()!=null && nonFinance.getPeTwo()!=0.0)
                     	  sm.setPortPeSecond(nonFinance.getWeight()*nonFinance.getPeTwo());
-                    		  if(nonFinance.getWeight()!=0.0 && nonFinance.getPethree()!=0.0)
+                    		  if(nonFinance.getPethree()!=null && nonFinance.getPethree()!=0.0)
                     	  sm.setPortPeThird(nonFinance.getWeight()*nonFinance.getPethree());
-                    		  if(nonFinance.getWeight()!=0.0 && nonFinance.getPeFour()!=0.0)
+                    		  if(nonFinance.getPeFour()!=null && nonFinance.getPeFour()!=0.0)
                     	  sm.setPortPeFourth(nonFinance.getWeight()*nonFinance.getPeFour());
-                    		  if(nonFinance.getWeight()!=0.0 && nonFinance.getPeFive()!=0.0)
+                    		  if(nonFinance.getPeFive()!=null && nonFinance.getPeFive()!=0.0)
                     	  sm.setPortPeFifth(nonFinance.getWeight()*nonFinance.getPeFive());
                     	  //sm.setEarningsFirst((nonFinance.getWeight()*nonFinance.getPatGrowthOne())/100.0);
-                    		  if(nonFinance.getWeight()!=0.0 && nonFinance.getPatGrowthTwo()!=0.0)
+                    		  if(nonFinance.getPatGrowthTwo()!=null && nonFinance.getPatGrowthTwo()!=0.0)
                     	  sm.setEarningsSecond((nonFinance.getWeight()*nonFinance.getPatGrowthTwo())/100.0);
-                    		  if(nonFinance.getWeight()!=0.0 && nonFinance.getPatGrowthThree()!=0.0)
+                    		  if(nonFinance.getPatGrowthThree()!=null && nonFinance.getPatGrowthThree()!=0.0)
                     	  sm.setEarningsThird((nonFinance.getWeight()*nonFinance.getPatGrowthThree())/100.0);
-                    		  if(nonFinance.getWeight()!=0.0 && nonFinance.getPatGrowthFour()!=0.0)
+                    		  if(nonFinance.getPatGrowthFour()!=null && nonFinance.getPatGrowthFour()!=0.0)
                     	  sm.setEarningsFourth((nonFinance.getWeight()*nonFinance.getPatGrowthFour())/100.0);
-                    		  if(nonFinance.getWeight()!=0.0 && nonFinance.getPatGrowthFive()!=0.0)
+                    		  if(nonFinance.getPatGrowthFive()!=null && nonFinance.getPatGrowthFive()!=0.0)
                     	  sm.setEarningsFifth((nonFinance.getWeight()*nonFinance.getPatGrowthFive())/100.0);
-                    		  if(nonFinance.getWeight()!=0.0 && nonFinance.getMarketCapThree()!=0.0)
+                    		  if(nonFinance.getMarketCapThree()!=null && nonFinance.getMarketCapThree()!=0.0)
                     	  sm.setWtAvgCap((nonFinance.getWeight()*nonFinance.getMarketCapThree())/100.0);
-                    		  if(nonFinance.getWeight()!=0.0 && nonFinance.getMarketCapThree()!=0.0)
-                    	  sm.setRoe((nonFinance.getWeight()*nonFinance.getMarketCapThree())/100.0);
-                    		  if(nonFinance.getWeight()!=0.0 && nonFinance.getPethree()!=0.0 && nonFinance.getPatGrowthThree()!=0.0)
+                    		  if(nonFinance.getRoeThree()!=null && nonFinance.getRoeThree()!=0.0)
+                    	  sm.setRoe((nonFinance.getWeight()*nonFinance.getRoeThree())/100.0);
+                    		  if((nonFinance.getPethree()!=0.0 && nonFinance.getPatGrowthThree()!=0.0) && (nonFinance.getPethree()!=null && nonFinance.getPatGrowthThree()!=null))
                     	  sm.setPegYearPeg(nonFinance.getWeight()*(nonFinance.getPethree()/nonFinance.getPatGrowthThree()));
                     	  }
                     	  sm.setCreatedBy(opportunityMaster.getCreatedBy());

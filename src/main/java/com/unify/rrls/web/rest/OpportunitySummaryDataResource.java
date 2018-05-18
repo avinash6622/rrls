@@ -148,22 +148,36 @@ public class OpportunitySummaryDataResource {
             sm.setPatGrowthFourth(opportunityMaster.getNonFinancialSummaryData().getPatGrowthFour());
             sm.setPatGrowthFifth(opportunityMaster.getNonFinancialSummaryData().getPatGrowthFive());
             sm.setbWeight(opportunityMaster.getNonFinancialSummaryData().getWeight());
-            if(opportunityMaster.getNonFinancialSummaryData().getPethree()!=null || opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree()!=null){
+            if((opportunityMaster.getNonFinancialSummaryData().getPethree()!=null && opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree()!=null)
+            		&& opportunityMaster.getNonFinancialSummaryData().getPethree()!=0.0 || opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree()!=0.0){
             sm.setPegOj(opportunityMaster.getNonFinancialSummaryData().getPethree()/opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree());}
           //  System.out.println("OJ value"+opportunityMaster.getNonFinancialSummaryData().getPethree()/opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree());
             if(opportunityMaster.getNonFinancialSummaryData().getWeight()!=null && opportunityMaster.getNonFinancialSummaryData().getWeight()!=0.0){
+            	 if(opportunityMaster.getNonFinancialSummaryData().getPeOne()!=null && opportunityMaster.getNonFinancialSummaryData().getPeOne()!=0.0)
             sm.setPortPeFirst(opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPeOne());
+            	 if(opportunityMaster.getNonFinancialSummaryData().getPeTwo()!=null && opportunityMaster.getNonFinancialSummaryData().getPeTwo()!=0.0)
             sm.setPortPeSecond(opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPeTwo());
+            	 if(opportunityMaster.getNonFinancialSummaryData().getPethree()!=null && opportunityMaster.getNonFinancialSummaryData().getPethree()!=0.0)
             sm.setPortPeThird(opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPethree());
+            	 if(opportunityMaster.getNonFinancialSummaryData().getPeFour()!=null && opportunityMaster.getNonFinancialSummaryData().getPeFour()!=0.0)
             sm.setPortPeFourth(opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPeFour());
+            	 if(opportunityMaster.getNonFinancialSummaryData().getPeFive()!=null && opportunityMaster.getNonFinancialSummaryData().getPeFive()!=0.0)
             sm.setPortPeFifth(opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPeFive());
            // sm.setEarningsFirst((opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPatGrowthOne())/100.0);
+            	 if(opportunityMaster.getNonFinancialSummaryData().getPatGrowthTwo()!=null && opportunityMaster.getNonFinancialSummaryData().getPatGrowthTwo()!=0.0)
             sm.setEarningsSecond((opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPatGrowthTwo())/100.0);
+            	 if(opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree()!=null && opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree()!=0.0)
             sm.setEarningsThird((opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree())/100.0);
+            	 if(opportunityMaster.getNonFinancialSummaryData().getPatGrowthFour()!=null && opportunityMaster.getNonFinancialSummaryData().getPatGrowthFour()!=0.0)
             sm.setEarningsFourth((opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPatGrowthFour())/100.0);
+            	 if(opportunityMaster.getNonFinancialSummaryData().getPatGrowthFive()!=null && opportunityMaster.getNonFinancialSummaryData().getPatGrowthFive()!=0.0)
             sm.setEarningsFifth((opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPatGrowthFive())/100.0);
+            	 if(opportunityMaster.getNonFinancialSummaryData().getMarketCapThree()!=null && opportunityMaster.getNonFinancialSummaryData().getMarketCapThree()!=0.0)
             sm.setWtAvgCap((opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getMarketCapThree())/100.0);
-            sm.setRoe((opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getMarketCapThree())/100.0);
+            	 if(opportunityMaster.getNonFinancialSummaryData().getRoeThree()!=null && opportunityMaster.getNonFinancialSummaryData().getRoeThree()!=0.0)
+            sm.setRoe((opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getRoeThree())/100.0);
+            	 if((opportunityMaster.getNonFinancialSummaryData().getPethree()!=0.0 && opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree()!=0.0)
+            			 && (opportunityMaster.getNonFinancialSummaryData().getPethree()!=null && opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree()!=null))
             sm.setPegYearPeg(opportunityMaster.getNonFinancialSummaryData().getWeight()*(opportunityMaster.getNonFinancialSummaryData().getPethree()/opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree()));
             }
             if((opportunityAutomation!=null) && (opportunityAutomation.getPrevClose()!=null))
@@ -199,7 +213,7 @@ System.out.println(sm);
 
         System.out.println("ROLE---->"+role);
 
-        if(role.equals("Master"))
+        if(role.equals("Master") || role.equals("RM"))
         {
              page = opportunitySummaryDataRepository.findAllGroupby(pageable);
         }

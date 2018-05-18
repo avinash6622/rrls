@@ -405,35 +405,37 @@ public class OpportunityMasterResource {
 				opportunitySummaryData.setPatGrowthFifth(nonFinancialSummaryData.getPatGrowthFive());
 				opportunitySummaryData.setOpportunityMasterid(result);
 				opportunitySummaryData.setStrategyMasterId(sm);
-				if (nonFinancialSummaryData.getWeight() != null) {
+				
+				if((nonFinancialSummaryData.getPethree()!=0.0 && nonFinancialSummaryData.getPatGrowthThree()!=0.0) &&
+						(nonFinancialSummaryData.getPethree()!=null && nonFinancialSummaryData.getPatGrowthThree()!=null)){
+				opportunitySummaryData.setPegOj((nonFinancialSummaryData.getPethree() / nonFinancialSummaryData.getPatGrowthThree()));}
+				if (nonFinancialSummaryData.getWeight() != null && nonFinancialSummaryData.getWeight() != 0.0) {
 					opportunitySummaryData.setbWeight(nonFinancialSummaryData.getWeight());
-					opportunitySummaryData.setPegOj(
-							(nonFinancialSummaryData.getPethree() / nonFinancialSummaryData.getPatGrowthThree()));
-					opportunitySummaryData
-							.setPortPeFirst(nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getPeOne());
-					opportunitySummaryData
-							.setPortPeSecond(nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getPeTwo());
-					opportunitySummaryData
-							.setPortPeThird(nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getPethree());
-					opportunitySummaryData
-							.setPortPeFourth(nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getPeFour());
-					opportunitySummaryData
-							.setPortPeFifth(nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getPeFive());
-					opportunitySummaryData.setEarningsSecond(
-							(nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getPatGrowthTwo()) / 100.0);
-					opportunitySummaryData.setEarningsThird(
-							(nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getPatGrowthThree())
+					if(nonFinancialSummaryData.getPeOne()!=0.0 && nonFinancialSummaryData.getPeOne()!=null)
+					opportunitySummaryData.setPortPeFirst(nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getPeOne());
+					if(nonFinancialSummaryData.getPeTwo()!=0.0 && nonFinancialSummaryData.getPeTwo()!=null)
+					opportunitySummaryData.setPortPeSecond(nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getPeTwo());
+					if(nonFinancialSummaryData.getPethree()!=0.0 && nonFinancialSummaryData.getPethree()!=null)
+					opportunitySummaryData.setPortPeThird(nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getPethree());
+					if(nonFinancialSummaryData.getPeFour()!=0.0 && nonFinancialSummaryData.getPeFour()!=null)
+					opportunitySummaryData.setPortPeFourth(nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getPeFour());
+					if(nonFinancialSummaryData.getPeFive()!=0.0 && nonFinancialSummaryData.getPeFive()!=null)
+					opportunitySummaryData.setPortPeFifth(nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getPeFive());
+					if(nonFinancialSummaryData.getPatGrowthTwo()!=0.0 && nonFinancialSummaryData.getPatGrowthTwo()!=null)
+					opportunitySummaryData.setEarningsSecond((nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getPatGrowthTwo()) / 100.0);
+					if(nonFinancialSummaryData.getPatGrowthThree()!=0.0 && nonFinancialSummaryData.getPatGrowthThree()!=null)
+					opportunitySummaryData.setEarningsThird((nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getPatGrowthThree())
 									/ 100.0);
-					opportunitySummaryData.setEarningsFourth(
-							(nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getPatGrowthFour()) / 100.0);
-					opportunitySummaryData.setEarningsFifth(
-							(nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getPatGrowthFive()) / 100.0);
-					opportunitySummaryData.setWtAvgCap(
-							(nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getMarketCapThree())
-									/ 100.0);
-					opportunitySummaryData
-							.setRoe((nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getMarketCapThree())
-									/ 100.0);
+					if(nonFinancialSummaryData.getPatGrowthFour()!=0.0 && nonFinancialSummaryData.getPatGrowthFour()!=null)
+					opportunitySummaryData.setEarningsFourth((nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getPatGrowthFour()) / 100.0);
+					if(nonFinancialSummaryData.getPatGrowthFive()!=0.0 && nonFinancialSummaryData.getPatGrowthFive()!=null)
+					opportunitySummaryData.setEarningsFifth((nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getPatGrowthFive()) / 100.0);
+					if(nonFinancialSummaryData.getMarketCapThree()!=0.0 && nonFinancialSummaryData.getMarketCapThree()!=null)
+					opportunitySummaryData.setWtAvgCap((nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getMarketCapThree())/ 100.0);
+					if(nonFinancialSummaryData.getRoeThree()!=0.0 && nonFinancialSummaryData.getRoeThree()!=null)
+					opportunitySummaryData.setRoe((nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getRoeThree())	/ 100.0);
+					if((nonFinancialSummaryData.getPethree()!=0.0 && nonFinancialSummaryData.getPatGrowthThree()!=0.0) && 
+							(nonFinancialSummaryData.getPethree()!=null && nonFinancialSummaryData.getPatGrowthThree()!=null))
 					opportunitySummaryData.setPegYearPeg(nonFinancialSummaryData.getWeight()
 							* (nonFinancialSummaryData.getPethree() / nonFinancialSummaryData.getPatGrowthThree()));
 				}

@@ -454,4 +454,6 @@ li.answer-list.level-3{
 table tr:focus, table tr:active {
 	outline: 0;
 }
-
+.descrOpp{
+	width:580px;
+}

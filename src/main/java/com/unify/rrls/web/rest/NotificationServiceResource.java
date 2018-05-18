@@ -110,14 +110,6 @@ public class NotificationServiceResource {
             }
 
         }
-
-
-
-
-
-
-
-
         return new ResponseEntity<>(list,HttpStatus.OK);
     }
 
@@ -144,6 +136,34 @@ public class NotificationServiceResource {
             result.setStatus(deleteNotification.getStatus());
 
             result1 = deleteNotificationRepository.save(result);
+        }
+
+        return new ResponseEntity<>(result1,HttpStatus.OK);
+
+    }
+    
+    @PostMapping("/clear_notification")
+    @Timed
+    public ResponseEntity<DeleteNotification> clearNotification(@RequestBody DeleteNotification deleteNotification) {
+        log.debug("REST request to get a page of OpportunityMasters");
+        List<DeleteNotification> list = null;
+
+
+        DeleteNotification result1 = null;
+
+
+        List<DeleteNotification> result = deleteNotificationRepository.findByUserId(deleteNotification.getUserId());
+
+        if(result == null)
+        {
+          result1 = deleteNotificationRepository.save(deleteNotification);
+        }
+        else{
+/*
+
+            result.setStatus(deleteNotification.getStatus());
+
+            result1 = deleteNotificationRepository.save(result);*/
         }
 
         return new ResponseEntity<>(result1,HttpStatus.OK);
