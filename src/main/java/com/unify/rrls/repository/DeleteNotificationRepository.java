@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
 public interface DeleteNotificationRepository extends JpaRepository<DeleteNotification,Integer> {
 
     DeleteNotification findByUserIdAndNotiId(Integer userId,Integer notiId);
-    List<DeleteNotification> findByUserId(Integer userId);
+    DeleteNotification findByUserId(Integer userId);
 
 }

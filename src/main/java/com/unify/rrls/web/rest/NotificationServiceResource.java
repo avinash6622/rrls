@@ -142,31 +142,25 @@ public class NotificationServiceResource {
 
     }
     
-    @PostMapping("/clear_notification")
+    @GetMapping("/clear_notification/{userId}")
     @Timed
-    public ResponseEntity<DeleteNotification> clearNotification(@RequestBody DeleteNotification deleteNotification) {
-        log.debug("REST request to get a page of OpportunityMasters");
-        List<DeleteNotification> list = null;
+    public ResponseEntity<DeleteNotification> clearNotification(@PathVariable Integer userId) {
+        log.debug("REST request to clear notifications");
+        List<HistoryLogs> list = null;
+        
+        Query q = em.createNativeQuery("select * from history_logs where id not in(select history_log_id from delete_notification where user_id="+userId+" and status in('deleted'))",HistoryLogs.class);
 
+        list   = q.getResultList();
+        
+        for(HistoryLogs hl:list){
+        	DeleteNotification result=new DeleteNotification();
+        	result.setUserId(userId);
+        	result.setNotiId(hl.getId());
+        	result.setStatus("deleted");
+        	deleteNotificationRepository.save(result);
+        }       
 
-        DeleteNotification result1 = null;
-
-
-        List<DeleteNotification> result = deleteNotificationRepository.findByUserId(deleteNotification.getUserId());
-
-        if(result == null)
-        {
-          result1 = deleteNotificationRepository.save(deleteNotification);
-        }
-        else{
-/*
-
-            result.setStatus(deleteNotification.getStatus());
-
-            result1 = deleteNotificationRepository.save(result);*/
-        }
-
-        return new ResponseEntity<>(result1,HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 

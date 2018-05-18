@@ -167,7 +167,7 @@
                 url:'api/store_noti_user_id',
                 method:'POST'
             },
-
+         
            'opportunitysummaryData':{
                 url:'api/opportunity-summary/getdata',
                 method:'GET',

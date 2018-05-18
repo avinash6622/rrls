@@ -26,10 +26,9 @@
         vm.count = null;
         vm.close = close;
         vm.readstatus= readstatus;
+        vm.clearNoti=clearNoti;
 
         vm.nonotification = null;
-
-
 
 
         $scope.$on('authenticationSuccess', function() {
@@ -37,12 +36,6 @@
         });
 
         getAccount();
-
-
-
-
-
-
 
         function getAccount() {
             Principal.identity().then(function(account) {
@@ -78,6 +71,18 @@
 
         }
 
+        function clearNoti(userId){
+        	console.log('clear',userId)
+        	
+        	  $http.get('api/clear_notification/'+userId)
+              .then(function(response) {
+                  vm.notificationValues = [];               
+                
+                  console.log(vm.notificationValues);
+
+
+              });
+        }
 
 
 
