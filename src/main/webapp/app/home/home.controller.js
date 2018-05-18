@@ -6,9 +6,9 @@
         .controller('HomeController', HomeController);
 
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'AlertService', 'OpportunityMaster','ParseLinks','paginationConstants','$http','$filter','pagingParams','DecimalConfiguration','$state'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'AlertService', 'OpportunityMaster','ParseLinks','paginationConstants','$http','$filter','pagingParams','DecimalConfiguration','$state','$timeout'];
 
-    function HomeController ($scope, Principal, LoginService, AlertService, OpportunityMaster,ParseLinks,paginationConstants,$http,$filter,pagingParams,DecimalConfiguration,$state) {
+    function HomeController ($scope, Principal, LoginService, AlertService, OpportunityMaster,ParseLinks,paginationConstants,$http,$filter,pagingParams,DecimalConfiguration,$state,$timeout) {
         var vm = this;
 
         vm.account = null;
@@ -31,6 +31,7 @@
         vm.reverse = pagingParams.ascending;
         vm.predicate = pagingParams.predicate;
       vm.transition = transition;
+      vm.loader = false;
 
 
       //  vm.predicate = 'id';
@@ -84,7 +85,7 @@
 
         loadAll()
 
-        setTimeout(function() {
+        $timeout(function() {
             getDecimalConfig();
         }, 3000);
 
@@ -104,55 +105,67 @@
         function getDecimalConfig() {
 
 
-            DecimalConfiguration.get({id:vm.account.id},function (resp) {
-
-                console.log(resp);
-
-                console.log(resp.rupee);
-
-                console.log(vm.account.login);
+            DecimalConfiguration.get({id:vm.account.id},onSuccess1,onError1);
 
 
 
 
-/*
-                if(vm.account.login == vm.opportunityMaster.createdBy)
-                {
-                    vm.decimalValue = resp.decimalValue;
-                }*/
-
-
-                if(resp.rupee == 'Millions')
-                {
-                    if(vm.account.login == resp.user.login)
-                    {
-                        if(!$state.params.createdBy)
-                        {
-                            vm.multiplevalue = 10;
-                        }
-
-                    }
-
-
-                }
-
-
-            },function (err) {
-                console.log(err);
-            });
-
-            setTimeout(function() {
-                $("#mytable").CongelarFilaColumna({
-                    Columnas: 5,
-                    width: '100%',
-                    height: '100%'
-                });
-                $("#table-scroll").css({
-                    'visibility': 'visible'
-                });
-            }, 2000);
 
         }
+
+
+       function onSuccess1(resp){
+
+           console.log(resp);
+
+           console.log(resp.rupee);
+
+           console.log(vm.account.login);
+
+
+
+
+
+
+
+           if(resp.rupee == 'Millions')
+           {
+               if(vm.account.login == resp.user.login)
+               {
+                   if(!$state.params.createdBy)
+                   {
+                       vm.multiplevalue = 10;
+                   }
+
+               }
+
+
+           }
+
+           $timeout(function() {
+               $("#mytable").CongelarFilaColumna({
+                   Columnas: 5,
+                   width: '100%',
+                   height: '100%'
+               });
+               $("#table-scroll").css({
+                   'visibility': 'visible'
+               });
+
+               vm.loader = false;
+
+           }, 2000);
+
+
+
+
+       }
+
+       function onError1(){
+
+       }
+
+
 
 
         	//console.log($state.params);
@@ -186,11 +199,13 @@
         }
 
         function onSuccess(data, headers) {
+
             vm.links = ParseLinks.parse(headers('link'));
             vm.totalItems = headers('X-Total-Count');
             vm.queryCount = vm.totalItems;
             vm.page = pagingParams.page;
             vm.dashboardvalues = data;
+            vm.loader = true;
 
         }
         function onError(error) {

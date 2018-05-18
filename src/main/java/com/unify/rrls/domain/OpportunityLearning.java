@@ -24,32 +24,35 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Table(name = "opportunity_learning")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class OpportunityLearning extends AbstractAuditingEntity implements Serializable {
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "subject")
 	private String subject;
-	
+
 	@Column(name="description")
 	private String description;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "opp_mas_id")
-	private OpportunityMaster opportunityMaster;	
-	
+	private OpportunityMaster opportunityMaster;
+
+    @Column(name="opp_name")
+	private String oppName;
+
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}	
+	}
 	public OpportunityMaster getOpportunityMaster() {
 		return opportunityMaster;
 	}
@@ -68,5 +71,12 @@ public class OpportunityLearning extends AbstractAuditingEntity implements Seria
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
+    public String getOppName() {
+        return oppName;
+    }
+
+    public void setOppName(String oppName) {
+        this.oppName = oppName;
+    }
 }

@@ -69,6 +69,7 @@ public class OpportunityLearningResource {
 
         String sDescription=opportunityLearning.getDescription().replaceAll("////", "\\");
         opportunityLearning.setDescription(sDescription);
+        opportunityLearning.setOppName(opportunityLearning.getOpportunityMaster().getMasterName().getOppName());
 
         OpportunityLearning result = opportunityLearningRepository.save(opportunityLearning);
 
@@ -85,13 +86,13 @@ public class OpportunityLearningResource {
         return ResponseEntity.created(new URI("/api/opportunity-learnings/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
-    
+
     @PutMapping("/opportunity-learnings")
     @Timed
     public ResponseEntity<OpportunityLearning> updateOpportunityLearning(@RequestBody OpportunityLearning opportunityLearning)
         throws URISyntaxException, IOException, MissingServletRequestParameterException {
         log.debug("REST request to update OpportunityLearning : {}", opportunityLearning);
-      
+
         String sDescription=opportunityLearning.getDescription().replaceAll("////", "\\");
         opportunityLearning.setDescription(sDescription);
 
@@ -120,7 +121,7 @@ public class OpportunityLearningResource {
 
 		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(opportunityLearning));
 	}
-    
+
     @PostMapping("/opportunity-learnings-subject")
    	@Timed
    	public ResponseEntity<List<OpportunityLearning>> getLearningSubject(@RequestBody OpportunityLearning subjectLearning) {
@@ -130,17 +131,39 @@ public class OpportunityLearningResource {
 
    		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(opportunityLearning));
    	}
-    
+
     @GetMapping("/opportunity-learnings")
 	@Timed
 	public ResponseEntity<List<OpportunityLearning>> getAllOpportunityLearnings(@ApiParam Pageable pageable) {
 		log.debug("REST request to get a page of OpportunityLearningss");
 		Page<OpportunityLearning> page = null;
-		
+
 		page = opportunityLearningRepository.findAll(pageable);
-	
+
 		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-learning-consolidated");
 
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 	}
+
+
+    @GetMapping("/opportunity-learnings/search")
+    @Timed
+    public ResponseEntity<List<OpportunityLearning>> getAllOpportunityLearningsforauto() {
+        log.debug("REST request to get a page of OpportunityLearningss");
+        List<OpportunityLearning> page = null;
+
+        page = opportunityLearningRepository.findAllGroupby();
+
+        HttpHeaders headers=new HttpHeaders();
+        return new ResponseEntity<>(page, headers,HttpStatus.OK);
+    }
+
+    @PostMapping("/opportunity-learning/get-name")
+    @Timed
+    public ResponseEntity<List<OpportunityLearning>> searchOpportunities(@RequestBody OpportunityLearning opportunityLearning,@ApiParam Pageable pageable) throws URISyntaxException {
+        Page<OpportunityLearning> page = opportunityLearningRepository.findByOppName(opportunityLearning.getOppName(),pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
 }

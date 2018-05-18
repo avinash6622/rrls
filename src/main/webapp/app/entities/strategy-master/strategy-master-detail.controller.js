@@ -110,9 +110,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('StrategyMasterDetailController', StrategyMasterDetailController);
 
-    StrategyMasterDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'StrategyMaster','$filter','pagingParams','ParseLinks','paginationConstants','$state'];
+    StrategyMasterDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'StrategyMaster','$filter','pagingParams','ParseLinks','paginationConstants','$state','$timeout'];
 
-    function StrategyMasterDetailController($scope, $rootScope, $stateParams, previousState, StrategyMaster,$filter,pagingParams,ParseLinks,paginationConstants,$state) {
+    function StrategyMasterDetailController($scope, $rootScope, $stateParams, previousState, StrategyMaster,$filter,pagingParams,ParseLinks,paginationConstants,$state,$timeout) {
         var vm = this;
 
        // vm.strategyMaster = entity;
@@ -151,6 +151,7 @@
         vm.predicate = pagingParams.predicate;
        vm.transition = transition;
         vm.strategyvalues = [];
+        vm.loader = false;
 
 
         loadAll()
@@ -186,6 +187,8 @@
 
 
         function onSuccess(data, headers) {
+
+
             vm.links = ParseLinks.parse(headers('link'));
             vm.totalItems = headers('X-Total-Count');
             vm.queryCount = vm.totalItems;
@@ -194,15 +197,22 @@
 
             console.log(vm.strategyvalues[0]);
 
-            setTimeout(function() {
+            vm.loader = true;
+
+          $timeout(function() {
+
+              console.log(vm.loader);
                 $("#mytable1").CongelarFilaColumna({
                     Columnas: 5,
                     width: '100%',
                     height: '100%'
                 });
-                $("#table-table").css({
-                    'visibility': 'visible'
-                });
+
+              $("#table-table").css({
+                  'visibility': 'visible'
+              });
+
+              vm.loader = false;
             }, 2000);
 
 

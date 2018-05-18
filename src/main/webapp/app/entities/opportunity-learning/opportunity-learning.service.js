@@ -23,20 +23,20 @@
         	 	url:'api/opportunity-learnings-subject',
                 method:'POST',
                 isArray: true
-             
+
             },
             'get':{
             	url:'api/opportunity-learnings/:id',
                 method:'GET'
-                
-                	
+
+
             },
             'update':{
             	url:'api/opportunity-learnings',
             	  method: 'PUT',
                   transformRequest: function (data) {
                       var copy = angular.copy(data);
-                    
+
                       return angular.toJson(copy);
                   }
             },
@@ -50,6 +50,12 @@
 
                 return angular.toJson(copy);
             }
+        },
+
+        'searchopportunity':{
+                url:'api/opportunity-learning/get-name',
+                method:'POST',
+                isArray: true
         }
         });
     }

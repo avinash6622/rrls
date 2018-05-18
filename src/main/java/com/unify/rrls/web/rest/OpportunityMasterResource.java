@@ -76,6 +76,10 @@ import com.unify.rrls.web.rest.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 /**
  * REST controller for managing OpportunityMaster.
  */
@@ -136,6 +140,10 @@ public class OpportunityMasterResource {
 
 	@Autowired
 	UserResource userResource;
+
+
+    @PersistenceContext
+    EntityManager em;
 
 	public OpportunityMasterResource(OpportunityMasterRepository opportunityMasterRepository,
 			FileUploadRepository fileUploadRepository, FileUploadCommentsRepository fileUploadCommentsRepository,
@@ -782,18 +790,19 @@ public class OpportunityMasterResource {
 
 	@GetMapping("/opportunity-masters/all")
     @Timed
-    public ResponseEntity<List<OpportunityMaster>> getAllOpportunityMastersforauto() {
+    public ResponseEntity<List<OpportunityName>> getAllOpportunityMastersforauto() {
         log.debug("REST request to get a page of OpportunityMasters");
-        List<OpportunityMaster> page = null;
+        List<OpportunityName> list =new ArrayList<>();
+
        // String role = SecurityUtils.getCurrentRoleLogin();
        // String username = SecurityUtils.getCurrentUserLogin();
 
 
-        page = opportunityMasterRepository.findAll();
-        System.out.println(page);
+        Query q = em.createNativeQuery("select * from opportunity_name where id  in(select master_name from opportunity_master) ",OpportunityName.class);
 
+        list   = q.getResultList();
         HttpHeaders headers=new HttpHeaders();
-        return new ResponseEntity<>(page, headers,HttpStatus.OK);
+        return new ResponseEntity<>(list, headers,HttpStatus.OK);
 
     }
 

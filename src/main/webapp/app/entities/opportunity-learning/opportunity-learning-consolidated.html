@@ -19,11 +19,8 @@
 
         <div>
         <div class="row">
-            <div class="col-md-4 input-group" style="padding-left: 18px;">
-            <input class="form-control ng-pristine ng-valid clearable" ng-model="vm.name"  auto-complete="vm.autoCompleteOpportunity" type="text" placeholder="Search"> 
-            <span class="input-group-btn" ><button type= "button" class="btn btn-default" ng-show="vm.name" ng-click="vm.clear()">X</button></span></div>
 
-
+            <div class="col-md-4 input-group" style="padding-left: 18px;"><input class="form-control ng-pristine ng-valid clearable" ng-model="vm.name"  auto-complete="vm.autoCompleteOpportunity" type="text" placeholder="Search"> <span class="input-group-btn" ><button type= "button" class="btn btn-default" ng-show="vm.name" ng-click="vm.clear()">X</button></span></div>
         </div>
     </div>
        <!-- <div style="margin-bottom: 5px"></div>-->
@@ -31,45 +28,47 @@
     <div class="table-responsive">
         <table class="jh-table table table-striped">
             <thead>
-                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
 					<th></th>
-                    <th jh-sort-by="subject"><span>Subject</span> <span class="glyphicon glyphicon-sort"></span></th>
+
                     <th jh-sort-by="opportunityMaster.masterName.oppName"><span>Opportunity Name</span> <span class="glyphicon glyphicon-sort"></span></th>
                   <th jh-sort-by="createdBy"><span>Created By</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="subject"><span>Subject</span> <span class="glyphicon glyphicon-sort"></span></th>
                 </tr>
             </thead>
             <tbody>
                <!--  <tr ng-repeat-start="learning in vm.opportunityLearnings">
  		<td><button class="btn btn-md btn-primary" ng-if="expanded">-</button>
               <button class="btn btn-md btn-primary" ng-if="!expanded">+</button></td>
-            
+
               			 <td><a ng-click="expanded = !expanded;vm.selectIndex($index)"><strong>{{learning.subject}}</strong></a></td>
               			 <td><a ui-sref="opportunity-master-detail({id:learning.opportunityMaster.id})">{{learning.opportunityMaster.masterName.oppName}}</a></td>
               			  <td><a ui-sref="home-research({createdBy:learning.opportunityMaster.createdBy})">{{learning.createdBy}}</a></td>
-              			 
+
               			 </tr> -->
-              			 
-            <tr ng-repeat-start="learning in vm.opportunityLearnings" ng-click="vm.expandCollapse($index, !learning.expanded)">
+
+            <tr ng-repeat-start="learning in vm.opportunityLearnings|orderBy:predicate:reverse" ng-click="vm.expandCollapse($index, !learning.expanded)">
  		<td><button class="btn btn-md btn-primary" ng-if="learning.expanded" ng-click="vm.expandCollapse($index, learning.expanded)">-</button>
               <button class="btn btn-md btn-primary" ng-if="!learning.expanded" ng-click="vm.expandCollapse($index, learning.expanded)">+</button></td>
-            
-              			 <td><a><strong>{{learning.subject}}</strong></a></td>
+
+
               			 <td><a ui-sref="opportunity-master-detail({id:learning.opportunityMaster.id})">{{learning.opportunityMaster.masterName.oppName}}</a></td>
               			  <td><a ui-sref="home-research({createdBy:learning.opportunityMaster.createdBy})">{{learning.createdBy}}</a></td>
-              			 
+                          <td><a><strong>{{learning.subject}}</strong></a></td>
+
               			 </tr>
-              			
-              		
+
+
 <tr ng-if="learning.expanded" ng-repeat-end="">
    <td colspan="3">
   <span ng-bind-html="learning.description"></span>
-     </td> 
-     
+     </td>
+
                   <!--   <td><a ng-click="vm.subject(learning.subject)">{{learning.subject}}</a></td> -->
-                  
-             </tr> 
-               
-              
+
+             </tr>
+
+
             </tbody>
 
 

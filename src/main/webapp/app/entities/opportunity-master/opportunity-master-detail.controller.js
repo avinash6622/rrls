@@ -160,7 +160,7 @@
           }
 
         $scope.getTotal = function(val1, val2, val3) {
-            console.log(val1, val2, val3);
+           // console.log(val1, val2, val3);
             val1 = isNaN(val1) ? 0: val1;
             val2 = isNaN(val2) ? 0: val2;
             var	result = parseFloat(val1) + parseFloat(val2);

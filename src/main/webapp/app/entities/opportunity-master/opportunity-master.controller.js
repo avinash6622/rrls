@@ -55,7 +55,7 @@ function filterName(id){
                 dropdownHeight : '200px',
 
                 data : function(searchText) {
-                    return $http.get('api/opportunity-names').then(
+                    return $http.get('api/opportunity-masters/all').then(
                         function(response) {
                             searchText = searchText.toLowerCase();
                           //  console.log(searchText);

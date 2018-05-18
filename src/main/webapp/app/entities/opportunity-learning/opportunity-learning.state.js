@@ -11,7 +11,7 @@
         $stateProvider
             .state('consolidated-learning', {
                 parent: 'entity',
-                url: '/consolidated-learnings',
+                url: '/consolidated-learnings?page&sort',
                 data: {
                     authorities: ['User'],
                     pageTitle: 'Consolidated Learning'
