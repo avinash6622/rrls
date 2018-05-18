@@ -182,7 +182,7 @@
 
 
                     <ul class="dropdown-menu dropdown-messages" uib-dropdown-menu ng-style="{'height': vm.notificationValues.length > 5 ? '215px': 'auto'}">
-                      <li ng-show="vm.notificationValues.length"><div><a class="pull-right" ng-click="vm.clearNoti(vm.account.id);$event.stopPropagation()">Clear All</a><br /></div></li>
+                      <li ng-show="vm.notificationValues.length"><span><a class="pull-right" style="padding-right:23px;" ng-click="vm.clearNoti(vm.account.id);$event.stopPropagation()">Clear All</a><br /></span></li>
                         <div class="primary-aligned">
 					
                         <span ng-show="vm.notificationValues.length" ng-repeat="noti in vm.notificationValues">

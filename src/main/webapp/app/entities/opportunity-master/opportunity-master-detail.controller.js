@@ -62,15 +62,7 @@
 
             DecimalConfiguration.get({id:vm.account.id},function (resp) {
 
-                console.log(resp);
-
-                console.log(resp.rupee);
-
-                console.log(vm.account.login);
-
-                console.log(vm.opportunityMaster);
-
-                if(vm.account.login == vm.opportunityMaster.createdBy)
+               if(vm.account.login == vm.opportunityMaster.createdBy)
                 {
                     vm.decimalValue = resp.decimalValue;
                 }
@@ -319,12 +311,7 @@
     			result = (result * 100);
     			result = (isNaN(result) || result==Infinity) ? 0 : result;
     			//console.log('result',result);
-    			if(val1 == null || val1 == 0 ){
-    					console.log("val1 is null ",val1);
-    			}
-    			if(val2 == null || val2 == 0 ){
-					console.log("val2 is null ",val2);
-			}
+    		
     			switch (val3) {
     			case 1:
     				vm.opportunityMaster.nonFinancialSummaryData.marginOne = result;
@@ -348,12 +335,7 @@
     			default:
     				break;
     			}
-    			console.log("margin one ", vm.opportunityMaster.nonFinancialSummaryData.marginOne);
-    			/*console.log("margin two ", vm.opportunityMaster.nonFinancialSummaryData.marginTwo);
-    			console.log("margin Three ", vm.opportunityMaster.nonFinancialSummaryData.marginThree);
-    			console.log("margin Four ",vm.opportunityMaster.nonFinancialSummaryData.marginFour);
-    			console.log("margin Five ", vm.opportunityMaster.nonFinancialSummaryData.marginFive);*/
-
+    			
     			/*if(result=='') {
     				console.log("result else ");
     				result = 0;

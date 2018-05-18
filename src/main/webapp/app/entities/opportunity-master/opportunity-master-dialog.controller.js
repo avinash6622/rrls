@@ -39,7 +39,7 @@
 		vm.selectedOpportunity = null;
         vm.decimalValue = null;
 
-		console.log("SELECTED------>", vm.strategymasters);
+		
 
 		// var name= vm.opportunityNames;
 		vm.autoCompleteOptions = {
@@ -143,12 +143,7 @@
 
             DecimalConfiguration.get({id:vm.account.id},function (resp) {
 
-                console.log(resp);
-
-                console.log(vm.account.login);
-
-                console.log(vm.opportunityMaster.createdBy);
-
+              
                 if(vm.account.login == vm.opportunityMaster.createdBy)
                 {
                     vm.decimalValue = resp.decimalValue;
@@ -455,7 +450,7 @@
 			if (val2 == 0) {
 				var result = parseFloat(val1) / parseFloat(val3);
 				result = (result * 100);
-				console.log('ROE',result,val1,val3)
+				
 			} else {
 				var result = parseFloat(val1)
 						/ ((parseFloat(val2) + parseFloat(val3)) / 2);
@@ -591,7 +586,6 @@
 		function save() {
 			vm.isSaving = true;
 
-			console.log("ndksjangkjshagn", vm.opportunityMaster);
 			console.log("Computation",
 					vm.opportunityMaster.financialSummaryData);
 			if (vm.opportunityMaster.id !== null) {

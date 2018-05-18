@@ -56,14 +56,17 @@ public class DecimalConfigurationResource {
 
 	        if (decimalConfiguration.getId() != null) {
 	        	  result = decimalConfigurationRepository.save(decimalConfiguration);
-	        	return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, result.getId().toString()))
-	    				.body(result);
+	        	  String reponse = "A decimalConfiguration is updated successfully";
+	        	  return ResponseEntity.created(new URI("/api/decimal-config/" + result.getId()))
+	  	                .headers(HeaderUtil.createAlert(reponse, result.getId().toString())).body(result);
 	        }
 	        else{
 	         result = decimalConfigurationRepository.save(decimalConfiguration);}
+	        
+	        String reponse = "A decimalConfiguration is created successfully";
 
 	        return ResponseEntity.created(new URI("/api/decimal-config/" + result.getId()))
-	            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
+	                .headers(HeaderUtil.createAlert(reponse, result.getId().toString())).body(result);
 	    }
 
 	  	@GetMapping("/decimal-config/{id}")
