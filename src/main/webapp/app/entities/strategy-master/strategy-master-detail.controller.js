@@ -200,6 +200,9 @@
                     width: '100%',
                     height: '100%'
                 });
+                $("#table-table").css({
+                    'visibility': 'visible'
+                });
             }, 2000);
 
 

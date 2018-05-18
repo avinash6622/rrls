@@ -32,6 +32,7 @@
         vm.predicate = pagingParams.predicate;
       vm.transition = transition;
 
+
       //  vm.predicate = 'id';
 
         vm.dashboardvalues = [];
@@ -85,8 +86,9 @@
 
         setTimeout(function() {
             getDecimalConfig();
-
         }, 3000);
+
+
 
         function getAccount() {
             Principal.identity().then(function(account) {
@@ -144,6 +146,9 @@
                     Columnas: 5,
                     width: '100%',
                     height: '100%'
+                });
+                $("#table-scroll").css({
+                    'visibility': 'visible'
                 });
             }, 2000);
 

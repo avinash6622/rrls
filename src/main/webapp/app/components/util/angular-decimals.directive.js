@@ -25,6 +25,8 @@ app.directive("decimals", ['$filter', function ($filter) {
                     } else {
                         element.val(ngModel.$modelValue.toString());
                     }
+                } else {
+                    element.val((0).toFixed(decimalCount).toString());
                 }
             }
 
