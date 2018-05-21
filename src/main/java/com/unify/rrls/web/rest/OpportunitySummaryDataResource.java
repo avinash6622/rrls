@@ -149,7 +149,7 @@ public class OpportunitySummaryDataResource {
             sm.setPatGrowthFifth(opportunityMaster.getNonFinancialSummaryData().getPatGrowthFive());
             sm.setbWeight(opportunityMaster.getNonFinancialSummaryData().getWeight());
             if((opportunityMaster.getNonFinancialSummaryData().getPethree()!=null && opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree()!=null)
-            		&& opportunityMaster.getNonFinancialSummaryData().getPethree()!=0.0 || opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree()!=0.0){
+            		&& opportunityMaster.getNonFinancialSummaryData().getPethree()!=0.0 && opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree()!=0.0){
             sm.setPegOj(opportunityMaster.getNonFinancialSummaryData().getPethree()/opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree());}
           //  System.out.println("OJ value"+opportunityMaster.getNonFinancialSummaryData().getPethree()/opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree());
             if(opportunityMaster.getNonFinancialSummaryData().getWeight()!=null && opportunityMaster.getNonFinancialSummaryData().getWeight()!=0.0){

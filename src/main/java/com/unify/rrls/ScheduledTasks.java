@@ -86,10 +86,10 @@ public class ScheduledTasks {
 					nonFinancialSummaryData.setPethree(calculation.getMarketCap()/nonFinancialSummaryData.getPatthree());
 				}
 				if(nonFinancialSummaryData.getPatfour()!=null && nonFinancialSummaryData.getPatfour()!=0){
-					nonFinancialSummaryData.setPatfour(calculation.getMarketCap()/nonFinancialSummaryData.getPatfour());
+					nonFinancialSummaryData.setPeFour(calculation.getMarketCap()/nonFinancialSummaryData.getPatfour());
 				}
 				if(nonFinancialSummaryData.getPatFive()!=null && nonFinancialSummaryData.getPatFive()!=0){
-					nonFinancialSummaryData.setPatFive(calculation.getMarketCap()/nonFinancialSummaryData.getPatFive());
+					nonFinancialSummaryData.setPeFive(calculation.getMarketCap()/nonFinancialSummaryData.getPatFive());
 				}
 				if(nonFinancialSummaryData.getNetworthOne()!=null && nonFinancialSummaryData.getNetworthOne()!=0){
 					nonFinancialSummaryData.setPbOne(calculation.getMarketCap()/nonFinancialSummaryData.getNetworthOne());
@@ -177,10 +177,10 @@ if(calculation.getMarketCap()!=null && calculation.getMarketCap()!=0){
 		financialSummaryData.setPeThree(calculation.getMarketCap()/financialSummaryData.getPatThree());
 	}
 	if(financialSummaryData.getPatFour()!=null && financialSummaryData.getPatFour()!=0){
-		financialSummaryData.setPatFour(calculation.getMarketCap()/financialSummaryData.getPatFour());
+		financialSummaryData.setPeFour(calculation.getMarketCap()/financialSummaryData.getPatFour());
 	}
 	if(financialSummaryData.getPatFive()!=null && financialSummaryData.getPatFive()!=0){
-		financialSummaryData.setPatFive(calculation.getMarketCap()/financialSummaryData.getPatFive());
+		financialSummaryData.setPeFive(calculation.getMarketCap()/financialSummaryData.getPatFive());
 	}
 	if(financialSummaryData.getNetworthOne()!=null && financialSummaryData.getNetworthOne()!=0){
 		financialSummaryData.setPbvOne(calculation.getMarketCap()/financialSummaryData.getNetworthOne());
