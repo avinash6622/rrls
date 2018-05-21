@@ -6,9 +6,9 @@
         .controller('HomeController', HomeController);
 
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'AlertService', 'OpportunityMaster','ParseLinks','paginationConstants','$state','$http','$filter','pagingParams'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'AlertService', 'OpportunityMaster','ParseLinks','paginationConstants','$http','$filter','pagingParams','DecimalConfiguration','$state','$timeout'];
 
-    function HomeController ($scope, Principal, LoginService, AlertService, OpportunityMaster,ParseLinks,paginationConstants,$state,$http,$filter,pagingParams) {
+    function HomeController ($scope, Principal, LoginService, AlertService, OpportunityMaster,ParseLinks,paginationConstants,$http,$filter,pagingParams,DecimalConfiguration,$state,$timeout) {
         var vm = this;
 
         vm.account = null;
@@ -25,15 +25,20 @@
         vm.links = {
             last: 0
         };
-     //   vm.predicate = 'id';
-       // vm.reset = reset;
+       vm.predicate = 'id';
+        vm.reset = reset;
         vm.reverse = true;
         vm.reverse = pagingParams.ascending;
         vm.predicate = pagingParams.predicate;
-       /* vm.transition = transition;*/
-        vm.predicate = 'id';
+      vm.transition = transition;
+      vm.loader = false;
+
+
+      //  vm.predicate = 'id';
 
         vm.dashboardvalues = [];
+
+        vm.multiplevalue = null;
 
         $scope.$on('authenticationSuccess', function() {
             getAccount();
@@ -74,9 +79,17 @@
 
         $scope.neYearNext = $filter('date')(nextYearNext,'yyyy');
 
-
+       // vm.loadPage(vm.page);
 
         getAccount();
+
+        loadAll()
+
+        $timeout(function() {
+            getDecimalConfig();
+        }, 3000);
+
+
 
         function getAccount() {
             Principal.identity().then(function(account) {
@@ -88,17 +101,139 @@
             $state.go('register');
         }
 
-      /*  loadAll();*/
 
-      /*  function loadAll () {*/
-        	console.log($state.params);
+        function getDecimalConfig() {
 
 
-
+            DecimalConfiguration.get({id:vm.account.id},onSuccess1,onError1);
 
 
 
-            if ($state.params && $state.params.createdBy) {
+
+
+        }
+
+
+       function onSuccess1(resp){
+
+           console.log(resp);
+
+           console.log(resp.rupee);
+
+           console.log(vm.account.login);
+
+
+
+
+
+
+
+           if(resp.rupee == 'Millions')
+           {
+               if(vm.account.login == resp.user.login)
+               {
+                   if(!$state.params.createdBy)
+                   {
+                       vm.multiplevalue = 10;
+                   }
+
+               }
+
+
+           }
+
+           $timeout(function() {
+               $("#mytable").CongelarFilaColumna({
+                   Columnas: 5,
+                   width: '100%',
+                   height: '100%'
+               });
+               $("#table-scroll").css({
+                   'visibility': 'visible'
+               });
+
+               vm.loader = false;
+
+           }, 2000);
+
+
+
+
+       }
+
+       function onError1(){
+
+       }
+
+
+
+
+        	//console.log($state.params);
+
+        function loadAll(){
+                   console.log($state.params);
+
+
+            if ($state.params && $state.params.createdBy){
+                OpportunityMaster.opportunitysummaryDataCreatedBy({
+                    page: pagingParams.page - 1,
+                    size: vm.itemsPerPage,
+                    createdBy:$state.params.createdBy
+                },onSuccess, onError)
+            }
+
+            else{
+
+                OpportunityMaster.opportunitysummaryData({
+                    page: pagingParams.page - 1,
+                    size: vm.itemsPerPage,
+
+
+                }, onSuccess, onError);
+
+            }
+
+
+
+
+        }
+
+        function onSuccess(data, headers) {
+
+            vm.links = ParseLinks.parse(headers('link'));
+            vm.totalItems = headers('X-Total-Count');
+            vm.queryCount = vm.totalItems;
+            vm.page = pagingParams.page;
+            vm.dashboardvalues = data;
+            vm.loader = true;
+
+        }
+        function onError(error) {
+            AlertService.error(error.data.message);
+        }
+
+
+/*
+        function onSuccess1(data, headers) {
+            vm.links = ParseLinks.parse(headers('link'));
+            vm.totalItems = headers('X-Total-Count');
+            vm.queryCount = vm.totalItems;
+            vm.page = pagingParams.page;
+            vm.dashboardvalues = data;
+
+        }
+        function onError1(error) {
+            AlertService.error(error.data.message);
+        }*/
+
+
+
+
+
+
+
+
+ /*           if ($state.params && $state.params.createdBy) {
 
 	           $http.get('api/opportunity-summary/getdata/' + $state.params.createdBy)
 	            .then(function(response) {
@@ -120,6 +255,7 @@
                 };
 
                 $scope.paginate = function (value) {
+                    console.log(value);
                     var begin, end, index;
                     begin = (vm.page - 1) * vm.itemsPerPage;
                     end = begin + vm.itemsPerPage;
@@ -127,36 +263,21 @@
                     return (begin <= index && index < end);
                 };
 
-            }
-else{
-                $http.get('api/opportunity-summary/getdata')
-                    .then(function(response) {
-                        console.log("RESPONSEs");
-                        var len = response.data;
+            }*/
 
-                        // vm.dashboardvalues =  response.data;
-                        for (var i = 0; i < len.length; i++) {
-                            vm.dashboardvalues.push(len[i]);
-                        }
-                        vm.totalItems =  vm.dashboardvalues.length;
-                        vm.queryCount = vm.totalItems;
 
-                    });
-                $scope.order = function (predicate) {
-                    vm.reverse = (vm.predicate === vm.predicate) ? !vm.reverse : false;
-                    vm.predicate = predicate;
-                };
+        /*    function onsuccess(data,headers)
+            {
+                vm.links = ParseLinks.parse(headers('link'));
+                vm.queryCount = headers('X-Total-Count');
+            }*/
 
-                $scope.paginate = function (value) {
-                    var begin, end, index;
-                    begin = (vm.page - 1) * vm.itemsPerPage;
-                    end = begin + vm.itemsPerPage;
-                    index = vm.dashboardvalues.indexOf(value);
-                    return (begin <= index && index < end);
-                };
 
-            }
-            }
+
+
+
+
+
 
         function sort() {
             var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
@@ -167,27 +288,48 @@ else{
         }
 
 
-        function onError(error) {
-            AlertService.error(error.data.message);
-        }
-     /*   function reset () {
+        function reset () {
             vm.page = 0;
             vm.opportunityMasters = [];
             loadAll();
-        }*/
+        }
         function loadPage(page) {
             vm.page = page;
-            vm.transition();
+            loadAll();
+
+
+        /*    setTimeout(function() {
+                $("#mytable").CongelarFilaColumna({
+                    Columnas: 5,
+                    width: '100%',
+                    height: '100%'
+                });
+            }, 2000);*/
+
+
         }
 
 
-    /*    function transition () {
+
+        function transition () {
             $state.transitionTo($state.$current, {
                 page: vm.page,
                 sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
-                search: vm.currentSearch
+                search: vm.currentSearch,
+                createdBy:$state.params.createdBy
             });
-        }*/
+
+
+        }
+
+
+
+        }
+
+
+
+
+
 /*    }*/
 })();
 

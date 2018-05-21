@@ -67,9 +67,9 @@
                     value: 'id,asc',
                     squash: true
                 }
-               
+
             },
-            resolve: {            	 
+            resolve: {
                 pagingParams: ['$stateParams', 'PaginationUtil', function ($stateParams, PaginationUtil) {
                     return {
                         page: PaginationUtil.parsePage($stateParams.page),

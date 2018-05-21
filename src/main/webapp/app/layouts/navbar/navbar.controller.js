@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$state', 'Auth', 'Principal', 'ProfileService', 'LoginService','$scope'];
+    NavbarController.$inject = ['$state', 'Auth', 'Principal', 'ProfileService', 'LoginService','$scope','OpportunityMaster','$http','DateUtils'];
 
-    function NavbarController ($state, Auth, Principal, ProfileService, LoginService,$scope) {
+    function NavbarController ($state, Auth, Principal, ProfileService, LoginService,$scope,OpportunityMaster,$http,DateUtils) {
         var vm = this;
 
         vm.isNavbarCollapsed = true;
@@ -23,6 +23,13 @@
         vm.toggleNavbar = toggleNavbar;
         vm.collapseNavbar = collapseNavbar;
         vm.$state = $state;
+        vm.count = null;
+        vm.close = close;
+        vm.readstatus= readstatus;
+        vm.clearNoti=clearNoti;
+
+        vm.nonotification = null;
+
 
         $scope.$on('authenticationSuccess', function() {
             getAccount();
@@ -34,8 +41,50 @@
             Principal.identity().then(function(account) {
                 vm.account = account;
                 vm.isAuthenticated = Principal.isAuthenticated;
+
+
+                $http.get('api/history-logs/'+vm.account.id)
+                    .then(function(response) {
+                        vm.notificationValues = [];
+                        console.log("RESPONSE",response);
+
+
+                        var len = response.data;
+
+                        console.log(len.length);
+
+
+                            for (var i = 0; i < len.length; i++) {
+                                vm.notificationValues.push(len[i]);
+                            }
+
+
+
+
+                        console.log(vm.notificationValues);
+
+
+                    });
+
+
             });
+
         }
+
+        function clearNoti(userId){
+        	console.log('clear',userId)
+        	
+        	  $http.get('api/clear_notification/'+userId)
+              .then(function(response) {
+                  vm.notificationValues = [];               
+                
+                  console.log(vm.notificationValues);
+
+
+              });
+        }
+
+
 
         function login() {
             collapseNavbar();
@@ -56,5 +105,29 @@
         function collapseNavbar() {
             vm.isNavbarCollapsed = true;
         }
+
+        function close(id,userid,index,status){
+
+            vm.notificationValues.splice(index, 1);
+
+         OpportunityMaster.notification({notiId :id,userId:userid,status:status}, function(resp){
+
+         });
+
+
+        }
+
+        function readstatus(id,userid,status,item){
+
+            if (item.dStatus !== 'Read') {
+                OpportunityMaster.notification({notiId :id,userId:userid,status:status}, function(resp){
+                    console.log(resp);
+
+                });
+            }
+
+
+        }
+
     }
 })();

@@ -11,7 +11,7 @@
         $stateProvider
         .state('opportunity-master', {
             parent: 'entity',
-            url: '/opportunity-master',
+            url: '/opportunity-master?page&sort',
             data: {
                 authorities: ['User'],
                 pageTitle: 'Opportunity'
@@ -215,26 +215,7 @@
                     $state.go('^');
                 });
             }]
-        })
-   /*   .state('opportunity-master.download',{
-          parent: 'download',
-          url: '/{fileName}',
-
-          views :{
-
-          },
-
-          resolve: {
-
-          },
-          onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
-              var vm = this;
-              vm.readOnly = true;
-          }]
-
-
-        })*/
-           ;
+        });
     }
 
 })();

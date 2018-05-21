@@ -35,7 +35,7 @@ border:none !important;
 		border-right-style: none !important;
 		border-left-style: none !important;
 }
-<style>
+
     .table-responsive>.fixed-column {
         position: absolute!important;
         display: inline-block!important;
@@ -53,10 +53,11 @@ border:none !important;
     .fixed-column thead,.fixed-column tbody{
         background: white!important;
     }
-</style>
+
 
 </style>
  <div ng-cloak>
+
      <div class="row">
          <div class="col-md-3 col-sm-6 col-xs-12">
 
@@ -74,7 +75,10 @@ border:none !important;
 
          </div>
      </div>
+
     <div class="row">
+
+
         <div class="col-md-12">
          <!--   <h1>Welcome!</h1>-->
 
@@ -84,15 +88,18 @@ border:none !important;
                     You are logged in as user "{{vm.account.login |capitalize}}".
                     <br>
                     </div>-->
-                     <div class="scrollmenu" table-scroll" id="table-scroll">
-                      <div class="table-responsive">
-                         <table id="mytable" class="table table-striped table-bordered">
+                <div ng-show="vm.loader"><img class="logo-img" src="content/images/spinner.gif" alt="logo" style="margin: 0px auto; display: block;"/></div>
+                <div class="scrollmenu table-scroll" id="table-scroll" style="visibility: hidden;">
+
+                    <div class="table-responsive" style="width: 100%; height: 80vh;">
+                         <table id="mytable" class="table table-striped table-bordered table-hover table-condensed fht-table">
                              <thead>
 
                              <tr class="headborder">
 
                                  <th rowspan="2" style="vertical-align: middle;">Opportunity</th>
                                  <th rowspan="2" style="vertical-align: middle;">Strategy</th>
+                                  <th rowspan="2" style="vertical-align: middle;">Status</th>
                                  <th rowspan="2" style="vertical-align: middle;">Prev. close</th>
                                  <th rowspan="2" style="vertical-align: middle;">M.Cap</th>
                                  <th scope="col" colspan="5">PAT</th>
@@ -149,41 +156,42 @@ border:none !important;
                              </tr>
                              </thead>
                         <tbody>
-                             <tr ng-repeat="value in vm.dashboardvalues | orderBy:predicate:reverse | filter:paginate" class="ng-scope tbody-class">
+                             <tr ng-repeat="value in vm.dashboardvalues | orderBy:predicate:reverse" class="ng-scope tbody-class">
                                  <td scope="col" style="text-align: left"><a class="ng-binding" ui-sref="opportunity-master-detail({id:value.opportunityMasterid.id})">{{value.opportunityMasterid.masterName.oppName}}</a></td>
                                  <td style="text-align: left">
                                      <span ng-repeat="strategy in value.strategyMasterList" class="ng-scope">
                                          <a ui-sref="strategy-master-detail({id:strategy.id})" class="ng-binding" >{{strategy.strategyName}}</br></a>
                                      </span>
                                  </td>
-                                 <td style="text-align: right" class="ng-binding">{{value.cmp | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.marketCap | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.patFirstYear | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.patSecondYear | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.patThirdYear | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.patFourthYear | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.patFifthYear | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.peFirstYear | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.peSecondYear | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.peThirdYear | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.peFourthYear | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.peFifthYear | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.roeFirstYear | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.roeSecondYear | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.roeThirdYear | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.roeFourthYear | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.roeFifthYear | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.deFirstYear | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.deSecondYear | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.deThirdColour | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.deFourthYear | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.deFifthYear | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthFirst | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthSecond | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthThird | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthFourth | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthFifth | number:2}}</td>
-                                 <td style="text-align: right" class="ng-binding">{{value.pegOj | number:2}}</td>
+                                 <td ng-class="value.opportunityMasterid.status == 'Open' ? 'text-success' : 'text-danger'"  style="text-align: left">{{value.opportunityMasterid.status ? value.opportunityMasterid.status: '&nbsp'}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.cmp | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.marketCap | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patFirstYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patSecondYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patThirdYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patFourthYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patFifthYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.peFirstYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.peSecondYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.peThirdYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.peFourthYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.peFifthYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.roeFirstYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.roeSecondYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.roeThirdYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.roeFourthYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.roeFifthYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.deFirstYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.deSecondYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.deThirdColour | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.deFourthYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.deFifthYear | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthFirst | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthSecond | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthThird | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthFourth | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.patGrowthFifth | thousandSuffix:0:vm.multiplevalue}}</td>
+                                 <td style="text-align: right" class="ng-binding">{{value.pegOj | thousandSuffix:0:vm.multiplevalue}}</td>
 
 
                              </tr>
@@ -201,6 +209,8 @@ border:none !important;
                 </div> -->
                 </div>
                 <div class="text-center">
+
+
 
 
                     <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
@@ -225,17 +235,4 @@ border:none !important;
     <p data-translate="footer" style="font-size: 12px">&copy;{{currentYear}}, All rights reserved.</p>
 </footer>
 
-<script>
-$(window).on('load',function(){
-    var $table = $('#mytable');
-    var $fixedColumn = $table.clone().insertBefore($table).addClass('fixed-column');
 
-    //$fixedColumn.find('th:not(:lt(4)),tbody > .tbody-class td:not(:lt(4))').remove();
-
-    $fixedColumn.find('th:not(:lt(4)), tbody tr td:not(:nth-child(-n+4))').remove();
-
-    $fixedColumn.find('tr').each(function (i, elem) {
-        $(this).height($table.find('tr:eq(' + i + ')').height());
-    });
-});    
-</script>

@@ -1,13 +1,47 @@
-<style>
+<style xmlns="http://www.w3.org/1999/html">
 
     .success-text {
         color: #00C851; }
 
     .primary-text {
         color: #4285F4; }
+   .primary-aligned{
+       padding-top: 3px;
+       padding-right: 20px;
+       padding-bottom: 3px;
+       padding-left: 20px;
+   }
 
 
+    a.glyphicon-bell {
+        position: relative;
+        font-size: 1.5em;
+        color: grey;
+        cursor: pointer;
+    }
+    span.fa-comment {
+        position: absolute;
+        font-size: 1.0em;
+        top: 4px;
+        color: red;
+        right: 6px;
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        border-radius: 50%;
 
+    }
+    span.num {
+        position: absolute;
+        font-size: 1.2rem;
+        top: 2px;
+        color: #fff;
+        width: 20px;
+        height: 20px;
+        right: 6px;
+        text-align: center;
+
+    }
 </style>
 
 
@@ -28,7 +62,7 @@
 
         <div class="navbar-collapse" uib-collapse="vm.isNavbarCollapsed" ng-switch="vm.isAuthenticated()">
             <ul class="nav navbar-nav navbar-right">
-                <li ui-sref-active="active" ng-switch-when="true" has-authority = "Research">
+                <li ui-sref-active="active" ng-switch-when="true" has-any-authority = "Research,Master,RM">
                     <a ui-sref="home" ng-click="vm.collapseNavbar()">
                         <span class="glyphicon glyphicon-home"></span>
                         <span class="hidden-sm">Home</span>
@@ -46,6 +80,12 @@
                         </span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-left" uib-dropdown-menu>
+                      <li ui-sref-active="active">
+                            <a ui-sref="consolidated-learning" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span>Consolidated Learnings</span>
+                            </a>
+                        </li>
                         <li has-authority="Admin">
                             <a ui-sref="user-management" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-user"></span>&nbsp;
@@ -53,23 +93,24 @@
                             </a>
                         </li>
                         <li ui-sref-active="active">
-                                <a ui-sref="strategy-master" ng-click="vm.collapseNavbar()">
-                                    <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                    <span>Strategy Master</span>
-                                </a>
-                            </li>
+                            <a ui-sref="strategy-master" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span>Strategy Master</span>
+                            </a>
+                        </li>
                         <li ui-sref-active="active">
-                                <a ui-sref="opportunity-master" ng-click="vm.collapseNavbar()">
-                                    <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                    <span>Opportunity Master</span>
-                                </a>
-                            </li>
+                            <a ui-sref="opportunity-master" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span>Opportunity Master</span>
+                            </a>
+                        </li>
                         <li ui-sref-active="active" has-authority="Admin">
                             <a ui-sref="opportunity-name" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span>Opportunity Name</span>
                             </a>
                         </li>
+
 
                     </ul>
                 </li>
@@ -85,6 +126,20 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-left" uib-dropdown-menu>
 
+                     <li ui-sref-active="active">
+                            <a ui-sref="decimal-configuration.get({id:vm.account.id})" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span>Configuration</span>
+                            </a>
+                        </li>
+
+                        <li ui-sref-active="active" has-any-authority="Admin,Research,Master">
+                            <a ui-sref="opportunity-delegation" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span>User Delegation</span>
+                            </a>
+                        </li>
+
                         <li ui-sref-active="active">
                             <a ui-sref="password" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-lock"></span>&nbsp;
@@ -99,38 +154,109 @@
                             </a>
                         </li>
 
-
-
                     </ul>
+                    
                 </li>
-              <!--  <li ng-class="{active: vm.$state.includes('admin')}"  ng-switch-when="true" has-authority="Admin" uib-dropdown class="dropdown pointer">
-                    <a class="dropdown-toggle" uib-dropdown-toggle href="" id="admin-menu">
-                        <span>
-                            <span class="glyphicon glyphicon-tower"></span>
-                            <span class="hidden-sm">Administration</span>
-                            <b class="caret"></b>
+
+
+                <li uib-dropdown class="dropdown pointer notification" ng-switch-when="true">
+
+                 <!--   <a class="dropdown-toggle" uib-dropdown-toggle href="" id="noti_menu">
+
+                      <notification-icon animation="my-custom-animation" ng-init="vm.customPending = 0" count=vm.count style="width:10px;height: 10px">
+                        <i class="glyphicon glyphicon-bell"></i>
+                    </notification-icon>
+                            &lt;!&ndash;<span class="glyphicon glyphicon-bell"></span>&ndash;&gt;
+
+
+
+                    </a>-->
+
+                    <a uib-dropdown-toggle href="" class="dropdown-toggle glyphicon glyphicon-bell" ng-style="{'color': vm.notificationValues.length > 0 ? '#da251c':''}">
+                       <!-- <span class="fa fa-comment"></span>
+                        <span class="num">{{vm.notificationValues.length}}</span>-->
+
+                    </a>
+
+
+                    <ul class="dropdown-menu dropdown-messages" uib-dropdown-menu ng-style="{'height': vm.notificationValues.length > 5 ? '215px': 'auto'}">
+                      <li ng-show="vm.notificationValues.length"><span><a class="pull-right" style="padding-right:23px;" ng-click="vm.clearNoti(vm.account.id);$event.stopPropagation()">Clear All</a><br /></span></li>
+                        <div class="primary-aligned">
+					
+                        <span ng-show="vm.notificationValues.length" ng-repeat="noti in vm.notificationValues">
+                            <li>
+
+                                <div>
+                                    <span ng-click="vm.readstatus(noti.id,vm.account.id,'Read', noti)"  ng-disabled="noti.dStatus === 'Read'">
+                                        <span ng-if="noti.action !== 'delegated' && noti.page !='Opportunity Name'"><a ui-sref="home-research({createdBy:noti.createdBy})">{{noti.createdBy | capitalize}}</a> {{noti.action}} <span ng-if="noti.fileNamecontent"><strong>"{{noti.fileNamecontent}}"</strong></span> {{noti.page}} <a ui-sref="{{noti.page == 'Strategy' ? 'strategy-master-detail({id:noti.oppId})' : noti.page == 'Opportunity' ? 'opportunity-master-detail({id:noti.oppId})' : 'user-management-detail({login:noti.oppname})'}}">{{noti.oppname}}</a></span>
+                                        <span ng-if="noti.action !== 'delegated' && noti.page == 'Opportunity Name'"><a ui-sref="home-research({createdBy:noti.createdBy})">{{noti.createdBy | capitalize}}</a> {{noti.action}} <span ng-if="noti.fileNamecontent"><strong>"{{noti.fileNamecontent}}"</strong></span> {{noti.page}} {{noti.oppname}}</span>
+
+                                        <span ng-if="noti.action === 'delegated'"><a ui-sref="home-research({createdBy:noti.createdBy})">{{noti.createdBy | capitalize}}</a> {{noti.action}} {{noti.page}} <a ui-sref="opportunity-master-detail({id:noti.oppId})">{{noti.oppname}} </a><span ng-if="noti.fileNamecontent">to {{noti.fileNamecontent}}</span> </span>
+                                        <!--<span ng-if="noti.page === 'Strategy'"><a ui-sref="home-research({createdBy:noti.createdBy})">{{noti.createdBy | capitalize}}</a> {{noti.action}} {{noti.page}} <a ui-sref="strategy-master-detail({id:noti.oppId})">{{noti.oppname}}</a></span>-->
+
+                                    </span>
+                                    <span class="pull-right text-muted small">{{noti.createdDate | date :"MMM d, y h:mm:ss a" }}&nbsp;&nbsp;
+                                    <button type="button" class="close" ng-click="vm.close(noti.id,vm.account.id,$index,'deleted');$event.stopPropagation()">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </span>
+                                </div>
+
+                             </li>
+
+
+                        <li class="divider"></li>
+
                         </span>
-                    </a>
-                    <ul class="dropdown-menu" uib-dropdown-menu>
-                        <li ui-sref-active="active">
-                            <a ui-sref="user-management" ng-click="vm.collapseNavbar()">
-                                <span class="glyphicon glyphicon-user"></span>&nbsp;
-                                <span>User management</span>
-                            </a>
-                        </li>
 
-                        &lt;!&ndash; jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here &ndash;&gt;
+
+                            <li ng-hide="vm.notificationValues.length">
+                                <div>
+                                    No notifications
+                                </div>
+                            </li>
+                        </div>
+
+
+
                     </ul>
+
+
                 </li>
--->
 
-            <!--    <li ui-sref-active="active" ng-switch="vm.isAuthenticated()" ng-switch-when="true">
-                    <a href=""  id="logout1">
-                        <span class="glyphicon glyphicon-user"></span>&nbsp;
-                        <span class ="primary-text">{{vm.account.login |capitalize}}</span>
-                    </a>
 
-                </li>-->
+
+
+
+
+                <!--  <li ng-class="{active: vm.$state.includes('admin')}"  ng-switch-when="true" has-authority="Admin" uib-dropdown class="dropdown pointer">
+                      <a class="dropdown-toggle" uib-dropdown-toggle href="" id="admin-menu">
+                          <span>
+                              <span class="glyphicon glyphicon-tower"></span>
+                              <span class="hidden-sm">Administration</span>
+                              <b class="caret"></b>
+                          </span>
+                      </a>
+                      <ul class="dropdown-menu" uib-dropdown-menu>
+                          <li ui-sref-active="active">
+                              <a ui-sref="user-management" ng-click="vm.collapseNavbar()">
+                                  <span class="glyphicon glyphicon-user"></span>&nbsp;
+                                  <span>User management</span>
+                              </a>
+                          </li>
+
+                          &lt;!&ndash; jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here &ndash;&gt;
+                      </ul>
+                  </li>
+  -->
+
+                <!--    <li ui-sref-active="active" ng-switch="vm.isAuthenticated()" ng-switch-when="true">
+                        <a href=""  id="logout1">
+                            <span class="glyphicon glyphicon-user"></span>&nbsp;
+                            <span class ="primary-text">{{vm.account.login |capitalize}}</span>
+                        </a>
+
+                    </li>-->
             </ul>
         </div>
     </div>

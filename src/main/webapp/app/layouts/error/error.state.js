@@ -3,9 +3,12 @@
 
     angular
         .module('researchRepositoryLearningSystemApp')
-        .config(stateConfig);
+        .config(stateConfig)
+        .controller('accessdeniedController', accessdeniedController);
+
 
     stateConfig.$inject = ['$stateProvider'];
+    accessdeniedController.$inject = ['$scope','$filter'];
 
     function stateConfig($stateProvider) {
         $stateProvider
@@ -19,6 +22,7 @@
                 views: {
                     'content@': {
                         templateUrl: 'app/layouts/error/error.html'
+
                     }
                 }
             })
@@ -30,9 +34,27 @@
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'app/layouts/error/accessdenied.html'
+                        templateUrl: 'app/layouts/error/accessdenied.html',
+                        controller: 'accessdeniedController'
                     }
                 }
             });
     }
+
+    function accessdeniedController($scope,$filter){
+
+        console.log("hi");
+
+        var myDate = new Date();
+        console.log($scope.currentYear);
+
+        $scope.currentYear = $filter('date')(myDate, 'yyyy');
+
+
+
+ }
+
+
 })();
+
+

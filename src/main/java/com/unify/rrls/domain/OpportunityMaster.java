@@ -36,6 +36,10 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	@Column(name = "description")
     private String statusDes;
 
+	@Column(name = "status")
+    private String status;
+
+
 	@Transient
 	@JsonProperty
 	private String htmlContent;
@@ -70,7 +74,7 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
     @Transient
     @JsonProperty
     private NonFinancialSummaryData nonFinancialSummaryData;
-    
+
    	//private List<StrategyMaster> selectedStrategyMaster=new ArrayList<StrategyMaster>();
 
 	@OneToMany(mappedBy = "opportunityMasterId")
@@ -80,11 +84,25 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	@JoinColumn(name = "master_name")
 	private OpportunityName masterName;
 
+	 @OneToMany(mappedBy="opportunityMaster")
+	 private List<OpportunityQuestion> opportunityQuestions;
+
+	 @Transient
+	 @JsonProperty
+	 private Integer decimalPoint;
 
  /*   @OneToOne(fetch = FetchType.LAZY,
         cascade =  CascadeType.ALL,
         mappedBy = "OpportunityMasterID")
     private OpportunityMasterContact opportunityMasterContact;*/
+
+	public List<OpportunityQuestion> getOpportunityQuestions() {
+		return opportunityQuestions;
+	}
+
+	public void setOpportunityQuestions(List<OpportunityQuestion> opportunityQuestions) {
+		this.opportunityQuestions = opportunityQuestions;
+	}
 
 	/*@OneToMany(mappedBy = "strategyMaster",cascade={CascadeType.PERSIST},fetch = FetchType.EAGER)
 	private List<StrategyMapping> strategyMapping;*/
@@ -197,7 +215,23 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
         this.nonFinancialSummaryData = nonFinancialSummaryData;
     }
 
-    @Override
+    public Integer getDecimalPoint() {
+		return decimalPoint;
+	}
+
+	public void setDecimalPoint(Integer decimalPoint) {
+		this.decimalPoint = decimalPoint;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
 			return true;
@@ -212,30 +246,18 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 		return Objects.equals(getId(), opportunityMaster.getId());
 	}
 
+
     @Override
-    public String toString() {
-        return "OpportunityMaster{" +
-            "selectedStrategyMaster=" + selectedStrategyMaster +
-            /*", strategyMapping=" + strategyMapping +*/
-            '}';
-    }
-/*    @Override
     public String toString() {
         return "OpportunityMaster{" +
             "id=" + id +
             ", oppDescription='" + oppDescription + '\'' +
             ", oppStatus='" + oppStatus + '\'' +
             ", statusDes='" + statusDes + '\'' +
-            ", htmlContent='" + htmlContent + '\'' +
-            ", fileUploadCommentList=" + fileUploadCommentList +
-            ", selectedStrategyMaster=" + selectedStrategyMaster +
-            ", selectedoppContanct=" + selectedoppContanct +
-            ", financialSummaryData=" + financialSummaryData +
-            ", fileUploads=" + fileUploads +
+            ", status='" + status + '\'' +
             ", masterName=" + masterName +
-            ", strategyMapping=" + strategyMapping +
             '}';
-    }*/
+    }
 
     @Override
 	public int hashCode() {

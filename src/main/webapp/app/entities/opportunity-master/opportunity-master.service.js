@@ -99,7 +99,20 @@
 
 
             },
+         /*  'questionAnswer':{
+                url:'api/opportunity-masters/get-Question/:id',
+                method:'GET',
 
+                transformResponse: function(data){
+                	console.log('questiondata',data);
+                	var data1=data
+                	return data1;
+               }
+
+
+            },
+
+*/
             'downloadfilecontent':{
                 url:'api/opportunity-masters/download-file/',
                 method:'GET',
@@ -149,6 +162,24 @@
 
 
             },
+            'notification':{
+
+                url:'api/store_noti_user_id',
+                method:'POST'
+            },
+         
+           'opportunitysummaryData':{
+                url:'api/opportunity-summary/getdata',
+                method:'GET',
+               isArray: true
+           },
+
+            'opportunitysummaryDataCreatedBy':{
+                url:'api/opportunity-summary/getdata/:createdBy',
+                method:'GET',
+                isArray: true
+
+            },
 
             /*,
             'addWordCreation':{
@@ -164,6 +195,11 @@
                 }
 
             }*/
+           'getSearchOpportunity': {
+           	url: 'api/opportunity-masters/search',
+               method: 'POST',
+               isArray: true
+           }
         });
 
 

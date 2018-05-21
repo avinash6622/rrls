@@ -16,8 +16,14 @@
             // jhipster-needle-angularjs-add-module JHipster will add new module here
             'angular-loading-bar',
             'ckeditor',
-            'autoCompleteModule'
+            'autoCompleteModule',
+           // 'xyScroll',
+            'angular-notification-icons',
            // 'angucomplete-alt'
+            'rzModule',
+            'ngSanitize',
+            'angular-decimals',
+            'Utils'
         ])
         .run(run);
 

@@ -14,6 +14,7 @@
 <div>
     <div class="well">
 
+
     <jhi-alert></jhi-alert>
 
         <div>
@@ -46,7 +47,7 @@
                     <th>
                         <div class="pull-right">
                         <div class="col-xs-3">
-                            <button class="btn btn-primary" ui-sref="strategy-master.new" has-authority="Research">
+                            <button class="btn btn-primary" ui-sref="strategy-master.new" has-any-authority="Research,Master">
                                 <span></span>
                                 <span style="padding: 10px">Create New Strategy</span>
                             </button>
@@ -59,29 +60,29 @@
             <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
                 <tr ng-repeat="strategyMaster in vm.strategyMasters track by strategyMaster.id">
 
-                    <td><a ui-sref="strategy-master-detail({id:strategyMaster.id})">{{strategyMaster.strategyName}}</a></td>
+                    <td><button type="submit"
+                                      ui-sref="strategy-master.edit({id:strategyMaster.id})"
+                                      class="btn btn-primary btn-sm"
+                                      tooltip="edit"
+                                      tooltip-placement="bottom" has-any-authority="Research,Master">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        <span class="hidden-sm-down"></span>
+                    </button> <a ui-sref="strategy-master-detail({id:strategyMaster.id})">{{strategyMaster.strategyName}}</a></td>
                     <td>{{strategyMaster.aum}}</td>
 
                     <td>{{strategyMaster.totalStocks}}</td>
 
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
-                            <button type="submit"
+                        <!--    <button type="submit"
                                     ui-sref="strategy-master-detail({id:strategyMaster.id})"
                                     class="btn btn-info btn-sm" data-toggle="tooltip"
                                      tooltip="view"
          							 tooltip-placement="bottom">
                                 <span class="glyphicon glyphicon-eye-open"></span>
                                 <span class="hidden-sm-down"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="strategy-master.edit({id:strategyMaster.id})"
-                                    class="btn btn-primary btn-sm"
-                                     tooltip="edit"
-         							 tooltip-placement="bottom">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="hidden-sm-down"></span>
-                            </button>
+                            </button>-->
+
                     <!--        <button type="submit"
                                     ui-sref="strategy-master.delete({id:strategyMaster.id})"
                                     class="btn btn-danger btn-sm"

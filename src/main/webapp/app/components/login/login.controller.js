@@ -41,7 +41,6 @@
         var myDate=new Date();
 
         $scope.currentYear = $filter('date')(myDate,'yyyy');
-
         Principal.identity().then(function(account) {
            // console.log("njdsnnkskj--->",account);
             vm.roles = account;
@@ -49,21 +48,25 @@
 
             if(Principal.isAuthenticated()) {
 
-
+/*
                 if (vm.roles.authorities[1] == 'CIO') {
                     console.log("hii");
                     $state.go('strategy-master');
-                }
-                else {
+                }*/
+            /*    else {
 
                     if (vm.roles.authorities[1] == 'Admin') {
+
                         $state.go('user-management');
+                      /!*  $state.go('blogs');*!/
                     }
                     else {
                         $state.go('home');
                     }
 
-                }
+                }*/
+
+                $state.go('blogs');
             }
             });
 
@@ -95,7 +98,7 @@
                     $state.go(previousState.name, previousState.params);
                 } else {
                     Principal.identity().then(function(account) {
-                        console.log("njdsnnkskj--->",account);
+                    /*    console.log("njdsnnkskj--->",account);
                         vm.roles = account;
                         console.log(vm.roles.authorities);
                         if(vm.roles.authorities[1] == 'CIO')
@@ -107,18 +110,20 @@
 
                             if(vm.roles.authorities[1] == 'Admin')
                             {
-                                $state.go('user-management');
+                              /!*  $state.go('user-management');*!/
+                                $state.go('blogs');
                             }
                             else{
                                 $state.go('home');
                             }
 
-                   }
+                   }*/
 
 
-
+                        $state.go('blogs');
 
                     });
+
                     }
 
             }).catch(function () {

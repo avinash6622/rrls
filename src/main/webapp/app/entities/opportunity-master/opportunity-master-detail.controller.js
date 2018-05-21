@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('OpportunityMasterDetailController', OpportunityMasterDetailController);
 
-    OpportunityMasterDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'OpportunityMaster', 'StrategyMaster', 'Upload', 'FileUploadComments','FileUpload','$uibModal','$filter','$http'];
+    OpportunityMasterDetailController.$inject = ['$scope', '$rootScope','Principal', '$stateParams', 'previousState', 'entity', 'OpportunityMaster', 'StrategyMaster', 'Upload', 'FileUploadComments','FileUpload','$uibModal','$filter','$http','OpportunityQuestion','DecimalConfiguration','CommentOpportunity'];
 
-    function OpportunityMasterDetailController($scope, $rootScope, $stateParams, previousState, entity, OpportunityMaster, StrategyMaster, Upload, FileUploadComments,FileUpload,$uibModal,$filter,$http) {
+    function OpportunityMasterDetailController($scope, $rootScope,Principal, $stateParams, previousState, entity, OpportunityMaster, StrategyMaster, Upload, FileUploadComments,FileUpload,$uibModal,$filter,$http,OpportunityQuestion,DecimalConfiguration,CommentOpportunity) {
         var vm = this;
 
         vm.opportunityMaster = entity;
@@ -29,10 +29,48 @@
         /*vm.additionalFile=additionalFile;*/
         vm.addFileName='';
         vm.summaryData='';
+        vm.questions=[];
+        vm.account = null;
+        vm.decimalValue = null;
 
 
+        console.log('Decimal value',vm.opportunityMaster.decimalPoint);
       //  vm.submiTable=submitTable;
+        $scope.$on('authenticationSuccess', function() {
+            getAccount();
+        });
 
+  	  getAccount();
+  	  setTimeout(function() {
+          getDecimalConfig();
+      }, 3000);
+
+
+
+        function getAccount() {
+            Principal.identity().then(function(account) {
+                vm.account = account;
+                vm.isAuthenticated = Principal.isAuthenticated;
+
+
+            });
+
+        }
+
+        function getDecimalConfig() {
+
+
+            DecimalConfiguration.get({id:vm.account.id},function (resp) {
+
+               if(vm.account.login == vm.opportunityMaster.createdBy)
+                {
+                    vm.decimalValue = resp.decimalValue;
+                }
+               },function (err) {
+                console.log(err);
+            });
+
+        }
 
 
 
@@ -82,9 +120,6 @@
         $scope.prevYearBefore = $filter('date')(previousYearBefore,'yyyy');
         $scope.neYearNext = $filter('date')(nextYearNext,'yyyy');
 
-
-
-
         $scope.submitTable = function() {
 
 
@@ -93,7 +128,7 @@
 
             OpportunityMaster.summarydatavalues(vm.opportunityMaster, function (resp) {
 
-                isDisabled=true;
+            	 $scope.isDisabled=true;
             }, function (err) {
                 console.log(err);
             });
@@ -117,10 +152,13 @@
           }
 
         $scope.getTotal = function(val1, val2, val3) {
-
+           // console.log(val1, val2, val3);
+            val1 = isNaN(val1) ? 0: val1;
+            val2 = isNaN(val2) ? 0: val2;
             var	result = parseFloat(val1) + parseFloat(val2);
-            result=(isNaN(result)) ? '':result;
-            if(result!=''){
+
+            //result=(isNaN(result) || result==Infinity) ? 0:result;
+
             switch(val3){
       	  case 1:
       		  vm.opportunityMaster.financialSummaryData.totIncOne = result;
@@ -139,15 +177,15 @@
       		break;
       	default:
       			  break;
-      	  }}
+      	  }
 
 
             return result;
             };
             $scope.getFinPbv = function(val1, val2, val3) {
 
-            	var result = (parseFloat(val1) / parseFloat(val2)).toFixed(2);
-            	result=(isNaN(result)) ? '':result;
+            	var result = (parseFloat(val1) / parseFloat(val2));
+            	result=(isNaN(result) || result==Infinity) ? 0:result;
             	if(result!=''){
             	 switch(val3){
          	  case 1:
@@ -188,12 +226,12 @@
             $scope.getFinRoe = function(val1, val2,val3,val4) {
           	  if(val2==0)
               	 {	var result = parseFloat(val1) / parseFloat(val3);
-               	result=(result*100).toFixed(2);  }
+               	result=(result*100);  }
              	 else{
               		var result = parseFloat(val1) / ((parseFloat(val2)+parseFloat(val3))/2);
-               	result=(result*100).toFixed(2);
+               	result=(result*100);
              	 }
-          		result=(isNaN(result)) ? '':result;
+          		result=(isNaN(result) || result==Infinity) ? 0:result;
           		if(result!=''){
           		 switch(val4){
           		  case 1:
@@ -220,8 +258,8 @@
           	$scope.getNonGrowth = function(val1, val2, val3) {
 
     			var result = (parseFloat(val2) / parseFloat(val1)) - 1;
-    			result = (result * 100).toFixed(2);
-    			result = (isNaN(result)) ? '' : result;
+    			result = (result * 100);
+    			result = (isNaN(result) || result==Infinity) ? 0 : result;
     			if(result!=''){
     			switch (val3) {
     			case 1:
@@ -266,14 +304,21 @@
     			return result;
     		};
     		$scope.getNonMargin = function(val1, val2, val3) {
-
+    			val1 = (isNaN(val1)) ? null:val1;
+    			val2 = (isNaN(val2)) ? null:val2;
+    			//console.log('EBITDA',val1,val2,val3);
     			var result = parseFloat(val1) / parseFloat(val2);
-    			result = (result * 100).toFixed(2);
-    			result = (isNaN(result)) ? '' : result;
-    			if(result!=''){
+    			result = (result * 100);
+    			result = (isNaN(result) || result==Infinity) ? 0 : result;
+    			//console.log('result',result);
+    		
     			switch (val3) {
     			case 1:
     				vm.opportunityMaster.nonFinancialSummaryData.marginOne = result;
+    				if(val1 == null || val1 == null ){
+    					vm.opportunityMaster.nonFinancialSummaryData.marginOne = 0;
+    					result == 0;
+    				}
     				break;
     			case 2:
     				vm.opportunityMaster.nonFinancialSummaryData.marginTwo = result;
@@ -289,15 +334,23 @@
     				break;
     			default:
     				break;
-    			}}
+    			}
+    			
+    			/*if(result=='') {
+    				console.log("result else ");
+    				result = 0;
+    				console.log('val 3',val3);
+    				return result;
+    			}	*/
     			return result;
+
     		};
 
     		$scope.getNonPbt = function(val1, val2, val3, val4, val5) {
 
     			var result = (parseFloat(val1) + parseFloat(val2) - parseFloat(val3)
-    					- parseFloat(val4)).toFixed(2);
-    			result = (isNaN(result)) ? '' : result;
+    					- parseFloat(val4));
+    			result = (isNaN(result) || result==Infinity) ? 0 : result;
     			if(result!=''){
     			switch (val5) {
     			case 1:
@@ -323,8 +376,8 @@
 
     		$scope.getNonPat = function(val1, val2, val3) {
 
-    			var result = (parseFloat(val1) - parseFloat(val2)).toFixed(2);
-    			result = (isNaN(result)) ? '' : result;
+    			var result = (parseFloat(val1) - parseFloat(val2));
+    			result = (isNaN(result) || result==Infinity) ? 0 : result;
     			if(result!=''){
     			switch (val3) {
     			case 1:
@@ -349,8 +402,8 @@
     		};
     		$scope.getNonPe = function(val1, val2, val3) {
 
-    			var result = (parseFloat(val1) / parseFloat(val2)).toFixed(2);
-    			result = (isNaN(result)) ? '' : result;
+    			var result = (parseFloat(val1) / parseFloat(val2));
+    			result = (isNaN(result) || result==Infinity) ? 0 : result;
     			if(result!=''){
     			switch (val3) {
     			case 1:
@@ -408,13 +461,13 @@
 
     			if (val2 == 0) {
     				var result = parseFloat(val1) / parseFloat(val3);
-    				result = (result * 100).toFixed(2);
+    				result = (result * 100);
     			} else {
     				var result = parseFloat(val1)
     						/ ((parseFloat(val2) + parseFloat(val3)) / 2);
-    				result = (result * 100).toFixed(2);
+    				result = (result * 100);
     			}
-    			result = (isNaN(result)) ? '' : result;
+    			result = (isNaN(result) || result==Infinity) ? 0 : result;
     			if(result!=''){
     			switch (val4) {
     			case 1:
@@ -438,6 +491,62 @@
     			}}
     			return result;
     		};
+
+    		$scope.getNonTaxRat = function(val1, val2, val3) {
+
+    				var result = parseFloat(val1)/parseFloat(val2);
+    				result = (result * 100);
+    			result = (isNaN(result) || result==Infinity) ? 0 : result;
+    			if(result!=''){
+    			switch (val3) {
+    			case 1:
+    				vm.opportunityMaster.nonFinancialSummaryData.taxRateOne = result;
+    				break;
+    			case 2:
+    				vm.opportunityMaster.nonFinancialSummaryData.taxRateTwo = result;
+    				break;
+    			case 3:
+    				vm.opportunityMaster.nonFinancialSummaryData.taxRateThree = result;
+    				break;
+    			case 4:
+    				vm.opportunityMaster.nonFinancialSummaryData.taxRateFour = result;
+    				break;
+    			case 5:
+    				vm.opportunityMaster.nonFinancialSummaryData.taxRateFive = result;
+    				break;
+    			default:
+    				break;
+    			}}
+    			return result;
+    		};
+
+    		$scope.getNonIntRat = function(val1, val2, val3) {
+
+				var result = parseFloat(val1)/parseFloat(val2);
+				result = (result * 100);
+			result = (isNaN(result) || result==Infinity) ? 0 : result;
+			if(result!=''){
+			switch (val3) {
+			case 1:
+				vm.opportunityMaster.nonFinancialSummaryData.intRateOne = result;
+				break;
+			case 2:
+				vm.opportunityMaster.nonFinancialSummaryData.intRateTwo = result;
+				break;
+			case 3:
+				vm.opportunityMaster.nonFinancialSummaryData.intRateThree = result;
+				break;
+			case 4:
+				vm.opportunityMaster.nonFinancialSummaryData.intRateFour = result;
+				break;
+			case 5:
+				vm.opportunityMaster.nonFinancialSummaryData.intRateFive = result;
+				break;
+			default:
+				break;
+			}}
+			return result;
+		};
         $scope.isDisabled = true;
 
         $scope.open = function (status) {
@@ -462,11 +571,11 @@
                         });
                         var inputData = {};
 
-                        inputData.opportunityComments = val +" - "+status;
+                        inputData.commentText = val +" - "+status;
                         inputData.opportunityMaster=vm.opportunityMaster;
 
-                        FileUploadComments.save(inputData, function(resp) {
-                            vm.opportunityMaster.fileUploadCommentList.push(resp);},
+                        CommentOpportunity.save(inputData, function(resp) {
+                           /* vm.opportunityMaster.fileUploadCommentList.push(resp);*/},
                             function(err) {
                                 console.log(err);
                             });
@@ -484,6 +593,58 @@
 
 
         };
+
+        $scope.question = function () {
+
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/entities/opportunity-master/opportunity-question-answer.html',
+                controllerAs: '$ctrl',
+                controller: 'OpportunityQuestionController',
+                size: 'lg',
+                resolve: {
+                	options: function() {
+                		return vm.opportunityMaster;
+                	}
+                }
+            });
+
+
+        };
+
+        $scope.learning = function () {
+
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/entities/opportunity-learning/opportunity-master-learning.html',
+                controllerAs: '$ctrl',
+                controller: 'OpportunityLearningController',
+              size: 'lg',
+               resolve: {
+                	options: function() {
+                		return vm.opportunityMaster;
+                	}
+                }
+            });
+
+
+        };
+
+        $scope.commentstemp = function(){
+
+            var modalInstance = $uibModal.open({
+
+                templateUrl: 'app/entities/opportunity-master/opportunity-comment.html',
+                controllerAs: '$ctrl',
+                controller: 'OpportunityCommentController',
+                size: 'lg',
+                resolve: {
+                    options: function() {
+                        return vm.opportunityMaster;
+                    }
+                }
+
+            });
+
+        }
 
 
         function load() {
@@ -541,6 +702,8 @@
         }
         function selectFile (file) {
 
+
+
             vm.opportunityMaster.fileUpload = file;
         }
 
@@ -551,21 +714,12 @@
         	OpportunityMaster.wordCreation({fileContent: doc,fileName:vm.fileName,oppId:vm.opportunityMaster.id,
         		oppName:vm.opportunityMaster.masterName.oppName,oppId:vm.opportunityMaster.id}, function(result){
 
-
         			vm.opportunityMaster.fileUploads.push(result);
-
-
-
         			clear();
         		}, onSaveError);
 
 
         }
-
-
-
-
-
 
         function saveComment() {
             vm.isSaving = true;
@@ -583,9 +737,6 @@
         }
 
        function approveFile(status){
-
-
-
 
         	vm.opportunityMaster.oppStatus = status;
 

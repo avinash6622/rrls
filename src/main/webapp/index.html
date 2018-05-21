@@ -12,9 +12,12 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="bower_components/components-font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/angularjs-slider/dist/rzslider.css"/>
     <!-- endinject -->
     <link rel="stylesheet" href="content/css/vendor.css">
     <link rel="stylesheet" href="content/css/styles.css">
+    <link rel="stylesheet" href="content/css/ScrollTabla.css">
     <!-- endbuild -->
     <!-- build:css content/css/main.css -->
     <link rel="stylesheet" href="content/css/main.css">
@@ -22,6 +25,9 @@
     <link rel="shortcut icon" href="unifi_logo.ico" />
     <link rel="manifest" href="mianifest.webapp" />
     <link href="bower_components/angular-auto-complete/angular-auto-complete.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="bower_components/angular-notification-icons/dist/angular-notification-icons.min.css">
+   <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />-->
+
 </head>
 <body ng-app="researchRepositoryLearningSystemApp" ng-strict-di>
     <!--[if lt IE 9]>
@@ -87,16 +93,22 @@
     <script src="bower_components/underscore/underscore-min.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
     <script src="bower_components/angular-auto-complete/angular-auto-complete.js"></script>
+    <script src="bower_components/angular-notification-icons/dist/angular-notification-icons.min.js"></script>
+	<!-- <script src="bower_components/angularjs/angular.min.js"></script> -->
+	<script src="bower_components/angularjs-slider/dist/rzslider.min.js"></script>
     <script src="content/lib/ckeditor/ckeditor.js"></script>
     <script src="content/lib/ckeditor/plugins/ajax/ajax.js"></script>
     <script src="content/lib/excel-library/Blob.js"></script>
     <script src="content/lib/excel-library/canvas-datagrid.js"></script>
     <script src="content/lib/excel-library/FileSaver.js"></script>
     <script src="content/lib/excel-library/xlsx.full.min.js"></script>
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+    <script src="bower_components/jquery/jquery-1.11.0.min.js"></script>
+    <script src="bower_components/jquery/jquery.CongelarFilaColumna.js"></script>
+
 	<!-- <script src="content/lib/excel-library/ui-bootstrap-custom-tpls-0.10.0.js"></script>
  -->
 
+    <script src="app/components/util/angular-decimals.directive.js"></script>
 
     <!-- endinject -->
     <!-- endbuild -->
@@ -105,6 +117,7 @@
     <!-- inject:js -->
     <script src="app/app.module.js"></script>
     <script src="app/services/user/user.service.js"></script>
+   <!--  <script src="app/scroll.js"></script> -->
     <script src="app/services/profiles/profile.service.js"></script>
     <script src="app/services/profiles/page-ribbon.directive.js"></script>
     <script src="app/services/auth/register.service.js"></script>
@@ -146,6 +159,30 @@
     <script src="app/entities/file-upload-comments/file-upload-comments.service.js"></script>
     <script src="app/entities/file-upload/file-upload.service.js"></script>
     <script src="app/entities/additional-file-upload/additional-file-upload.service.js"></script>
+    <script src="app/entities/opportunity-question/opportunity-question.service.js"></script>
+    <script src="app/entities/opportunity-question/opportunity-question.controller.js"></script>
+    <script src="app/entities/answer-comments/answer-comments.controller.js"></script>
+    <script src="app/entities/answer-comments/answer-comments.service.js"></script>
+    <script src="app/entities/decimal-config/decimal-configuration.controller.js"></script>
+    <script src="app/entities/decimal-config/decimal-configuration.state.js"></script>
+    <script src="app/entities/decimal-config/decimal-configuration.service.js"></script>
+    <script src="app/entities/user-delegation/user-delegation.controller.js"></script>
+    <script src="app/entities/user-delegation/user-delegation.state.js"></script>
+    <script src="app/entities/user-delegation/user-delegation.service.js"></script>
+    <script src="app/blogs/blogs.controller.js"></script>
+    <script src="app/blogs/blogs.state.js"></script>
+
+
+
+    <script src="app/entities/opportunity-comment/opportunity-comment.controller.js"></script>
+    <script src="app/entities/opportunity-comment/opportunity-comment.service.js"></script>
+    <script src="app/entities/reply-comments/reply-comments.controller.js"></script>
+    <script src="app/entities/reply-comments/reply-comments.service.js"></script>
+    <script src="app/entities/opportunity-learning/opportunity-learning.service.js"></script>
+    <script src="app/entities/opportunity-learning/opportunity-learning.controller.js"></script>
+     <script src="app/entities/opportunity-learning/opportunity-learning.state.js"></script>
+      <script src="app/entities/opportunity-learning/opportunity-learning-consolidated.controller.js"></script>
+
     <script src="app/entities/entity.state.js"></script>
     <script src="app/components/util/truncate-words.filter.js"></script>
     <script src="app/components/util/truncate-characters.filter.js"></script>

@@ -19,7 +19,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "opportunity_name")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class OpportunityName implements Serializable {
+public class OpportunityName extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,7 +41,6 @@ public class OpportunityName implements Serializable {
 
     @Column(name="security_id")
     private String securityId;
-
 
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -136,5 +135,17 @@ public class OpportunityName implements Serializable {
     public int hashCode() {
 
         return Objects.hash(id, oppName, sectorType, securityCode, segment, securityId);
+    }
+
+    @Override
+    public String toString() {
+        return "OpportunityName{" +
+            "id=" + id +
+            ", oppName='" + oppName + '\'' +
+            ", sectorType='" + sectorType + '\'' +
+            ", securityCode='" + securityCode + '\'' +
+            ", segment='" + segment + '\'' +
+            ", securityId='" + securityId + '\'' +
+            '}';
     }
 }

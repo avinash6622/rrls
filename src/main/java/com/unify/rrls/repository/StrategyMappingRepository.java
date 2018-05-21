@@ -8,11 +8,13 @@ import org.springframework.stereotype.Repository;
 import com.unify.rrls.domain.FileUpload;
 import com.unify.rrls.domain.OpportunityMaster;
 import com.unify.rrls.domain.StrategyMapping;
+import com.unify.rrls.domain.StrategyMaster;
 
 @SuppressWarnings("unused")
 @Repository
 public interface StrategyMappingRepository extends JpaRepository<StrategyMapping, Long>  {
 	
 	List<StrategyMapping> findByOpportunityMaster(OpportunityMaster opportunityMaster);
+	List<StrategyMapping> findByStrategyMaster(StrategyMaster StrategyMaster);
 
 }

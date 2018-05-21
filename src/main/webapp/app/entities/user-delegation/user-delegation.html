@@ -1,0 +1,47 @@
+<div>
+    <div class="well">
+
+        <div>
+            <jhi-alert></jhi-alert>
+
+            <!--    <button type="button" class="btn btn-default pull-right"
+                        ng-click="vm.clear()">Go Back</button>-->
+            <h4 style="text-align: center;"><strong>User Delegation</strong></h4>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6 col-md-offset-3">
+                <form name="editForm" role="form">
+
+                    <div class="form-group">
+                        <label for="field_opportunityName"></label>
+                        <input class="form-control" type="text" name="opportunityName" id="field_opportunityName" ng-model="vm.oppName"  auto-complete="vm.autoCompleteOptionsopp" placeholder="Opportunity Name"/>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="field_userName"></label>
+                        <input class="form-control" type="text" name="userName" id="field_userName" ng-model="vm.deleUserName"  auto-complete="vm.autoCompleteOptions" placeholder="User Name"/>
+
+                    </div>
+
+                    <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary pull-right" style="padding:2px;padding-right:4px" ng-click="vm.save()">
+                         &nbsp;<span>Submit</span>
+                    </button>
+
+                </form>
+
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+    <footer class="footer footer-dark" ng-cloak>
+        <p data-translate="footer" class="col-md-offset-3" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.</p>
+    </footer>
+</div>
+

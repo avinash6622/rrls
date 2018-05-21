@@ -18,8 +18,13 @@ import com.unify.rrls.repository.OpportunityMasterRepository;
 import com.unify.rrls.repository.StrategyMasterRepository;
 import com.unify.rrls.security.SecurityUtils;
 
+import com.unify.rrls.web.rest.util.PaginationUtil;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +33,8 @@ import org.springframework.web.bind.annotation.*;
 import com.codahale.metrics.annotation.Timed;
 import com.unify.rrls.repository.OpportunitySummaryDataRepository;
 import com.unify.rrls.web.rest.util.HeaderUtil;
+
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/api")
@@ -41,12 +48,12 @@ public class OpportunitySummaryDataResource {
 
 	private final FinancialSummaryDataRepository financialSummaryDataRepository;
 
-	private final NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository;	
+	private final NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository;
 
 	private final StrategyMasterRepository strategyMasterRepository;
-	
+
 	private final OpportunityAutomationRepository opportunityAutomationRepository;
-	
+
 	private final OpportunityMasterRepository opportunityMasterRepository;
 
 	public OpportunitySummaryDataResource(OpportunitySummaryDataRepository opportunitySummaryDataRepository,FinancialSummaryDataRepository financialSummaryDataRepository,
@@ -101,7 +108,7 @@ public class OpportunitySummaryDataResource {
             if((opportunityAutomation!=null) && (opportunityAutomation.getPrevClose()!=null))
             {
             	sm.setCmp(opportunityAutomation.getPrevClose());
-            } 
+            }
             opportunitySummaryDataRepository.save(sm);
 
         }
@@ -141,29 +148,43 @@ public class OpportunitySummaryDataResource {
             sm.setPatGrowthFourth(opportunityMaster.getNonFinancialSummaryData().getPatGrowthFour());
             sm.setPatGrowthFifth(opportunityMaster.getNonFinancialSummaryData().getPatGrowthFive());
             sm.setbWeight(opportunityMaster.getNonFinancialSummaryData().getWeight());
-            if(opportunityMaster.getNonFinancialSummaryData().getPethree()!=null || opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree()!=null){
+            if((opportunityMaster.getNonFinancialSummaryData().getPethree()!=null && opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree()!=null)
+            		&& opportunityMaster.getNonFinancialSummaryData().getPethree()!=0.0 || opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree()!=0.0){
             sm.setPegOj(opportunityMaster.getNonFinancialSummaryData().getPethree()/opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree());}
           //  System.out.println("OJ value"+opportunityMaster.getNonFinancialSummaryData().getPethree()/opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree());
-            if(opportunityMaster.getNonFinancialSummaryData().getWeight()!=null){
+            if(opportunityMaster.getNonFinancialSummaryData().getWeight()!=null && opportunityMaster.getNonFinancialSummaryData().getWeight()!=0.0){
+            	 if(opportunityMaster.getNonFinancialSummaryData().getPeOne()!=null && opportunityMaster.getNonFinancialSummaryData().getPeOne()!=0.0)
             sm.setPortPeFirst(opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPeOne());
+            	 if(opportunityMaster.getNonFinancialSummaryData().getPeTwo()!=null && opportunityMaster.getNonFinancialSummaryData().getPeTwo()!=0.0)
             sm.setPortPeSecond(opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPeTwo());
+            	 if(opportunityMaster.getNonFinancialSummaryData().getPethree()!=null && opportunityMaster.getNonFinancialSummaryData().getPethree()!=0.0)
             sm.setPortPeThird(opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPethree());
+            	 if(opportunityMaster.getNonFinancialSummaryData().getPeFour()!=null && opportunityMaster.getNonFinancialSummaryData().getPeFour()!=0.0)
             sm.setPortPeFourth(opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPeFour());
+            	 if(opportunityMaster.getNonFinancialSummaryData().getPeFive()!=null && opportunityMaster.getNonFinancialSummaryData().getPeFive()!=0.0)
             sm.setPortPeFifth(opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPeFive());
            // sm.setEarningsFirst((opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPatGrowthOne())/100.0);
+            	 if(opportunityMaster.getNonFinancialSummaryData().getPatGrowthTwo()!=null && opportunityMaster.getNonFinancialSummaryData().getPatGrowthTwo()!=0.0)
             sm.setEarningsSecond((opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPatGrowthTwo())/100.0);
+            	 if(opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree()!=null && opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree()!=0.0)
             sm.setEarningsThird((opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree())/100.0);
+            	 if(opportunityMaster.getNonFinancialSummaryData().getPatGrowthFour()!=null && opportunityMaster.getNonFinancialSummaryData().getPatGrowthFour()!=0.0)
             sm.setEarningsFourth((opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPatGrowthFour())/100.0);
+            	 if(opportunityMaster.getNonFinancialSummaryData().getPatGrowthFive()!=null && opportunityMaster.getNonFinancialSummaryData().getPatGrowthFive()!=0.0)
             sm.setEarningsFifth((opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getPatGrowthFive())/100.0);
+            	 if(opportunityMaster.getNonFinancialSummaryData().getMarketCapThree()!=null && opportunityMaster.getNonFinancialSummaryData().getMarketCapThree()!=0.0)
             sm.setWtAvgCap((opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getMarketCapThree())/100.0);
-            sm.setRoe((opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getMarketCapThree())/100.0);
+            	 if(opportunityMaster.getNonFinancialSummaryData().getRoeThree()!=null && opportunityMaster.getNonFinancialSummaryData().getRoeThree()!=0.0)
+            sm.setRoe((opportunityMaster.getNonFinancialSummaryData().getWeight()*opportunityMaster.getNonFinancialSummaryData().getRoeThree())/100.0);
+            	 if((opportunityMaster.getNonFinancialSummaryData().getPethree()!=0.0 && opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree()!=0.0)
+            			 && (opportunityMaster.getNonFinancialSummaryData().getPethree()!=null && opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree()!=null))
             sm.setPegYearPeg(opportunityMaster.getNonFinancialSummaryData().getWeight()*(opportunityMaster.getNonFinancialSummaryData().getPethree()/opportunityMaster.getNonFinancialSummaryData().getPatGrowthThree()));
             }
             if((opportunityAutomation!=null) && (opportunityAutomation.getPrevClose()!=null))
             {
             	sm.setCmp(opportunityAutomation.getPrevClose());
-            } 
-
+            }
+System.out.println(sm);
             opportunitySummaryDataRepository.save(sm);
         }
 
@@ -180,69 +201,90 @@ public class OpportunitySummaryDataResource {
 
     @GetMapping("/opportunity-summary/getdata")
     @Timed
-    public ResponseEntity<List<OpportunitySummaryData>> getAllOpportunitySummaryData() {
+    public ResponseEntity<List<OpportunitySummaryData>> getAllOpportunitySummaryData(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of OpportunityMasters");
 
-        Query q = em.createNativeQuery("select * from opportunity_summary_data group by opp_master",OpportunitySummaryData.class);
-
-        List<OpportunitySummaryData> page =  q.getResultList();
         String userName=SecurityUtils.getCurrentUserLogin();
-        
+        String role = SecurityUtils.getCurrentRoleLogin();
+        /*Query q = em.createNativeQuery("select * from opportunity_summary_data group by opp_master",OpportunitySummaryData.class);
+
+        List<OpportunitySummaryData> page =  q.getResultList();*/
+        Page<OpportunitySummaryData> page = null;
+
+        System.out.println("ROLE---->"+role);
+
+        if(role.equals("Master") || role.equals("RM"))
+        {
+             page = opportunitySummaryDataRepository.findAllGroupby(pageable);
+        }
+        else{
+              page = opportunitySummaryDataRepository.findAllGroupByOpportunityMasterid(userName,pageable);
+        }
+
+
+
 
         List<OpportunitySummaryData> summaryData = new ArrayList<OpportunitySummaryData>();
 
         for (OpportunitySummaryData opportunitySummaryData:page) {
            // if(opportunitySummaryData.getOpportunityMasterid().getOppStatus() != null) {
-               // if (opportunitySummaryData.getOpportunityMasterid().getCreatedBy().equals(createdBy)) {                
+              //  if (opportunitySummaryData.getOpportunityMasterid().getCreatedBy().equals(createdBy)) {
                 	System.out.println(opportunitySummaryData.getOpportunityMasterid());
-                	if(opportunitySummaryData.getCreatedBy().equals(userName)){                  
+                	//if(opportunitySummaryData.getCreatedBy().equals(userName)){
                     List<StrategyMaster> strategyMasterList = getStrategyList(opportunitySummaryData.getOpportunityMasterid().getId());
                     opportunitySummaryData.setStrategyMasterList(strategyMasterList);
-                    summaryData.add(opportunitySummaryData);}
-                 
+                    summaryData.add(opportunitySummaryData);
+                	//}
+
                 //}
             //}
         }
 
-        System.out.println(page);
-        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
+      //  System.out.println("LIST---->"+page);
+     /*   //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
         HttpHeaders headers=new HttpHeaders();
        // HttpHeaders headers = new HttpHeaders();
         headers.add("X-Total-Count", Long.toString(summaryData.size()));
-        return new ResponseEntity<>(summaryData, headers, HttpStatus.OK);
+        return new ResponseEntity<>(summaryData, headers, HttpStatus.OK);*/
+
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
+
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
     @GetMapping("/opportunity-summary/getdata/{createdBy}")
     @Timed
-    public ResponseEntity<List<OpportunitySummaryData>> getParticularSummaryData(@PathVariable String createdBy) {
+    public ResponseEntity<List<OpportunitySummaryData>> getParticularSummaryData(@PathVariable String createdBy,@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of OpportunityMasters");
-
+/*
         Query q = em.createNativeQuery("select * from opportunity_summary_data group by opp_master",OpportunitySummaryData.class);
 
-        List<OpportunitySummaryData> page =  q.getResultList();
+        List<OpportunitySummaryData> page =  q.getResultList();*/
         String userName=SecurityUtils.getCurrentUserLogin();
-        
+        Page<OpportunitySummaryData> page = opportunitySummaryDataRepository.findAllGroupByOpportunityMasterid(createdBy,pageable);
+
 
         List<OpportunitySummaryData> summaryData = new ArrayList<OpportunitySummaryData>();
 
         for (OpportunitySummaryData opportunitySummaryData:page) {
            // if(opportunitySummaryData.getOpportunityMasterid().getOppStatus() != null) {
-                if (opportunitySummaryData.getOpportunityMasterid().getCreatedBy().equals(createdBy)) {                
+                if (opportunitySummaryData.getOpportunityMasterid().getCreatedBy().equals(createdBy)) {
                 	System.out.println(opportunitySummaryData.getOpportunityMasterid());
-                	//if(opportunitySummaryData.getCreatedBy().equals(userName)){                  
+                	//if(opportunitySummaryData.getCreatedBy().equals(userName)){
                     List<StrategyMaster> strategyMasterList = getStrategyList(opportunitySummaryData.getOpportunityMasterid().getId());
                     opportunitySummaryData.setStrategyMasterList(strategyMasterList);
                     summaryData.add(opportunitySummaryData);}
-                 
+
                // }
             //}
         }
 
         System.out.println(page);
         //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
-        HttpHeaders headers=new HttpHeaders();
+      //  HttpHeaders headers=new HttpHeaders();
        // HttpHeaders headers = new HttpHeaders();
-        headers.add("X-Total-Count", Long.toString(summaryData.size()));
-        return new ResponseEntity<>(summaryData, headers, HttpStatus.OK);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-masters");
+
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     private List<StrategyMaster> getStrategyList(Long id) {

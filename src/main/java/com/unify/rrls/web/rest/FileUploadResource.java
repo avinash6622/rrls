@@ -18,6 +18,7 @@ import javax.validation.Valid;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -79,6 +80,12 @@ public class FileUploadResource {
     private final NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository;
     private final OpportunitySummaryDataRepository opportunitySummaryDataRepository;
     private final StrategyMappingRepository strategyMappingRepository;
+
+    @Autowired
+    NotificationServiceResource notificationServiceResource;
+
+    @Autowired
+    UserResource userResource;
 
 
     private byte[] fileStream;
@@ -184,39 +191,55 @@ public class FileUploadResource {
     	fileUploaded.setOpportunityMasterId(opp);
     	fileUploaded.setFiletype(filetype);
     	result=fileUploadRepository.save(fileUploaded);
+
+
+
+         String oppName = result.getOpportunityMasterId().getMasterName().getOppName();
+
+         String page ="Opportunity";
+
+
+          Long id =  userResource.getUserId(result.getCreatedBy());
+
+      notificationServiceResource.notificationHistorysave(oppName,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"uploaded",page,result.getFileName(),id,result.getOpportunityMasterId().getId());
+
+
+
+
       }
         //fileUploadRepository.save(fileUpload);
         return ResponseEntity.created(new URI("/api/file-uploads/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
-    
-    @RequestMapping(value = "/file-upload-data", method =RequestMethod.POST)
+
+    @SuppressWarnings("deprecation")
+	@RequestMapping(value = "/file-upload-data", method =RequestMethod.POST)
     @Timed
     public ResponseEntity<FileUpload> uploadSummaryData(@RequestParam(value="oppId")Long oppId,
     		@RequestParam(value="fileUploads")
     		MultipartFile[] fileUploads) throws URISyntaxException, IOException, MissingServletRequestParameterException {
-        log.debug("REST request to save FileUpload : {}", fileUploads);     
+        log.debug("REST request to save FileUpload : {}", fileUploads);
         OpportunityMaster opportunityMaster=opportunityMasterRepository.findOne(oppId);
         List<StrategyMapping> strategyMap=strategyMappingRepository.findByOpportunityMaster(opportunityMaster);
-        
+
         int iCurrRowNum=0;
-        
+
         String user= SecurityUtils.getCurrentUserLogin();
         String  sFilesDirectory =  "src/main/resources/"+opportunityMaster.getMasterName().getOppName()+"/summary/"+user;
-       
+
       File dirFiles = new File(sFilesDirectory);
       dirFiles.mkdirs();
-   
+
       FileUpload fileUploaded=new FileUpload();
-     
+
       for (MultipartFile sFile : fileUploads) {
 
     	 setFileName(sFile.getOriginalFilename());
     	fileStream = IOUtils.toByteArray(sFile.getInputStream());
 
           System.out.println("FILE NAME--->"+fileName);
-          
+
               File sFiles = new File(dirFiles, fileName);
               writeFile(fileStream, sFiles);
               fileUploaded.setFileData(sFiles.toString());
@@ -224,21 +247,21 @@ public class FileUploadResource {
                   try {
                   	FinancialSummaryData finance=financialSummaryDataRepository.findByOpportunityMasterId(opportunityMaster);
                   	//String file="C:\\Users\\girija noah\\Desktop\\Financial template.xlsx";
-                  	
+
                       FileInputStream fis = new FileInputStream(sFiles);
                       //FileInputStream fis = new FileInputStream(new File("C:\\Users\\Noah\\AppData\\Roaming\\Skype\\My Skype Received Files\\2604 nov.xls"));
 
                       XSSFWorkbook workbook = new XSSFWorkbook(fis);
 
                       XSSFSheet sheet = workbook.getSheetAt(0);
-                      int iPutNxtDetailsToDB = 0;         
+                      int iPutNxtDetailsToDB = 0;
 
                       Iterator<Row> rowIterator = sheet.iterator();
                       int iTotRowInserted = 0;
-                      int iPhysNumOfCells;         
+                      int iPhysNumOfCells;
                       String dDate = "";
                       Integer iSheetCheck=0;
-                     
+
                       while (rowIterator.hasNext()) {
                           Row row = rowIterator.next();
                           iCurrRowNum = row.getRowNum() + 1;
@@ -249,7 +272,7 @@ public class FileUploadResource {
                           int iPos = 0;
                           int iTotConToMeet = 1;
                           int iTotConMet = 0;
-                          int iConCheckNow = 0;               
+                          int iConCheckNow = 0;
                           String sConCheck = "";
                           iPhysNumOfCells = row.getPhysicalNumberOfCells();
 
@@ -259,7 +282,7 @@ public class FileUploadResource {
                               if (iPutNxtDetailsToDB == 0) {
                                   if (iPos == 0)
                                       sConCheck = "INR Cr";
-                                  
+
                                   if (cell.getStringCellValue().trim().equals(sConCheck))
                                       iTotConMet++;
 
@@ -272,109 +295,183 @@ public class FileUploadResource {
                           }
 
                           if (iPutNxtDetailsToDB == 1 && iConCheckNow == 0) {
-                            
+
                               if (iPhysNumOfCells != 1) {
 
                                   while (cellIterator.hasNext()) {
-                                      Cell cell = cellIterator.next();                          
-                                  }
+                                      Cell cell = cellIterator.next();
+                                      cell.setCellType(CellType.STRING);}
+                                     
                                   String finColumn = row.getCell(0).getStringCellValue();
-                               
-                                  if (finColumn.contains("Net Interest Income")) {                       	 
-                                  	finance.setNetIntOne(row.getCell(1).getNumericCellValue());
-                                  	finance.setNetIntTwo(row.getCell(2).getNumericCellValue());
-                                  	finance.setNetIntThree(row.getCell(3).getNumericCellValue());
-                                  	finance.setNetIntFour(row.getCell(4).getNumericCellValue());
-                                  	finance.setNetIntFive(row.getCell(5).getNumericCellValue());}
+                                
+                                  if (finColumn.contains("Net Interest Income")) {
+                                	if(row.getCell(1).getStringCellValue()!="")
+                                  	finance.setNetIntOne(Double.parseDouble(row.getCell(1).getStringCellValue()));                                	
+                                	if(row.getCell(2).getStringCellValue()!="")
+                                  	finance.setNetIntTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));                                	
+                                	if(row.getCell(3).getStringCellValue()!="")
+                                  	finance.setNetIntThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                	if(row.getCell(4).getStringCellValue()!="")
+                                  	finance.setNetIntFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                	if(row.getCell(5).getStringCellValue()!="")
+                                  	finance.setNetIntFive(Double.parseDouble(row.getCell(5).getStringCellValue()));}
                                  if (finColumn.contains("Non Interest Income")){
-                              	   finance.setNonIntOne(row.getCell(1).getNumericCellValue());
-                             		   finance.setNonIntTwo(row.getCell(2).getNumericCellValue());
-                             		   finance.setNonIntThree(row.getCell(3).getNumericCellValue());
-                             		   finance.setNonIntFour(row.getCell(4).getNumericCellValue());
-                             		   finance.setNonIntFive(row.getCell(5).getNumericCellValue());}
+                                	 if(row.getCell(1).getStringCellValue()!="")
+                              	   finance.setNonIntOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                	 if(row.getCell(2).getStringCellValue()!="")
+                             		   finance.setNonIntTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                	 if(row.getCell(3).getStringCellValue()!="")
+                             		   finance.setNonIntThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                	 if(row.getCell(4).getStringCellValue()!="")
+                             		   finance.setNonIntFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                	 if(row.getCell(5).getStringCellValue()!="")
+                             		   finance.setNonIntFive(Double.parseDouble(row.getCell(5).getStringCellValue()));}
                                   if (finColumn.contains("Total Income"))
-                                  {    	finance.setTotIncOne(row.getCell(1).getNumericCellValue());
-                                 		   finance.setTotIncTwo(row.getCell(2).getNumericCellValue());
-                                 		   finance.setTotIncThree(row.getCell(3).getNumericCellValue());
-                                 		   finance.setTotIncFour(row.getCell(4).getNumericCellValue());
-                                 		   finance.setTotIncFive(row.getCell(5).getNumericCellValue());}                    
+                                  {   if(row.getCell(1).getStringCellValue()!="")
+                                	  finance.setTotIncOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                  if(row.getCell(2).getStringCellValue()!="")
+                                 		   finance.setTotIncTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                  if(row.getCell(3).getStringCellValue()!="")
+                                 		   finance.setTotIncThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                  if(row.getCell(4).getStringCellValue()!="")
+                                 		   finance.setTotIncFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                  if(row.getCell(5).getStringCellValue()!="")
+                                 		   finance.setTotIncFive(Double.parseDouble(row.getCell(5).getStringCellValue()));}
                                   if (finColumn.contains("Operating Expenses"))
-                                  {  finance.setOpExpOne(row.getCell(1).getNumericCellValue());
-                             		   finance.setOpExpTwo(row.getCell(2).getNumericCellValue());
-                             		   finance.setOpExpThree(row.getCell(3).getNumericCellValue());
-                             		   finance.setOpExpFour(row.getCell(4).getNumericCellValue());
-                             		   finance.setOpExpFive(row.getCell(5).getNumericCellValue());}
+                                  { if(row.getCell(1).getStringCellValue()!="")
+                                	  finance.setOpExpOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                  if(row.getCell(2).getStringCellValue()!="")
+                             		   finance.setOpExpTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                  if(row.getCell(3).getStringCellValue()!="")
+                             		   finance.setOpExpThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                  if(row.getCell(4).getStringCellValue()!="")
+                             		   finance.setOpExpFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                  if(row.getCell(5).getStringCellValue()!="")
+                             		   finance.setOpExpFive(Double.parseDouble(row.getCell(5).getStringCellValue()));}
                                   if (finColumn.contains("Operating Profit"))
-                                  {  finance.setOpProOne(row.getCell(1).getNumericCellValue());
-                             		   finance.setOpProTwo(row.getCell(2).getNumericCellValue());
-                             		   finance.setOpProThree(row.getCell(3).getNumericCellValue());
-                             		   finance.setOpProFour(row.getCell(4).getNumericCellValue());
-                             		   finance.setOpProFive(row.getCell(5).getNumericCellValue());}
+                                  {  if(row.getCell(1).getStringCellValue()!="")
+                                	  finance.setOpProOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                  if(row.getCell(2).getStringCellValue()!="")
+                             		   finance.setOpProTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                  if(row.getCell(3).getStringCellValue()!="")
+                             		   finance.setOpProThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                  if(row.getCell(4).getStringCellValue()!="")
+                             		   finance.setOpProFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                  if(row.getCell(5).getStringCellValue()!="")
+                             		   finance.setOpProFive(Double.parseDouble(row.getCell(5).getStringCellValue()));}
                                   if (finColumn.contains("Provisions"))
-                                  {  finance.setProvisionsOne(row.getCell(1).getNumericCellValue());
-                             		   finance.setProvisionsTwo(row.getCell(2).getNumericCellValue());
-                             		   finance.setProvisionsThree(row.getCell(3).getNumericCellValue());
-                             		   finance.setProvisionsFour(row.getCell(4).getNumericCellValue());
-                             		   finance.setProvisionsFive(row.getCell(5).getNumericCellValue());}
+                                  {  if(row.getCell(1).getStringCellValue()!="")
+                                	  finance.setProvisionsOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                  if(row.getCell(2).getStringCellValue()!="")
+                             		   finance.setProvisionsTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                  if(row.getCell(3).getStringCellValue()!="")
+                             		   finance.setProvisionsThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                  if(row.getCell(4).getStringCellValue()!="")
+                             		   finance.setProvisionsFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                  if(row.getCell(5).getStringCellValue()!="")
+                             		   finance.setProvisionsFive(Double.parseDouble(row.getCell(5).getStringCellValue()));}
                                   if (finColumn.contains("PAT"))
-                                  {  finance.setPatOne(row.getCell(1).getNumericCellValue());
-                             		   finance.setPatTwo(row.getCell(2).getNumericCellValue());
-                             		   finance.setPatThree(row.getCell(3).getNumericCellValue());
-                             		   finance.setPatFour(row.getCell(4).getNumericCellValue());
-                             		   finance.setPatFive(row.getCell(5).getNumericCellValue());}
+                                  {
+                                	  if(row.getCell(1).getStringCellValue()!="")
+                                	  finance.setPatOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                	  if(row.getCell(2).getStringCellValue()!="")
+                             		   finance.setPatTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                	  if(row.getCell(3).getStringCellValue()!="")
+                             		   finance.setPatThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                	  if(row.getCell(4).getStringCellValue()!="")
+                             		   finance.setPatFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                	  if(row.getCell(5).getStringCellValue()!="")
+                             		   finance.setPatFive(Double.parseDouble(row.getCell(5).getStringCellValue()));}
                                   if (finColumn.contains("EPS"))
-                                  {  finance.setEpsOne(row.getCell(1).getNumericCellValue());
-                             		   finance.setEpsTwo(row.getCell(2).getNumericCellValue());
-                             		   finance.setEpsThree(row.getCell(3).getNumericCellValue());
-                             		   finance.setEpsFour(row.getCell(4).getNumericCellValue());
-                             		   finance.setEpsFive(row.getCell(5).getNumericCellValue());}
+                                  { 
+                                	  if(row.getCell(1).getStringCellValue()!="")
+                                	  finance.setEpsOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                	  if(row.getCell(2).getStringCellValue()!="")
+                             		   finance.setEpsTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                	  if(row.getCell(3).getStringCellValue()!="")
+                             		   finance.setEpsThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                	  if(row.getCell(4).getStringCellValue()!="")
+                             		   finance.setEpsFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                	  if(row.getCell(5).getStringCellValue()!="")
+                             		   finance.setEpsFive(Double.parseDouble(row.getCell(5).getStringCellValue()));}
                                   if (finColumn.contains("Market Cap"))
                                   { /* finance.setMarCapOne(row.getCell(1).getNumericCellValue());
                              		   finance.setMarCapTwo(row.getCell(2).getNumericCellValue());*/
-                             		   finance.setMarCapThree(row.getCell(3).getNumericCellValue());
+                                	  if(row.getCell(3).getStringCellValue()!="")
+                             		   finance.setMarCapThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
                              		  /* finance.setMarCapFour(row.getCell(4).getNumericCellValue());
                              		   finance.setMarCapFive(row.getCell(5).getNumericCellValue());*/}
                                   if (finColumn.contains("AUM"))
-                                  {  finance.setAumOne(row.getCell(1).getNumericCellValue());
-                             		   finance.setAumTwo(row.getCell(2).getNumericCellValue());
-                             		   finance.setAumThree(row.getCell(3).getNumericCellValue());
-                             		   finance.setAumFour(row.getCell(4).getNumericCellValue());
-                             		   finance.setAumFive(row.getCell(5).getNumericCellValue());}
+                                  { 
+                                	  if(row.getCell(1).getStringCellValue()!="")
+                                	  finance.setAumOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                	  if(row.getCell(2).getStringCellValue()!="")
+                             		   finance.setAumTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                	  if(row.getCell(3).getStringCellValue()!="")
+                             		   finance.setAumThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                	  if(row.getCell(4).getStringCellValue()!="")
+                             		   finance.setAumFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                	  if(row.getCell(5).getStringCellValue()!="")
+                             		   finance.setAumFive(Double.parseDouble(row.getCell(5).getStringCellValue()));}
                                   if (finColumn.contains("Networth"))
-                                  {  finance.setNetworthOne(row.getCell(1).getNumericCellValue());
-                             		   finance.setNetworthTwo(row.getCell(2).getNumericCellValue());
-                             		   finance.setNetworthThree(row.getCell(3).getNumericCellValue());
-                             		   finance.setNetworthFour(row.getCell(4).getNumericCellValue());
-                             		   finance.setNetworthfive(row.getCell(5).getNumericCellValue());}
+                                  {  
+                                	  if(row.getCell(1).getStringCellValue()!="")
+                                	  finance.setNetworthOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                	  if(row.getCell(2).getStringCellValue()!="")
+                             		   finance.setNetworthTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                	  if(row.getCell(3).getStringCellValue()!="")
+                             		   finance.setNetworthThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                	  if(row.getCell(4).getStringCellValue()!="")
+                             		   finance.setNetworthFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                	  if(row.getCell(5).getStringCellValue()!="")
+                             		   finance.setNetworthfive(Double.parseDouble(row.getCell(5).getStringCellValue()));}
                                   if (finColumn.contains("ROE"))
-                                  {  finance.setRoeOne(row.getCell(1).getNumericCellValue()*100);
-                             		   finance.setRoeTwo(row.getCell(2).getNumericCellValue()*100);
-                             		   finance.setRoeThree(row.getCell(3).getNumericCellValue()*100);
-                             		   finance.setRoeFour(row.getCell(4).getNumericCellValue()*100);
-                             		   finance.setRoeFive(row.getCell(5).getNumericCellValue()*100);}
+                                  { 
+                                	  if(row.getCell(1).getStringCellValue()!="")
+                                	  finance.setRoeOne((Double.parseDouble(row.getCell(1).getStringCellValue()))*100);
+                                	  if(row.getCell(2).getStringCellValue()!="")
+                             		   finance.setRoeTwo((Double.parseDouble(row.getCell(2).getStringCellValue()))*100);
+                                	  if(row.getCell(3).getStringCellValue()!="")
+                             		   finance.setRoeThree((Double.parseDouble(row.getCell(3).getStringCellValue()))*100);
+                                	  if(row.getCell(4).getStringCellValue()!="")
+                             		   finance.setRoeFour((Double.parseDouble(row.getCell(4).getStringCellValue()))*100);
+                                	  if(row.getCell(5).getStringCellValue()!="")
+                             		   finance.setRoeFive((Double.parseDouble(row.getCell(5).getStringCellValue()))*100);}
                                   if (finColumn.contains("PBV"))
-                                  {  finance.setPbvOne(row.getCell(1).getNumericCellValue());
-                             		   finance.setPbvTwo(row.getCell(2).getNumericCellValue());
-                             		   finance.setPbvThree(row.getCell(3).getNumericCellValue());
-                             		   finance.setPbvFour(row.getCell(4).getNumericCellValue());
-                             		   finance.setPbvFive(row.getCell(5).getNumericCellValue());}                      
+                                  {  
+                                	  if(row.getCell(1).getStringCellValue()!="")
+                                	  finance.setPbvOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                	  if(row.getCell(2).getStringCellValue()!="")
+                             		   finance.setPbvTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                	  if(row.getCell(3).getStringCellValue()!="")
+                             		   finance.setPbvThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                	  if(row.getCell(4).getStringCellValue()!="")
+                             		   finance.setPbvFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                	  if(row.getCell(5).getStringCellValue()!="")
+                             		   finance.setPbvFive(Double.parseDouble(row.getCell(5).getStringCellValue()));}
                                   if (finColumn.contains("PE"))
-                                  {  finance.setPeOne(row.getCell(1).getNumericCellValue());
-                             		   finance.setPeTwo(row.getCell(2).getNumericCellValue());
-                             		   finance.setPeThree(row.getCell(3).getNumericCellValue());
-                             		   finance.setPeFour(row.getCell(4).getNumericCellValue());
-                             		   finance.setPeFive(row.getCell(5).getNumericCellValue());}                      
-
+                                  { 
+                                	  if(row.getCell(1).getStringCellValue()!="")
+                                	  finance.setPeOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                	  if(row.getCell(2).getStringCellValue()!="")
+                             		   finance.setPeTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                	  if(row.getCell(3).getStringCellValue()!="")
+                             		   finance.setPeThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                	  if(row.getCell(4).getStringCellValue()!="")
+                             		   finance.setPeFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                	  if(row.getCell(5).getStringCellValue()!="")
+                             		   finance.setPeFive(Double.parseDouble(row.getCell(5).getStringCellValue()));}
+                              
                           }
 
                           }
                       }
-                     
+
                       financialSummaryDataRepository.save(finance);
                       List<OpportunitySummaryData> opportunitySummaryDataList = opportunitySummaryDataRepository.findByOpportunityMasterid(opportunityMaster);
 
                       for (OpportunitySummaryData sm : opportunitySummaryDataList) {
-                    	
+
                     	  sm.setPatFirstYear(finance.getPatOne());
                     	  sm.setPatSecondYear(finance.getPatTwo());
                     	  sm.setPatThirdYear(finance.getPatThree());
@@ -390,7 +487,8 @@ public class FileUploadResource {
                     	  sm.setPeSecondYear(finance.getPeTwo());
                     	  sm.setPeThirdYear(finance.getPeThree());
                     	  sm.setPeFourthYear(finance.getPeFour());
-                    	  sm.setPeFifthYear(finance.getPeFive());                    	
+                    	  sm.setPeFifthYear(finance.getPeFive());
+                    	  sm.setCreatedBy(opportunityMaster.getCreatedBy());
                       opportunitySummaryDataRepository.save(opportunitySummaryDataList);
 
                        }
@@ -408,21 +506,21 @@ public class FileUploadResource {
                   try {
                   	NonFinancialSummaryData nonFinance=nonFinancialSummaryDataRepository.findByOpportunityMaster(opportunityMaster);
                   	//String file="C:\\Users\\girija noah\\Desktop\\Non-Financial.xlsx";
-                  	
+
                       FileInputStream fis = new FileInputStream(sFiles);
                       //FileInputStream fis = new FileInputStream(new File("C:\\Users\\Noah\\AppData\\Roaming\\Skype\\My Skype Received Files\\2604 nov.xls"));
 
                       XSSFWorkbook workbook = new XSSFWorkbook(fis);
 
-                      XSSFSheet sheet = workbook.getSheetAt(1);
-                      int iPutNxtDetailsToDB = 0;         
+                      XSSFSheet sheet = workbook.getSheetAt(0);
+                      int iPutNxtDetailsToDB = 0;
 
                       Iterator<Row> rowIterator = sheet.iterator();
                       int iTotRowInserted = 0;
-                      int iPhysNumOfCells;         
+                      int iPhysNumOfCells;
                       String dDate = "";
                       Integer iSheetCheck=0;
-                     
+
                       while (rowIterator.hasNext()) {
                           Row row = rowIterator.next();
                           iCurrRowNum = row.getRowNum() + 1;
@@ -433,7 +531,7 @@ public class FileUploadResource {
                           int iPos = 0;
                           int iTotConToMeet = 1;
                           int iTotConMet = 0;
-                          int iConCheckNow = 0;               
+                          int iConCheckNow = 0;
                           String sConCheck = "";
                           iPhysNumOfCells = row.getPhysicalNumberOfCells();
 
@@ -443,7 +541,7 @@ public class FileUploadResource {
                               if (iPutNxtDetailsToDB == 0) {
                                   if (iPos == 0)
                                       sConCheck = "INR Cr";
-                                  
+
                                   if (cell.getStringCellValue().trim().equals(sConCheck))
                                       iTotConMet++;
 
@@ -456,130 +554,368 @@ public class FileUploadResource {
                           }
 
                           if (iPutNxtDetailsToDB == 1 && iConCheckNow == 0) {
-                            
+
                               if (iPhysNumOfCells != 1 && iPhysNumOfCells != 0) {
 
                                   while (cellIterator.hasNext()) {
-                                      Cell cell = cellIterator.next();                          
-                                  }
+                                	  Cell cell = cellIterator.next();         							
+                                	  cell.setCellType(CellType.STRING);}
                                   String finColumn = row.getCell(0).getStringCellValue();
-                               
-                                  if (finColumn.equals("Revenues")) {                       	 
-                                  	nonFinance.setRevenueOne(row.getCell(1).getNumericCellValue());
-                                  	nonFinance.setRevenueTwo(row.getCell(2).getNumericCellValue());
-                                  	nonFinance.setRevenueThree(row.getCell(3).getNumericCellValue());
-                                  	nonFinance.setRevenueFour(row.getCell(4).getNumericCellValue());
-                                  	nonFinance.setRevenueFive(row.getCell(5).getNumericCellValue());}
+                                
+                                  if (finColumn.equals("Revenues")) {
+                                	if(row.getCell(1).getStringCellValue()!="")
+                                  	nonFinance.setRevenueOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                	else
+                                		nonFinance.setRevenueOne(0.0);	
+                                	if(row.getCell(2).getStringCellValue()!="")
+                                  	nonFinance.setRevenueTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                	else
+                                		nonFinance.setRevenueTwo(0.0);
+                                	if(row.getCell(3).getStringCellValue()!="")
+                                  	nonFinance.setRevenueThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                	else
+                                		nonFinance.setRevenueThree(0.0);
+                                	if(row.getCell(4).getStringCellValue()!="")
+                                  	nonFinance.setRevenueFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                	else
+                                		nonFinance.setRevenueFour(0.0);
+                                  	if(row.getCell(5).getStringCellValue()!="")
+                                  	nonFinance.setRevenueFive(Double.parseDouble(row.getCell(5).getStringCellValue()));
+                                  	else
+                                  		nonFinance.setRevenueFive(0.0);}
                                  if (finColumn.equals("Rev.Growth(%)")){
                               	  /* nonFinance.setRevGrowthOne(row.getCell(1).getNumericCellValue());*/
-                              	   nonFinance.setRevGrowthTwo(row.getCell(2).getNumericCellValue());
-                              	   nonFinance.setRevGrowthThree(row.getCell(3).getNumericCellValue());
-                              	   nonFinance.setRevGrowthFour(row.getCell(4).getNumericCellValue());
-                              	   nonFinance.setRevGrowthFive(row.getCell(5).getNumericCellValue());}
+                                	 if(row.getCell(2).getStringCellValue()!="")
+                              	   nonFinance.setRevGrowthTwo((Double.parseDouble(row.getCell(2).getStringCellValue()))*100);
+                                	 else
+                                		 nonFinance.setRevGrowthTwo(0.0);
+                                	 if(row.getCell(3).getStringCellValue()!="")
+                              	   nonFinance.setRevGrowthThree((Double.parseDouble(row.getCell(3).getStringCellValue())*100));
+                                	 else
+                                		 nonFinance.setRevGrowthThree(0.0);
+                                	 if(row.getCell(4).getStringCellValue()!="")
+                              	   nonFinance.setRevGrowthFour((Double.parseDouble(row.getCell(4).getStringCellValue()))*100);
+                                	 else
+                                		 nonFinance.setRevGrowthFour(0.0);
+                                	 if(row.getCell(5).getStringCellValue()!="")
+                              	   nonFinance.setRevGrowthFive((Double.parseDouble(row.getCell(5).getStringCellValue()))*100);
+                                	 else
+                                		 nonFinance.setRevGrowthFive(0.0);}
                                   if (finColumn.equals("EBITDA"))
-                                  {    
-                                  nonFinance.setEbitdaOne(row.getCell(1).getNumericCellValue());
-                                  nonFinance.setEbitdaTwo(row.getCell(2).getNumericCellValue());
-                                  nonFinance.setEbitdaThree(row.getCell(3).getNumericCellValue());
-                                  nonFinance.setEbitdaFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setEbitdaFive(row.getCell(5).getNumericCellValue());}                    
+                                  {
+                                	  if(row.getCell(1).getStringCellValue()!="")
+                                  nonFinance.setEbitdaOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setEbitdaOne(0.0);  
+                                	  if(row.getCell(2).getStringCellValue()!="")
+                                  nonFinance.setEbitdaTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setEbitdaTwo(0.0);
+                                	  if(row.getCell(3).getStringCellValue()!="")
+                                  nonFinance.setEbitdaThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setEbitdaThree(0.0);
+                                	  if(row.getCell(4).getStringCellValue()!="")
+                                  nonFinance.setEbitdaFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setEbitdaFour(0.0);
+                                	  if(row.getCell(5).getStringCellValue()!="")
+                                  nonFinance.setEbitdaFive(Double.parseDouble(row.getCell(5).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setEbitdaFive(0.0);}
                                   if (finColumn.equals("Margin(%)"))
-                                  {  nonFinance.setMarginOne(row.getCell(1).getNumericCellValue());
-                                  nonFinance.setMarginTwo(row.getCell(2).getNumericCellValue());
-                                  nonFinance.setMarginThree(row.getCell(3).getNumericCellValue());
-                                  nonFinance.setMarginFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setMarginFive(row.getCell(5).getNumericCellValue());}
+                                  { if(row.getCell(1).getStringCellValue()!="")
+                                	  nonFinance.setMarginOne((Double.parseDouble(row.getCell(1).getStringCellValue()))*100);
+                                  else
+                                	  nonFinance.setMarginOne(0.0);
+                                  if(row.getCell(2).getStringCellValue()!="")
+                                  nonFinance.setMarginTwo((Double.parseDouble(row.getCell(2).getStringCellValue()))*100);
+                                  else
+                                	  nonFinance.setMarginTwo(0.0);
+                                  if(row.getCell(3).getStringCellValue()!="")
+                                  nonFinance.setMarginThree((Double.parseDouble(row.getCell(3).getStringCellValue()))*100);
+                                  else
+                                	  nonFinance.setMarginThree(0.0);  
+                                  if(row.getCell(4).getStringCellValue()!="")
+                                  nonFinance.setMarginFour((Double.parseDouble(row.getCell(4).getStringCellValue()))*100);
+                                  else
+                                	  nonFinance.setMarginFour(0.0);
+                                  if(row.getCell(5).getStringCellValue()!="")
+                                  nonFinance.setMarginFive((Double.parseDouble(row.getCell(5).getStringCellValue()))*100);
+                                  else
+                                	  nonFinance.setMarginFive(0.0);}
                                   if (finColumn.equals("EBI.Growth(%)"))
                                   { /* nonFinance.setEbitdaGrowthOne(row.getCell(1).getNumericCellValue());*/
-                                  nonFinance.setEbitdaGrowthTwo(row.getCell(2).getNumericCellValue());
-                                  nonFinance.setEbitdaGrowthThree(row.getCell(3).getNumericCellValue());
-                                  nonFinance.setEbitdaGrowthFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setEbitdaGrowthFive(row.getCell(5).getNumericCellValue());}
+                                	  if(row.getCell(2).getStringCellValue()!="")
+                                  nonFinance.setEbitdaGrowthTwo((Double.parseDouble(row.getCell(2).getStringCellValue()))*100);
+                                	  else
+                                		  nonFinance.setEbitdaGrowthTwo(0.0);
+                                	  if(row.getCell(3).getStringCellValue()!="")
+                                  nonFinance.setEbitdaGrowthThree((Double.parseDouble(row.getCell(3).getStringCellValue()))*100);
+                                	  else
+                                		  nonFinance.setEbitdaGrowthThree(0.0);
+                                	  if(row.getCell(4).getStringCellValue()!="")
+                                  nonFinance.setEbitdaGrowthFour((Double.parseDouble(row.getCell(4).getStringCellValue()))*100);
+                                	  else
+                                		  nonFinance.setEbitdaGrowthFour(0.0);
+                                	  if(row.getCell(5).getStringCellValue()!="")
+                                  nonFinance.setEbitdaGrowthFive((Double.parseDouble(row.getCell(5).getStringCellValue()))*100);
+                                	  else
+                                		  nonFinance.setEbitdaGrowthFive(0.0);}
                                   if (finColumn.equals("Other Income"))
-                                  {  nonFinance.setOtherIncOne(row.getCell(1).getNumericCellValue());
-                                  nonFinance.setOtherIncTwo(row.getCell(2).getNumericCellValue());
-                                  nonFinance.setOtherIncThree(row.getCell(3).getNumericCellValue());
-                                  nonFinance.setOtherIncFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setOtherIncFive(row.getCell(5).getNumericCellValue());}
+                                  {
+                                	  if(row.getCell(1).getStringCellValue()!="")
+                                	  nonFinance.setOtherIncOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setOtherIncOne(0.0);
+                                	  if(row.getCell(2).getStringCellValue()!="")
+                                  nonFinance.setOtherIncTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setOtherIncTwo(0.0);
+                                	  if(row.getCell(3).getStringCellValue()!="")
+                                  nonFinance.setOtherIncThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setOtherIncThree(0.0);
+                                	  if(row.getCell(4).getStringCellValue()!="")
+                                  nonFinance.setOtherIncFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                  else
+                                	  nonFinance.setOtherIncFour(0.0);
+                                	
+                                	  if(row.getCell(5).getStringCellValue()!="")
+                                  nonFinance.setOtherIncFive(Double.parseDouble(row.getCell(5).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setOtherIncFive(0.0);}
                                   if (finColumn.equals("Interest Exp"))
-                                  {  nonFinance.setIntExpOne(row.getCell(1).getNumericCellValue());
-                                  nonFinance.setIntExpTwo(row.getCell(2).getNumericCellValue());
-                                  nonFinance.setIntExpThree(row.getCell(3).getNumericCellValue());
-                                  nonFinance.setIntExpFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setIntExpFive(row.getCell(5).getNumericCellValue());}
+                                  { 
+                                	  if(row.getCell(1).getStringCellValue()!="")
+                                	  nonFinance.setIntExpOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setIntExpOne(0.0);
+                                	  if(row.getCell(2).getStringCellValue()!="")
+                                  nonFinance.setIntExpTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setIntExpTwo(0.0);
+                                	  if(row.getCell(3).getStringCellValue()!="")
+                                  nonFinance.setIntExpThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setIntExpThree(0.0);
+                                	  if(row.getCell(4).getStringCellValue()!="")
+                                  nonFinance.setIntExpFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setIntExpFour(0.0);
+                                	  if(row.getCell(5).getStringCellValue()!="")
+                                  nonFinance.setIntExpFive(Double.parseDouble(row.getCell(5).getStringCellValue()));
+                                	  nonFinance.setIntExpFive(0.0);}
                                   if (finColumn.equals("Depriciation"))
-                                  {  nonFinance.setDepOne(row.getCell(1).getNumericCellValue());
-                                  nonFinance.setDepTwo(row.getCell(2).getNumericCellValue());
-                                  nonFinance.setDepThree(row.getCell(3).getNumericCellValue());
-                                  nonFinance.setDepFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setDepFive(row.getCell(5).getNumericCellValue());}
+                                  {if(row.getCell(1).getStringCellValue()!="")
+                                	  nonFinance.setDepOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                  else
+                                	  nonFinance.setDepOne(0.0);
+                                  if(row.getCell(2).getStringCellValue()!="")
+                                  nonFinance.setDepTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                  else
+                                  nonFinance.setDepTwo(0.0);
+                                  if(row.getCell(3).getStringCellValue()!="")
+                                  nonFinance.setDepThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                  else
+                                	  nonFinance.setDepThree(0.0);  
+                                  if(row.getCell(4).getStringCellValue()!="")
+                                  nonFinance.setDepFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                  else
+                                	  nonFinance.setDepFour(0.0);
+                                  if(row.getCell(5).getStringCellValue()!="")
+                                  nonFinance.setDepFive(Double.parseDouble(row.getCell(5).getStringCellValue()));
+                                  else
+                                	  nonFinance.setDepFive(0.0);}
                                   if (finColumn.equals("PBT"))
-                                  {  nonFinance.setPbtOne(row.getCell(1).getNumericCellValue());
-                                  nonFinance.setPbtTwo(row.getCell(2).getNumericCellValue());
-                                  nonFinance.setPbtThree(row.getCell(3).getNumericCellValue());
-                                  nonFinance.setPbtFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setPbtFive(row.getCell(5).getNumericCellValue());}
+                                  { if(row.getCell(1).getStringCellValue()!="")
+                                	  nonFinance.setPbtOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                  else
+                                	  nonFinance.setPbtOne(0.0);
+                                  if(row.getCell(2).getStringCellValue()!="")
+                                  nonFinance.setPbtTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                  else
+                                	  nonFinance.setPbtTwo(0.0);
+                                  if(row.getCell(3).getStringCellValue()!="")
+                                  nonFinance.setPbtThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                  else
+                                	  nonFinance.setPbtThree(0.0);
+                                  if(row.getCell(4).getStringCellValue()!="")
+                                  nonFinance.setPbtFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                  else
+                                	  nonFinance.setPbtFour(0.0);
+                                  if(row.getCell(5).getStringCellValue()!="")
+                                  nonFinance.setPbtFive(Double.parseDouble(row.getCell(5).getStringCellValue()));
+                                  else
+                                	  nonFinance.setPbtFive(0.0);}
                                   if (finColumn.equals("Tax"))
-                                  {  nonFinance.setTaxOne(row.getCell(1).getNumericCellValue());
-                                  nonFinance.setTaxTwo(row.getCell(2).getNumericCellValue());
-                                  nonFinance.setTaxThree(row.getCell(3).getNumericCellValue());
-                                  nonFinance.setTaxFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setTaxFive(row.getCell(5).getNumericCellValue());}
+                                  { 
+                                	  if(row.getCell(1).getStringCellValue()!="")
+                                	  nonFinance.setTaxOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setTaxOne(0.0);
+                                	  if(row.getCell(2).getStringCellValue()!="")
+                                  nonFinance.setTaxTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setTaxTwo(0.0);
+                                	  if(row.getCell(3).getStringCellValue()!="")
+                                  nonFinance.setTaxThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setTaxThree(0.0);
+                                	  if(row.getCell(4).getStringCellValue()!="")
+                                  nonFinance.setTaxFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setTaxFour(0.0);
+                                	  if(row.getCell(5).getStringCellValue()!="")
+                                  nonFinance.setTaxFive(Double.parseDouble(row.getCell(5).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setTaxFive(0.0);}
                                   if (finColumn.equals("PAT"))
-                                  {  nonFinance.setPatOne(row.getCell(1).getNumericCellValue());
-                                  nonFinance.setPatTwo(row.getCell(2).getNumericCellValue());
-                                  nonFinance.setPatthree(row.getCell(3).getNumericCellValue());
-                                  nonFinance.setPatfour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setPatFive(row.getCell(5).getNumericCellValue());}
+                                  {
+                                	  if(row.getCell(1).getStringCellValue()!="")
+                                	  nonFinance.setPatOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setPatOne(0.0);
+                                	  if(row.getCell(2).getStringCellValue()!="")
+                                  nonFinance.setPatTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setPatTwo(0.0);
+                                	  if(row.getCell(3).getStringCellValue()!="")
+                                  nonFinance.setPatthree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setPatthree(0.0);
+                                	  if(row.getCell(4).getStringCellValue()!="")
+                                  nonFinance.setPatfour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setPatfour(0.0);
+                                	  if(row.getCell(5).getStringCellValue()!="")
+                                  nonFinance.setPatFive(Double.parseDouble(row.getCell(5).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setPatFive(0.0);}
                                   if (finColumn.equals("PAT.Growth(%)"))
                                   { /* nonFinance.setPatGrowthOne(row.getCell(1).getNumericCellValue());*/
-                                  nonFinance.setPatGrowthTwo(row.getCell(2).getNumericCellValue());
-                                  nonFinance.setPatGrowthThree(row.getCell(3).getNumericCellValue());
-                                  nonFinance.setPatGrowthFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setPatGrowthFive(row.getCell(5).getNumericCellValue());}
+                                	  if(row.getCell(2).getStringCellValue()!="")
+                                  nonFinance.setPatGrowthTwo((Double.parseDouble(row.getCell(2).getStringCellValue()))*100);
+                                	  else
+                                		  nonFinance.setPatGrowthTwo(0.0);
+                                	  if(row.getCell(3).getStringCellValue()!="")
+                                  nonFinance.setPatGrowthThree((Double.parseDouble(row.getCell(3).getStringCellValue()))*100);
+                                	  else
+                                		  nonFinance.setPatGrowthThree(0.0);
+                                	  if(row.getCell(4).getStringCellValue()!="")
+                                  nonFinance.setPatGrowthFour((Double.parseDouble(row.getCell(4).getStringCellValue()))*100);
+                                	  else
+                                		  nonFinance.setPatGrowthFour(0.0);
+                                	  if(row.getCell(5).getStringCellValue()!="")
+                                  nonFinance.setPatGrowthFive((Double.parseDouble(row.getCell(5).getStringCellValue()))*100);
+                                	  else
+                                		  nonFinance.setPatGrowthFive(0.0);}
                                   if (finColumn.equals("Market Cap"))
                                   {  /*nonFinance.setMarketCapOne(row.getCell(1).getNumericCellValue());
                                   nonFinance.setMarketCapTwo(row.getCell(2).getNumericCellValue());*/
-                                  nonFinance.setMarketCapThree(row.getCell(3).getNumericCellValue());
+                                	  if(row.getCell(3).getStringCellValue()!="")
+                                  nonFinance.setMarketCapThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setMarketCapThree(0.0);
                                  /* nonFinance.setMarketCapFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setMarketCapFive(row.getCell(5).getNumericCellValue()); */}                     
-                                  if (finColumn.equals("PE"))
+                                  nonFinance.setMarketCapFive(row.getCell(5).getNumericCellValue()); */}
+                               /*   if (finColumn.equals("PE"))
                                   {  nonFinance.setPeOne(row.getCell(1).getNumericCellValue());
                                   nonFinance.setPeTwo(row.getCell(2).getNumericCellValue());
                                   nonFinance.setPethree(row.getCell(3).getNumericCellValue());
                                   nonFinance.setPeFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setPeFive(row.getCell(5).getNumericCellValue());}
+                                  nonFinance.setPeFive(row.getCell(5).getNumericCellValue());}*/
                                   if (finColumn.equals("Networth"))
-                                  {  nonFinance.setNetworthOne(row.getCell(1).getNumericCellValue());
-                                  nonFinance.setNetworthTwo(row.getCell(2).getNumericCellValue());
-                                  nonFinance.setNetworthThree(row.getCell(3).getNumericCellValue());
-                                  nonFinance.setNetworthFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setNetworthFive(row.getCell(5).getNumericCellValue());}
-                                  if (finColumn.equals("PB"))
+                                  {
+                                	  if(row.getCell(1).getStringCellValue()!="")
+                                	  nonFinance.setNetworthOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setNetworthOne(0.0);
+                                	  if(row.getCell(2).getStringCellValue()!="")
+                                  nonFinance.setNetworthTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setNetworthTwo(0.0);
+                                	  if(row.getCell(3).getStringCellValue()!="")
+                                  nonFinance.setNetworthThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setNetworthThree(0.0);
+                                	  if(row.getCell(4).getStringCellValue()!="")
+                                  nonFinance.setNetworthFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setNetworthFour(0.0);
+                                	  if(row.getCell(5).getStringCellValue()!="")
+                                  nonFinance.setNetworthFive(Double.parseDouble(row.getCell(5).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setNetworthFive(0.0);}
+                               /*   if (finColumn.equals("PB"))
                                   {  nonFinance.setPbOne(row.getCell(1).getNumericCellValue());
                                   nonFinance.setPbTwo(row.getCell(2).getNumericCellValue());
                                   nonFinance.setPbThree(row.getCell(3).getNumericCellValue());
                                   nonFinance.setPbFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setPbFive(row.getCell(5).getNumericCellValue());}
+                                  nonFinance.setPbFive(row.getCell(5).getNumericCellValue());}*/
                                   if (finColumn.equals("ROE(%)"))
-                                  {  nonFinance.setRoeOne(row.getCell(1).getNumericCellValue());
-                                  nonFinance.setRoeTwo(row.getCell(2).getNumericCellValue());
-                                  nonFinance.setRoeThree(row.getCell(3).getNumericCellValue());
-                                  nonFinance.setRoeFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setRoefive(row.getCell(5).getNumericCellValue());}                        
+                                  {   if(row.getCell(1).getStringCellValue()!="")
+                                	  nonFinance.setRoeOne((Double.parseDouble(row.getCell(1).getStringCellValue()))*100);
+                                  else
+                                	  nonFinance.setRoeOne(0.0);
+                                  if(row.getCell(2).getStringCellValue()!="")
+                                  nonFinance.setRoeTwo((Double.parseDouble(row.getCell(2).getStringCellValue()))*100);
+                                  else
+                                	  nonFinance.setRoeTwo(0.0);
+                                  if(row.getCell(3).getStringCellValue()!="")
+                                  nonFinance.setRoeThree((Double.parseDouble(row.getCell(3).getStringCellValue()))*100);
+                                  nonFinance.setRoeThree(0.0);
+                                  if(row.getCell(4).getStringCellValue()!="")
+                                  nonFinance.setRoeFour((Double.parseDouble(row.getCell(4).getStringCellValue()))*100);
+                                  nonFinance.setRoeFour(0.0);
+                                  if(row.getCell(5).getStringCellValue()!="")
+                                  nonFinance.setRoefive((Double.parseDouble(row.getCell(5).getStringCellValue()))*100);
+                                  nonFinance.setRoefive(0.0);}
                                   if (finColumn.equals("Total Debt"))
-                                  {  nonFinance.setTotDebOne(row.getCell(1).getNumericCellValue());
-                                  nonFinance.setTotDebTwo(row.getCell(2).getNumericCellValue());
-                                  nonFinance.setTotDebThree(row.getCell(3).getNumericCellValue());
-                                  nonFinance.setTotDebFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setTotDebFive(row.getCell(5).getNumericCellValue());}
+                                  {
+                                	  if(row.getCell(1).getStringCellValue()!="")
+                                	  nonFinance.setTotDebOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setTotDebOne(0.0);
+                                	  if(row.getCell(2).getStringCellValue()!="")
+                                  nonFinance.setTotDebTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setTotDebTwo(0.0);
+                                	  if(row.getCell(3).getStringCellValue()!="")
+                                  nonFinance.setTotDebThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setTotDebThree(0.0);
+                                	  if(row.getCell(4).getStringCellValue()!="")
+                                  nonFinance.setTotDebFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setTotDebFour(0.0);
+                                	  if(row.getCell(5).getStringCellValue()!="")
+                                  nonFinance.setTotDebFive(Double.parseDouble(row.getCell(5).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setTotDebFive(0.0);}
                                   if (finColumn.equals("DE"))
-                                  {  nonFinance.setDeOne(row.getCell(1).getNumericCellValue());
-                                  nonFinance.setDeTwo(row.getCell(2).getNumericCellValue());
-                                  nonFinance.setDeThree(row.getCell(3).getNumericCellValue());
-                                  nonFinance.setDeFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setDeFive(row.getCell(5).getNumericCellValue());}
-                                  if (finColumn.equals("Tax Rate"))
+                                  {
+                                	  if(row.getCell(1).getStringCellValue()!="")
+                                	  nonFinance.setDeOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setDeOne(0.0);
+                                	  if(row.getCell(2).getStringCellValue()!="")
+                                  nonFinance.setDeTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setDeTwo(0.0);
+                                	  if(row.getCell(3).getStringCellValue()!="")
+                                  nonFinance.setDeThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setDeThree(0.0);
+                                	  if(row.getCell(4).getStringCellValue()!="")
+                                  nonFinance.setDeFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setDeFour(0.0);
+                                	  if(row.getCell(5).getStringCellValue()!="")
+                                  nonFinance.setDeFive(Double.parseDouble(row.getCell(5).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setDeFive(0.0);}
+                                /*  if (finColumn.equals("Tax Rate"))
                                   {  nonFinance.setTaxRateOne(row.getCell(1).getNumericCellValue());
                                   nonFinance.setTaxRateTwo(row.getCell(2).getNumericCellValue());
                                   nonFinance.setTaxRateThree(row.getCell(3).getNumericCellValue());
@@ -590,32 +926,127 @@ public class FileUploadResource {
                                   nonFinance.setIntRateTwo(row.getCell(2).getNumericCellValue());
                                   nonFinance.setIntRateThree(row.getCell(3).getNumericCellValue());
                                   nonFinance.setIntRateFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setIntRateFive(row.getCell(5).getNumericCellValue());}
+                                  nonFinance.setIntRateFive(row.getCell(5).getNumericCellValue());}*/
                                   if (finColumn.equals("Deprciation Rate"))
-                                  {  nonFinance.setDepRateOne(row.getCell(1).getNumericCellValue());
-                                  nonFinance.setDepRateTwo(row.getCell(2).getNumericCellValue());
-                                  nonFinance.setDepRateThree(row.getCell(3).getNumericCellValue());
-                                  nonFinance.setDepRateFour(row.getCell(4).getNumericCellValue());
-                                  nonFinance.setDepRateFive(row.getCell(5).getNumericCellValue());}
+                                  {if(row.getCell(1).getStringCellValue()!="")
+                                	  nonFinance.setDepRateOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                  else
+                                	  nonFinance.setDepRateOne(0.0);
+                                  if(row.getCell(2).getStringCellValue()!="")
+                                  nonFinance.setDepRateTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                  else
+                                	  nonFinance.setDepRateTwo(0.0);
+                                  if(row.getCell(3).getStringCellValue()!="")
+                                  nonFinance.setDepRateThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                  else
+                                	  nonFinance.setDepRateThree(0.0);
+                                  if(row.getCell(4).getStringCellValue()!="")
+                                  nonFinance.setDepRateFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                  else
+                                	  nonFinance.setDepRateFour(0.0);
+                                  if(row.getCell(5).getStringCellValue()!="")
+                                  nonFinance.setDepRateFive(Double.parseDouble(row.getCell(5).getStringCellValue()));
+                                  else
+                                	  nonFinance.setDepRateFive(0.0);}
                                   if (finColumn.equals("Weight")){
-                                	 
-                                      nonFinance.setWeight(row.getCell(3).getNumericCellValue());
-                                      
-                                	  
-                                  }
+                                	  if(row.getCell(3).getStringCellValue()!="")
+                                      nonFinance.setWeight(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                	  else
+                                		  nonFinance.setWeight(0.0);
 
-                          }
+                                  }
+                          }                             
 
                           }
                       }
-                     
+
+                      if((nonFinance.getMarketCapThree()!=0.0 && nonFinance.getPatOne()!=0.0))
+                      nonFinance.setPeOne(nonFinance.getMarketCapThree()/nonFinance.getPatOne());
+                      else
+                    	  nonFinance.setPeOne(0.00);
+                      if(nonFinance.getMarketCapThree()!=0.0 && nonFinance.getPatTwo()!=0.0)
+                      nonFinance.setPeTwo(nonFinance.getMarketCapThree()/nonFinance.getPatTwo());
+                      else
+                    	  nonFinance.setPeTwo(0.00);  
+                      if(nonFinance.getMarketCapThree()!=0.0 && nonFinance.getPatthree()!=0.0)
+                      nonFinance.setPethree(nonFinance.getMarketCapThree()/nonFinance.getPatthree());
+                      else
+                    	  nonFinance.setPethree(0.00);
+                      if(nonFinance.getMarketCapThree()!=0.0 && nonFinance.getPatfour()!=0.0)
+                      nonFinance.setPeFour(nonFinance.getMarketCapThree()/nonFinance.getPatfour());
+                      else
+                    	  nonFinance.setPeFour(0.00);	
+                      if(nonFinance.getMarketCapThree()!=0.0 && nonFinance.getPatFive()!=0.0)
+                      nonFinance.setPeFive(nonFinance.getMarketCapThree()/nonFinance.getPatFive());
+                      else
+                    	  nonFinance.setPeFive(0.00);
+                      if(nonFinance.getMarketCapThree()!=0.0 && nonFinance.getNetworthOne()!=0.0)
+                      nonFinance.setPbOne(nonFinance.getMarketCapThree()/nonFinance.getNetworthOne());
+                      else
+                    	  nonFinance.setPbOne(0.00);
+                      if(nonFinance.getMarketCapThree()!=0.0 && nonFinance.getNetworthTwo()!=0.0)
+                      nonFinance.setPbTwo(nonFinance.getMarketCapThree()/nonFinance.getNetworthTwo());
+                      else
+                    	  nonFinance.setPbTwo(0.00);
+                      if(nonFinance.getMarketCapThree()!=0.0 && nonFinance.getNetworthThree()!=0.0)
+                      nonFinance.setPbThree(nonFinance.getMarketCapThree()/nonFinance.getNetworthThree());
+                      else
+                    	  nonFinance.setPbThree(0.00);  
+                      if(nonFinance.getMarketCapThree()!=0.0 && nonFinance.getNetworthFour()!=0.0)
+                      nonFinance.setPbFour(nonFinance.getMarketCapThree()/nonFinance.getNetworthFour());
+                      else
+                    	  nonFinance.setPbFour(0.00); 
+                      if(nonFinance.getMarketCapThree()!=0.0 && nonFinance.getNetworthFive()!=0.0)
+                      nonFinance.setPbFive(nonFinance.getMarketCapThree()/nonFinance.getNetworthFive());
+                      else
+                    	  nonFinance.setPbFive(0.00);  
+                      if(nonFinance.getTaxOne()!=0.0 && nonFinance.getPbtOne()!=0.0)
+                      nonFinance.setTaxRateOne((nonFinance.getTaxOne()/nonFinance.getPbtOne())*100);
+                      else
+                      nonFinance.setTaxRateOne(0.00);
+                      if(nonFinance.getTaxTwo()!=0.0 && nonFinance.getPbtTwo()!=0.0)
+                      nonFinance.setTaxRateTwo((nonFinance.getTaxTwo()/nonFinance.getPbtTwo())*100);
+                      else
+                    	  nonFinance.setTaxRateTwo(0.00);
+                      if(nonFinance.getTaxThree()!=0.0 && nonFinance.getPbtThree()!=0.0)
+                      nonFinance.setTaxRateThree((nonFinance.getTaxThree()/nonFinance.getPbtThree())*100);
+                      else
+                    	  nonFinance.setTaxRateThree(0.00);
+                      if(nonFinance.getTaxFour()!=0.0 && nonFinance.getPbtFour()!=0.0)
+                      nonFinance.setTaxRateFour((nonFinance.getTaxFour()/nonFinance.getPbtFour())*100);
+                      else
+                    	  nonFinance.setTaxRateFour(0.00);  
+                      if(nonFinance.getTaxFive()!=0.0 && nonFinance.getPbtFive()!=0.0)
+                      nonFinance.setTaxRateFive((nonFinance.getTaxFive()/nonFinance.getPbtFive())*100);
+                      else
+                    	  nonFinance.setTaxRateFive(0.00);	 
+                      if(nonFinance.getIntExpOne()!=0.0 && nonFinance.getTotDebOne()!=0.0)
+                      nonFinance.setIntRateOne((nonFinance.getIntExpOne()/nonFinance.getTotDebOne())*100);
+                      else
+                    	  nonFinance.setIntRateOne(0.00); 
+                      if(nonFinance.getIntExpTwo()!=0.0 && nonFinance.getTotDebTwo()!=0.0)
+                      nonFinance.setIntRateTwo((nonFinance.getIntExpTwo()/nonFinance.getTotDebTwo())*100);
+                      else
+                    	  nonFinance.setIntRateTwo(0.00);
+                      if(nonFinance.getIntExpThree()!=0.0 && nonFinance.getTotDebThree()!=0.0)
+                      nonFinance.setIntRateThree((nonFinance.getIntExpThree()/nonFinance.getTotDebThree())*100);
+                      else
+                    	  nonFinance.setIntRateThree(0.00); 
+                      if(nonFinance.getIntExpFour()!=0.0 && nonFinance.getTotDebFour()!=0.0)
+                      nonFinance.setIntRateFour((nonFinance.getIntExpFour()/nonFinance.getTotDebFour())*100);
+                      else
+                    	  nonFinance.setIntRateFour(0.00);  
+                      if(nonFinance.getIntExpFive()!=0.0 && nonFinance.getTotDebFive()!=0.0)
+                      nonFinance.setIntRateFive((nonFinance.getIntExpFive()/nonFinance.getTotDebFive())*100);
+                      else{
+                    	  nonFinance.setIntRateFive(0.00);  }
                       nonFinancialSummaryDataRepository.save(nonFinance);
                       List<OpportunitySummaryData> opportunitySummaryDataList = opportunitySummaryDataRepository.findByOpportunityMasterid(opportunityMaster);
                       System.out.println(opportunitySummaryDataList);
 
 
-                      for (OpportunitySummaryData sm : opportunitySummaryDataList) {                   	
-                     
+                      for (OpportunitySummaryData sm : opportunitySummaryDataList) {
+
                     	  sm.setMarketCap(nonFinance.getMarketCapThree());
                     	  sm.setPatFirstYear(nonFinance.getPatOne());
                     	  sm.setPatSecondYear(nonFinance.getPatTwo());
@@ -643,27 +1074,40 @@ public class FileUploadResource {
                     	  sm.setPatGrowthFourth(nonFinance.getPatGrowthFour());
                     	  sm.setPatGrowthFifth(nonFinance.getPatGrowthFive());
                     	  sm.setbWeight(nonFinance.getWeight());
+                    	  if((nonFinance.getPethree()!=0.0 && nonFinance.getPatGrowthThree()!=0.0) && (nonFinance.getPethree()!=null && nonFinance.getPatGrowthThree()!=null))
                     	  sm.setPegOj((nonFinance.getPethree()/nonFinance.getPatGrowthThree()));
-                    	  if(nonFinance.getWeight()!=null){
+                    	  if(nonFinance.getWeight()!=0.0 && nonFinance.getWeight()!=null){
+                    		  if(nonFinance.getPeOne()!=null && nonFinance.getPeOne()!=0.0)
                     	  sm.setPortPeFirst(nonFinance.getWeight()*nonFinance.getPeOne());
+                    		  if(nonFinance.getPeTwo()!=null && nonFinance.getPeTwo()!=0.0)
                     	  sm.setPortPeSecond(nonFinance.getWeight()*nonFinance.getPeTwo());
+                    		  if(nonFinance.getPethree()!=null && nonFinance.getPethree()!=0.0)
                     	  sm.setPortPeThird(nonFinance.getWeight()*nonFinance.getPethree());
+                    		  if(nonFinance.getPeFour()!=null && nonFinance.getPeFour()!=0.0)
                     	  sm.setPortPeFourth(nonFinance.getWeight()*nonFinance.getPeFour());
+                    		  if(nonFinance.getPeFive()!=null && nonFinance.getPeFive()!=0.0)
                     	  sm.setPortPeFifth(nonFinance.getWeight()*nonFinance.getPeFive());
                     	  //sm.setEarningsFirst((nonFinance.getWeight()*nonFinance.getPatGrowthOne())/100.0);
+                    		  if(nonFinance.getPatGrowthTwo()!=null && nonFinance.getPatGrowthTwo()!=0.0)
                     	  sm.setEarningsSecond((nonFinance.getWeight()*nonFinance.getPatGrowthTwo())/100.0);
+                    		  if(nonFinance.getPatGrowthThree()!=null && nonFinance.getPatGrowthThree()!=0.0)
                     	  sm.setEarningsThird((nonFinance.getWeight()*nonFinance.getPatGrowthThree())/100.0);
+                    		  if(nonFinance.getPatGrowthFour()!=null && nonFinance.getPatGrowthFour()!=0.0)
                     	  sm.setEarningsFourth((nonFinance.getWeight()*nonFinance.getPatGrowthFour())/100.0);
+                    		  if(nonFinance.getPatGrowthFive()!=null && nonFinance.getPatGrowthFive()!=0.0)
                     	  sm.setEarningsFifth((nonFinance.getWeight()*nonFinance.getPatGrowthFive())/100.0);
+                    		  if(nonFinance.getMarketCapThree()!=null && nonFinance.getMarketCapThree()!=0.0)
                     	  sm.setWtAvgCap((nonFinance.getWeight()*nonFinance.getMarketCapThree())/100.0);
-                    	  sm.setRoe((nonFinance.getWeight()*nonFinance.getMarketCapThree())/100.0);
+                    		  if(nonFinance.getRoeThree()!=null && nonFinance.getRoeThree()!=0.0)
+                    	  sm.setRoe((nonFinance.getWeight()*nonFinance.getRoeThree())/100.0);
+                    		  if((nonFinance.getPethree()!=0.0 && nonFinance.getPatGrowthThree()!=0.0) && (nonFinance.getPethree()!=null && nonFinance.getPatGrowthThree()!=null))
                     	  sm.setPegYearPeg(nonFinance.getWeight()*(nonFinance.getPethree()/nonFinance.getPatGrowthThree()));
                     	  }
-                     
+                    	  sm.setCreatedBy(opportunityMaster.getCreatedBy());
                       opportunitySummaryDataRepository.save(sm);
                       }
                       log.info("In financial uploadFinancial" + iTotRowInserted + " inserted");
-                      
+
                   } catch (FileNotFoundException e) {
                       log.error("Exception at financial uploadFinancial() method " + e);
                   } catch (IOException e) {
@@ -673,10 +1117,10 @@ public class FileUploadResource {
                   }
           }
               }
-    
 
-  
-      
+
+
+
         //fileUploadRepository.save(fileUpload);
         return null;
     }
@@ -762,3 +1206,4 @@ public class FileUploadResource {
 		System.out.println("File Uploading is Completed");
 	}
 }
+

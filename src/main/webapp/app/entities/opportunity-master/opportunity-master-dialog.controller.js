@@ -7,11 +7,11 @@
 
 	OpportunityMasterDialogController.$inject = [ '$timeout', '$scope', '$sce',
 			'$state', '$stateParams', '$http', 'entity', 'Upload',
-			'OpportunityMaster', 'StrategyMaster', 'OpportunityName','$filter' ];
+			'OpportunityMaster', 'StrategyMaster', 'OpportunityName','$filter','Principal','DecimalConfiguration' ];
 
 	function OpportunityMasterDialogController($timeout, $scope, $sce, $state,
 			$stateParams, $http, entity, Upload, OpportunityMaster,
-			StrategyMaster, OpportunityName, $filter) {
+			StrategyMaster, OpportunityName, $filter,Principal,DecimalConfiguration) {
 		var vm = this;
 
 		vm.opportunityMaster = entity;
@@ -37,8 +37,9 @@
 		vm.readOnly = false;
 
 		vm.selectedOpportunity = null;
+        vm.decimalValue = null;
 
-		console.log("SELECTED------>", vm.opportunityNames);
+		
 
 		// var name= vm.opportunityNames;
 		vm.autoCompleteOptions = {
@@ -120,6 +121,42 @@
 
 
 
+        getAccount();
+        setTimeout(function() {
+            getDecimalConfig();
+        }, 3000);
+
+
+
+        function getAccount() {
+            Principal.identity().then(function(account) {
+                vm.account = account;
+                vm.isAuthenticated = Principal.isAuthenticated;
+
+
+            });
+
+        }
+
+        function getDecimalConfig() {
+
+
+            DecimalConfiguration.get({id:vm.account.id},function (resp) {
+
+              
+                if(vm.account.login == vm.opportunityMaster.createdBy)
+                {
+                    vm.decimalValue = resp.decimalValue;
+                }
+
+            },function (err) {
+                console.log(err);
+            });
+
+        }
+
+
+
 
         $scope.addContact = function() {
 			vm.opportunityMaster.selectedoppContanct.push({})
@@ -132,7 +169,7 @@
 		$scope.getTotal = function(val1, val2, val3) {
 
 			var result = parseFloat(val1) + parseFloat(val2);
-			result = (isNaN(result)) ? '' : result;
+			result = (isNaN(result) || result==Infinity) ? 0 : result;
 
 			switch (val3) {
 			case 1:
@@ -158,8 +195,8 @@
 		};
 		$scope.getFinPbv = function(val1, val2, val3) {
 
-			var result = (parseFloat(val1) / parseFloat(val2)).toFixed(2);
-			result = (isNaN(result)) ? '' : result;
+			var result = (parseFloat(val1) / parseFloat(val2));
+			result = (isNaN(result) || result==Infinity) ? 0 : result;
 			switch (val3) {
 			case 1:
 				vm.opportunityMaster.financialSummaryData.pbvOne = result;
@@ -199,13 +236,13 @@
 		$scope.getFinRoe = function(val1, val2, val3, val4) {
 			if (val2 == 0) {
 				var result = parseFloat(val1) / parseFloat(val3);
-				result = (result * 100).toFixed(2);
+				result = (result * 100);
 			} else {
 				var result = parseFloat(val1)
 						/ ((parseFloat(val2) + parseFloat(val3)) / 2);
-				result = (result * 100).toFixed(2);
+				result = (result * 100);
 			}
-			result = (isNaN(result)) ? '' : result;
+			result = (isNaN(result) || result==Infinity) ? 0 : result;
 			switch (val4) {
 			case 1:
 				vm.opportunityMaster.financialSummaryData.roeOne = result;
@@ -230,8 +267,8 @@
 		$scope.getNonGrowth = function(val1, val2, val3) {
 
 			var result = (parseFloat(val2) / parseFloat(val1)) - 1;
-			result = (result * 100).toFixed(2);
-			result = (isNaN(result)) ? '' : result;
+			result = (result * 100);
+			result = (isNaN(result) || result==Infinity) ? 0 : result;
 			switch (val3) {
 			case 1:
 				vm.opportunityMaster.nonFinancialSummaryData.revGrowthTwo = result;
@@ -277,8 +314,8 @@
 		$scope.getNonMargin = function(val1, val2, val3) {
 
 			var result = parseFloat(val1) / parseFloat(val2);
-			result = (result * 100).toFixed(2);
-			result = (isNaN(result)) ? '' : result;
+			result = (result * 100);
+			result = (isNaN(result) || result==Infinity) ? 0 : result;
 			switch (val3) {
 			case 1:
 				vm.opportunityMaster.nonFinancialSummaryData.marginOne = result;
@@ -304,8 +341,8 @@
 		$scope.getNonPbt = function(val1, val2, val3, val4, val5) {
 
 			var result = (parseFloat(val1) + parseFloat(val2) - parseFloat(val3)
-					- parseFloat(val4)).toFixed(2);
-			result = (isNaN(result)) ? '' : result;
+					- parseFloat(val4));
+			result = (isNaN(result) || result==Infinity) ? 0 : result;
 			switch (val5) {
 			case 1:
 				vm.opportunityMaster.nonFinancialSummaryData.pbtOne = result;
@@ -330,8 +367,8 @@
 
 		$scope.getNonPat = function(val1, val2, val3) {
 
-			var result = (parseFloat(val1) - parseFloat(val2)).toFixed(2);
-			result = (isNaN(result)) ? '' : result;
+			var result = (parseFloat(val1) - parseFloat(val2));
+			result = (isNaN(result) || result==Infinity) ? 0 : result;
 			switch (val3) {
 			case 1:
 				vm.opportunityMaster.nonFinancialSummaryData.patOne = result;
@@ -355,8 +392,8 @@
 		};
 		$scope.getNonPe = function(val1, val2, val3) {
 
-			var result = (parseFloat(val1) / parseFloat(val2)).toFixed(2);
-			result = (isNaN(result)) ? '' : result;
+			var result = (parseFloat(val1) / parseFloat(val2));
+			result = (isNaN(result) || result==Infinity) ? 0 : result;
 			switch (val3) {
 			case 1:
 				vm.opportunityMaster.nonFinancialSummaryData.peOne = result;
@@ -412,14 +449,14 @@
 
 			if (val2 == 0) {
 				var result = parseFloat(val1) / parseFloat(val3);
-				result = (result * 100).toFixed(2);
-				console.log('ROE',result,val1,val3)
+				result = (result * 100);
+				
 			} else {
 				var result = parseFloat(val1)
 						/ ((parseFloat(val2) + parseFloat(val3)) / 2);
-				result = (result * 100).toFixed(2);
+				result = (result * 100);
 			}
-			result = (isNaN(result)) ? '' : result;
+			result = (isNaN(result) || result==Infinity) ? 0 : result;
 			switch (val4) {
 			case 1:
 				vm.opportunityMaster.nonFinancialSummaryData.roeOne = result;
@@ -441,6 +478,61 @@
 			}
 			return result;
 		};
+		$scope.getNonTaxRat = function(val1, val2, val3) {
+
+			var result = parseFloat(val1)/parseFloat(val2);
+			result = (result * 100);
+		result = (isNaN(result) || result==Infinity) ? 0 : result;
+		if(result!=''){
+		switch (val3) {
+		case 1:
+			vm.opportunityMaster.nonFinancialSummaryData.taxRateOne = result;
+			break;
+		case 2:
+			vm.opportunityMaster.nonFinancialSummaryData.taxRateTwo = result;
+			break;
+		case 3:
+			vm.opportunityMaster.nonFinancialSummaryData.taxRateThree = result;
+			break;
+		case 4:
+			vm.opportunityMaster.nonFinancialSummaryData.taxRateFour = result;
+			break;
+		case 5:
+			vm.opportunityMaster.nonFinancialSummaryData.taxRateFive = result;
+			break;
+		default:
+			break;
+		}}
+		return result;
+	};
+
+	$scope.getNonIntRat = function(val1, val2, val3) {
+
+		var result = parseFloat(val1)/parseFloat(val2);
+		result = (result * 100);
+	result = (isNaN(result) || result==Infinity) ? 0 : result;
+	if(result!=''){
+	switch (val3) {
+	case 1:
+		vm.opportunityMaster.nonFinancialSummaryData.intRateOne = result;
+		break;
+	case 2:
+		vm.opportunityMaster.nonFinancialSummaryData.intRateTwo = result;
+		break;
+	case 3:
+		vm.opportunityMaster.nonFinancialSummaryData.intRateThree = result;
+		break;
+	case 4:
+		vm.opportunityMaster.nonFinancialSummaryData.intRateFour = result;
+		break;
+	case 5:
+		vm.opportunityMaster.nonFinancialSummaryData.intRateFive = result;
+		break;
+	default:
+		break;
+	}}
+	return result;
+};
 		// Editor options.
 		$scope.options = {
 			language : 'en',
@@ -494,7 +586,6 @@
 		function save() {
 			vm.isSaving = true;
 
-			console.log("ndksjangkjshagn", vm.opportunityMaster);
 			console.log("Computation",
 					vm.opportunityMaster.financialSummaryData);
 			if (vm.opportunityMaster.id !== null) {

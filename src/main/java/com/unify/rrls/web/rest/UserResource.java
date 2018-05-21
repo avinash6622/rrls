@@ -2,6 +2,7 @@ package com.unify.rrls.web.rest;
 
 import com.unify.rrls.config.Constants;
 import com.codahale.metrics.annotation.Timed;
+import com.unify.rrls.domain.HistoryLogs;
 import com.unify.rrls.domain.User;
 import com.unify.rrls.repository.UserRepository;
 import com.unify.rrls.security.AuthoritiesConstants;
@@ -16,6 +17,7 @@ import io.swagger.annotations.ApiParam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Query;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -57,6 +60,9 @@ import java.util.*;
 @RequestMapping("/api")
 public class UserResource {
 
+    @Autowired
+    NotificationServiceResource notificationServiceResource;
+
     private final Logger log = LoggerFactory.getLogger(UserResource.class);
 
     private static final String ENTITY_NAME = "userManagement";
@@ -87,7 +93,7 @@ public class UserResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/users")
-    @Timed   
+    @Timed
     public ResponseEntity createUser(@Valid @RequestBody ManagedUserVM managedUserVM) throws URISyntaxException {
         log.debug("REST request to save User : {}", managedUserVM);
 
@@ -107,6 +113,13 @@ public class UserResource {
         } else {
             User newUser = userService.createUser(managedUserVM);
             mailService.sendCreationEmail(newUser);
+
+            String page="User";
+            Long id = getUserId(newUser.getCreatedBy());
+
+            notificationServiceResource.notificationHistorysave(newUser.getLogin(),newUser.getCreatedBy(),newUser.getLastModifiedBy(),newUser.getCreatedDate(),"created",page,"",id,Long.parseLong("0"));
+
+
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
                 .headers(HeaderUtil.createAlert( "A user is created with identifier " + newUser.getLogin(), newUser.getLogin()))
                 .body(newUser);
@@ -122,7 +135,7 @@ public class UserResource {
      * or with status 500 (Internal Server Error) if the user couldn't be updated
      */
     @PutMapping("/users")
-    @Timed  
+    @Timed
     public ResponseEntity<UserDTO> updateUser(@Valid @RequestBody ManagedUserVM managedUserVM) {
         log.debug("REST request to update User : {}", managedUserVM);
         Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(managedUserVM.getEmail());
@@ -193,4 +206,12 @@ public class UserResource {
         userService.deleteUser(login);
         return ResponseEntity.ok().headers(HeaderUtil.createAlert( "A user is deleted with identifier " + login, login)).build();
     }
+
+    public Long getUserId(String username)
+    {
+
+        User user = userRepository.findByLogin(username);
+        return user.getId();
+    }
+
 }

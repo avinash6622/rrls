@@ -1,0 +1,72 @@
+<style>
+</style>
+<div class="modal-headers">
+    <h3 class="modal-title" text-align="center">Questions & Answer</h3>
+</div>
+
+ <div class="row"  style="height: 500px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">	
+
+    <div class="comments-container">
+				<ul id="comments-list" class="comments-list">
+			<li>
+			<div ng-repeat="questions in $ctrl.questions">
+				<div class="comment-main-level">				
+					<div class="comment-box">
+						<div class="comment-head">
+							<span class="comment-name">{{questions.createdBy}}</span>
+							<span>{{questions.createdDate | date :"MMM d, y h:mm:ss a"}}</span>
+							<button class="btn btn-sm btn-info pull-right" ng-click="showTextArea=true" ng-show="questions.answerComments==null">Answer</button>
+							
+							<!-- <i class="fa fa-heart"></i> -->
+						</div>
+						<div class="comment-content">
+							{{questions.questionText}}
+						</div>						
+						<textarea ng-show="showTextArea" placeholder="Enter your answer" ng-model="$ctrl.answerText" style="width:70%; float:left;"></textarea>
+						<button ng-show="showTextArea" class="btn btn-sm btn-primary" style="margin-left: 3px;" ng-click="$ctrl.answerSubmit(questions, null, $index,null);showTextArea = false;">Submit</button>
+						<button  ng-show="showTextArea" class="btn btn-sm btn-warning" ng-click="showTextArea=false">Cancel</button>
+						
+					</div>
+				</div>
+				<div  ng-repeat="answer in questions.answerComments">
+				<ul class="comments-list reply-list">
+				
+					<li ng-class="{['level-' + ($index < 3 ? ''+$index: '3')]: answer.answerComment !== null}" class="answer-list">
+						<div class="comment-box">
+				
+						<div>
+							<div class="comment-head">
+								<span class="comment-name">{{answer.createdBy}}</span>
+								<span>{{answer.createdDate | date :"MMM d, y h:mm:ss a"}}</span>
+								<button class="btn btn-sm btn-info pull-right" ng-click="showReplyText=true" ng-show="$last && $index<2">Reply</button>
+							</div>
+							<div class="comment-content">
+								{{answer.answerText}}
+								</div>
+								<textarea ng-show="showReplyText" placeholder="Enter your reply" ng-model="$ctrl.answerText" style="width:70%; float:left;"></textarea>
+								<button ng-show="showReplyText" class="btn btn-sm btn-primary" style="margin-left: 3px;" ng-click="$ctrl.answerSubmit(questions, answer,$parent.$index,$index);showReplyText = false;">Submit</button>
+						<button ng-show="showReplyText" class="btn btn-sm btn-warning" ng-click="showReplyText=false">Cancel</button>
+					
+							</div>
+							</div>
+					
+					</li>
+
+				
+				</ul></div>
+			
+				</div>
+			</li>
+
+		
+		</ul>
+	</div>
+	</div>
+	
+
+<div class="modal-footer">
+<textarea ng-model="$ctrl.question" placeholder="Enter question" style="width:80%; float:left;"></textarea>
+   <button class="btn btn-md btn-primary" ng-click="$ctrl.save()"
+				ng-disabled="" >Submit</button>
+    <button class="btn btn-md btn-warning" data-dismiss="modal" type="button" ng-click="$ctrl.clearDialog()">Cancel</button>
+</div>
