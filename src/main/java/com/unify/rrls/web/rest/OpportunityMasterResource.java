@@ -283,7 +283,7 @@ public class OpportunityMasterResource {
 		}
 
 		OpportunityMaster result = opportunityMasterRepository.save(opportunityMaster);
-		System.out.println("sdfsdfsd--->" + result);
+		//System.out.println("sdfsdfsd--->" + result);
 
 		for (OpportunityMasterContact oC : opportunityMaster.getSelectedoppContanct()) {
 			oC.setOpportunityMasterId(result);
@@ -304,7 +304,7 @@ public class OpportunityMasterResource {
 				strategyMapping.setStrategyMaster(sm);
 				strategyMappingRepository.save(strategyMapping);
 			}
-			System.out.println(strategyMaster);
+		//	System.out.println(strategyMaster);
 
 			opportunityMaster.setSelectedStrategyMaster(strategyMaster);
 			List<StrategyMapping> countStrategy=strategyMappingRepository.findByStrategyMaster(strategyMaster.get(0));
@@ -459,7 +459,7 @@ public class OpportunityMasterResource {
 
 		}
 
-		System.out.println(result.getId().toString());
+		//System.out.println(result.getId().toString());
 
 		String page = "Opportunity";
 
@@ -503,7 +503,7 @@ public class OpportunityMasterResource {
 
 			strategyMappingRepository.delete(strategyMappings);
 
-            System.out.println("Mapping------>"+strategyMappings);
+          //  System.out.println("Mapping------>"+strategyMappings);
 
             for(StrategyMapping sm : strategyMappings)
             {
