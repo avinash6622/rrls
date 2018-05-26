@@ -50,7 +50,7 @@ public class DownloadController {
 
             array = fileName.split("[.]");
 
-            String extension = array[1];
+            String extension = array[array.length-1];
 
 
             String pathName= path.substring(0,path.lastIndexOf(File.separator));
