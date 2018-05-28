@@ -759,6 +759,7 @@ public class OpportunityMasterResource {
 		result.setFileDataContentType(extension);
 		result.setFileData(sFile);
 		result.setOpportunityMasterId(opportunityMaster);
+		result.setFiletype("Presentation");
 		result = fileUploadRepository.save(result);
 
 		return ResponseEntity.created(new URI("/api/opportunity-masters"))
