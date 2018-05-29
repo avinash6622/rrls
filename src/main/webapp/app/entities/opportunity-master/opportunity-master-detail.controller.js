@@ -32,6 +32,7 @@
         vm.questions=[];
         vm.account = null;
         vm.decimalValue = null;
+        vm.mydisable = true;
 
 
         console.log('Decimal value',vm.opportunityMaster.decimalPoint);
@@ -52,10 +53,17 @@
                 vm.account = account;
                 vm.isAuthenticated = Principal.isAuthenticated;
 
+                console.log(vm.account.authorities[1]);
 
+                if(vm.account.authorities[1] == 'Research' || vm.account.authorities[1] == 'CIO')
+                {
+                    vm.mydisable = false;
+                }
             });
 
         }
+
+
 
         function getDecimalConfig() {
 
@@ -311,7 +319,7 @@
     			result = (result * 100);
     			result = (isNaN(result) || result==Infinity) ? 0 : result;
     			//console.log('result',result);
-    		
+
     			switch (val3) {
     			case 1:
     				vm.opportunityMaster.nonFinancialSummaryData.marginOne = result;
@@ -335,7 +343,7 @@
     			default:
     				break;
     			}
-    			
+
     			/*if(result=='') {
     				console.log("result else ");
     				result = 0;

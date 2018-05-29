@@ -2684,6 +2684,10 @@ th {
 	background-color: #f9f9f9;
 }
 
+.table-striped>tbody>tr:nth-of-type(even) {
+    background-color: #ccc;
+}
+
 .table-hover>tbody>tr:hover {
 	background-color: #f5f5f5;
 }
@@ -3475,7 +3479,7 @@ a.btn.disabled, fieldset[disabled] a.btn {
 .btn-default {
 	color: #333;
 	background-color: #fff;
-	border-color: #ccc;	
+	border-color: #ccc;
 }
 .fileUpload{
 	clear: both;
@@ -5651,7 +5655,7 @@ a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
 
 @
 -webkit-keyframes progress-bar-stripes {from { background-position:40px0;
-	
+
 }
 
 to {
@@ -5660,7 +5664,7 @@ to {
 
 }
 @
-keyframes progress-bar-stripes {from { background-position:40px0;	
+keyframes progress-bar-stripes {from { background-position:40px0;
 }
 
 to {

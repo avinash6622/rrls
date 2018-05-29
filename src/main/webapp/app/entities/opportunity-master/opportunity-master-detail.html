@@ -77,14 +77,14 @@ padding :none !important}
     <!--   <div class="col-xs-5"> <a ui-sref="opportunity-master.comments">Comments</a>&nbsp;&nbsp;&nbsp;<a ng-click="question('Approved')">Questions & Answer</a>&nbsp;&nbsp;&nbsp;<a>Learnings</a></div> -->
         <div class="col-md-8">
         <div class="pull-right">
-        <button type="button" ng-click="commentstemp('Approved')" class="btn btn-md btn-primary">
+        <button type="button" ng-click="commentstemp('Approved')" class="btn btn-md btn-primary" ng-disabled="vm.mydisable">
                   <span class="hidden-sm-down"> Comments</span>
                 </button>
 
 
                 <button type="button"
                         ng-click="question('Approved')"
-                        class="btn btn-md btn-primary">
+                        class="btn btn-md btn-primary" ng-disabled="vm.mydisable">
                    <span
                     class="hidden-sm-down"> Questions & Answers</span>
                 </button>
@@ -834,7 +834,7 @@ padding :none !important}
 								<td scope="col" style="text-align: left">Margin(%)</td>
 								<td><input name="marginOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marginOne" decimals="{{vm.decimalValue}}"
-									ng-change="getNonMargin(vm.opportunityMaster.nonFinancialSummaryData.ebitdaOne, vm.opportunityMaster.nonFinancialSummaryData.revenueOne,1)"									
+									ng-change="getNonMargin(vm.opportunityMaster.nonFinancialSummaryData.ebitdaOne, vm.opportunityMaster.nonFinancialSummaryData.revenueOne,1)"
 									 ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="marginTwo"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.marginTwo" decimals="{{vm.decimalValue}}"
