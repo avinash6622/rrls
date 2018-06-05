@@ -566,6 +566,47 @@ padding :none !important}
 									ng-disabled="isDisabled" style="text-align: right"/></td>
 							</tr>
 
+
+                            <tr>
+                                <td scope="col" style="text-align: left">Exceptional Item 1</td>
+                                <td><input name="exceptionalOne"
+                                           ng-model="vm.opportunityMaster.financialSummaryData.exceptionOne" decimals="{{vm.decimalValue}}"
+                                           ng-disabled="isDisabled" style="text-align: right"/></td>
+                                <td><input name="exceptionalTwo"
+                                           ng-model="vm.opportunityMaster.financialSummaryData.exceptionTwo" decimals="{{vm.decimalValue}}"
+                                           ng-disabled="isDisabled" style="text-align: right"/></td>
+                                <td><input name="exceptionalThree"
+                                           ng-model="vm.opportunityMaster.financialSummaryData.exceptionThree" decimals="{{vm.decimalValue}}"
+                                           ng-disabled="isDisabled" style="text-align: right"/></td>
+                                <td><input name="exceptionalFour"
+                                           ng-model="vm.opportunityMaster.financialSummaryData.exceptionFour" decimals="{{vm.decimalValue}}"
+                                           ng-disabled="isDisabled" style="text-align: right"/></td>
+                                <td><input name="exceptionalFive"
+                                           ng-model="vm.opportunityMaster.financialSummaryData.exceptionFive" decimals="{{vm.decimalValue}}"
+                                           ng-disabled="isDisabled" style="text-align: right"/></td>
+                            </tr>
+
+
+                            <tr>
+                                <td scope="col" style="text-align: left">Exceptional Item 2</td>
+                                <td><input name="exceptionalItemOne"
+                                           ng-model="vm.opportunityMaster.financialSummaryData.exceptionItemOne" decimals="{{vm.decimalValue}}"
+                                           ng-disabled="isDisabled" style="text-align: right"/></td>
+                                <td><input name="exceptionalItemTwo"
+                                           ng-model="vm.opportunityMaster.financialSummaryData.exceptionItemTwo" decimals="{{vm.decimalValue}}"
+                                           ng-disabled="isDisabled" style="text-align: right"/></td>
+                                <td><input name="exceptionalItemThree"
+                                           ng-model="vm.opportunityMaster.financialSummaryData.exceptionItemThree" decimals="{{vm.decimalValue}}"
+                                           ng-disabled="isDisabled" style="text-align: right"/></td>
+                                <td><input name="exceptionalItemFour"
+                                           ng-model="vm.opportunityMaster.financialSummaryData.exceptionItemFour" decimals="{{vm.decimalValue}}"
+                                           ng-disabled="isDisabled" style="text-align: right"/></td>
+                                <td><input name="exceptionalItemFive"
+                                           ng-model="vm.opportunityMaster.financialSummaryData.exceptionItemFive" decimals="{{vm.decimalValue}}"
+                                           ng-disabled="isDisabled" style="text-align: right"/></td>
+                            </tr>
+
+
 							<tr>
 								<td scope="col" style="text-align: left">PAT</td>
 								<td><input name="patOne"
@@ -752,7 +793,7 @@ padding :none !important}
 					ng-if="vm.opportunityMaster.masterName.segment != 'Finance'">
 
 					<!--  <label class="control-label">Summary Data</label> -->
-					<table id="mytable2" class="table table-bordered">
+					<table id="mytable3" class="table table-bordered">
 						<thead>
 
 							<tr class="headborder">
@@ -957,7 +998,49 @@ padding :none !important}
 									ng-disabled="true" style="text-align: right"/></td>
 							</tr>
 
-							<tr>
+
+
+                            <tr>
+                                <td scope="col" style="text-align: left">Exceptional Item 1</td>
+                                <td><input name="exceptionalOne"
+                                           ng-model="vm.opportunityMaster.nonFinancialSummaryData.exceptionOne" decimals="{{vm.decimalValue}}"
+                                           ng-disabled="isDisabled" style="text-align: right"/></td>
+                                <td><input name="exceptionalTwo"
+                                           ng-model="vm.opportunityMaster.nonFinancialSummaryData.exceptionTwo" decimals="{{vm.decimalValue}}"
+                                           ng-disabled="isDisabled" style="text-align: right"/></td>
+                                <td><input name="exceptionalThree"
+                                           ng-model="vm.opportunityMaster.nonFinancialSummaryData.exceptionThree" decimals="{{vm.decimalValue}}"
+                                           ng-disabled="isDisabled" style="text-align: right"/></td>
+                                <td><input name="exceptionalFour"
+                                           ng-model="vm.opportunityMaster.nonFinancialSummaryData.exceptionFour" decimals="{{vm.decimalValue}}"
+                                           ng-disabled="isDisabled" style="text-align: right"/></td>
+                                <td><input name="exceptionalFive"
+                                           ng-model="vm.opportunityMaster.nonFinancialSummaryData.exceptionFive" decimals="{{vm.decimalValue}}"
+                                           ng-disabled="isDisabled" style="text-align: right"/></td>
+                            </tr>
+
+
+                            <tr>
+                                <td scope="col" style="text-align: left">Exceptional Item 2</td>
+                                <td><input name="exceptionalItemOne"
+                                           ng-model="vm.opportunityMaster.nonFinancialSummaryData.exceptionItemOne" decimals="{{vm.decimalValue}}"
+                                           ng-disabled="isDisabled" style="text-align: right"/></td>
+                                <td><input name="exceptionalItemTwo"
+                                           ng-model="vm.opportunityMaster.nonFinancialSummaryData.exceptionItemTwo" decimals="{{vm.decimalValue}}"
+                                           ng-disabled="isDisabled" style="text-align: right"/></td>
+                                <td><input name="exceptionalItemThree"
+                                           ng-model="vm.opportunityMaster.nonFinancialSummaryData.exceptionItemThree" decimals="{{vm.decimalValue}}"
+                                           ng-disabled="isDisabled" style="text-align: right"/></td>
+                                <td><input name="exceptionalItemFour"
+                                           ng-model="vm.opportunityMaster.nonFinancialSummaryData.exceptionItemFour" decimals="{{vm.decimalValue}}"
+                                           ng-disabled="isDisabled" style="text-align: right"/></td>
+                                <td><input name="exceptionalItemFive"
+                                           ng-model="vm.opportunityMaster.nonFinancialSummaryData.exceptionItemFive" decimals="{{vm.decimalValue}}"
+                                           ng-disabled="isDisabled" style="text-align: right"/></td>
+                            </tr>
+
+
+                            <tr>
 								<td scope="col" style="text-align: left">Tax</td>
 								<td><input name="taxOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.taxOne" decimals="{{vm.decimalValue}}"
@@ -980,23 +1063,23 @@ padding :none !important}
 								<td scope="col" style="text-align: left">PAT</td>
 								<td><input name="provisionsOne"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patOne" decimals="{{vm.decimalValue}}"
-									ng-value="getNonPat(vm.opportunityMaster.nonFinancialSummaryData.pbtOne, vm.opportunityMaster.nonFinancialSummaryData.taxOne,1)"
+									ng-value="getNonPat(vm.opportunityMaster.nonFinancialSummaryData.pbtOne,vm.opportunityMaster.nonFinancialSummaryData.exceptionOne,vm.opportunityMaster.nonFinancialSummaryData.exceptionItemOne,vm.opportunityMaster.nonFinancialSummaryData.taxOne,1)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="provisionsTwo"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patTwo" decimals="{{vm.decimalValue}}"
-									ng-value="getNonPat(vm.opportunityMaster.nonFinancialSummaryData.pbtTwo, vm.opportunityMaster.nonFinancialSummaryData.taxTwo,2)"
+									ng-value="getNonPat(vm.opportunityMaster.nonFinancialSummaryData.pbtTwo,vm.opportunityMaster.nonFinancialSummaryData.exceptionTwo,vm.opportunityMaster.nonFinancialSummaryData.exceptionItemTwo, vm.opportunityMaster.nonFinancialSummaryData.taxTwo,2)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="provisionsThree"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patthree" decimals="{{vm.decimalValue}}"
-									ng-value="getNonPat(vm.opportunityMaster.nonFinancialSummaryData.pbtThree, vm.opportunityMaster.nonFinancialSummaryData.taxThree,3)"
+									ng-value="getNonPat(vm.opportunityMaster.nonFinancialSummaryData.pbtThree,vm.opportunityMaster.nonFinancialSummaryData.exceptionThree,vm.opportunityMaster.nonFinancialSummaryData.exceptionItemThree, vm.opportunityMaster.nonFinancialSummaryData.taxThree,3)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="provisionsFour"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patfour" decimals="{{vm.decimalValue}}"
-									ng-value="getNonPat(vm.opportunityMaster.nonFinancialSummaryData.pbtFour, vm.opportunityMaster.nonFinancialSummaryData.taxFour,4)"
+									ng-value="getNonPat(vm.opportunityMaster.nonFinancialSummaryData.pbtFour,vm.opportunityMaster.nonFinancialSummaryData.exceptionFour,vm.opportunityMaster.nonFinancialSummaryData.exceptionItemFour, vm.opportunityMaster.nonFinancialSummaryData.taxFour,4)"
 									ng-disabled="true" style="text-align: right"/></td>
 								<td><input name="provisionsFive"
 									ng-model="vm.opportunityMaster.nonFinancialSummaryData.patFive" decimals="{{vm.decimalValue}}"
-									ng-value="getNonPat(vm.opportunityMaster.nonFinancialSummaryData.pbtFive, vm.opportunityMaster.nonFinancialSummaryData.taxFive,5)"
+									ng-value="getNonPat(vm.opportunityMaster.nonFinancialSummaryData.pbtFive,vm.opportunityMaster.nonFinancialSummaryData.exceptionFive,vm.opportunityMaster.nonFinancialSummaryData.exceptionItemFive,vm.opportunityMaster.nonFinancialSummaryData.taxFive,5)"
 									ng-disabled="true" style="text-align: right"/></td>
 							</tr>
 

@@ -382,9 +382,9 @@
     			return result;
     		};
 
-    		$scope.getNonPat = function(val1, val2, val3) {
+    		$scope.getNonPat = function(val1, val2,val4,val5, val3) {
 
-    			var result = (parseFloat(val1) - parseFloat(val2));
+    			var result = (parseFloat(val1)+parseFloat(val2)+parseFloat(val4) - parseFloat(val5));
     			result = (isNaN(result) || result==Infinity) ? 0 : result;
     			if(result!=''){
     			switch (val3) {
