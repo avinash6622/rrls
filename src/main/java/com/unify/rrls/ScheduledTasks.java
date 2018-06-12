@@ -210,6 +210,6 @@ if(calculation.getMarketCap()!=null && calculation.getMarketCap()!=0){
 }
 
 }
-	
+
 
 }
