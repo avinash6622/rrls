@@ -1,8 +1,9 @@
 package com.unify.rrls.service;
 
-import com.unify.rrls.domain.User;
+import java.util.List;
+import java.util.Locale;
 
-import io.github.jhipster.config.JHipsterProperties;
+import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.lang3.CharEncoding;
 import org.slf4j.Logger;
@@ -15,8 +16,10 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 
-import javax.mail.internet.MimeMessage;
-import java.util.Locale;
+import com.unify.rrls.domain.HistoryLogs;
+import com.unify.rrls.domain.User;
+
+import io.github.jhipster.config.JHipsterProperties;
 
 /**
  * Service for sending emails.
@@ -31,6 +34,8 @@ public class MailService {
     private static final String USER = "user";
 
     private static final String BASE_URL = "baseUrl";
+    
+    private static final String LISTS="lists";
 
     private final JHipsterProperties jHipsterProperties;
 
@@ -101,5 +106,24 @@ public class MailService {
     public void sendPasswordResetMail(User user) {
         log.debug("Sending password reset email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "passwordResetEmail", "email.reset.title");
+    }
+    
+    @Async
+    public void sendNotification(User user,List<HistoryLogs>lists) {
+        log.debug("Sending password reset email to '{}'", user.getEmail());
+        sendEmailForNotification(user, "notificationEmail", "email.notification.title",lists);
+    }
+    
+    @Async
+    public void sendEmailForNotification(User user, String templateName, String titleKey,List<HistoryLogs> lists) {
+        Locale locale = Locale.forLanguageTag(user.getLangKey());
+        Context context = new Context(locale);
+        context.setVariable(LISTS, lists);
+        context.setVariable(USER, user);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process(templateName, context);
+        String subject = messageSource.getMessage(titleKey, null, locale);
+        sendEmail(user.getEmail(), subject, content, false, true);
+
     }
 }

@@ -26,6 +26,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.validation.Valid;
 import java.net.URI;
@@ -199,8 +201,7 @@ public class UserResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/users/{login:" + Constants.LOGIN_REGEX + "}")
-    @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Timed   
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {
         log.debug("REST request to delete User: {}", login);
         userService.deleteUser(login);
@@ -213,5 +214,52 @@ public class UserResource {
         User user = userRepository.findByLogin(username);
         return user.getId();
     }
+    @PersistenceContext
+    EntityManager em;
+    
+    @GetMapping("/usersMail/{login:" + Constants.LOGIN_REGEX + "}")
+    @Timed
+    public String getUserMail(@PathVariable String login){
+    	
+    	Date date = new Date();
+    	System.out.println(date);
+    	
+    	 User user = userRepository.findByLogin("girija");
+    	 
+    	   List<HistoryLogs> list = null;
+           List<HistoryLogs> historyLogs = new ArrayList<>();
 
+           System.out.println("id--->"+user.getId());
+
+           Query q = em.createNativeQuery("select * from history_logs where id not in(select history_log_id from delete_notification where user_id="+user.getId()+" and status = 'deleted')",HistoryLogs.class);
+
+           list   = q.getResultList();
+
+           for(HistoryLogs hl:list){
+
+              // System.out.println(hl.getdStatus());
+
+               if(hl.getdStatus() != null){
+
+                   Query q2 = em.createNativeQuery("select history_log_id from delete_notification where status !='deleted' and user_id ="+user.getId()+"");
+
+                   Integer id= Integer.parseInt(q2.getSingleResult().toString());
+
+                   if(hl.getId() == id )
+                   {
+                       hl.setdStatus("Read");
+                   }
+                   else
+                   {
+                       hl.setdStatus("UnRead");
+                   }
+
+               }
+
+           }
+    	 mailService.sendNotification(user,list);
+    	
+		return null;
+    	
+    }
 }
