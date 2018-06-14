@@ -1,8 +1,16 @@
 package com.unify.rrls;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,13 +21,17 @@ import org.springframework.stereotype.Service;
 
 import com.codahale.metrics.annotation.Timed;
 import com.unify.rrls.domain.FinancialSummaryData;
+import com.unify.rrls.domain.HistoryLogs;
 import com.unify.rrls.domain.NonFinancialSummaryData;
 import com.unify.rrls.domain.OpportunityAutomation;
 import com.unify.rrls.domain.OpportunitySummaryData;
+import com.unify.rrls.domain.User;
 import com.unify.rrls.repository.FinancialSummaryDataRepository;
 import com.unify.rrls.repository.NonFinancialSummaryDataRepository;
 import com.unify.rrls.repository.OpportunityAutomationRepository;
 import com.unify.rrls.repository.OpportunitySummaryDataRepository;
+import com.unify.rrls.repository.UserRepository;
+import com.unify.rrls.service.MailService;
 
 @Service
 public class ScheduledTasks {
@@ -32,6 +44,13 @@ public class ScheduledTasks {
 	 	NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository;
 	 	@Autowired
 	 	OpportunitySummaryDataRepository opportunitySummaryDataRepository;
+	 	@Autowired
+	 	UserRepository userRepository;
+	 	@Autowired
+	 	MailService mailService;
+	 	
+	 	@PersistenceContext
+	 	EntityManager em;
 	
 	  private static final Logger logger = LoggerFactory.getLogger(ScheduledTasks.class);
 	  private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");	   
@@ -209,6 +228,45 @@ if(calculation.getMarketCap()!=null && calculation.getMarketCap()!=0){
 	}
 }
 
+}
+
+
+@Timed
+ /* @Scheduled(fixedDelay = 10000, initialDelay = 5000)*/
+@Scheduled(cron = "0 0 18 * * ?")
+public void scheduleTaskWithNotification() {
+    logger.info("Fixed Rate Task :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()) );
+    
+    runSchedulerNotification();
+	
+}
+
+private void runSchedulerNotification() {
+	 Calendar now = Calendar.getInstance();
+	 now.set(Calendar.HOUR, 0);
+     now.set(Calendar.MINUTE, 0);
+     now.set(Calendar.SECOND, 0);        
+     now.set(Calendar.HOUR_OF_DAY, 0);
+    
+	DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    
+	Date date = new Date();
+	 
+    String fromDate=sdf.format(now.getTime());
+	String hDate=sdf.format(date);
+
+	 List<User> user = userRepository.findAll();
+	 
+	   List<HistoryLogs> list = null;
+     
+       Query q = em.createNativeQuery("select * from history_logs where opp_created_date between '"+fromDate+"' and '"+hDate+"'",HistoryLogs.class);
+
+       list   = q.getResultList();
+       if(list.size()!=0){
+for(User users:user){
+	 mailService.sendNotification(users,list);
+}
+}
+	
 }
 
 

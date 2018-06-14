@@ -32,6 +32,8 @@ import javax.persistence.Query;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -220,45 +222,30 @@ public class UserResource {
     @GetMapping("/usersMail/{login:" + Constants.LOGIN_REGEX + "}")
     @Timed
     public String getUserMail(@PathVariable String login){
-    	
+    	 Calendar now = Calendar.getInstance();
+    	 now.set(Calendar.HOUR, 0);
+         now.set(Calendar.MINUTE, 0);
+         now.set(Calendar.SECOND, 0);        
+         now.set(Calendar.HOUR_OF_DAY, 0);
+        
+    	DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    
     	Date date = new Date();
-    	System.out.println(date);
-    	
-    	 User user = userRepository.findByLogin("girija");
+    	 
+        String fromDate=sdf.format(now.getTime());
+    	String hDate=sdf.format(date);
+    
+    	 List<User> user = userRepository.findAll();
     	 
     	   List<HistoryLogs> list = null;
-           List<HistoryLogs> historyLogs = new ArrayList<>();
-
-           System.out.println("id--->"+user.getId());
-
-           Query q = em.createNativeQuery("select * from history_logs where id not in(select history_log_id from delete_notification where user_id="+user.getId()+" and status = 'deleted')",HistoryLogs.class);
+         
+           Query q = em.createNativeQuery("select * from history_logs where opp_created_date between '"+fromDate+"' and '"+hDate+"'",HistoryLogs.class);
 
            list   = q.getResultList();
-
-           for(HistoryLogs hl:list){
-
-              // System.out.println(hl.getdStatus());
-
-               if(hl.getdStatus() != null){
-
-                   Query q2 = em.createNativeQuery("select history_log_id from delete_notification where status !='deleted' and user_id ="+user.getId()+"");
-
-                   Integer id= Integer.parseInt(q2.getSingleResult().toString());
-
-                   if(hl.getId() == id )
-                   {
-                       hl.setdStatus("Read");
-                   }
-                   else
-                   {
-                       hl.setdStatus("UnRead");
-                   }
-
-               }
-
-           }
-    	 mailService.sendNotification(user,list);
-    	
+           if(list.size()!=0){
+for(User users:user){
+    	 mailService.sendNotification(users,list);
+}
+}
 		return null;
     	
     }
