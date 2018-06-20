@@ -5,10 +5,13 @@ import com.codahale.metrics.annotation.Timed;
 import com.unify.rrls.domain.*;
 import com.unify.rrls.repository.DeleteNotificationRepository;
 import com.unify.rrls.repository.HistoryLogsRepository;
+import com.unify.rrls.repository.OpportunityMasterRepository;
 import com.unify.rrls.security.SecurityUtils;
 import com.unify.rrls.web.rest.util.HeaderUtil;
 import com.unify.rrls.web.rest.util.PaginationUtil;
 import io.swagger.annotations.ApiParam;
+
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
@@ -28,6 +32,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -38,13 +43,16 @@ public class NotificationServiceResource {
     private final Logger log = LoggerFactory.getLogger(NotificationServiceResource.class);
 
     @Autowired
-   HistoryLogsRepository historyLogsRepository;
+    HistoryLogsRepository historyLogsRepository;
+    OpportunityMasterRepository opportunityMasterRepository;
 
     DeleteNotificationRepository deleteNotificationRepository;
 
-    public NotificationServiceResource(HistoryLogsRepository historyLogsRepository,DeleteNotificationRepository deleteNotificationRepository){
+    public NotificationServiceResource(HistoryLogsRepository historyLogsRepository,DeleteNotificationRepository deleteNotificationRepository,
+    		OpportunityMasterRepository opportunityMasterRepository){
         this.historyLogsRepository=historyLogsRepository;
         this.deleteNotificationRepository=deleteNotificationRepository;
+        this.opportunityMasterRepository=opportunityMasterRepository;
     }
 
     public String notificationHistorysave(String name,String createdBy, String modifiedBy, Instant createdDate, String action, String page,String fileName,Long userId,Long oppId){
@@ -79,13 +87,19 @@ public class NotificationServiceResource {
     @Timed
     public ResponseEntity<List<HistoryLogs>> getAllHistoryLogs(@PathVariable Integer userId) {
         log.debug("REST request to get a page of OpportunityMasters");
+        String user = SecurityUtils.getCurrentUserLogin();
+        String role=SecurityUtils.getCurrentRoleLogin();
+        List<OpportunityMaster> oppMaster=opportunityMasterRepository.findAllByCreatedBy(user);
+        
+        List<Long> idList = oppMaster.stream().map(OpportunityMaster::getId).collect(Collectors.toList());
+        System.out.println(idList.size());
+         
         List<HistoryLogs> list = null;
         List<HistoryLogs> historyLogs = new ArrayList<>();
-
-        System.out.println("id--->"+userId);
-
-        Query q = em.createNativeQuery("select * from history_logs where id not in(select history_log_id from delete_notification where user_id="+userId+" and status = 'deleted') order by id desc limit 20",HistoryLogs.class);
-
+        
+        if(role.equals("Research")){
+       // Query q = em.createNativeQuery("select * from history_logs where id not in(select history_log_id from delete_notification where user_id="+userId+" and status = 'deleted') order by id desc limit 20",HistoryLogs.class);
+        Query q = em.createNativeQuery("select * from history_logs where (opp_id in("+StringUtils.join(idList,',')+") and page='Strategy' and user_id="+userId+") or id in(select id from history_logs where opp_id in("+StringUtils.join(idList,',')+") and page='Opportunity' and id not in(select history_log_id from delete_notification where user_id="+userId+" and status in('deleted')))order by id desc limit 20",HistoryLogs.class);
         list   = q.getResultList();
 
         for(HistoryLogs hl:list){
@@ -109,7 +123,7 @@ public class NotificationServiceResource {
 
             }
 
-        }
+        }}
         return new ResponseEntity<>(list,HttpStatus.OK);
     }
 

@@ -222,29 +222,30 @@ public class UserResource {
     @GetMapping("/usersMail/{login:" + Constants.LOGIN_REGEX + "}")
     @Timed
     public String getUserMail(@PathVariable String login){
+    	
     	 Calendar now = Calendar.getInstance();
-    	 now.set(Calendar.HOUR, 0);
+    	 now.add(Calendar.DATE, -1);    	
          now.set(Calendar.MINUTE, 0);
          now.set(Calendar.SECOND, 0);        
-         now.set(Calendar.HOUR_OF_DAY, 0);
-        
-    	DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    
+         now.set(Calendar.HOUR_OF_DAY,17 );
+        User user=userRepository.findByLogin(login);
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    
     	Date date = new Date();
     	 
         String fromDate=sdf.format(now.getTime());
     	String hDate=sdf.format(date);
     
-    	 List<User> user = userRepository.findAll();
-    	 
-    	   List<HistoryLogs> list = null;
+   /*	 List<User> user = userRepository.findAll();*/
+	 
+	   List<HistoryLogs> list = null;
          
            Query q = em.createNativeQuery("select * from history_logs where opp_created_date between '"+fromDate+"' and '"+hDate+"'",HistoryLogs.class);
 
            list   = q.getResultList();
            if(list.size()!=0){
-for(User users:user){
-    	 mailService.sendNotification(users,list);
-}
+/*for(User users:user){*/
+	     mailService.sendNotification(user,list);
+//}
 }
 		return null;
     	

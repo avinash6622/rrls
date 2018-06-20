@@ -233,7 +233,7 @@ if(calculation.getMarketCap()!=null && calculation.getMarketCap()!=0){
 
 @Timed
  /* @Scheduled(fixedDelay = 10000, initialDelay = 5000)*/
-@Scheduled(cron = "0 0 18 * * ?")
+@Scheduled(cron = "0 0 17 * * ?")
 public void scheduleTaskWithNotification() {
     logger.info("Fixed Rate Task :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()) );
     
@@ -243,10 +243,10 @@ public void scheduleTaskWithNotification() {
 
 private void runSchedulerNotification() {
 	 Calendar now = Calendar.getInstance();
-	 now.set(Calendar.HOUR, 0);
+	 now.add(Calendar.DATE, -1);    	
      now.set(Calendar.MINUTE, 0);
      now.set(Calendar.SECOND, 0);        
-     now.set(Calendar.HOUR_OF_DAY, 0);
+     now.set(Calendar.HOUR_OF_DAY,17 );
     
 	DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    
 	Date date = new Date();
