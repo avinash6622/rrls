@@ -69,7 +69,7 @@ private final AnswerCommentRepository answerCommentRepository;
          question=(answerComment.getCommentStatus().equals("Answered")) ? answerComment.getOpportunityQuestion().getId() : answerComment.getOpportunityQuestion().getId();
 
       
-        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),status,page,subContent,id,result.getOpportunityQuestion().getOpportunityMaster().getId(),question);
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),status,page,subContent,id,result.getOpportunityQuestion().getOpportunityMaster().getId(),question,Long.parseLong("0"));
 
 
         return ResponseEntity.created(new URI("/api/answer-comment/" + result.getId()))

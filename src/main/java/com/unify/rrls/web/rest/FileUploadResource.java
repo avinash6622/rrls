@@ -201,7 +201,7 @@ public class FileUploadResource {
 
           Long id =  userResource.getUserId(result.getCreatedBy());
 
-      notificationServiceResource.notificationHistorysave(oppName,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"uploaded",page,result.getFileName(),id,result.getOpportunityMasterId().getId(),Long.parseLong("0"));
+      notificationServiceResource.notificationHistorysave(oppName,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"uploaded",page,result.getFileName(),id,result.getOpportunityMasterId().getId(),Long.parseLong("0"),Long.parseLong("0"));
 
 
 

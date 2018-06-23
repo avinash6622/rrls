@@ -79,7 +79,7 @@ public class OpportunityLearningResource {
         String name =String.valueOf(result.getOpportunityMaster().getMasterName().getOppName());
          Long id =  userResource.getUserId(result.getCreatedBy());
 
-        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"added",page,subContent,id,result.getOpportunityMaster().getId(),Long.parseLong("0"));
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"added",page,subContent,id,result.getOpportunityMaster().getId(),Long.parseLong("0"),Long.parseLong("0"));
 
 
 
@@ -104,7 +104,7 @@ public class OpportunityLearningResource {
         String name =String.valueOf(result.getOpportunityMaster().getMasterName().getOppName());
          Long id =  userResource.getUserId(result.getCreatedBy());
 
-        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"updated",page,subContent,id,result.getOpportunityMaster().getId(),Long.parseLong("0"));
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"updated",page,subContent,id,result.getOpportunityMaster().getId(),Long.parseLong("0"),Long.parseLong("0"));
 
 
 

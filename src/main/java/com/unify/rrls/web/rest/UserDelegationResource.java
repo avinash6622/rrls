@@ -122,7 +122,7 @@ public class UserDelegationResource {
 
 
         notificationServiceResource.notificationHistorysave(result.getOppName(), result.getCreatedBy(), "",
-            result.getCreatedDate(), "delegated", page, result.getDeleUserName(), id,master.getId(),Long.parseLong("0"));
+            result.getCreatedDate(), "delegated", page, result.getDeleUserName(), id,master.getId(),Long.parseLong("0"),Long.parseLong("0"));
 
         return ResponseEntity.created(new URI("/api/oppName_userName/" + result.getId()))
             .headers(HeaderUtil.createAlert(reponse, result.getId().toString())).body(result);

@@ -121,7 +121,7 @@ public class UserResource {
             String page="User";
             Long id = getUserId(newUser.getCreatedBy());
 
-            notificationServiceResource.notificationHistorysave(newUser.getLogin(),newUser.getCreatedBy(),newUser.getLastModifiedBy(),newUser.getCreatedDate(),"created",page,"",id,Long.parseLong("0"),Long.parseLong("0"));
+            notificationServiceResource.notificationHistorysave(newUser.getLogin(),newUser.getCreatedBy(),newUser.getLastModifiedBy(),newUser.getCreatedDate(),"created",page,"",id,Long.parseLong("0"),Long.parseLong("0"),Long.parseLong("0"));
 
 
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
@@ -231,7 +231,9 @@ public class UserResource {
         User user=userRepository.findByLogin(login);
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    
     	Date date = new Date();
-    	 
+    	DateFormat sdate = new SimpleDateFormat("EEEE");    
+    	String sday=sdate.format(date);
+    	System.out.println(sday);
         String fromDate=sdf.format(now.getTime());
     	String hDate=sdf.format(date);
     
