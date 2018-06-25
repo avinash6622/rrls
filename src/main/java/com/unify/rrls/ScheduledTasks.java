@@ -250,25 +250,44 @@ private void runSchedulerNotification() {
     
 	DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    
 	Date date = new Date();
-	 
-	 User user=userRepository.findByLogin("shivendra");
+	DateFormat sdate = new SimpleDateFormat("E");    
+	String sday=sdate.format(date);
+	
     String fromDate=sdf.format(now.getTime());
 	String hDate=sdf.format(date);
 
-	/*Test mail
-	 *  List<User> user = userRepository.findAll();*/
+	List<User> user = userRepository.findAll();
 	 
 	   List<HistoryLogs> list = null;
-     
+	   if(sday.equals("Tue") || sday.equals("Wed") || sday.equals("Thu") ||sday.equals("Fri")){ 
        //Query q = em.createNativeQuery("select * from history_logs where opp_created_date between '"+fromDate+"' and '"+hDate+"'",HistoryLogs.class);
 	   Query q = em.createNativeQuery(" SELECT * FROM history_logs where sub_content like '%Learning%' and action='added' and opp_created_date between '"+fromDate+"' and '"+hDate+"' or id in(select id from history_logs where action not in('Answered','added','Replied','delegated') and page!='User' and opp_created_date between '"+fromDate+"' and '"+hDate+"')",HistoryLogs.class);
 
        list   = q.getResultList();
        if(list.size()!=0){
-/*for(User users:user){*/
-	 mailService.sendNotification(user,list);
-//}
+for(User users:user){
+	 mailService.sendNotification(users,list);
 }
+}}
+	   if(sday.equals("Mon")){
+      	 Calendar nows = Calendar.getInstance();
+      	 nows.add(Calendar.DATE, -3);    	
+           nows.set(Calendar.MINUTE, 0);
+           nows.set(Calendar.SECOND, 0);        
+           nows.set(Calendar.HOUR_OF_DAY,17 );          
+      	
+          String fromDateMon=sdf.format(nows.getTime());
+          System.out.println(fromDateMon);
+      	  Query q = em.createNativeQuery(" SELECT * FROM history_logs where sub_content like '%Learning%' and action='added' and opp_created_date between '"+fromDate+"' and '"+hDate+"' or id in(select id from history_logs where action not in('Answered','added','Replied','delegated') and page!='User' and opp_created_date between '"+fromDateMon+"' and '"+hDate+"')",HistoryLogs.class);
+
+            list   = q.getResultList();
+            if(list.size()!=0){
+ for(User users:user){
+         	   
+ 	     mailService.sendNotification(users,list);
+ }
+ }	 
+       }
 	
 }
 

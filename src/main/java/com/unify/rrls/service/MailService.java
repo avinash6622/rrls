@@ -1,5 +1,8 @@
 package com.unify.rrls.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -58,14 +61,19 @@ public class MailService {
     public void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHtml) {
         log.debug("Send email[multipart '{}' and html '{}'] to '{}' with subject '{}' and content={}",
             isMultipart, isHtml, to, subject, content);
-
+        DateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");    
+    	Date date = new Date();
+    	String subDate=sdf.format(date);
         // Prepare message using a Spring helper
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, CharEncoding.UTF_8);
             message.setTo(to);
             message.setFrom(jHipsterProperties.getMail().getFrom());
-            message.setSubject(subject);
+            if(subject.equals("Research Repository & Learning System EOD Notifications - Dated "))
+            message.setSubject(subject+subDate);
+            else{
+            	 message.setSubject(subject+subDate);}	
             message.setText(content, isHtml);
             javaMailSender.send(mimeMessage);
             log.debug("Sent email to User '{}'", to);
@@ -116,7 +124,8 @@ public class MailService {
     
     @Async
     public void sendEmailForNotification(User user, String templateName, String titleKey,List<HistoryLogs> lists) {
-        Locale locale = Locale.forLanguageTag(user.getLangKey());
+        Locale locale = Locale.forLanguageTag(user.getLangKey());   
+    	
         Context context = new Context(locale);
         context.setVariable(LISTS, lists);
         context.setVariable(USER, user);
