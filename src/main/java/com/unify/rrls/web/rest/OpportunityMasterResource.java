@@ -468,7 +468,7 @@ public class OpportunityMasterResource {
 		Long id = userResource.getUserId(result.getCreatedBy());
 
 		notificationServiceResource.notificationHistorysave(name, result.getCreatedBy(), result.getLastModifiedBy(),
-				result.getCreatedDate(), "created", page, "", id,result.getId());
+				result.getCreatedDate(), "created", page, "", id,result.getId(),Long.parseLong("0"));
 
 		// return null;
 		return ResponseEntity.ok().headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -714,7 +714,7 @@ public class OpportunityMasterResource {
 		Long id = userResource.getUserId(result.getCreatedBy());
 
 		notificationServiceResource.notificationHistorysave(name, result.getCreatedBy(), result.getLastModifiedBy(),
-				result.getCreatedDate(), result.getOppStatus(), page, "", id,result.getId());
+				result.getCreatedDate(), result.getOppStatus(), page, "", id,result.getId(),Long.parseLong("0"));
 
 		return ResponseEntity.ok()
 				.headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, opportunityMaster.getId().toString()))

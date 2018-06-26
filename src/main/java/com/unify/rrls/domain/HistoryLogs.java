@@ -1,15 +1,20 @@
 package com.unify.rrls.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.time.Instant;
+import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "history_logs")
@@ -39,6 +44,10 @@ public class HistoryLogs {
     private Long userId;
     @Column(name="opp_id")
     private Long oppId;
+    @Column(name="comments_id")
+    private Long commentsId;
+    @Column(name="questions_id")
+    private Long questionsId;
 
     @Transient
     @JsonProperty
@@ -131,9 +140,25 @@ public class HistoryLogs {
 
     public void setOppId(Long oppId) {
         this.oppId = oppId;
-    }
+    }    
 
-    @Override
+    public Long getCommentsId() {
+		return commentsId;
+	}
+
+	public void setCommentsId(Long commentsId) {
+		this.commentsId = commentsId;
+	}
+
+	public Long getQuestionsId() {
+		return questionsId;
+	}
+
+	public void setQuestionsId(Long questionsId) {
+		this.questionsId = questionsId;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -148,13 +173,15 @@ public class HistoryLogs {
             Objects.equals(fileNamecontent, that.fileNamecontent) &&
             Objects.equals(userId, that.userId) &&
             Objects.equals(oppId, that.oppId) &&
-            Objects.equals(dStatus, that.dStatus);
+            Objects.equals(dStatus, that.dStatus) &&
+            Objects.equals(commentsId, that.commentsId) &&
+            Objects.equals(questionsId, that.questionsId);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, oppname, createdBy, lastModifiedBy, createdDate, action, page, fileNamecontent, userId, oppId, dStatus);
+        return Objects.hash(id, oppname, createdBy, lastModifiedBy, createdDate, action, page, fileNamecontent, userId, oppId, dStatus,commentsId,questionsId);
     }
 
     @Override
@@ -171,6 +198,8 @@ public class HistoryLogs {
             ", userId=" + userId +
             ", oppId=" + oppId +
             ", dStatus='" + dStatus + '\'' +
+            ", commentsId='" + commentsId + '\'' +
+            ", questionsId='" + questionsId + '\'' +
             '}';
     }
 }

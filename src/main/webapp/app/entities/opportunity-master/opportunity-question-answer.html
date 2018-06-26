@@ -15,7 +15,7 @@
 						<div class="comment-head">
 							<span class="comment-name">{{questions.createdBy}}</span>
 							<span>{{questions.createdDate | date :"MMM d, y h:mm:ss a"}}</span>
-							<button class="btn btn-sm btn-info pull-right" ng-click="showTextArea=true" ng-show="questions.answerComments==null">Answer</button>
+							<button class="btn btn-sm btn-info pull-right" ng-click="showTextArea=true" ng-show="questions.answerComments.length==0 || questions.answerComments==null">Answer</button>
 							
 							<!-- <i class="fa fa-heart"></i> -->
 						</div>

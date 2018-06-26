@@ -63,7 +63,7 @@ public class ReplyCommentResource {
         String name = String.valueOf(result.getCommentOpportunity().getOpportunityMaster().getMasterName().getOppName());
         Long id =  userResource.getUserId(result.getCreatedBy());
 
-        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),status,page,subContent,id,result.getCommentOpportunity().getOpportunityMaster().getId());
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),status,page,subContent,id,result.getCommentOpportunity().getOpportunityMaster().getId(),Long.parseLong("0"));
 
 
         return ResponseEntity.created(new URI("/api/answer-comment/" + result.getId()))

@@ -77,7 +77,7 @@ public class StrategyMasterResource {
         Long id =  userResource.getUserId(result.getCreatedBy());
 
 
-        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"created",page,"",id,result.getId());
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"created",page,"",id,result.getId(),Long.parseLong("0"));
 
 
         return ResponseEntity.created(new URI("/api/strategy-masters/" + result.getId()))
@@ -107,7 +107,7 @@ public class StrategyMasterResource {
         String page = "Strategy";
         Long id =  userResource.getUserId(result.getCreatedBy());
 
-        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"updated",page,"",id,result.getId());
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"updated",page,"",id,result.getId(),Long.parseLong("0"));
 
 
         return ResponseEntity.ok()

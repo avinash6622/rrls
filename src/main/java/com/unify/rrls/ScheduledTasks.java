@@ -258,7 +258,8 @@ private void runSchedulerNotification() {
 	 
 	   List<HistoryLogs> list = null;
      
-       Query q = em.createNativeQuery("select * from history_logs where opp_created_date between '"+fromDate+"' and '"+hDate+"'",HistoryLogs.class);
+       //Query q = em.createNativeQuery("select * from history_logs where opp_created_date between '"+fromDate+"' and '"+hDate+"'",HistoryLogs.class);
+	   Query q = em.createNativeQuery(" SELECT * FROM history_logs where sub_content like '%Learning%' and action='added' and opp_created_date between '"+fromDate+"' and '"+hDate+"' or id in(select id from history_logs where action not in('Answered','added','Replied') and opp_created_date between '"+fromDate+"' and '"+hDate+"')",HistoryLogs.class);
 
        list   = q.getResultList();
        if(list.size()!=0){

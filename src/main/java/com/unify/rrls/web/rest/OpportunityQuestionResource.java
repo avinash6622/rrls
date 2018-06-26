@@ -63,7 +63,7 @@ public class OpportunityQuestionResource {
         String name =String.valueOf(result.getOpportunityMaster().getMasterName().getOppName());
          Long id =  userResource.getUserId(result.getCreatedBy());
 
-        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"added",page,subContent,id,result.getOpportunityMaster().getId());
+        notificationServiceResource.notificationHistorysave(name,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"added",page,subContent,id,result.getOpportunityMaster().getId(),Long.parseLong("0"));
 
 
 

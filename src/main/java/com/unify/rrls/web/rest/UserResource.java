@@ -121,7 +121,7 @@ public class UserResource {
             String page="User";
             Long id = getUserId(newUser.getCreatedBy());
 
-            notificationServiceResource.notificationHistorysave(newUser.getLogin(),newUser.getCreatedBy(),newUser.getLastModifiedBy(),newUser.getCreatedDate(),"created",page,"",id,Long.parseLong("0"));
+            notificationServiceResource.notificationHistorysave(newUser.getLogin(),newUser.getCreatedBy(),newUser.getLastModifiedBy(),newUser.getCreatedDate(),"created",page,"",id,Long.parseLong("0"),Long.parseLong("0"));
 
 
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
@@ -239,7 +239,8 @@ public class UserResource {
 	 
 	   List<HistoryLogs> list = null;
          
-           Query q = em.createNativeQuery("select * from history_logs where opp_created_date between '"+fromDate+"' and '"+hDate+"'",HistoryLogs.class);
+         //  Query q = em.createNativeQuery("select * from history_logs where opp_created_date between '"+fromDate+"' and '"+hDate+"'",HistoryLogs.class);
+	  	   Query q = em.createNativeQuery(" SELECT * FROM history_logs where sub_content like '%Learning%' and action='added' and opp_created_date between '"+fromDate+"' and '"+hDate+"' or id in(select id from history_logs where action not in('Answered','added','Replied') and opp_created_date between '"+fromDate+"' and '"+hDate+"')",HistoryLogs.class);
 
            list   = q.getResultList();
            if(list.size()!=0){
