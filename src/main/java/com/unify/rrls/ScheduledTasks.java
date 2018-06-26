@@ -251,21 +251,23 @@ private void runSchedulerNotification() {
 	DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    
 	Date date = new Date();
 	 
+	 User user=userRepository.findByLogin("shivendra");
     String fromDate=sdf.format(now.getTime());
 	String hDate=sdf.format(date);
 
-	 List<User> user = userRepository.findAll();
+	/*Test mail
+	 *  List<User> user = userRepository.findAll();*/
 	 
 	   List<HistoryLogs> list = null;
      
        //Query q = em.createNativeQuery("select * from history_logs where opp_created_date between '"+fromDate+"' and '"+hDate+"'",HistoryLogs.class);
-	   Query q = em.createNativeQuery(" SELECT * FROM history_logs where sub_content like '%Learning%' and action='added' and opp_created_date between '"+fromDate+"' and '"+hDate+"' or id in(select id from history_logs where action not in('Answered','added','Replied') and opp_created_date between '"+fromDate+"' and '"+hDate+"')",HistoryLogs.class);
+	   Query q = em.createNativeQuery(" SELECT * FROM history_logs where sub_content like '%Learning%' and action='added' and opp_created_date between '"+fromDate+"' and '"+hDate+"' or id in(select id from history_logs where action not in('Answered','added','Replied','delegated') and page!='User' and opp_created_date between '"+fromDate+"' and '"+hDate+"')",HistoryLogs.class);
 
        list   = q.getResultList();
        if(list.size()!=0){
-for(User users:user){
-	 mailService.sendNotification(users,list);
-}
+/*for(User users:user){*/
+	 mailService.sendNotification(user,list);
+//}
 }
 	
 }
