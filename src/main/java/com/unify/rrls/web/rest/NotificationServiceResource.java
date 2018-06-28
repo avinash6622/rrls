@@ -6,6 +6,7 @@ import com.unify.rrls.domain.*;
 import com.unify.rrls.repository.DeleteNotificationRepository;
 import com.unify.rrls.repository.HistoryLogsRepository;
 import com.unify.rrls.repository.OpportunityMasterRepository;
+import com.unify.rrls.repository.OpportunityQuestionRepository;
 import com.unify.rrls.security.SecurityUtils;
 import com.unify.rrls.web.rest.util.HeaderUtil;
 import com.unify.rrls.web.rest.util.PaginationUtil;
@@ -45,14 +46,16 @@ public class NotificationServiceResource {
     @Autowired
     HistoryLogsRepository historyLogsRepository;
     OpportunityMasterRepository opportunityMasterRepository;
+    OpportunityQuestionRepository opportunityQuestionRepository;
 
     DeleteNotificationRepository deleteNotificationRepository;
 
     public NotificationServiceResource(HistoryLogsRepository historyLogsRepository,DeleteNotificationRepository deleteNotificationRepository,
-    		OpportunityMasterRepository opportunityMasterRepository){
+    		OpportunityMasterRepository opportunityMasterRepository, OpportunityQuestionRepository opportunityQuestionRepository){
         this.historyLogsRepository=historyLogsRepository;
         this.deleteNotificationRepository=deleteNotificationRepository;
         this.opportunityMasterRepository=opportunityMasterRepository;
+        this.opportunityQuestionRepository=opportunityQuestionRepository;
     }
 
     public String notificationHistorysave(String name,String createdBy, String modifiedBy, Instant createdDate, String action, String page,String fileName,Long userId,Long oppId,Long questionsId){
@@ -92,33 +95,40 @@ public class NotificationServiceResource {
         String role=SecurityUtils.getCurrentRoleLogin();
         List<OpportunityMaster> oppMaster=opportunityMasterRepository.findAllByCreatedBy(user);
         List<Integer> questionLogs=historyLogsRepository.findByCreatedBy(user);
+        
+      
         System.out.println(questionLogs);
+      
+        if (questionLogs.size()==0)
+        	questionLogs.add(0);		
         
         List<Long> idList = oppMaster.stream().map(OpportunityMaster::getId).collect(Collectors.toList());
-        System.out.println(idList.size());
+        System.out.println(StringUtils.join(idList,','));
+        
+        Query questn = em.createNativeQuery("select questions_id FROM `history_logs` where opp_created_by !='"+user+"' and action='added' and questions_id!=0 and opp_id in("+StringUtils.join(idList,',')+")");
+        List<Integer> questionId = questn.getResultList();
+        
+        System.out.println(questionId);
+        
+        if (questionId.size()==0)
+        	questionId.add(0);
          
         List<HistoryLogs> list = null;
         List<HistoryLogs> historyLogs = new ArrayList<>();
         
-      /*  if(role.equals("Research")){
+        if(role.equals("Research")){
        // Query q = em.createNativeQuery("select * from history_logs where id not in(select history_log_id from delete_notification where user_id="+userId+" and status = 'deleted') order by id desc limit 20",HistoryLogs.class);
-        Query q = em.createNativeQuery("select * from history_logs where (page='Opportunity' and opp_id not in("+StringUtils.join(idList,',')+") and opp_created_by!='"+user+"' and questions_id in("+StringUtils.join(idList,',')+")) or "+
-        	 "id in(select id from history_logs where opp_id in("+StringUtils.join(idList,',')+") and page='Opportunity' and id not "+
-        	 "in(select history_log_id from delete_notification where user_id="+userId+" and status in('deleted')))order by id desc limit 20",HistoryLogs.class);
-        	//Query q = em.createNativeQuery("select * from history_logs where (opp_id in("+StringUtils.join(idList,',')+") and page='Strategy' and user_id="+userId+") or id in(select id from history_logs where opp_id in("+StringUtils.join(idList,',')+") and page='Opportunity' and id not in(select history_log_id from delete_notification where user_id="+userId+" and status in('deleted')))order by id desc limit 20",HistoryLogs.class);
+        Query q = em.createNativeQuery("select * from history_logs where(page='Opportunity' and action='Replied' and opp_id in("+StringUtils.join(idList,',')+") and opp_created_by!='"+user+"' and questions_id in("+StringUtils.join(questionId,',')+")) or id"
+        		+ " in(select id from history_logs where (page='Opportunity' and opp_id not in("+StringUtils.join(idList,',')+") and opp_created_by!='"+user+"' and questions_id in("+StringUtils.join(questionLogs,',')+")) or "+
+        	 "id in(select id from history_logs where opp_id in("+StringUtils.join(idList,',')+") and page='Opportunity' and (action not in('Answered','Replied','delegated') and opp_created_by!='"+user+"') and id not "+
+        	 "in(select history_log_id from delete_notification where user_id="+userId+" and status in('deleted'))))order by id desc limit 20",HistoryLogs.class);
         list   = q.getResultList();
 
         for(HistoryLogs hl:list){
-
-           // System.out.println(hl.getdStatus());
-
-            if(hl.getdStatus() != null){
-
-                Query q2 = em.createNativeQuery("select history_log_id from delete_notification where status !='deleted' and user_id ="+userId+"");
-
-                Integer id= Integer.parseInt(q2.getSingleResult().toString());
-
-                if(hl.getId() == id )
+       
+        	DeleteNotification readMessage=deleteNotificationRepository.findByHistoryLog(userId, hl.getId());
+        	
+              if(readMessage!= null )
                 {
                     hl.setdStatus("Read");
                 }
@@ -127,39 +137,10 @@ public class NotificationServiceResource {
                     hl.setdStatus("UnRead");
                 }
 
-            }
+            
 
-        }}*/
+        }}
        
-            Query q = em.createNativeQuery("select * from history_logs where id not in(select history_log_id from delete_notification where user_id="+userId+" and status = 'deleted') order by id desc limit 20",HistoryLogs.class);
-            /* Query q = em.createNativeQuery("select * from history_logs where (page='Opportunity' and opp_id not in("+StringUtils.join(idList,',')+") and opp_created_by!='"+user+"' and questions_id in("+StringUtils.join(idList,',')+")) or "+
-             	 "id in(select id from history_logs where opp_id in("+StringUtils.join(idList,',')+") and page='Opportunity' and id not "+
-             	 "in(select history_log_id from delete_notification where user_id="+userId+" and status in('deleted')))order by id desc limit 20",HistoryLogs.class);
-             	//Query q = em.createNativeQuery("select * from history_logs where (opp_id in("+StringUtils.join(idList,',')+") and page='Strategy' and user_id="+userId+") or id in(select id from history_logs where opp_id in("+StringUtils.join(idList,',')+") and page='Opportunity' and id not in(select history_log_id from delete_notification where user_id="+userId+" and status in('deleted')))order by id desc limit 20",HistoryLogs.class);
-            */ list   = q.getResultList();
-
-             for(HistoryLogs hl:list){
-
-                // System.out.println(hl.getdStatus());
-
-                 if(hl.getdStatus() != null){
-
-                     Query q2 = em.createNativeQuery("select history_log_id from delete_notification where status !='deleted' and user_id ="+userId+"");
-
-                     Integer id= Integer.parseInt(q2.getSingleResult().toString());
-
-                     if(hl.getId() == id )
-                     {
-                         hl.setdStatus("Read");
-                     }
-                     else
-                     {
-                         hl.setdStatus("UnRead");
-                     }
-
-                 }
-
-             }
         return new ResponseEntity<>(list,HttpStatus.OK);
     }
 

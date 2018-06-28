@@ -174,7 +174,7 @@
 
                     <a uib-dropdown-toggle href="" class="dropdown-toggle glyphicon glyphicon-bell" ng-style="{'color': vm.notificationValues.length > 0 ? '#da251c':''}">
                         <span class="fa fa-comment"></span>
-                        <span class="num">{{vm.notificationValues.length}}</span>
+                        <span class="num" ng-repeat="x in vm.notificationValues | filter : {'dStatus' : 'UnRead'} as read">{{read.length}}</span>
 
                     </a>
 
