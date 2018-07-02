@@ -148,7 +148,7 @@ public class NotificationServiceResource {
         		+ " in(select id from history_logs where (page='Opportunity' and opp_id not in("+StringUtils.join(idList,',')+") and opp_created_by!='"+user+"' and "
         				+ "(questions_id in("+StringUtils.join(questionLogs,',')+")) or comments_id in("+StringUtils.join(commentsLogs,',')+"))) or "+
         	 "id in(select id from history_logs where opp_id in("+StringUtils.join(idList,',')+") and page='Opportunity' and (action not in('Answered','Replied','delegated','created','uploaded') and opp_created_by!='"+user+"') and id not "+
-        	 "in(select history_log_id from delete_notification where user_id="+userId+" and status in('deleted'))))order by id desc limit 20",HistoryLogs.class);
+        	 "in(select history_log_id from delete_notification where user_id="+userId+" and status in('deleted'))))order by opp_created_date desc limit 20",HistoryLogs.class);
         	/* Query q = em.createNativeQuery("select * from history_logs where(page='Opportunity' and action='Replied' and opp_id in("+StringUtils.join(idList,',')+") and opp_created_by!='"+user+"' and questions_id in("+StringUtils.join(questionId,',')+")) or id"
         			         		+ " in(select id from history_logs where (page='Opportunity' and opp_id not in("+StringUtils.join(idList,',')+") and opp_created_by!='"+user+"' and questions_id in("+StringUtils.join(questionLogs,',')+")) or "+
         			        	 "id in(select id from history_logs where opp_id in("+StringUtils.join(idList,',')+") and page='Opportunity' and (action not in('Answered','Replied','delegated') and opp_created_by!='"+user+"') and id not "+
