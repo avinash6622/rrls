@@ -87,7 +87,7 @@
 
         $timeout(function() {
             getDecimalConfig();
-        }, 3000);
+        }, 1000);
 
 
 
@@ -154,7 +154,7 @@
 
                vm.loader = false;
 
-           }, 2000);
+           }, 300);
 
 
 
