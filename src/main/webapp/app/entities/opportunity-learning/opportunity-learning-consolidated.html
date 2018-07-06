@@ -13,10 +13,48 @@
 
 <div>
     <div class="well">
+   <div class="panel panel-default">
+         <!-- Default panel contents -->
+         <div class="panel-heading"><strong>Fixed Learning</strong></div>
+     <div class="panel-body well" style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
+       <div class="table-responsive">
+        <table class="jh-table table table-striped">         
+            <tbody>
+            
+            <tr ng-repeat-start="fixed in vm.fixedLearnings|orderBy:predicate:reverse" ng-click="vm.fixedCollapse($index, !fixed.expanded)">
+ 		<td><button class="btn btn-md btn-primary" ng-if="fixed.expanded" ng-click="vm.fixedCollapse($index,fixed.expanded)">-</button>
+              <button class="btn btn-md btn-primary" ng-if="!fixed.expanded" ng-click="vm.fixedCollapse($index,fixed.expanded)">+</button></td>
 
+
+              			<td><a><strong>{{fixed.subject}}</strong></a></td>
+
+              			 </tr>
+
+
+<tr ng-if="fixed.expanded" ng-repeat-end="">
+   <td colspan="3">
+  <span ng-bind-html="fixed.description"></span>
+     </td>
+
+                  <!--   <td><a ng-click="vm.subject(learning.subject)">{{learning.subject}}</a></td> -->
+
+             </tr>
+
+
+            </tbody>
+
+
+        </table>
+
+</div>
+     </div>
+       
+       </div>
 
     <jhi-alert></jhi-alert>
-
+<div class="panel panel-default">
+<div class="panel-heading"><strong>Consolidated Learning</strong></div>
+<div class="panel-body well" style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
         <div>
         <div class="row">
 
@@ -78,7 +116,11 @@
   <div class="text-center" style="margin-bottom: -5px">
             <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
             <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+        </div></div>
         </div>
+        
+    
+     
     </div>
     <footer class="footer footer-dark" ng-cloak>
         <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.</p>

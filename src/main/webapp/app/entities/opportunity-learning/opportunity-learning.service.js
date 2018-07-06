@@ -56,6 +56,12 @@
                 url:'api/opportunity-learning/get-name',
                 method:'POST',
                 isArray: true
+        },
+        'fixedLearning':{
+        	
+        	  url:'api//fixed-learning',
+              method:'GET',
+              isArray: true
         }
         });
     }

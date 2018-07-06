@@ -12,6 +12,7 @@
         var vm = this;
 
         vm.opportunityLearnings = [];
+        vm.fixedLearnings=[];
         vm.loadPage = loadPage;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
         vm.predicate = pagingParams.predicate;
@@ -29,6 +30,7 @@
         vm.subject=subject;
         vm.subjectLearnings=[];
         vm.expandCollapse = expandCollapse;
+        vm.fixedCollapse = fixedCollapse;
        /* vm.selectIndex=selectIndex;*/
         $scope.isCollapsed = true;
         vm.clear = clear;
@@ -70,6 +72,16 @@
         function expandCollapse(index, state) {
         	console.log(index, state);
         	vm.opportunityLearnings.forEach(function(value, key) {
+        		if (key === index) {
+        			value.expanded = state;
+        		} else {
+        			value.expanded = false;
+        		}
+        	});
+        }
+        function fixedCollapse(index, state) {
+        	console.log(index, state);
+        	vm.fixedLearnings.forEach(function(value, key) {
         		if (key === index) {
         			value.expanded = state;
         		} else {
@@ -155,7 +167,15 @@
                 sort: sort()
             }, onSuccess, onError);
 
+            OpportunityLearning.fixedLearning(onSuccess2,onError);
 
+        }
+        function onSuccess2(data1,headers){
+
+            console.log('FixedLearning',data1);
+
+            vm.fixedLearnings = data1;
+            console.log('FixedLearning',vm.fixedLearnings);
 
         }
 

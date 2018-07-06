@@ -64,7 +64,8 @@ public class CacheConfiguration {
             cm.createCache(com.unify.rrls.domain.OpportunityLearning.class.getName(),jcacheConfiguration);
             cm.createCache(com.unify.rrls.domain.DecimalConfiguration.class.getName(),jcacheConfiguration);
             cm.createCache(com.unify.rrls.domain.UserDelegationAudit.class.getName(),jcacheConfiguration);
-
+            cm.createCache(com.unify.rrls.domain.FixedLearning.class.getName(),jcacheConfiguration);
+            cm.createCache(com.unify.rrls.domain.FixedLearningMapping.class.getName(),jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }
