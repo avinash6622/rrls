@@ -6,6 +6,18 @@
     .col-xs-3{
         padding-right: 0px !important;
     }
+      body {
+      padding: 15px;
+    }
+
+    .select2 > .select2-choice.ui-select-match {
+      /* Because of the inclusion of Bootstrap */
+      height: 29px;
+    }
+
+    .selectize-control > .selectize-dropdown {
+      top: 36px;
+    }
 
 </style>
 
@@ -18,10 +30,14 @@
          <div class="panel-heading"><strong>Fixed Learning</strong></div>
      <div class="panel-body well" style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
        <div class="table-responsive">
-        <table class="jh-table table table-striped">         
+        <table class="jh-table table table-striped">  
+         <thead>
+               <!--  <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+					</tr> -->
+            </thead>       
             <tbody>
             
-            <tr ng-repeat-start="fixed in vm.fixedLearnings|orderBy:predicate:reverse" ng-click="vm.fixedCollapse($index, !fixed.expanded)">
+            <tr ng-repeat-start="fixed in vm.fixedLearnings" ng-click="vm.fixedCollapse($index, !fixed.expanded)">
  		<td><button class="btn btn-md btn-primary" ng-if="fixed.expanded" ng-click="vm.fixedCollapse($index,fixed.expanded)">-</button>
               <button class="btn btn-md btn-primary" ng-if="!fixed.expanded" ng-click="vm.fixedCollapse($index,fixed.expanded)">+</button></td>
 
@@ -34,6 +50,11 @@
 <tr ng-if="fixed.expanded" ng-repeat-end="">
    <td colspan="3">
   <span ng-bind-html="fixed.description"></span>
+  <multiple-autocomplete ng-model="fixed.opportunityMaster"
+     object-property="oppName"
+     suggestions-arr="vm.opportunityMasters">
+</multiple-autocomplete>
+   <button class="btn btn-md btn-primary" ng-show="vm.edit" ng-click="vm.fixedMap(fixed)">Save</button>           			
      </td>
 
                   <!--   <td><a ng-click="vm.subject(learning.subject)">{{learning.subject}}</a></td> -->
@@ -48,7 +69,15 @@
 
 </div>
      </div>
-       
+      <!--  <div class="text-center" style="margin-bottom: -5px">
+            <jhi-item-count page="vm.pageFixed" total="vm.queryFixedCount" items-per-page="vm.itemsFixedPerPage"  item="vm.itemsValue"></jhi-item-count>
+            <uib-pagination class="pagination-sm" total-items="vm.totalFixedItems" ng-model="vm.pageFixed" ng-change="vm.transitionFixed()"></uib-pagination>
+        </div>  --> 
+        
+        <div class="text-center" style="margin-bottom: -5px">
+            <jhi-item-count page="vm.pageFixed" total="vm.queryCount1" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
+            <uib-pagination class="pagination-sm" total-items="vm.totalItems1" ng-model="vm.pageFixed" ng-change="vm.transitionFixed()"></uib-pagination>
+        </div>
        </div>
 
     <jhi-alert></jhi-alert>
@@ -112,11 +141,11 @@
 
         </table>
 
-</div>
+</div></div>
   <div class="text-center" style="margin-bottom: -5px">
             <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
             <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
-        </div></div>
+        </div>
         </div>
         
     

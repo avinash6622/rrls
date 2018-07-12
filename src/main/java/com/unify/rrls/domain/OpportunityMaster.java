@@ -4,8 +4,16 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.*;
-import javax.validation.constraints.Size;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -90,6 +98,10 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	 @Transient
 	 @JsonProperty
 	 private Integer decimalPoint;
+	 
+	 @Transient
+	 @JsonProperty
+	 private String oppName;
 
  /*   @OneToOne(fetch = FetchType.LAZY,
         cascade =  CascadeType.ALL,
@@ -147,6 +159,14 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 
 	public List<FileUploadComments> getFileUploadCommentList() {
 		return fileUploadCommentList;
+	}
+
+	public String getOppName() {
+		return oppName;
+	}
+
+	public void setOppName(String oppName) {
+		this.oppName = oppName;
 	}
 
 	public void setFileUploadCommentList(List<FileUploadComments> fileUploadCommentList) {

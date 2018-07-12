@@ -1,5 +1,6 @@
 package com.unify.rrls.web.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 import com.unify.rrls.domain.FixedLearning;
+import com.unify.rrls.domain.FixedLearningMapping;
 import com.unify.rrls.domain.OpportunityMaster;
 import com.unify.rrls.repository.FixedLearningMappingRepository;
 import com.unify.rrls.repository.FixedLearningRepository;
@@ -46,20 +48,45 @@ public class FixedLearningResource {
 	  @Timed
 		public ResponseEntity<List<FixedLearning>> getFixedLearning(@ApiParam Pageable pageable) {
 			log.debug("REST request to get FixedLearning : {}");
-
-			Page<FixedLearning> page = null;
-			page = fixedLearningRepository.findAll(pageable);
+			List<OpportunityMaster> oppMap;
+			Page<FixedLearning> pageFixed = null;
+			pageFixed = fixedLearningRepository.findAll(pageable);
 			
-			HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/fixed-learning");
+			for(FixedLearning fl: pageFixed){
+				oppMap=new ArrayList<OpportunityMaster>();
+				List<FixedLearningMapping> fixedLearningMapping=fixedLearningMappingRepository.findByFixedLearning(fl);
+				for(FixedLearningMapping fslm:fixedLearningMapping){
+					OpportunityMaster om=fslm.getOpportunityMaster();
+					om.setOppName(om.getMasterName().getOppName());
+				oppMap.add(om);}
+				fl.setOpportunityMaster(oppMap);
+			}
+			
+			HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(pageFixed, "/api/fixed-learning");
 
-			return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+			return new ResponseEntity<>(pageFixed.getContent(), headers, HttpStatus.OK);
 		}
 	  
 	  @PostMapping("/fixed-learning")
 	  @Timed
 		public ResponseEntity<FixedLearning> updateFixedLearning(@RequestBody FixedLearning fixedLearning) {
 			log.debug("REST request  to update FixedLearning : {}",fixedLearning);
+			FixedLearningMapping  fixedLearningMapping;
 				
+			FixedLearning fixedLearningUpdate=fixedLearningRepository.findOne(fixedLearning.getId());
+			
+			List<FixedLearningMapping> checkLearning= fixedLearningMappingRepository.findByFixedLearning(fixedLearningUpdate);
+			for(FixedLearningMapping flm: checkLearning){
+				fixedLearningMappingRepository.delete(flm);
+			}
+			FixedLearning result=fixedLearningRepository.save(fixedLearning);
+			for(OpportunityMaster fm:fixedLearning.getOpportunityMaster())
+			{
+				fixedLearningMapping=new FixedLearningMapping();
+				fixedLearningMapping.setFixedLearning(result);
+				fixedLearningMapping.setOpportunityMaster(fm);
+				fixedLearningMappingRepository.save(fixedLearningMapping);
+			}
 
 			return new ResponseEntity<>(HttpStatus.OK);
 		}

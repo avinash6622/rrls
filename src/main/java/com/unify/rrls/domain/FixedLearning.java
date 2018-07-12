@@ -19,51 +19,63 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 @Table(name = "fixed_learning")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class FixedLearning extends AbstractAuditingEntity implements Serializable{
-	
-		@Id
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private Long id;
-		
-		@Column(name = "subject")
-		private String subject;
-		
-		@Column(name = "description")
-		private String description;
-		
-		@Transient
-		@JsonProperty
-		private List<FixedLearningMapping> fixedLearningMapping;
+public class FixedLearning extends AbstractAuditingEntity implements Serializable {
 
-		public Long getId() {
-			return id;
-		}
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-		public void setId(Long id) {
-			this.id = id;
-		}
+	@Column(name = "subject")
+	private String subject;
 
-		public String getSubject() {
-			return subject;
-		}
+	@Column(name = "description")
+	private String description;
 
-		public void setSubject(String subject) {
-			this.subject = subject;
-		}
+	@Transient
+	@JsonProperty
+	private List<FixedLearningMapping> fixedLearningMapping;
 
-		public String getDescription() {
-			return description;
-		}
+	@Transient
+	@JsonProperty
+	private List<OpportunityMaster> opportunityMaster;
 
-		public void setDescription(String description) {
-			this.description = description;
-		}
-		public List<FixedLearningMapping> getFixedLearningMapping() {
-			return fixedLearningMapping;
-		}
-		public void setFixedLearningMapping(List<FixedLearningMapping> fixedLearningMapping) {
-			this.fixedLearningMapping = fixedLearningMapping;
-		}
+	public Long getId() {
+		return id;
+	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
 
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public List<FixedLearningMapping> getFixedLearningMapping() {
+		return fixedLearningMapping;
+	}
+
+	public void setFixedLearningMapping(List<FixedLearningMapping> fixedLearningMapping) {
+		this.fixedLearningMapping = fixedLearningMapping;
+	}
+
+	public List<OpportunityMaster> getOpportunityMaster() {
+		return opportunityMaster;
+	}
+
+	public void setOpportunityMaster(List<OpportunityMaster> opportunityMaster) {
+		this.opportunityMaster = opportunityMaster;
+	}
 }

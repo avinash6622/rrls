@@ -199,7 +199,13 @@
            	url: 'api/opportunity-masters/search',
                method: 'POST',
                isArray: true
-           }
+           },
+           'queryOpportunity':{
+               url:'api/opportunity-master-all',
+               method:'GET',
+              isArray: true
+             
+          },
         });
 
 

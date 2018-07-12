@@ -837,6 +837,20 @@ public class OpportunityMasterResource {
 		    return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 		}
 
+		@GetMapping("/opportunity-master-all")
+		@Timed
+		public ResponseEntity<List<OpportunityMaster>> opportunityList() {
+			List<OpportunityMaster> listName=new ArrayList<OpportunityMaster>();
+		    List<OpportunityMaster> listOpportunity = opportunityMasterRepository.findAll();
+		    for(OpportunityMaster om : listOpportunity)
+		    {
+		    	System.out.println();
+		    	om.setOppName(om.getMasterName().getOppName());
+		    	listName.add(om);
+		    }
+		    HttpHeaders headers=new HttpHeaders();
+		    return new ResponseEntity<List<OpportunityMaster>>(listName, headers, HttpStatus.OK);
+		}
 
 	/**
 	 * GET /opportunity-masters/:id : get the "id" opportunityMaster.

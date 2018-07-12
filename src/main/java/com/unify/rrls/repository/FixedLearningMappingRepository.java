@@ -14,5 +14,5 @@ import com.unify.rrls.domain.OpportunityMaster;
 @Repository
 public interface FixedLearningMappingRepository extends JpaRepository<FixedLearningMapping, Long>  {
 
-	List<OpportunityMaster> findByFixedLearning(FixedLearning fixedLearning);
+	List<FixedLearningMapping> findByFixedLearning(FixedLearning fixedLearning);
 }
