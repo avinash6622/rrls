@@ -25,6 +25,24 @@
 
 <div>
     <div class="well">
+    
+    <div class="tabbable">
+  <ul class="nav nav-tabs">
+    <li class="active"><span data-target="#tab1" data-toggle="tab">Section 1</span ></li>
+    <li>               <span data-target="#tab2" data-toggle="tab">Section 2</span ></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      <p>I'm in Section 1.</p>
+    </div>
+    <div class="tab-pane" id="tab2">
+      <p>I'm in Section 2.</p>
+    </div>
+  </div>
+</div>
+    
+    
+    
    <div class="panel panel-default">
          <!-- Default panel contents -->
          <div class="panel-heading"><strong>Fixed Learning</strong></div>
@@ -127,7 +145,7 @@
 
 
 <tr ng-if="learning.expanded" ng-repeat-end="">
-   <td colspan="3">
+   <td colspan="4">
   <span ng-bind-html="learning.description"></span>
      </td>
 
