@@ -23,7 +23,9 @@
             'rzModule',
             'ngSanitize',
             'angular-decimals',
-            'Utils'
+            'Utils',
+            'ui.select',
+            'multipleSelect'
         ])
         .run(run);
 
