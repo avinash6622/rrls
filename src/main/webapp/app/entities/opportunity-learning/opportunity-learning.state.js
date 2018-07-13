@@ -1,4 +1,4 @@
-(function() {
+/*(function() {
     'use strict';
 
     angular
@@ -44,7 +44,7 @@
                     }]
                 }
             })
-      /*  .state('fixed-learning', {
+        .state('fixed-learning', {
             parent: 'entity',
             url: '/fixed-learning?page&sort',
             data: {
@@ -78,7 +78,8 @@
                     };
                 }]
             }
-        })*/;
+        });
     }
 
 })();
+*/

@@ -14,11 +14,11 @@
                 method:'GET',
                 isArray: true
             },
-         'consolidatedLearning':{
+       /*  'consolidatedLearning':{
         	 	url:'api/opportunity-learnings',
                 method:'GET',
                 isArray: true
-            },
+            },*/
             'subjectLearning':{
         	 	url:'api/opportunity-learnings-subject',
                 method:'POST',

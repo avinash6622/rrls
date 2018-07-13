@@ -15,57 +15,40 @@
 			$state, $http, $sce) {
 
 		var vm = this;
-
-		vm.opportunityLearnings = [];
+		
 		vm.fixedLearnings = [];
 		vm.opportunityMasters = [];
-		vm.loadPage = loadPage;
-		vm.loadFixedPage = loadFixedPage;
-		vm.itemsPerPage = paginationConstants.itemsPerPage;
-		;
-		//vm.itemsFixedPerPage = paginationConstants.itemsFixedPerPage;
-		vm.predicate = pagingParams.predicate;
-		// vm.predicateFixed = pagingParams.predicateFixed;
-		vm.reverse = pagingParams.ascending;
-		// vm.reverseFixed = pagingParams.ascending;
+		vm.loadPage = loadPage;		
+		vm.itemsPerPage = paginationConstants.itemsPerPage;	
+		vm.predicate = pagingParams.predicate;		
+		vm.reverse = pagingParams.ascending;		
 		vm.edit = true;
 		vm.page = 1;
 		vm.pageFixed = 1;
 		vm.links = {
 			last : 0
 		};
-		/*vm.linksFixed = {
-		        last: 0
-		    };
-		 */
-		vm.reset = reset;
-		// vm.resetFixed = resetFixed;
-		vm.reverse = true;
-		// vm.reverseFixed = true;
-		vm.transition = transition;
-		vm.transitionFixed = transitionFixed;
+		
+		vm.reset = reset;		
+		vm.reverse = true;		
+		vm.transition = transition;		
 		vm.itemsValue = 'Learnings';
 		vm.account = null;
 		vm.subject = subject;
-		vm.subjectLearnings = [];
-		vm.expandCollapse = expandCollapse;
+		vm.subjectLearnings = [];	
 		vm.fixedCollapse = fixedCollapse;
 		vm.fixedMap = fixedMap;
-		/* vm.selectIndex=selectIndex;*/
+		
 		$scope.isCollapsed = [];
 		vm.clear = clear;
-		vm.loadAll = loadAll;
-		vm.loadAll1 = loadAll1;
+		vm.loadAll = loadAll;		
 		vm.name = '';
 		vm.selectedList = [];
-		/* $scope.expanded=false;*/
-
+		
 		vm.loadAll();
-		vm.loadAll1();
+		
 
-		function subject(subjectName) {
-			/*$scope.isCollapsed[index] = false;*/
-			console.log('subject', subjectName);
+		function subject(subjectName) {			
 			OpportunityLearning.subjectLearning({
 				subject : subjectName
 			}, function(response) {
@@ -85,20 +68,9 @@
 		var myDate = new Date();
 
 		$scope.currentYear = $filter('date')(myDate, 'yyyy');
-
-		function expandCollapse(index, state) {
-			console.log(index, state);
-			vm.opportunityLearnings.forEach(function(value, key) {
-				if (key === index) {
-					value.expanded = state;
-				} else {
-					value.expanded = false;
-				}
-			});
-
-		}
+		
 		function fixedCollapse(index, state) {
-			console.log(index, state);
+			
 			vm.fixedLearnings.forEach(function(value, key) {
 				if (key === index) {
 					value.expanded = state;
@@ -116,14 +88,10 @@
 			data : function(searchText) {
 				return $http.get('api/opportunity-learnings/search').then(
 						function(response) {
-							searchText = searchText.toLowerCase();
-							//  console.log(searchText);
-							// console.log(response);
-
-							// ideally filtering should be done on the server
+							searchText = searchText.toLowerCase();						
 							var states = _.filter(response.data,
 									function(state) {
-										// console.log(state);
+									
 										return (state.oppName).toLowerCase()
 												.startsWith(searchText);
 
@@ -146,98 +114,47 @@
 				vm.selectedName = e;
 				vm.name = e.item.oppName;
 				vm.opportunityName = e.item;
-				console.log(vm.opportunityName.id, 'NAme');
-
-				OpportunityLearning.searchopportunity(vm.opportunityName,
-						onSuccess1, onError1);
+			
 			}
-		}
+		}		
 
-		function onSuccess1(data, headers) {
-
-			console.log(data);
-
-			vm.opportunityLearnings = data;
-
-		}
-
-		function onError1() {
-
-		}
-
-		function clear() {
-			vm.opportunityLearnings = [];
-			vm.fixedLearnings = [];
-			console.log("hi");
+		function clear() {			
+			vm.fixedLearnings = [];			
 			vm.name = '';
-			loadAll();
-			loadAll1();
+			loadAll();			
 
 		}
 
 		function loadAll() {
-			OpportunityLearning.consolidatedLearning({
-				page : pagingParams.page - 1,
-				size : vm.itemsPerPage,
-				sort : sort()
-			}, onSuccess, onError);
-
-			/* FixedLearning.fixedLearning({
-			     page: pagingParams.pageFixed - 1,
-			     size: vm.itemsPerPage,
-			     sort: sort()
-			 }, onSuccess2, onError);*/
-
-			//FixedLearning.fixedLearning(onSuccess2,onError);  
-			OpportunityMaster.queryOpportunity(onSuccess3, onError);
-
-		}
-		function loadAll1() {
 			FixedLearning.fixedLearning({
 				page : pagingParams.page - 1,
 				size : vm.itemsPerPage,
 				sort : sort()
-			}, onSuccess2, onError);
+			}, onSuccessFixed, onError);
+		
+			OpportunityMaster.queryOpportunity(onSuccess3, onError);
+
 		}
+		
 
 		function onSuccess3(data2, headers) {
 
-			/*  console.log('FixedLearning',data2);*/
-
 			vm.opportunityMasters = data2;
-			console.log('OpportunityNames', vm.opportunityMasters);
 
 		}
 
-		function onSuccess2(data1, headers) {
-
-			/*  console.log('FixedLearning',data1);
-
-			  vm.fixedLearnings = data1;
-			  console.log('FixedLearning',vm.fixedLearnings);
-			 */
+		function onSuccessFixed(data1, headers) {
+		
 			vm.links = ParseLinks.parse(headers('link'));
-			vm.totalItems1 = headers('X-Total-Count');
+			vm.totalItems = headers('X-Total-Count');
 			for (var i = 0; i < data1.length; i++) {
 				vm.fixedLearnings.push(data1[i]);
 				$scope.isCollapsed.push(true);
 			}
-			vm.queryCount1 = vm.totalItems1;
-			vm.pageFixed = pagingParams.page;
-		}
-		function onSuccess(data, headers) {
-
-			vm.links = ParseLinks.parse(headers('link'));
-			vm.totalItems = headers('X-Total-Count');
-			for (var i = 0; i < data.length; i++) {
-				vm.opportunityLearnings.push(data[i]);
-				/* $scope.isCollapsed.push(true);*/
-			}
 			vm.queryCount = vm.totalItems;
 			vm.page = pagingParams.page;
-
 		}
-
+	
 		function onError(error) {
 			AlertService.error(error.data.message);
 		}
@@ -251,63 +168,29 @@
 			console.log(result);
 			return result;
 		}
-		/*function sortFixed() {
-		    var result = [vm.predicateFixed + ',' + (vm.reverseFixed ? 'asc' : 'desc')];
-		    console.log(vm.predicateFixed);
-		    if (vm.predicateFixed !== 'id') {
-		        result.push('id');
-		    }
-		    console.log(result);
-		    return result;
-		}*/
-
+	
 		function reset() {
 			vm.page = 0;
-			vm.opportunityLearnings = [];
+			 vm.fixedLearnings = [];
 			loadAll();
 		}
-		/*  function resetFixed () {
-		      vm.pageFixed = 0;
-		      vm.fixedLearnings = [];
-		      loadAll1();
-		  }
-
-		 */
+		
 		function loadPage(page) {
 			vm.page = page;
 			vm.transition();
 		}
-		function loadFixedPage(Page) {
-
-			vm.page = page;
-			vm.transition();
-		}
-
+	
 		function transition() {
-			$state.transitionTo('consolidated-learnings', {
+			console.log($state.$current);
+			$state.transitionTo('fixed-learnings', {
 				page : vm.page,
 				sort : vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
 				search : vm.currentSearch
 			});
 
-		}
-
-		function transitionFixed() {
-			console.log($state.$current);
-			$state.transitionTo('fixed-learnings', {
-				page : vm.pageFixed,
-				sort : vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
-				search : vm.currentSearch
-			});
 
 		}
-		/*  function transitionFixed () {
-		      $state.transitionTo($state.$current, {
-		          page: vm.pageFixed,
-		          sort: vm.predicateFixed + ',' + (vm.reverseFixed ? 'asc' : 'desc'),
-		          search: vm.currentSearch
-		      });
-		     
-		  }*/
+
+		
 	}
 })();

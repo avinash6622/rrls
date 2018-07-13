@@ -21,37 +21,19 @@
 
 </style>
 
-
-
 <div>
-    <div class="well">
-    
-    <div class="tabbable">
-  <ul class="nav nav-tabs">
-    <li class="active"><span data-target="#tab1" data-toggle="tab">Section 1</span ></li>
-    <li>               <span data-target="#tab2" data-toggle="tab">Section 2</span ></li>
-  </ul>
-  <div class="tab-content">
-    <div class="tab-pane active" id="tab1">
-      <p>I'm in Section 1.</p>
-    </div>
-    <div class="tab-pane" id="tab2">
-      <p>I'm in Section 2.</p>
-    </div>
-  </div>
-</div>
-    
-    
-    
-   <div class="panel panel-default">
-         <!-- Default panel contents -->
-         <div class="panel-heading"><strong>Fixed Learning</strong></div>
-     <div class="panel-body well" style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
+    <div class="well">     
+ 
+         
+     
        <div class="table-responsive">
         <table class="jh-table table table-striped">  
          <thead>
-               <!--  <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
-					</tr> -->
+         <tr>
+             <th></th>
+
+                    <th><span>Subject</span> </th>
+                 </tr>
             </thead>       
             <tbody>
             
@@ -67,17 +49,13 @@
 
 <tr ng-if="fixed.expanded" ng-repeat-end="">
    <td colspan="3">
-  <span ng-bind-html="fixed.description"></span>
+ 
   <multiple-autocomplete ng-model="fixed.opportunityMaster"
      object-property="oppName"
      suggestions-arr="vm.opportunityMasters">
 </multiple-autocomplete>
    <button class="btn btn-md btn-primary" ng-show="vm.edit" ng-click="vm.fixedMap(fixed)">Save</button>           			
-     </td>
-
-                  <!--   <td><a ng-click="vm.subject(learning.subject)">{{learning.subject}}</a></td> -->
-
-             </tr>
+     </td>             </tr>
 
 
             </tbody>
@@ -86,85 +64,14 @@
         </table>
 
 </div>
-     </div>
-      <!--  <div class="text-center" style="margin-bottom: -5px">
-            <jhi-item-count page="vm.pageFixed" total="vm.queryFixedCount" items-per-page="vm.itemsFixedPerPage"  item="vm.itemsValue"></jhi-item-count>
-            <uib-pagination class="pagination-sm" total-items="vm.totalFixedItems" ng-model="vm.pageFixed" ng-change="vm.transitionFixed()"></uib-pagination>
-        </div>  --> 
+  
         
         <div class="text-center" style="margin-bottom: -5px">
-            <jhi-item-count page="vm.pageFixed" total="vm.queryCount1" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
-            <uib-pagination class="pagination-sm" total-items="vm.totalItems1" ng-model="vm.pageFixed" ng-change="vm.transitionFixed()"></uib-pagination>
-        </div>
-       </div>
-
-    <jhi-alert></jhi-alert>
-<div class="panel panel-default">
-<div class="panel-heading"><strong>Consolidated Learning</strong></div>
-<div class="panel-body well" style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
-        <div>
-        <div class="row">
-
-            <div class="col-md-4 input-group" style="padding-left: 18px;"><input class="form-control ng-pristine ng-valid clearable" ng-model="vm.name"  auto-complete="vm.autoCompleteOpportunity" type="text" placeholder="Search"> <span class="input-group-btn" ><button type= "button" class="btn btn-default" ng-show="vm.name" ng-click="vm.clear()">X</button></span></div>
-        </div>
-    </div>
-       <!-- <div style="margin-bottom: 5px"></div>-->
-
-    <div class="table-responsive">
-        <table class="jh-table table table-striped">
-            <thead>
-                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
-					<th></th>
-
-                    <th jh-sort-by="opportunityMaster.masterName.oppName"><span>Opportunity Name</span> <span class="glyphicon glyphicon-sort"></span></th>
-                  <th jh-sort-by="createdBy"><span>Created By</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="subject"><span>Subject</span> <span class="glyphicon glyphicon-sort"></span></th>
-                </tr>
-            </thead>
-            <tbody>
-               <!--  <tr ng-repeat-start="learning in vm.opportunityLearnings">
- 		<td><button class="btn btn-md btn-primary" ng-if="expanded">-</button>
-              <button class="btn btn-md btn-primary" ng-if="!expanded">+</button></td>
-
-              			 <td><a ng-click="expanded = !expanded;vm.selectIndex($index)"><strong>{{learning.subject}}</strong></a></td>
-              			 <td><a ui-sref="opportunity-master-detail({id:learning.opportunityMaster.id})">{{learning.opportunityMaster.masterName.oppName}}</a></td>
-              			  <td><a ui-sref="home-research({createdBy:learning.opportunityMaster.createdBy})">{{learning.createdBy}}</a></td>
-
-              			 </tr> -->
-
-            <tr ng-repeat-start="learning in vm.opportunityLearnings|orderBy:predicate:reverse" ng-click="vm.expandCollapse($index, !learning.expanded)">
- 		<td><button class="btn btn-md btn-primary" ng-if="learning.expanded" ng-click="vm.expandCollapse($index, learning.expanded)">-</button>
-              <button class="btn btn-md btn-primary" ng-if="!learning.expanded" ng-click="vm.expandCollapse($index, learning.expanded)">+</button></td>
-
-
-              			 <td><a ui-sref="opportunity-master-detail({id:learning.opportunityMaster.id})">{{learning.opportunityMaster.masterName.oppName}}</a></td>
-              			  <td><a ui-sref="home-research({createdBy:learning.opportunityMaster.createdBy})">{{learning.createdBy}}</a></td>
-                          <td><a><strong>{{learning.subject}}</strong></a></td>
-
-              			 </tr>
-
-
-<tr ng-if="learning.expanded" ng-repeat-end="">
-   <td colspan="4">
-  <span ng-bind-html="learning.description"></span>
-     </td>
-
-                  <!--   <td><a ng-click="vm.subject(learning.subject)">{{learning.subject}}</a></td> -->
-
-             </tr>
-
-
-            </tbody>
-
-
-        </table>
-
-</div></div>
-  <div class="text-center" style="margin-bottom: -5px">
             <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
             <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
         </div>
-        </div>
+       
+    <jhi-alert></jhi-alert>
         
     
      
