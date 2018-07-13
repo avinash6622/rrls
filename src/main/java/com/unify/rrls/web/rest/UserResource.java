@@ -26,10 +26,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -117,7 +121,7 @@ public class UserResource {
             String page="User";
             Long id = getUserId(newUser.getCreatedBy());
 
-            notificationServiceResource.notificationHistorysave(newUser.getLogin(),newUser.getCreatedBy(),newUser.getLastModifiedBy(),newUser.getCreatedDate(),"created",page,"",id,Long.parseLong("0"));
+            notificationServiceResource.notificationHistorysave(newUser.getLogin(),newUser.getCreatedBy(),newUser.getLastModifiedBy(),newUser.getCreatedDate(),"created",page,"",id,Long.parseLong("0"),Long.parseLong("0"),Long.parseLong("0"));
 
 
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
@@ -199,8 +203,7 @@ public class UserResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/users/{login:" + Constants.LOGIN_REGEX + "}")
-    @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Timed   
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {
         log.debug("REST request to delete User: {}", login);
         userService.deleteUser(login);
@@ -213,5 +216,61 @@ public class UserResource {
         User user = userRepository.findByLogin(username);
         return user.getId();
     }
+    @PersistenceContext
+    EntityManager em;
+    
+    @GetMapping("/usersMail/{login:" + Constants.LOGIN_REGEX + "}")
+    @Timed
+    public String getUserMail(@PathVariable String login){
+    	
+    	 Calendar now = Calendar.getInstance();
+    	 now.add(Calendar.DATE, -1);    	
+         now.set(Calendar.MINUTE, 0);
+         now.set(Calendar.SECOND, 0);        
+         now.set(Calendar.HOUR_OF_DAY,17 );
+        User user=userRepository.findByLogin(login);
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    
+    	Date date = new Date();
+    	DateFormat sdate = new SimpleDateFormat("E");    
+    	String sday=sdate.format(date);
+    	System.out.println(sday);
+        String fromDate=sdf.format(now.getTime());
+    	String hDate=sdf.format(date);
+    
+   /*	 List<User> user = userRepository.findAll();*/
+	 
+	   List<HistoryLogs> list = null;
+         if(sday.equals("Tue") || sday.equals("Wed") || sday.equals("Thu") ||sday.equals("Fri")){
+         //  Query q = em.createNativeQuery("select * from history_logs where opp_created_date between '"+fromDate+"' and '"+hDate+"'",HistoryLogs.class);
+	  	   Query q = em.createNativeQuery(" SELECT * FROM history_logs where sub_content like '%Learning%' and action='added' and opp_created_date between '"+fromDate+"' and '"+hDate+"' or id in(select id from history_logs where action not in('Answered','added','Replied','delegated') and page!='User' and opp_created_date between '"+fromDate+"' and '"+hDate+"')",HistoryLogs.class);
 
+           list   = q.getResultList();
+           if(list.size()!=0){
+/*for(User users:user){*/
+        	   
+	     mailService.sendNotification(user,list);
+//}
+}}
+         if(sday.equals("Mon")){
+        	 Calendar nows = Calendar.getInstance();
+        	 nows.add(Calendar.DATE, -3);    	
+             nows.set(Calendar.MINUTE, 0);
+             nows.set(Calendar.SECOND, 0);        
+             nows.set(Calendar.HOUR_OF_DAY,17 );          
+        	
+            String fromDateMon=sdf.format(nows.getTime());
+            System.out.println(fromDateMon);
+        	  Query q = em.createNativeQuery(" SELECT * FROM history_logs where sub_content like '%Learning%' and action='added' and opp_created_date between '"+fromDate+"' and '"+hDate+"' or id in(select id from history_logs where action not in('Answered','added','Replied','delegated') and page!='User' and opp_created_date between '"+fromDate+"' and '"+hDate+"')",HistoryLogs.class);
+
+              list   = q.getResultList();
+              if(list.size()!=0){
+   /*for(User users:user){*/
+           	   
+   	     mailService.sendNotification(user,list);
+   //}
+   }	 
+         }
+		return null;
+    	
+    }
 }

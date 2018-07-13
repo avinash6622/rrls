@@ -173,8 +173,8 @@
                     </a>-->
 
                     <a uib-dropdown-toggle href="" class="dropdown-toggle glyphicon glyphicon-bell" ng-style="{'color': vm.notificationValues.length > 0 ? '#da251c':''}">
-                       <!-- <span class="fa fa-comment"></span>
-                        <span class="num">{{vm.notificationValues.length}}</span>-->
+                        <span class="fa fa-comment"></span>
+                        <span class="num" ng-repeat="x in vm.notificationValues | filter : {'dStatus' : 'UnRead'} as read">{{read.length}}</span>
 
                     </a>
 
@@ -186,7 +186,7 @@
                         <span ng-show="vm.notificationValues.length" ng-repeat="noti in vm.notificationValues">
                             <li>
 
-                                <div>
+                                <div id="notitime">
                                     <span ng-click="vm.readstatus(noti.id,vm.account.id,'Read', noti)"  ng-disabled="noti.dStatus === 'Read'">
                                         <span ng-if="noti.action !== 'delegated' && noti.page !='Opportunity Name'"><a ui-sref="home-research({createdBy:noti.createdBy})">{{noti.createdBy | capitalize}}</a> {{noti.action}} <span ng-if="noti.fileNamecontent"><strong>"{{noti.fileNamecontent}}"</strong></span> {{noti.page}} <a ui-sref="{{noti.page == 'Strategy' ? 'strategy-master-detail({id:noti.oppId})' : noti.page == 'Opportunity' ? 'opportunity-master-detail({id:noti.oppId})' : 'user-management-detail({login:noti.oppname})'}}">{{noti.oppname}}</a></span>
                                         <span ng-if="noti.action !== 'delegated' && noti.page == 'Opportunity Name'"><a ui-sref="home-research({createdBy:noti.createdBy})">{{noti.createdBy | capitalize}}</a> {{noti.action}} <span ng-if="noti.fileNamecontent"><strong>"{{noti.fileNamecontent}}"</strong></span> {{noti.page}} {{noti.oppname}}</span>
@@ -195,7 +195,7 @@
                                         <!--<span ng-if="noti.page === 'Strategy'"><a ui-sref="home-research({createdBy:noti.createdBy})">{{noti.createdBy | capitalize}}</a> {{noti.action}} {{noti.page}} <a ui-sref="strategy-master-detail({id:noti.oppId})">{{noti.oppname}}</a></span>-->
 
                                     </span>
-                                    <span class="pull-right text-muted small">{{noti.createdDate | date :"MMM d, y h:mm:ss a" }}&nbsp;&nbsp;
+                                    <span ng-style="{'color': noti.dStatus=='Read' ? 'black':'red'}" class="pull-right text-muted small">{{noti.createdDate | date :"MMM d, y h:mm:ss a" }}&nbsp;&nbsp;
                                     <button type="button" class="close" ng-click="vm.close(noti.id,vm.account.id,$index,'deleted');$event.stopPropagation()">
                                     <span aria-hidden="true">&times;</span>
                                     </button>

@@ -1,8 +1,16 @@
 package com.unify.rrls;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,13 +21,17 @@ import org.springframework.stereotype.Service;
 
 import com.codahale.metrics.annotation.Timed;
 import com.unify.rrls.domain.FinancialSummaryData;
+import com.unify.rrls.domain.HistoryLogs;
 import com.unify.rrls.domain.NonFinancialSummaryData;
 import com.unify.rrls.domain.OpportunityAutomation;
 import com.unify.rrls.domain.OpportunitySummaryData;
+import com.unify.rrls.domain.User;
 import com.unify.rrls.repository.FinancialSummaryDataRepository;
 import com.unify.rrls.repository.NonFinancialSummaryDataRepository;
 import com.unify.rrls.repository.OpportunityAutomationRepository;
 import com.unify.rrls.repository.OpportunitySummaryDataRepository;
+import com.unify.rrls.repository.UserRepository;
+import com.unify.rrls.service.MailService;
 
 @Service
 public class ScheduledTasks {
@@ -32,6 +44,13 @@ public class ScheduledTasks {
 	 	NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository;
 	 	@Autowired
 	 	OpportunitySummaryDataRepository opportunitySummaryDataRepository;
+	 	@Autowired
+	 	UserRepository userRepository;
+	 	@Autowired
+	 	MailService mailService;
+	 	
+	 	@PersistenceContext
+	 	EntityManager em;
 	
 	  private static final Logger logger = LoggerFactory.getLogger(ScheduledTasks.class);
 	  private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");	   
@@ -210,6 +229,67 @@ if(calculation.getMarketCap()!=null && calculation.getMarketCap()!=0){
 }
 
 }
+
+
+@Timed
+ /* @Scheduled(fixedDelay = 10000, initialDelay = 5000)*/
+@Scheduled(cron = "0 0 17 * * ?")
+public void scheduleTaskWithNotification() {
+    logger.info("Fixed Rate Task :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()) );
+    
+    runSchedulerNotification();
 	
+}
+
+private void runSchedulerNotification() {
+	 Calendar now = Calendar.getInstance();
+	 now.add(Calendar.DATE, -1);    	
+     now.set(Calendar.MINUTE, 0);
+     now.set(Calendar.SECOND, 0);        
+     now.set(Calendar.HOUR_OF_DAY,17 );
+    
+	DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    
+	Date date = new Date();
+	DateFormat sdate = new SimpleDateFormat("E");    
+	String sday=sdate.format(date);
+	
+    String fromDate=sdf.format(now.getTime());
+	String hDate=sdf.format(date);
+
+	List<User> user = userRepository.findAll();
+	 
+	   List<HistoryLogs> list = null;
+	   if(sday.equals("Tue") || sday.equals("Wed") || sday.equals("Thu") ||sday.equals("Fri")){ 
+       //Query q = em.createNativeQuery("select * from history_logs where opp_created_date between '"+fromDate+"' and '"+hDate+"'",HistoryLogs.class);
+	   Query q = em.createNativeQuery(" SELECT * FROM history_logs where sub_content like '%Learning%' and action='added' and opp_created_date between '"+fromDate+"' and '"+hDate+"' or id in(select id from history_logs where action not in('Answered','added','Replied','delegated') and page!='User' and opp_created_date between '"+fromDate+"' and '"+hDate+"')",HistoryLogs.class);
+
+       list   = q.getResultList();
+       if(list.size()!=0){
+for(User users:user){
+	 mailService.sendNotification(users,list);
+}
+}}
+	   if(sday.equals("Mon")){
+      	 Calendar nows = Calendar.getInstance();
+      	 nows.add(Calendar.DATE, -3);    	
+           nows.set(Calendar.MINUTE, 0);
+           nows.set(Calendar.SECOND, 0);        
+           nows.set(Calendar.HOUR_OF_DAY,17 );          
+      	
+          String fromDateMon=sdf.format(nows.getTime());
+          System.out.println(fromDateMon);
+      	  Query q = em.createNativeQuery(" SELECT * FROM history_logs where sub_content like '%Learning%' and action='added' and opp_created_date between '"+fromDateMon+"' and '"+hDate+"' or id in(select id from history_logs where action not in('Answered','added','Replied','delegated') and page!='User' and opp_created_date between '"+fromDateMon+"' and '"+hDate+"')",HistoryLogs.class);
+
+            list   = q.getResultList();
+            if(list.size()!=0){
+ for(User users:user){
+         	   
+ 	     mailService.sendNotification(users,list);
+ }
+ }	 
+       }
+	
+}
+
 
 }

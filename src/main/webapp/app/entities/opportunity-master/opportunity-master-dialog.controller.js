@@ -39,7 +39,7 @@
 		vm.selectedOpportunity = null;
         vm.decimalValue = null;
 
-		
+
 
 		// var name= vm.opportunityNames;
 		vm.autoCompleteOptions = {
@@ -143,7 +143,7 @@
 
             DecimalConfiguration.get({id:vm.account.id},function (resp) {
 
-              
+
                 if(vm.account.login == vm.opportunityMaster.createdBy)
                 {
                     vm.decimalValue = resp.decimalValue;
@@ -365,9 +365,10 @@
 			return result;
 		};
 
-		$scope.getNonPat = function(val1, val2, val3) {
+		$scope.getNonPat = function(val1, val2,val4,val5, val3) {
 
-			var result = (parseFloat(val1) - parseFloat(val2));
+			var result = (parseFloat(val1)+parseFloat(val2)+parseFloat(val4) - parseFloat(val5));
+			//console.log(result);
 			result = (isNaN(result) || result==Infinity) ? 0 : result;
 			switch (val3) {
 			case 1:
@@ -450,7 +451,7 @@
 			if (val2 == 0) {
 				var result = parseFloat(val1) / parseFloat(val3);
 				result = (result * 100);
-				
+
 			} else {
 				var result = parseFloat(val1)
 						/ ((parseFloat(val2) + parseFloat(val3)) / 2);

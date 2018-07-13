@@ -80,7 +80,7 @@ public class OpportunityNameResource {
         String page = "Opportunity Name";
         Long id =  userResource.getUserId(result.getCreatedBy());
 
-        notificationServiceResource.notificationHistorysave(result.getOppName(),result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"created",page,"",id,Long.parseLong("0"));
+        notificationServiceResource.notificationHistorysave(result.getOppName(),result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"created",page,"",id,Long.parseLong("0"),Long.parseLong("0"),Long.parseLong("0"));
 
 
         return ResponseEntity.created(new URI("/api/opportunity-masters/" + result.getId()))

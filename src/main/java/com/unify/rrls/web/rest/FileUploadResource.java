@@ -201,7 +201,7 @@ public class FileUploadResource {
 
           Long id =  userResource.getUserId(result.getCreatedBy());
 
-      notificationServiceResource.notificationHistorysave(oppName,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"uploaded",page,result.getFileName(),id,result.getOpportunityMasterId().getId());
+      notificationServiceResource.notificationHistorysave(oppName,result.getCreatedBy(),result.getLastModifiedBy(),result.getCreatedDate(),"uploaded",page,result.getFileName(),id,result.getOpportunityMasterId().getId(),Long.parseLong("0"),Long.parseLong("0"));
 
 
 
@@ -301,14 +301,14 @@ public class FileUploadResource {
                                   while (cellIterator.hasNext()) {
                                       Cell cell = cellIterator.next();
                                       cell.setCellType(CellType.STRING);}
-                                     
+
                                   String finColumn = row.getCell(0).getStringCellValue();
-                                
+
                                   if (finColumn.contains("Net Interest Income")) {
                                 	if(row.getCell(1).getStringCellValue()!="")
-                                  	finance.setNetIntOne(Double.parseDouble(row.getCell(1).getStringCellValue()));                                	
+                                  	finance.setNetIntOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
                                 	if(row.getCell(2).getStringCellValue()!="")
-                                  	finance.setNetIntTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));                                	
+                                  	finance.setNetIntTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
                                 	if(row.getCell(3).getStringCellValue()!="")
                                   	finance.setNetIntThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
                                 	if(row.getCell(4).getStringCellValue()!="")
@@ -370,6 +370,30 @@ public class FileUploadResource {
                              		   finance.setProvisionsFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
                                   if(row.getCell(5).getStringCellValue()!="")
                              		   finance.setProvisionsFive(Double.parseDouble(row.getCell(5).getStringCellValue()));}
+
+                                  if (finColumn.contains("Exceptional Item 1"))
+                                  {  if(row.getCell(1).getStringCellValue()!="")
+                                      finance.setExceptionOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                      if(row.getCell(2).getStringCellValue()!="")
+                                          finance.setExceptionTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                      if(row.getCell(3).getStringCellValue()!="")
+                                          finance.setExceptionThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                      if(row.getCell(4).getStringCellValue()!="")
+                                          finance.setExceptionFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                      if(row.getCell(5).getStringCellValue()!="")
+                                          finance.setExceptionFive(Double.parseDouble(row.getCell(5).getStringCellValue()));}
+
+                                  if (finColumn.contains("Exceptional Item 2"))
+                                  {  if(row.getCell(1).getStringCellValue()!="")
+                                      finance.setExceptionItemOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                      if(row.getCell(2).getStringCellValue()!="")
+                                          finance.setExceptionItemTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                      if(row.getCell(3).getStringCellValue()!="")
+                                          finance.setExceptionItemThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                      if(row.getCell(4).getStringCellValue()!="")
+                                          finance.setExceptionItemFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                      if(row.getCell(5).getStringCellValue()!="")
+                                          finance.setExceptionItemFive(Double.parseDouble(row.getCell(5).getStringCellValue()));}
                                   if (finColumn.contains("PAT"))
                                   {
                                 	  if(row.getCell(1).getStringCellValue()!="")
@@ -383,7 +407,7 @@ public class FileUploadResource {
                                 	  if(row.getCell(5).getStringCellValue()!="")
                              		   finance.setPatFive(Double.parseDouble(row.getCell(5).getStringCellValue()));}
                                   if (finColumn.contains("EPS"))
-                                  { 
+                                  {
                                 	  if(row.getCell(1).getStringCellValue()!="")
                                 	  finance.setEpsOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
                                 	  if(row.getCell(2).getStringCellValue()!="")
@@ -402,7 +426,7 @@ public class FileUploadResource {
                              		  /* finance.setMarCapFour(row.getCell(4).getNumericCellValue());
                              		   finance.setMarCapFive(row.getCell(5).getNumericCellValue());*/}
                                   if (finColumn.contains("AUM"))
-                                  { 
+                                  {
                                 	  if(row.getCell(1).getStringCellValue()!="")
                                 	  finance.setAumOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
                                 	  if(row.getCell(2).getStringCellValue()!="")
@@ -414,7 +438,7 @@ public class FileUploadResource {
                                 	  if(row.getCell(5).getStringCellValue()!="")
                              		   finance.setAumFive(Double.parseDouble(row.getCell(5).getStringCellValue()));}
                                   if (finColumn.contains("Networth"))
-                                  {  
+                                  {
                                 	  if(row.getCell(1).getStringCellValue()!="")
                                 	  finance.setNetworthOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
                                 	  if(row.getCell(2).getStringCellValue()!="")
@@ -426,7 +450,7 @@ public class FileUploadResource {
                                 	  if(row.getCell(5).getStringCellValue()!="")
                              		   finance.setNetworthfive(Double.parseDouble(row.getCell(5).getStringCellValue()));}
                                   if (finColumn.contains("ROE"))
-                                  { 
+                                  {
                                 	  if(row.getCell(1).getStringCellValue()!="")
                                 	  finance.setRoeOne((Double.parseDouble(row.getCell(1).getStringCellValue()))*100);
                                 	  if(row.getCell(2).getStringCellValue()!="")
@@ -438,7 +462,7 @@ public class FileUploadResource {
                                 	  if(row.getCell(5).getStringCellValue()!="")
                              		   finance.setRoeFive((Double.parseDouble(row.getCell(5).getStringCellValue()))*100);}
                                   if (finColumn.contains("PBV"))
-                                  {  
+                                  {
                                 	  if(row.getCell(1).getStringCellValue()!="")
                                 	  finance.setPbvOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
                                 	  if(row.getCell(2).getStringCellValue()!="")
@@ -450,7 +474,7 @@ public class FileUploadResource {
                                 	  if(row.getCell(5).getStringCellValue()!="")
                              		   finance.setPbvFive(Double.parseDouble(row.getCell(5).getStringCellValue()));}
                                   if (finColumn.contains("PE"))
-                                  { 
+                                  {
                                 	  if(row.getCell(1).getStringCellValue()!="")
                                 	  finance.setPeOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
                                 	  if(row.getCell(2).getStringCellValue()!="")
@@ -461,7 +485,7 @@ public class FileUploadResource {
                              		   finance.setPeFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
                                 	  if(row.getCell(5).getStringCellValue()!="")
                              		   finance.setPeFive(Double.parseDouble(row.getCell(5).getStringCellValue()));}
-                              
+
                           }
 
                           }
@@ -558,15 +582,15 @@ public class FileUploadResource {
                               if (iPhysNumOfCells != 1 && iPhysNumOfCells != 0) {
 
                                   while (cellIterator.hasNext()) {
-                                	  Cell cell = cellIterator.next();         							
+                                	  Cell cell = cellIterator.next();
                                 	  cell.setCellType(CellType.STRING);}
                                   String finColumn = row.getCell(0).getStringCellValue();
-                                
+
                                   if (finColumn.equals("Revenues")) {
                                 	if(row.getCell(1).getStringCellValue()!="")
                                   	nonFinance.setRevenueOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
                                 	else
-                                		nonFinance.setRevenueOne(0.0);	
+                                		nonFinance.setRevenueOne(0.0);
                                 	if(row.getCell(2).getStringCellValue()!="")
                                   	nonFinance.setRevenueTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
                                 	else
@@ -606,7 +630,7 @@ public class FileUploadResource {
                                 	  if(row.getCell(1).getStringCellValue()!="")
                                   nonFinance.setEbitdaOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
                                 	  else
-                                		  nonFinance.setEbitdaOne(0.0);  
+                                		  nonFinance.setEbitdaOne(0.0);
                                 	  if(row.getCell(2).getStringCellValue()!="")
                                   nonFinance.setEbitdaTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
                                 	  else
@@ -635,7 +659,7 @@ public class FileUploadResource {
                                   if(row.getCell(3).getStringCellValue()!="")
                                   nonFinance.setMarginThree((Double.parseDouble(row.getCell(3).getStringCellValue()))*100);
                                   else
-                                	  nonFinance.setMarginThree(0.0);  
+                                	  nonFinance.setMarginThree(0.0);
                                   if(row.getCell(4).getStringCellValue()!="")
                                   nonFinance.setMarginFour((Double.parseDouble(row.getCell(4).getStringCellValue()))*100);
                                   else
@@ -680,13 +704,13 @@ public class FileUploadResource {
                                   nonFinance.setOtherIncFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
                                   else
                                 	  nonFinance.setOtherIncFour(0.0);
-                                	
+
                                 	  if(row.getCell(5).getStringCellValue()!="")
                                   nonFinance.setOtherIncFive(Double.parseDouble(row.getCell(5).getStringCellValue()));
                                 	  else
                                 		  nonFinance.setOtherIncFive(0.0);}
                                   if (finColumn.equals("Interest Exp"))
-                                  { 
+                                  {
                                 	  if(row.getCell(1).getStringCellValue()!="")
                                 	  nonFinance.setIntExpOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
                                 	  else
@@ -718,7 +742,7 @@ public class FileUploadResource {
                                   if(row.getCell(3).getStringCellValue()!="")
                                   nonFinance.setDepThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
                                   else
-                                	  nonFinance.setDepThree(0.0);  
+                                	  nonFinance.setDepThree(0.0);
                                   if(row.getCell(4).getStringCellValue()!="")
                                   nonFinance.setDepFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
                                   else
@@ -749,7 +773,7 @@ public class FileUploadResource {
                                   else
                                 	  nonFinance.setPbtFive(0.0);}
                                   if (finColumn.equals("Tax"))
-                                  { 
+                                  {
                                 	  if(row.getCell(1).getStringCellValue()!="")
                                 	  nonFinance.setTaxOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
                                 	  else
@@ -770,6 +794,54 @@ public class FileUploadResource {
                                   nonFinance.setTaxFive(Double.parseDouble(row.getCell(5).getStringCellValue()));
                                 	  else
                                 		  nonFinance.setTaxFive(0.0);}
+                                  System.out.println(finColumn.equals("Exceptional Item 1"));
+
+                                  if (finColumn.equals("Exceptional Item 1"))
+                                  {
+                                      System.out.println("Entered exception"+row.getCell(1).getStringCellValue());
+                                      if(row.getCell(1).getStringCellValue()!="")
+                                          nonFinance.setExceptionOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                      else
+                                          nonFinance.setExceptionOne(0.0);
+                                      if(row.getCell(2).getStringCellValue()!="")
+                                          nonFinance.setExceptionTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                      else
+                                          nonFinance.setExceptionTwo(0.0);
+                                      if(row.getCell(3).getStringCellValue()!="")
+                                          nonFinance.setExceptionThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                      else
+                                          nonFinance.setExceptionThree(0.0);
+                                      if(row.getCell(4).getStringCellValue()!="")
+                                          nonFinance.setExceptionFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                      else
+                                          nonFinance.setExceptionFour(0.0);
+                                      if(row.getCell(5).getStringCellValue()!="")
+                                          nonFinance.setExceptionFive(Double.parseDouble(row.getCell(5).getStringCellValue()));
+                                      else
+                                          nonFinance.setExceptionFive(0.0);}
+
+                                  if (finColumn.equals("Exceptional Item 2"))
+                                  {
+                                      if(row.getCell(1).getStringCellValue()!="")
+                                          nonFinance.setExceptionItemOne(Double.parseDouble(row.getCell(1).getStringCellValue()));
+                                      else
+                                          nonFinance.setExceptionItemOne(0.0);
+                                      if(row.getCell(2).getStringCellValue()!="")
+                                          nonFinance.setExceptionItemTwo(Double.parseDouble(row.getCell(2).getStringCellValue()));
+                                      else
+                                          nonFinance.setExceptionItemTwo(0.0);
+                                      if(row.getCell(3).getStringCellValue()!="")
+                                          nonFinance.setExceptionItemThree(Double.parseDouble(row.getCell(3).getStringCellValue()));
+                                      else
+                                          nonFinance.setExceptionItemThree(0.0);
+                                      if(row.getCell(4).getStringCellValue()!="")
+                                          nonFinance.setExceptionItemFour(Double.parseDouble(row.getCell(4).getStringCellValue()));
+                                      else
+                                          nonFinance.setExceptionItemFour(0.0);
+                                      if(row.getCell(5).getStringCellValue()!="")
+                                          nonFinance.setExceptionItemFive(Double.parseDouble(row.getCell(5).getStringCellValue()));
+                                      else
+                                          nonFinance.setExceptionItemFive(0.0);}
                                   if (finColumn.equals("PAT"))
                                   {
                                 	  if(row.getCell(1).getStringCellValue()!="")
@@ -955,7 +1027,7 @@ public class FileUploadResource {
                                 		  nonFinance.setWeight(0.0);
 
                                   }
-                          }                             
+                          }
 
                           }
                       }
@@ -967,7 +1039,7 @@ public class FileUploadResource {
                       if(nonFinance.getMarketCapThree()!=0.0 && nonFinance.getPatTwo()!=0.0)
                       nonFinance.setPeTwo(nonFinance.getMarketCapThree()/nonFinance.getPatTwo());
                       else
-                    	  nonFinance.setPeTwo(0.00);  
+                    	  nonFinance.setPeTwo(0.00);
                       if(nonFinance.getMarketCapThree()!=0.0 && nonFinance.getPatthree()!=0.0)
                       nonFinance.setPethree(nonFinance.getMarketCapThree()/nonFinance.getPatthree());
                       else
@@ -975,7 +1047,7 @@ public class FileUploadResource {
                       if(nonFinance.getMarketCapThree()!=0.0 && nonFinance.getPatfour()!=0.0)
                       nonFinance.setPeFour(nonFinance.getMarketCapThree()/nonFinance.getPatfour());
                       else
-                    	  nonFinance.setPeFour(0.00);	
+                    	  nonFinance.setPeFour(0.00);
                       if(nonFinance.getMarketCapThree()!=0.0 && nonFinance.getPatFive()!=0.0)
                       nonFinance.setPeFive(nonFinance.getMarketCapThree()/nonFinance.getPatFive());
                       else
@@ -991,15 +1063,15 @@ public class FileUploadResource {
                       if(nonFinance.getMarketCapThree()!=0.0 && nonFinance.getNetworthThree()!=0.0)
                       nonFinance.setPbThree(nonFinance.getMarketCapThree()/nonFinance.getNetworthThree());
                       else
-                    	  nonFinance.setPbThree(0.00);  
+                    	  nonFinance.setPbThree(0.00);
                       if(nonFinance.getMarketCapThree()!=0.0 && nonFinance.getNetworthFour()!=0.0)
                       nonFinance.setPbFour(nonFinance.getMarketCapThree()/nonFinance.getNetworthFour());
                       else
-                    	  nonFinance.setPbFour(0.00); 
+                    	  nonFinance.setPbFour(0.00);
                       if(nonFinance.getMarketCapThree()!=0.0 && nonFinance.getNetworthFive()!=0.0)
                       nonFinance.setPbFive(nonFinance.getMarketCapThree()/nonFinance.getNetworthFive());
                       else
-                    	  nonFinance.setPbFive(0.00);  
+                    	  nonFinance.setPbFive(0.00);
                       if(nonFinance.getTaxOne()!=0.0 && nonFinance.getPbtOne()!=0.0)
                       nonFinance.setTaxRateOne((nonFinance.getTaxOne()/nonFinance.getPbtOne())*100);
                       else
@@ -1015,15 +1087,15 @@ public class FileUploadResource {
                       if(nonFinance.getTaxFour()!=0.0 && nonFinance.getPbtFour()!=0.0)
                       nonFinance.setTaxRateFour((nonFinance.getTaxFour()/nonFinance.getPbtFour())*100);
                       else
-                    	  nonFinance.setTaxRateFour(0.00);  
+                    	  nonFinance.setTaxRateFour(0.00);
                       if(nonFinance.getTaxFive()!=0.0 && nonFinance.getPbtFive()!=0.0)
                       nonFinance.setTaxRateFive((nonFinance.getTaxFive()/nonFinance.getPbtFive())*100);
                       else
-                    	  nonFinance.setTaxRateFive(0.00);	 
+                    	  nonFinance.setTaxRateFive(0.00);
                       if(nonFinance.getIntExpOne()!=0.0 && nonFinance.getTotDebOne()!=0.0)
                       nonFinance.setIntRateOne((nonFinance.getIntExpOne()/nonFinance.getTotDebOne())*100);
                       else
-                    	  nonFinance.setIntRateOne(0.00); 
+                    	  nonFinance.setIntRateOne(0.00);
                       if(nonFinance.getIntExpTwo()!=0.0 && nonFinance.getTotDebTwo()!=0.0)
                       nonFinance.setIntRateTwo((nonFinance.getIntExpTwo()/nonFinance.getTotDebTwo())*100);
                       else
@@ -1031,11 +1103,11 @@ public class FileUploadResource {
                       if(nonFinance.getIntExpThree()!=0.0 && nonFinance.getTotDebThree()!=0.0)
                       nonFinance.setIntRateThree((nonFinance.getIntExpThree()/nonFinance.getTotDebThree())*100);
                       else
-                    	  nonFinance.setIntRateThree(0.00); 
+                    	  nonFinance.setIntRateThree(0.00);
                       if(nonFinance.getIntExpFour()!=0.0 && nonFinance.getTotDebFour()!=0.0)
                       nonFinance.setIntRateFour((nonFinance.getIntExpFour()/nonFinance.getTotDebFour())*100);
                       else
-                    	  nonFinance.setIntRateFour(0.00);  
+                    	  nonFinance.setIntRateFour(0.00);
                       if(nonFinance.getIntExpFive()!=0.0 && nonFinance.getTotDebFive()!=0.0)
                       nonFinance.setIntRateFive((nonFinance.getIntExpFive()/nonFinance.getTotDebFive())*100);
                       else{

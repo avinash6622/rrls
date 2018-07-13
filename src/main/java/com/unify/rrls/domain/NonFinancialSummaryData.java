@@ -145,6 +145,27 @@ public class NonFinancialSummaryData implements Serializable{
 	private Double pbtFour;
 	@Column(name = "pbt_five")
 	private Double pbtFive;
+    @Column(name = "exception_one")
+    private Double exceptionOne;
+    @Column(name="exception_two")
+    private Double exceptionTwo;
+    @Column(name="exception_three")
+    private Double exceptionThree;
+    @Column(name="exception_four")
+    private Double exceptionFour;
+    @Column(name="exception_five")
+    private Double exceptionFive;
+    @Column(name = "exception_item_one")
+    private Double exceptionItemOne;
+    @Column(name="exception_item_two")
+    private Double exceptionItemTwo;
+    @Column(name="exception_item_three")
+    private Double exceptionItemThree;
+    @Column(name="exception_item_four")
+    private Double exceptionItemFour;
+    @Column(name="exception_item_five")
+    private Double exceptionItemFive;
+
 	@Column(name = "tax_one")
 	private Double taxOne;
 	@Column(name = "tax_two")
@@ -936,4 +957,84 @@ public Double getWeight() {
 public void setWeight(Double weight) {
 	this.weight = weight;
 }
+
+    public Double getExceptionOne() {
+        return exceptionOne;
+    }
+
+    public void setExceptionOne(Double exceptionOne) {
+        this.exceptionOne = exceptionOne;
+    }
+
+    public Double getExceptionTwo() {
+        return exceptionTwo;
+    }
+
+    public void setExceptionTwo(Double exceptionTwo) {
+        this.exceptionTwo = exceptionTwo;
+    }
+
+    public Double getExceptionThree() {
+        return exceptionThree;
+    }
+
+    public void setExceptionThree(Double exceptionThree) {
+        this.exceptionThree = exceptionThree;
+    }
+
+    public Double getExceptionFour() {
+        return exceptionFour;
+    }
+
+    public void setExceptionFour(Double exceptionFour) {
+        this.exceptionFour = exceptionFour;
+    }
+
+    public Double getExceptionFive() {
+        return exceptionFive;
+    }
+
+    public void setExceptionFive(Double exceptionFive) {
+        this.exceptionFive = exceptionFive;
+    }
+
+    public Double getExceptionItemOne() {
+        return exceptionItemOne;
+    }
+
+    public void setExceptionItemOne(Double exceptionItemOne) {
+        this.exceptionItemOne = exceptionItemOne;
+    }
+
+    public Double getExceptionItemTwo() {
+        return exceptionItemTwo;
+    }
+
+    public void setExceptionItemTwo(Double exceptionItemTwo) {
+        this.exceptionItemTwo = exceptionItemTwo;
+    }
+
+    public Double getExceptionItemThree() {
+        return exceptionItemThree;
+    }
+
+    public void setExceptionItemThree(Double exceptionItemThree) {
+        this.exceptionItemThree = exceptionItemThree;
+    }
+
+    public Double getExceptionItemFour() {
+        return exceptionItemFour;
+    }
+
+    public void setExceptionItemFour(Double exceptionItemFour) {
+        this.exceptionItemFour = exceptionItemFour;
+    }
+
+    public Double getExceptionItemFive() {
+        return exceptionItemFive;
+    }
+
+    public void setExceptionItemFive(Double exceptionItemFive) {
+        this.exceptionItemFive = exceptionItemFive;
+    }
 }
