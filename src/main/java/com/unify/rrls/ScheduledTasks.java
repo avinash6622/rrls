@@ -278,7 +278,7 @@ for(User users:user){
       	
           String fromDateMon=sdf.format(nows.getTime());
           System.out.println(fromDateMon);
-      	  Query q = em.createNativeQuery(" SELECT * FROM history_logs where sub_content like '%Learning%' and action='added' and opp_created_date between '"+fromDate+"' and '"+hDate+"' or id in(select id from history_logs where action not in('Answered','added','Replied','delegated') and page!='User' and opp_created_date between '"+fromDateMon+"' and '"+hDate+"')",HistoryLogs.class);
+      	  Query q = em.createNativeQuery(" SELECT * FROM history_logs where sub_content like '%Learning%' and action='added' and opp_created_date between '"+fromDateMon+"' and '"+hDate+"' or id in(select id from history_logs where action not in('Answered','added','Replied','delegated') and page!='User' and opp_created_date between '"+fromDateMon+"' and '"+hDate+"')",HistoryLogs.class);
 
             list   = q.getResultList();
             if(list.size()!=0){
