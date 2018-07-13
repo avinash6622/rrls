@@ -56,12 +56,12 @@ public class StrategyMapping  implements Serializable {
 		this.strategyMaster = strategyMaster;
 	}
 
-   /* @Override
+    @Override
     public String toString() {
         return "StrategyMapping{" +
             "id=" + id +
             ", opportunityMaster=" + opportunityMaster +
             ", strategyMaster=" + strategyMaster +
             '}';
-    }*/
+    }
 }

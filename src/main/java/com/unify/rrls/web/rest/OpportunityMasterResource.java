@@ -283,7 +283,7 @@ public class OpportunityMasterResource {
 		}
 
 		OpportunityMaster result = opportunityMasterRepository.save(opportunityMaster);
-		System.out.println("sdfsdfsd--->" + result);
+		//System.out.println("sdfsdfsd--->" + result);
 
 		for (OpportunityMasterContact oC : opportunityMaster.getSelectedoppContanct()) {
 			oC.setOpportunityMasterId(result);
@@ -304,7 +304,7 @@ public class OpportunityMasterResource {
 				strategyMapping.setStrategyMaster(sm);
 				strategyMappingRepository.save(strategyMapping);
 			}
-			System.out.println(strategyMaster);
+		//	System.out.println(strategyMaster);
 
 			opportunityMaster.setSelectedStrategyMaster(strategyMaster);
 			List<StrategyMapping> countStrategy=strategyMappingRepository.findByStrategyMaster(strategyMaster.get(0));
@@ -358,6 +358,8 @@ public class OpportunityMasterResource {
 				opportunitySummaryData.setPeFifthYear(summaryData.getPeFive());
 				opportunitySummaryData.setOpportunityMasterid(result);
 				opportunitySummaryData.setStrategyMasterId(sm);
+				opportunitySummaryData.setCreatedBy(opportunityMaster.getCreatedBy());
+				opportunitySummaryData.setLastModifiedBy(opportunityMaster.getLastModifiedBy());
 				opportunitySummaryDataRepository.save(opportunitySummaryData);
 
 			}
@@ -412,8 +414,10 @@ public class OpportunityMasterResource {
 				opportunitySummaryData.setPatGrowthFourth(nonFinancialSummaryData.getPatGrowthFour());
 				opportunitySummaryData.setPatGrowthFifth(nonFinancialSummaryData.getPatGrowthFive());
 				opportunitySummaryData.setOpportunityMasterid(result);
+				opportunitySummaryData.setCreatedBy(opportunityMaster.getCreatedBy());
+				opportunitySummaryData.setLastModifiedBy(opportunityMaster.getLastModifiedBy());
 				opportunitySummaryData.setStrategyMasterId(sm);
-				
+
 				if((nonFinancialSummaryData.getPethree()!=0.0 && nonFinancialSummaryData.getPatGrowthThree()!=0.0) &&
 						(nonFinancialSummaryData.getPethree()!=null && nonFinancialSummaryData.getPatGrowthThree()!=null)){
 				opportunitySummaryData.setPegOj((nonFinancialSummaryData.getPethree() / nonFinancialSummaryData.getPatGrowthThree()));}
@@ -442,7 +446,7 @@ public class OpportunityMasterResource {
 					opportunitySummaryData.setWtAvgCap((nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getMarketCapThree())/ 100.0);
 					if(nonFinancialSummaryData.getRoeThree()!=0.0 && nonFinancialSummaryData.getRoeThree()!=null)
 					opportunitySummaryData.setRoe((nonFinancialSummaryData.getWeight() * nonFinancialSummaryData.getRoeThree())	/ 100.0);
-					if((nonFinancialSummaryData.getPethree()!=0.0 && nonFinancialSummaryData.getPatGrowthThree()!=0.0) && 
+					if((nonFinancialSummaryData.getPethree()!=0.0 && nonFinancialSummaryData.getPatGrowthThree()!=0.0) &&
 							(nonFinancialSummaryData.getPethree()!=null && nonFinancialSummaryData.getPatGrowthThree()!=null))
 					opportunitySummaryData.setPegYearPeg(nonFinancialSummaryData.getWeight()
 							* (nonFinancialSummaryData.getPethree() / nonFinancialSummaryData.getPatGrowthThree()));
@@ -455,7 +459,7 @@ public class OpportunityMasterResource {
 
 		}
 
-		System.out.println(result.getId().toString());
+		//System.out.println(result.getId().toString());
 
 		String page = "Opportunity";
 
@@ -496,7 +500,25 @@ public class OpportunityMasterResource {
 		strategyMappings = strategyMappingRepository.findByOpportunityMaster(opportunityMasters);
 		System.out.println(opportunityMasters.getSelectedStrategyMaster());
 		if (!opportunityMasters.getSelectedStrategyMaster().isEmpty()) {
+
 			strategyMappingRepository.delete(strategyMappings);
+
+          //  System.out.println("Mapping------>"+strategyMappings);
+
+            for(StrategyMapping sm : strategyMappings)
+            {
+               // StrategyMaster updateTot=strategyMasterRepository.findOne(sm.getStrategyMaster().getId());
+                List<StrategyMapping> countStrategy = new ArrayList<>();
+                 countStrategy=strategyMappingRepository.findByStrategyMaster(sm.getStrategyMaster());
+
+                     StrategyMaster updateTot=strategyMasterRepository.findOne(sm.getStrategyMaster().getId());
+                     updateTot.setTotalStocks((double) countStrategy.size());
+                     strategyMasterRepository.save(updateTot);
+
+
+            }
+
+
 		}
 		// opportunityMasters.setStrategyMappings()
 		if (!opportunityMasters.getSelectedStrategyMaster().isEmpty()) {
@@ -549,7 +571,7 @@ public class OpportunityMasterResource {
 				sm.setPeFifthYear(opportunityMasters.getFinancialSummaryData().getPeFive());
 				sm.setOpportunityMasterid(opportunityMasters);
 				sm.setCreatedBy(opportunityMasters.getCreatedBy());
-				sm.setLastModifiedBy(opportunityMasters.getCreatedBy());
+				sm.setLastModifiedBy(opportunityMasters.getLastModifiedBy());
 				sm.setStrategyMasterId(sm1);
 				/*
 				 * sm.setbWeight(opportunityMasters.getFinancialSummaryData().
@@ -638,7 +660,7 @@ public class OpportunityMasterResource {
 				}
 				sm.setStrategyMasterId(sm1);
 				sm.setCreatedBy(opportunityMasters.getCreatedBy());
-				sm.setLastModifiedBy(opportunityMasters.getCreatedBy());
+				sm.setLastModifiedBy(opportunityMasters.getLastModifiedBy());
 				if ((opportunityAutomation != null) && (opportunityAutomation.getPrevClose() == null)) {
 					sm.setCmp(opportunityAutomation.getPrevClose());
 				}
@@ -737,6 +759,7 @@ public class OpportunityMasterResource {
 		result.setFileDataContentType(extension);
 		result.setFileData(sFile);
 		result.setOpportunityMasterId(opportunityMaster);
+		result.setFiletype("Presentation");
 		result = fileUploadRepository.save(result);
 
 		return ResponseEntity.created(new URI("/api/opportunity-masters"))
