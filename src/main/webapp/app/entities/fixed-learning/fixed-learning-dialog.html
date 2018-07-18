@@ -1,0 +1,21 @@
+<style>
+</style>
+<div class="modal-headers">
+ <div class="form-group col-md-8 col-md-offset-2">
+	<h3 class="modal-title" text-align="center">Create Learning</h3></div>
+</div>
+
+<div class="model-body learning-modal">
+ <div class="row">
+  
+  <div class="form-group col-md-8 col-md-offset-2">
+<input type="text" class="form-control" name="subject"
+				placeholder="Enter Subject" ng-model="$ctrl.subject">
+	</div>	</div>		 
+</div>
+<div class="modal-footer">
+	<button class="btn btn-md btn-primary" ng-click="$ctrl.save()"
+		ng-disabled="">Save</button>
+	<button class="btn btn-md btn-warning" data-dismiss="modal"
+		type="button" ng-click="$ctrl.clear()">Cancel</button>
+</div>

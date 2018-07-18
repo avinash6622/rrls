@@ -2,11 +2,11 @@
     <ul class="list-inline">
         <li ng-repeat="item in modelArr">
 			<span ng-if="objectProperty == undefined || objectProperty == ''">
-				{{item}} <span class="remove" ng-click="removeAddedValues(item)">
+				<a ng-click="clickSelecteditemFn(item)">{{item}}</a> <span class="remove" ng-click="removeAddedValues(item)">
                 <i class="glyphicon glyphicon-remove"></i></span>&nbsp;
 			</span>
-            <span ng-if="objectProperty != undefined && objectProperty != ''">
-				{{item[objectProperty]}} <span class="remove" ng-click="removeAddedValues(item)">
+            <span ng-if="objectProperty != undefined && objectProperty != ''" ng-click="clickSelecteditemFn(item)">
+				<a ng-click="clickSelecteditemFn(item)">{{item[objectProperty]}}</a> <span class="remove" ng-click="removeAddedValues(item)">
                 <i class="glyphicon glyphicon-remove"></i></span>&nbsp;
 			</span>
         </li>

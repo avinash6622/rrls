@@ -1,7 +1,11 @@
 package com.unify.rrls.web.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +25,10 @@ import com.codahale.metrics.annotation.Timed;
 import com.unify.rrls.domain.FixedLearning;
 import com.unify.rrls.domain.FixedLearningMapping;
 import com.unify.rrls.domain.OpportunityMaster;
+import com.unify.rrls.domain.StrategyMaster;
 import com.unify.rrls.repository.FixedLearningMappingRepository;
 import com.unify.rrls.repository.FixedLearningRepository;
+import com.unify.rrls.web.rest.util.HeaderUtil;
 import com.unify.rrls.web.rest.util.PaginationUtil;
 
 import io.swagger.annotations.ApiParam;
@@ -67,6 +73,20 @@ public class FixedLearningResource {
 			return new ResponseEntity<>(pageFixed.getContent(), headers, HttpStatus.OK);
 		}
 	  
+	  @GetMapping("/fixed-learning-all")
+	  @Timed
+		public ResponseEntity<List<FixedLearning>> getAllFixedLearning() {
+			log.debug("REST request to get FixedLearning : {}");
+		
+			List<FixedLearning> pageFixed = null;
+			pageFixed = fixedLearningRepository.findAll();			
+			
+			HttpHeaders headers = new HttpHeaders();
+			return new ResponseEntity<>(pageFixed, headers, HttpStatus.OK);
+		}
+	  
+	  
+	  
 	  @PostMapping("/fixed-learning")
 	  @Timed
 		public ResponseEntity<FixedLearning> updateFixedLearning(@RequestBody FixedLearning fixedLearning) {
@@ -91,6 +111,16 @@ public class FixedLearningResource {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 
-	
+	  @PostMapping("/fixed-learning-create")
+	  @Timed
+		public ResponseEntity<FixedLearning> createFixedLearning(@RequestBody FixedLearning fixedLearning) throws URISyntaxException {
+			log.debug("REST request  to c FixedLearning : {}",fixedLearning);			
+				
+			FixedLearning result=fixedLearningRepository.save(fixedLearning);	
+			
+			 return ResponseEntity.created(new URI("/api/fixed-learning/" + result.getId()))
+					 .headers(HeaderUtil.createAlert( "A Learning is created with identifier " + result.getId().toString(), result.getSubject()))			          
+			         .body(result);
+		}
 	
 }

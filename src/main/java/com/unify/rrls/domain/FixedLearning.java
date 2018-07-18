@@ -28,9 +28,6 @@ public class FixedLearning extends AbstractAuditingEntity implements Serializabl
 	@Column(name = "subject")
 	private String subject;
 
-	@Column(name = "description")
-	private String description;
-
 	@Transient
 	@JsonProperty
 	private List<FixedLearningMapping> fixedLearningMapping;
@@ -53,14 +50,6 @@ public class FixedLearning extends AbstractAuditingEntity implements Serializabl
 
 	public void setSubject(String subject) {
 		this.subject = subject;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public List<FixedLearningMapping> getFixedLearningMapping() {

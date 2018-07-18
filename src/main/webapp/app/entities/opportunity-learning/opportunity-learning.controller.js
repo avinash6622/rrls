@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('OpportunityLearningController', OpportunityLearningController);
 
-    OpportunityLearningController.$inject = ['OpportunityLearning', '$scope','Principal','ParseLinks', '$uibModalInstance', 'AlertService', 'paginationConstants','options'];
+    OpportunityLearningController.$inject = ['OpportunityLearning','FixedLearning', '$scope','Principal','ParseLinks', '$uibModalInstance', 'AlertService', 'paginationConstants','options'];
 
-    function OpportunityLearningController(OpportunityLearning,$scope, Principal,ParseLinks, $uibModalInstance, AlertService, paginationConstants,options) {
+    function OpportunityLearningController(OpportunityLearning,FixedLearning,$scope, Principal,ParseLinks, $uibModalInstance, AlertService, paginationConstants,options) {
     	  var $ctrl=this;
     	  
     	  $ctrl.clear = clear;
@@ -24,6 +24,10 @@
     	  OpportunityLearning.learningComment({id: options.id}, function(response) {          	
           	$ctrl.learnings = response;
           });
+    	  FixedLearning.fixedLearningSubject(function(response) {          	
+            	$ctrl.subjects = response;            
+            });
+    	  
     	  $scope.ckOptionsAdd = {
     	            language: 'en',
     	            allowedContent: true,

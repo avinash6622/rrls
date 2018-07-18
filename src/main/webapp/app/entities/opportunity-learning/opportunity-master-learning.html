@@ -43,13 +43,17 @@
 	<div></div>
 			<button class="btn btn-md btn-warning"
 		type="button" ng-click="$ctrl.showLearning=true" ng-show="$ctrl.learnings.length !== 0 && ($ctrl.account.login === $ctrl.opportunityMaster.createdBy || $ctrl.account.authorities[0]=='Master')">Add Learning</button>
-			<input type="text" class="form-control" name="subject"
+			<!-- <input type="text" class="form-control" name="subject"
 				placeholder="Enter Subject" ng-model="$ctrl.subject" ng-show="($ctrl.showLearning || $ctrl.learnings.length==0) && ($ctrl.account.login === $ctrl.opportunityMaster.createdBy || $ctrl.account.authorities[0]=='Master')">
+				 -->
+				 	<select ng-model="$ctrl.subject" class="form-control" ng-change="getselectval()" ng-show="($ctrl.showLearning || $ctrl.learnings.length==0) && ($ctrl.account.login === $ctrl.opportunityMaster.createdBy || $ctrl.account.authorities[0]=='Master')">
+				<option ng-repeat="x in $ctrl.subjects">{{x.subject}}</option>
+			</select>
 				<div ng-show="($ctrl.showLearning || $ctrl.learnings.length==0) && ($ctrl.account.login === $ctrl.opportunityMaster.createdBy || $ctrl.account.authorities[0]=='Master')">
 			<div ckeditor="ckOptionsAdd" ng-model="$ctrl.description"
 				ready="onReady()" ng-change="changeCKeditor()"></div></div>
 		</div></div>
-	
+	</div>
 <div class="modal-footer">
 	<button class="btn btn-md btn-primary" ng-click="$ctrl.save()"
 		ng-disabled="">Submit</button>

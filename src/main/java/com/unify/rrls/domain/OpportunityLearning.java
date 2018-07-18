@@ -43,6 +43,10 @@ public class OpportunityLearning extends AbstractAuditingEntity implements Seria
 	@ManyToOne
 	@JoinColumn(name = "opp_mas_id")
 	private OpportunityMaster opportunityMaster;
+	
+	@Transient
+	@JsonProperty
+	private List<FixedLearning> fixedLearning;
 
     @Column(name="opp_name")
 	private String oppName;
@@ -79,4 +83,10 @@ public class OpportunityLearning extends AbstractAuditingEntity implements Seria
     public void setOppName(String oppName) {
         this.oppName = oppName;
     }
+	public List<FixedLearning> getFixedLearning() {
+		return fixedLearning;
+	}
+	public void setFixedLearning(List<FixedLearning> fixedLearning) {
+		this.fixedLearning = fixedLearning;
+	}
 }

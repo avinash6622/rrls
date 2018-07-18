@@ -7,12 +7,12 @@
 	LearningConsolidatedController.$inject = [ 'OpportunityLearning',
 			'OpportunityMaster', 'FixedLearning', 'ParseLinks', 'Principal',
 			'AlertService', 'paginationConstants', '$scope', '$filter',
-			'pagingParams', '$state', '$http', '$sce' ];
+			'pagingParams', '$state', '$http', '$sce' ,'$uibModal'];
 
 	function LearningConsolidatedController(OpportunityLearning,
 			OpportunityMaster, FixedLearning, ParseLinks, Principal,
 			AlertService, paginationConstants, $scope, $filter, pagingParams,
-			$state, $http, $sce) {
+			$state, $http, $sce, $uibModal) {
 
 		var vm = this;
 		
@@ -38,6 +38,7 @@
 		vm.subjectLearnings = [];	
 		vm.fixedCollapse = fixedCollapse;
 		vm.fixedMap = fixedMap;
+		vm.selectedItem=selectedItem;
 		
 		$scope.isCollapsed = [];
 		vm.clear = clear;
@@ -65,6 +66,37 @@
 			});
 			vm.edit = false;
 		}
+		
+		function selectedItem(val1) {
+			console.log('logs', val1);
+
+		}
+		
+		$scope.clickTaggedOpportunity = function(item) {
+			console.log(item);
+			$state.go('opportunity-master-detail', {id: item.id});
+		};
+		
+		$scope.afterSelectItem = function(item) {
+			console.log(item);
+		}
+		
+		  $scope.addLearning = function () {
+
+	            var modalInstance = $uibModal.open({
+	                templateUrl: 'app/entities/fixed-learning/fixed-learning-dialog.html',
+	                controllerAs: '$ctrl',
+	                controller: 'FixedLearningController',
+	              size: 'lg',
+	             /*  resolve: {
+	                	options: function() {
+	                		return vm.opportunityMaster;
+	                	}
+	                }*/
+	            });
+
+
+	        };
 		var myDate = new Date();
 
 		$scope.currentYear = $filter('date')(myDate, 'yyyy');
@@ -108,7 +140,7 @@
 				};
 			},
 
-			itemSelected : function(e) {
+			item : function(e) {
 
 				console.log(e);
 				vm.selectedName = e;

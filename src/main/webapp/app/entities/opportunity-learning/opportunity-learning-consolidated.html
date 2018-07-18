@@ -22,17 +22,17 @@
 </style>
 
 <div>
-    <div class="well">     
- 
-         
-     
+    <div class="well">   
+        
+     <jhi-alert></jhi-alert>
        <div class="table-responsive">
         <table class="jh-table table table-striped">  
          <thead>
          <tr>
              <th></th>
 
-                    <th><span>Subject</span> </th>
+                    <th><span>Subject</span> <button class="btn btn-md btn-warning pull-right"
+		type="button" ng-click="addLearning()"  has-authority="Admin">Add Learning</button></th>
                  </tr>
             </thead>       
             <tbody>
@@ -50,12 +50,12 @@
 <tr ng-if="fixed.expanded" ng-repeat-end="">
    <td colspan="3">
  
-  <multiple-autocomplete ng-model="fixed.opportunityMaster"
+   <multiple-autocomplete ng-model="fixed.opportunityMaster" 
      object-property="oppName"
-     suggestions-arr="vm.opportunityMasters">
+     suggestions-arr="vm.opportunityMasters" after-select-item="afterSelectItem" click-selected="clickTaggedOpportunity">
 </multiple-autocomplete>
    <button class="btn btn-md btn-primary" ng-show="vm.edit" ng-click="vm.fixedMap(fixed)">Save</button>           			
-     </td>             </tr>
+     </td> </tr>
 
 
             </tbody>
