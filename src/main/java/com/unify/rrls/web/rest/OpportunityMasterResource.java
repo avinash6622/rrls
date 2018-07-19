@@ -15,7 +15,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import com.unify.rrls.domain.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.apache.commons.io.FileUtils;
 import org.docx4j.Docx4J;
 import org.docx4j.Docx4jProperties;
@@ -51,6 +54,25 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.codahale.metrics.annotation.Timed;
+import com.unify.rrls.domain.AnswerComment;
+import com.unify.rrls.domain.CommentOpportunity;
+import com.unify.rrls.domain.DocumentCreationBean;
+import com.unify.rrls.domain.FileUpload;
+import com.unify.rrls.domain.FileUploadComments;
+import com.unify.rrls.domain.FinancialSummaryData;
+import com.unify.rrls.domain.FixedLearning;
+import com.unify.rrls.domain.FixedLearningMapping;
+import com.unify.rrls.domain.NonFinancialSummaryData;
+import com.unify.rrls.domain.OpportunityAutomation;
+import com.unify.rrls.domain.OpportunityLearning;
+import com.unify.rrls.domain.OpportunityMaster;
+import com.unify.rrls.domain.OpportunityMasterContact;
+import com.unify.rrls.domain.OpportunityName;
+import com.unify.rrls.domain.OpportunityQuestion;
+import com.unify.rrls.domain.OpportunitySummaryData;
+import com.unify.rrls.domain.ReplyComment;
+import com.unify.rrls.domain.StrategyMapping;
+import com.unify.rrls.domain.StrategyMaster;
 import com.unify.rrls.repository.AdditionalFileUploadRepository;
 import com.unify.rrls.repository.AnswerCommentRepository;
 import com.unify.rrls.repository.CommentOpportunityRepository;
@@ -58,6 +80,8 @@ import com.unify.rrls.repository.DecimalConfigurationRepository;
 import com.unify.rrls.repository.FileUploadCommentsRepository;
 import com.unify.rrls.repository.FileUploadRepository;
 import com.unify.rrls.repository.FinancialSummaryDataRepository;
+import com.unify.rrls.repository.FixedLearningMappingRepository;
+import com.unify.rrls.repository.FixedLearningRepository;
 import com.unify.rrls.repository.NonFinancialSummaryDataRepository;
 import com.unify.rrls.repository.OpportunityAutomationRepository;
 import com.unify.rrls.repository.OpportunityLearningRepository;
@@ -75,10 +99,6 @@ import com.unify.rrls.web.rest.util.PaginationUtil;
 
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  * REST controller for managing OpportunityMaster.
@@ -134,6 +154,8 @@ public class OpportunityMasterResource {
 	private final OpportunityLearningRepository opportunityLearningRepository;
 	private final DecimalConfigurationRepository decimalConfigurationRepository;
 	private final UserRepository userRepository;
+	private final FixedLearningRepository fixedLearningRepository;
+	private final FixedLearningMappingRepository fixedLearningMappingRepository;
 
 	@Autowired
 	NotificationServiceResource notificationServiceResource;
@@ -158,7 +180,8 @@ public class OpportunityMasterResource {
 			AnswerCommentRepository answerCommentRepository, CommentOpportunityRepository commentOpportunityRepository,
 			ReplyCommentRepository replyCommentRepository,
 			OpportunityLearningRepository opportunityLearningRepository,
-			DecimalConfigurationRepository decimalConfigurationRepository,UserRepository userRepository) {
+			DecimalConfigurationRepository decimalConfigurationRepository,UserRepository userRepository,
+			FixedLearningRepository fixedLearningRepository,FixedLearningMappingRepository fixedLearningMappingRepository) {
 		this.opportunityMasterRepository = opportunityMasterRepository;
 		this.fileUploadRepository = fileUploadRepository;
 		this.fileUploadCommentsRepository = fileUploadCommentsRepository;
@@ -177,6 +200,8 @@ public class OpportunityMasterResource {
 		this.opportunityLearningRepository = opportunityLearningRepository;
 		this.decimalConfigurationRepository = decimalConfigurationRepository;
 		this.userRepository=userRepository;
+		this.fixedLearningRepository=fixedLearningRepository;
+		this.fixedLearningMappingRepository=fixedLearningMappingRepository;
 	}
 
 	/**
@@ -851,6 +876,32 @@ public class OpportunityMasterResource {
 		    HttpHeaders headers=new HttpHeaders();
 		    return new ResponseEntity<List<OpportunityMaster>>(listName, headers, HttpStatus.OK);
 		}
+		
+		@GetMapping("/opportunity-master-learn")
+		@Timed
+		public ResponseEntity<List<OpportunityMaster>> getopportunityLearningList() {
+			List<OpportunityMaster> listName=new ArrayList<OpportunityMaster>();
+			String user = SecurityUtils.getCurrentUserLogin();
+			String role = SecurityUtils.getCurrentRoleLogin();
+			if(role.equals("Admin") || (role.equals("Master"))){
+		    List<OpportunityMaster> listOpportunity = opportunityMasterRepository.findAll();
+		    for(OpportunityMaster om : listOpportunity)
+		    {
+		    	System.out.println();
+		    	om.setOppName(om.getMasterName().getOppName());
+		    	listName.add(om);
+		    }}
+			if(role.equals("Research")){
+			    List<OpportunityMaster> listOpportunity = opportunityMasterRepository.findByCreatedBy(user);
+			    for(OpportunityMaster om : listOpportunity)
+			    {
+			    	System.out.println();
+			    	om.setOppName(om.getMasterName().getOppName());
+			    	listName.add(om);
+			    }}
+		    HttpHeaders headers=new HttpHeaders();
+		    return new ResponseEntity<List<OpportunityMaster>>(listName, headers, HttpStatus.OK);
+		}
 
 	/**
 	 * GET /opportunity-masters/:id : get the "id" opportunityMaster.
@@ -994,8 +1045,21 @@ public class OpportunityMasterResource {
 		OpportunityMaster opportunityMasters = opportunityMasterRepository.findOne(id);
 		List<OpportunityLearning> opportunityLearnings = opportunityLearningRepository
 				.findByOpportunityMaster(opportunityMasters);
+		List<OpportunityLearning> opportunityLearning=new ArrayList<>();
+		for(OpportunityLearning ol:opportunityLearnings)
+		{
+			FixedLearning fixedLearning=fixedLearningRepository.findBySubject(ol.getSubject());
+			FixedLearningMapping fixedLearningMapping=fixedLearningMappingRepository.
+					findByOpportunityMasterAndFixedLearning(ol.getOpportunityMaster(), fixedLearning);
+			if(fixedLearningMapping==null){
+				opportunityLearningRepository.delete(ol);
+			}
+			else{
+				opportunityLearning.add(ol);
+			}
+		}
 
-		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(opportunityLearnings));
+		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(opportunityLearning));
 	}
 
 	@GetMapping("/opportunity-masters/get-comment/{id}")

@@ -2,10 +2,9 @@ package com.unify.rrls.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 import com.unify.rrls.domain.FixedLearning;
 import com.unify.rrls.domain.FixedLearningMapping;
+import com.unify.rrls.domain.OpportunityLearning;
 import com.unify.rrls.domain.OpportunityMaster;
-import com.unify.rrls.domain.StrategyMaster;
 import com.unify.rrls.repository.FixedLearningMappingRepository;
 import com.unify.rrls.repository.FixedLearningRepository;
+import com.unify.rrls.repository.OpportunityLearningRepository;
 import com.unify.rrls.web.rest.util.HeaderUtil;
 import com.unify.rrls.web.rest.util.PaginationUtil;
 
@@ -40,14 +40,18 @@ public class FixedLearningResource {
 	@Autowired
 	private final FixedLearningRepository fixedLearningRepository;
 	private final FixedLearningMappingRepository fixedLearningMappingRepository;
+	private final OpportunityLearningRepository opportunityLearningRepository;
 	
 	private final Logger log = LoggerFactory.getLogger(FixedLearningResource.class);
 	
+	
 	private static final String ENTITY_NAME = "fixedLearning";
 	
-	public FixedLearningResource(FixedLearningRepository fixedLearningRepository,FixedLearningMappingRepository fixedLearningMappingRepository) {
+	public FixedLearningResource(FixedLearningRepository fixedLearningRepository,FixedLearningMappingRepository fixedLearningMappingRepository,
+			OpportunityLearningRepository opportunityLearningRepository) {
 		this.fixedLearningRepository = fixedLearningRepository;
 		this.fixedLearningMappingRepository=fixedLearningMappingRepository;
+		this.opportunityLearningRepository=opportunityLearningRepository;
 	}
 	
 	  @GetMapping("/fixed-learning")
@@ -92,11 +96,13 @@ public class FixedLearningResource {
 		public ResponseEntity<FixedLearning> updateFixedLearning(@RequestBody FixedLearning fixedLearning) {
 			log.debug("REST request  to update FixedLearning : {}",fixedLearning);
 			FixedLearningMapping  fixedLearningMapping;
-				
+			
+			System.out.println("Remove"+fixedLearning.getRemoveOpportunityMaster());
+			
 			FixedLearning fixedLearningUpdate=fixedLearningRepository.findOne(fixedLearning.getId());
 			
 			List<FixedLearningMapping> checkLearning= fixedLearningMappingRepository.findByFixedLearning(fixedLearningUpdate);
-			for(FixedLearningMapping flm: checkLearning){
+			for(FixedLearningMapping flm: checkLearning){				
 				fixedLearningMappingRepository.delete(flm);
 			}
 			FixedLearning result=fixedLearningRepository.save(fixedLearning);
@@ -106,8 +112,21 @@ public class FixedLearningResource {
 				fixedLearningMapping.setFixedLearning(result);
 				fixedLearningMapping.setOpportunityMaster(fm);
 				fixedLearningMappingRepository.save(fixedLearningMapping);
+				OpportunityLearning opportunityLearning=opportunityLearningRepository.findByOpportunityMasterAndSubject(fm, result.getSubject());
+				System.out.println(opportunityLearning);
+				if(opportunityLearning==null){
+					opportunityLearning=new OpportunityLearning();
+					opportunityLearning.setSubject(result.getSubject());
+					opportunityLearning.setOpportunityMaster(fm);
+					opportunityLearning.setCreatedBy(fm.getCreatedBy());
+					opportunityLearning.setCreatedDate(Instant.now());
+					opportunityLearning.setCreatedBy(fm.getLastModifiedBy());
+					opportunityLearning.setLastModifiedDate(Instant.now());					
+					opportunityLearning.setOppName(fm.getMasterName().getOppName());
+					opportunityLearningRepository.save(opportunityLearning);
+				}
 			}
-
+			
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 

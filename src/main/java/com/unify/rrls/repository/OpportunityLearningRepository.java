@@ -16,6 +16,7 @@ import com.unify.rrls.domain.OpportunityMaster;
 public interface OpportunityLearningRepository extends JpaRepository<OpportunityLearning, Long>  {
 
 	 List<OpportunityLearning> findByOpportunityMaster(OpportunityMaster opportunityMaster);
+	 OpportunityLearning findByOpportunityMasterAndSubject(OpportunityMaster opportunityMaster,String subject);
 	 List<OpportunityLearning> findBySubject(String subject);
 
     @Query(value="select * from opportunity_learning group by opp_name", nativeQuery = true)

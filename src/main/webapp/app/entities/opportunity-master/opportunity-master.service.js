@@ -206,6 +206,12 @@
               isArray: true
              
           },
+          'tagOpportunity':{
+              url:'api/opportunity-master-learn',
+              method:'GET',
+             isArray: true
+            
+         },
         });
 
 

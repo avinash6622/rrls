@@ -31,7 +31,7 @@
          <tr>
              <th></th>
 
-                    <th><span>Subject</span> <button class="btn btn-md btn-warning pull-right"
+                    <th><span>Learning</span> <button class="btn btn-md btn-warning pull-right"
 		type="button" ng-click="addLearning()"  has-authority="Admin">Add Learning</button></th>
                  </tr>
             </thead>       
@@ -52,7 +52,7 @@
  
    <multiple-autocomplete ng-model="fixed.opportunityMaster" 
      object-property="oppName"
-     suggestions-arr="vm.opportunityMasters" after-select-item="afterSelectItem" click-selected="clickTaggedOpportunity">
+     suggestions-arr="vm.opportunityMasters" after-remove-item="afterSelectItem" click-selected="clickTaggedOpportunity">
 </multiple-autocomplete>
    <button class="btn btn-md btn-primary" ng-show="vm.edit" ng-click="vm.fixedMap(fixed)">Save</button>           			
      </td> </tr>

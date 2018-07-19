@@ -35,6 +35,10 @@ public class FixedLearning extends AbstractAuditingEntity implements Serializabl
 	@Transient
 	@JsonProperty
 	private List<OpportunityMaster> opportunityMaster;
+	
+	@Transient
+	@JsonProperty
+	private List<OpportunityMaster> removeOpportunityMaster;
 
 	public Long getId() {
 		return id;
@@ -66,5 +70,11 @@ public class FixedLearning extends AbstractAuditingEntity implements Serializabl
 
 	public void setOpportunityMaster(List<OpportunityMaster> opportunityMaster) {
 		this.opportunityMaster = opportunityMaster;
+	}
+	public List<OpportunityMaster> getRemoveOpportunityMaster() {
+		return removeOpportunityMaster;
+	}
+	public void setRemoveOpportunityMaster(List<OpportunityMaster> removeOpportunityMaster) {
+		this.removeOpportunityMaster = removeOpportunityMaster;
 	}
 }

@@ -21,11 +21,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
+import com.unify.rrls.domain.FixedLearning;
+import com.unify.rrls.domain.FixedLearningMapping;
 import com.unify.rrls.domain.OpportunityLearning;
+import com.unify.rrls.repository.FixedLearningMappingRepository;
+import com.unify.rrls.repository.FixedLearningRepository;
 import com.unify.rrls.repository.OpportunityLearningRepository;
 import com.unify.rrls.web.rest.util.HeaderUtil;
 import com.unify.rrls.web.rest.util.PaginationUtil;
@@ -38,6 +41,8 @@ import io.swagger.annotations.ApiParam;
 public class OpportunityLearningResource {
 
 	private final OpportunityLearningRepository opportunityLearningRepository;
+	private final FixedLearningRepository fixedLearningRepository;
+	private final FixedLearningMappingRepository fixedLearningMappingRepository;
 
 	private final Logger log = LoggerFactory.getLogger(OpportunityQuestionResource.class);
 
@@ -50,8 +55,11 @@ public class OpportunityLearningResource {
 	  UserResource userResource;
 
 
-	public OpportunityLearningResource(OpportunityLearningRepository opportunityLearningRepository) {
+	public OpportunityLearningResource(OpportunityLearningRepository opportunityLearningRepository,
+			FixedLearningRepository fixedLearningRepository,FixedLearningMappingRepository fixedLearningMappingRepository) {
 		this.opportunityLearningRepository = opportunityLearningRepository;
+		this.fixedLearningRepository=fixedLearningRepository;
+		this.fixedLearningMappingRepository=fixedLearningMappingRepository;
 	}
 
 
@@ -66,13 +74,22 @@ public class OpportunityLearningResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists",
                 "A new OpportunityLearning cannot already have an ID")).body(null);
         }
-
+        
         String sDescription=opportunityLearning.getDescription().replaceAll("////", "\\");
         opportunityLearning.setDescription(sDescription);
         opportunityLearning.setOppName(opportunityLearning.getOpportunityMaster().getMasterName().getOppName());
 
         OpportunityLearning result = opportunityLearningRepository.save(opportunityLearning);
-
+        
+        /* To store fixed learning before tagging*/
+        FixedLearning fixedLearning=fixedLearningRepository.findBySubject(result.getSubject());
+        if(fixedLearning!=null){
+        FixedLearningMapping fixedLearningMapping=new FixedLearningMapping();
+        fixedLearningMapping.setOpportunityMaster(opportunityLearning.getOpportunityMaster());
+        fixedLearningMapping.setFixedLearning(fixedLearning); 
+        fixedLearningMappingRepository.save(fixedLearningMapping);
+        }
+        
         String page="Opportunity";
         String subContent="Learning:"+opportunityLearning.getSubject();
 
@@ -166,4 +183,4 @@ public class OpportunityLearningResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
-}
+ }

@@ -9,6 +9,8 @@ import com.unify.rrls.domain.FixedLearning;
 @Repository
 public interface FixedLearningRepository extends JpaRepository<FixedLearning, Long>  {
 	
+	FixedLearning findBySubject(String name);
+	
 	
 
 }

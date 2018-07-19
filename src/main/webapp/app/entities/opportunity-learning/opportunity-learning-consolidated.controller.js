@@ -17,7 +17,7 @@
 		var vm = this;
 		
 		vm.fixedLearnings = [];
-		vm.opportunityMasters = [];
+		vm.opportunityMasters = [];		
 		vm.loadPage = loadPage;		
 		vm.itemsPerPage = paginationConstants.itemsPerPage;	
 		vm.predicate = pagingParams.predicate;		
@@ -58,7 +58,9 @@
 			});
 		}
 		function fixedMap(selectedList) {
-			console.log('log', selectedList);
+			console.log(vm.remove)
+			selectedList.removeOpportunityMaster=vm.remove;
+			console.log('afterList',selectedList);
 
 			FixedLearning.update(selectedList, function(response) {
 				console.log(response);
@@ -78,7 +80,8 @@
 		};
 		
 		$scope.afterSelectItem = function(item) {
-			console.log(item);
+			console.log('Remove',item);
+			
 		}
 		
 		  $scope.addLearning = function () {
@@ -164,7 +167,7 @@
 				sort : sort()
 			}, onSuccessFixed, onError);
 		
-			OpportunityMaster.queryOpportunity(onSuccess3, onError);
+			OpportunityMaster.tagOpportunity(onSuccess3, onError);
 
 		}
 		
