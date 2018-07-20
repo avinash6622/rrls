@@ -66,7 +66,7 @@
 				console.log(response);
 
 			});
-			vm.edit = false;
+			//vm.edit = false;
 		}
 		
 		function selectedItem(val1) {
