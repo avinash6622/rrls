@@ -6,56 +6,58 @@
 <div class="model-body learning-modal">
 	<div class="row"
 		style="height: 550px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
-		<div class="col-md-12">	
-		
-			<!-- <div ng-repeat="learn in $ctrl.learnings"> -->
+		<div class="col-md-12">
 
-				<!-- <div class="panel panel-default">
-					<div class="panel-heading">
-						<strong>Learning {{$index+1}}: </strong>{{learn.subject}}
-					</div>
-					<div class="panel-body">
-						<p ng-bind-html="learn.description"></p>
-					</div>
-				</div> -->
+
+			<uib-accordion close-others="true" id="closeExpanded">
+			<div uib-accordion-group ng-repeat="learn in $ctrl.learnings"
+				class="panel-default" is-open="status.open">
+				<uib-accordion-heading>
+				<strong>{{learn.subject}}</strong> <i class="pull-right glyphicon"
+					ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i></uib-accordion-heading>
+
+				<span ng-bind-html="learn.description"></span>
+				<button class="btn btn-md btn-warning pull-right" type="button"
+					ng-show="($ctrl.account.login === $ctrl.opportunityMaster.createdBy || $ctrl.account.authorities[0]=='Master') && !$ctrl.editLearning"
+					ng-click="$ctrl.display(learn); $ctrl.editLearning=true">Edit</button>
 				
-				 <uib-accordion close-others="true">
-    <div uib-accordion-group  ng-repeat="learn in $ctrl.learnings" class="panel-default" is-open="status.open">
-    <uib-accordion-heading><strong>{{learn.subject}}</strong>
-     <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i></uib-accordion-heading>
-   
-     <span ng-bind-html="learn.description"></span>
-     <button class="btn btn-md btn-warning pull-right"
-		type="button"  ng-show="($ctrl.account.login === $ctrl.opportunityMaster.createdBy || $ctrl.account.authorities[0]=='Master') && !$ctrl.editLearning" ng-click="$ctrl.display(learn); $ctrl.editLearning=true">Edit</button>
-	<button class="btn btn-md btn-warning pull-right"
-		type="button"  ng-show="$ctrl.editLearning" ng-click="$ctrl.modifiedLearn($ctrl.updateLearning,$index); $ctrl.editLearning=false">Save</button>
-   <div ng-show="$ctrl.editLearning">
-<input type="text" class="form-control" name="subject"
-				ng-model=" $ctrl.updateLearning.subject" ng-disabled="true">
-				
-			<div ckeditor="ckOptionsUpdate" ng-model="$ctrl.updateLearning.description"
-				ready="onReady()" ng-change="changeCKeditor()"></div>
- </div>
-    </div>
-    </uib-accordion>
-			<!-- </div> -->
-	<div></div>
-			<button class="btn btn-md btn-warning"
-		type="button" ng-click="$ctrl.showLearning=true" ng-show="$ctrl.learnings.length !== 0 && ($ctrl.account.login === $ctrl.opportunityMaster.createdBy || $ctrl.account.authorities[0]=='Master')">Add Learning</button>
+				<div ng-show="$ctrl.editLearning">
+					<input type="text" class="form-control" name="subject"
+						ng-model=" $ctrl.updateLearning.subject" ng-disabled="true">
+
+					<div ckeditor="ckOptionsUpdate"
+						ng-model="$ctrl.updateLearning.description" ready="onReady()"
+						ng-change="changeCKeditor()"></div>
+				</div>
+				<button class="btn btn-md btn-warning pull-right" type="button"
+					ng-show="$ctrl.editLearning"
+					ng-click="$ctrl.modifiedLearn($ctrl.updateLearning,$index); $ctrl.editLearning=false">Save</button>
+			</div>
+			</uib-accordion>			
+			<div></div>
+			<button class="btn btn-md btn-warning" type="button"
+				ng-click="$ctrl.showLearning=true; status.open = false;"
+				ng-show="$ctrl.learnings.length !== 0 && ($ctrl.account.login === $ctrl.opportunityMaster.createdBy || $ctrl.account.authorities[0]=='Master') && !$ctrl.editLearning">Add
+				Learning</button>
 			<!-- <input type="text" class="form-control" name="subject"
 				placeholder="Enter Subject" ng-model="$ctrl.subject" ng-show="($ctrl.showLearning || $ctrl.learnings.length==0) && ($ctrl.account.login === $ctrl.opportunityMaster.createdBy || $ctrl.account.authorities[0]=='Master')">
 				 -->
-				 	<select ng-model="$ctrl.subject" class="form-control" ng-change="getselectval()" ng-show="($ctrl.showLearning || $ctrl.learnings.length==0) && ($ctrl.account.login === $ctrl.opportunityMaster.createdBy || $ctrl.account.authorities[0]=='Master')">
+			<select ng-model="$ctrl.subject" class="form-control"
+				ng-change="getselectval()"
+				ng-show="($ctrl.showLearning || $ctrl.learnings.length==0) && ($ctrl.account.login === $ctrl.opportunityMaster.createdBy || $ctrl.account.authorities[0]=='Master')">
 				<option ng-repeat="x in $ctrl.subjects">{{x.subject}}</option>
 			</select>
-				<div ng-show="($ctrl.showLearning || $ctrl.learnings.length==0) && ($ctrl.account.login === $ctrl.opportunityMaster.createdBy || $ctrl.account.authorities[0]=='Master')">
-			<div ckeditor="ckOptionsAdd" ng-model="$ctrl.description"
-				ready="onReady()" ng-change="changeCKeditor()"></div></div>
-		</div></div>
+			<div
+				ng-show="($ctrl.showLearning || $ctrl.learnings.length==0) && ($ctrl.account.login === $ctrl.opportunityMaster.createdBy || $ctrl.account.authorities[0]=='Master') && !$ctrl.editLearning">
+				<div ckeditor="ckOptionsAdd" ng-model="$ctrl.description"
+					ready="onReady()" ng-change="changeCKeditor()"></div>
+			</div>
+		</div>
 	</div>
+</div>
 <div class="modal-footer">
 	<button class="btn btn-md btn-primary" ng-click="$ctrl.save()"
-		ng-disabled="">Submit</button>
+		ng-show="$ctrl.learnings.length !== 0 && ($ctrl.account.login === $ctrl.opportunityMaster.createdBy || $ctrl.account.authorities[0]=='Master') && !$ctrl.editLearning">Submit</button>
 	<button class="btn btn-md btn-warning" data-dismiss="modal"
 		type="button" ng-click="$ctrl.clear()">Cancel</button>
 </div>

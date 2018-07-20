@@ -44,6 +44,12 @@
               
           };
           
+  $scope.clps = function () {
+	  $ctrl.showLearning=true;
+	 var e1= document.getElementById(closeExpanded)
+	 e1.setAttribute('aria-expanded', 'false');
+          };
+          
     	  $scope.$on('authenticationSuccess', function() {
               getAccount();
           });
