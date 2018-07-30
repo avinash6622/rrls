@@ -1,0 +1,56 @@
+<style>
+
+    .col-xs-3 .btn{
+        padding:2px !important;
+        padding-right: 4px !important;
+
+    }
+    .page-header{
+         padding-bottom: 0px!important;
+         border-bottom: 0px !important;
+}
+</style>
+
+<div>
+    <div class="well">
+
+        <div class="page-header" style="margin:0">
+            <div class="row">
+                <div class="col-md-6"><h4 style="margin-top:0;"><span><strong>External RA</strong></span></h4></div>
+                <div class="pull-right">
+                    <div class="col-xs-3">
+                        <button type="submit"
+                                ui-sref="external-research"
+                                class="btn btn-info">
+                            <span class="glyphicon glyphicon-arrow-left"></span><span>Back</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        
+         <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Name:</span></dt>
+        <dd>
+            <span>{{vm.externalResearch.name}}</span>          
+        </dd>
+        <dt><span>Sector Type:</span></dt>
+        <dd>{{vm.externalResearch.sectorType}}</dd>      
+        <dt><span>Email Id:</span></dt>
+        <dd>{{vm.externalResearch.emailId}}</dd>     
+        <dt><span>Contact No</span></dt>
+        <dd>{{vm.externalResearch.contactNo}}</dd>
+        <dt><span>Address:</span></dt>
+        <dd>{{vm.externalResearch.address }}</dd>
+        <dt><span>Description</span></dt>
+        <dd>{{vm.externalResearch.description}}</dd>       
+    </dl>  
+      
+
+</div>
+</div>
+    <footer class="footer footer-dark" ng-cloak>
+        <p data-translate="footer" style="font-size: 12px;margin-left: 9px">&copy;{{currentYear}}, All rights reserved.</p>
+    </footer>
+
+</div>

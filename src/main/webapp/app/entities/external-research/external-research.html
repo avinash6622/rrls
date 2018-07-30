@@ -1,0 +1,96 @@
+<style>
+    .col-xs-3 .btn{
+    padding:0px !important;
+
+}
+    .col-xs-3{
+        padding-right: 0px !important;
+    }
+
+</style>
+
+
+
+<div>
+    <div class="well">
+
+
+    <jhi-alert></jhi-alert>
+
+        <div>
+        <div class="row">
+<!--            <div class="col-xs-2">
+                <button class="btn btn-primary" ui-sref="strategy-master.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span>
+                        Create New Strategy
+                    </span>
+                </button>
+            </div>-->
+
+        </div>
+    </div>
+       <!-- <div style="margin-bottom: 5px"></div>-->
+
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
+
+                    <th jh-sort-by="strategyName"><span>Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="aum"><span>Sector</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    
+                    <th>
+                        <div class="pull-right">
+                        <div class="col-xs-3">
+                            <button class="btn btn-primary" ui-sref="external-research.new" has-any-authority="Research,Master">
+                                <span></span>
+                                <span style="padding: 10px">Create New External Research</span>
+                            </button>
+                        </div>
+                        </div>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+                <tr ng-repeat="externalResearch in vm.externalResearch track by externalResearch.id">
+
+                    <td><button type="submit"
+                                      ui-sref="external-research.edit({id:externalResearch.id})"
+                                      class="btn btn-primary btn-sm"
+                                      tooltip="edit"
+                                      tooltip-placement="bottom" has-any-authority="Research,Master">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        <span class="hidden-sm-down"></span>
+                    </button> <a ui-sref="external-research-detail({id:externalResearch.id})">{{externalResearch.name}}</a></td>
+                    <td>{{externalResearch.sectorType}}</td>
+
+                    
+
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                      
+                        </div>
+                    </td>
+                </tr>
+             
+            </tbody>
+
+
+        </table>
+
+</div>
+   <div class="text-center" style="margin-bottom: -5px">
+
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+    </div>
+    <footer class="footer footer-dark" ng-cloak>
+        <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.</p>
+    </footer>
+
+</div>
+
+
