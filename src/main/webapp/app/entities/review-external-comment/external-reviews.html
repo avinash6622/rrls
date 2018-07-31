@@ -22,7 +22,7 @@
                             <div class="comment-content">
                                 {{review.reviewText}}
                             </div>
-                            <textarea ng-show="showTextArea" placeholder="Enter your answer" ng-model="$ctrl.answerText" style="width:70%; float:left;"></textarea>
+                            <textarea ng-show="showTextArea" placeholder="Enter your Reply" ng-model="$ctrl.answerText" style="width:70%; float:left;"></textarea>
                             <button ng-show="showTextArea" class="btn btn-sm btn-primary" style="margin-left: 3px;" ng-click="$ctrl.answerSubmit(review, null, $index,null);showTextArea = false;">Submit</button>
                             <button  ng-show="showTextArea" class="btn btn-sm btn-warning" ng-click="showTextArea=false">Cancel</button>
 
@@ -31,7 +31,7 @@
                     <div  ng-repeat="answer in review.reviewExternalList">
                         <ul class="comments-list reply-list">
 
-                            <li ng-class="{['level-' + ($index < 3 ? ''+$index: '3')]: answer.replyComment !== null}" class="answer-list">
+                            <li ng-class="{['level-' + ($index < 3 ? ''+$index: '3')]: answer.replyReview !== null}" class="answer-list">
                                 <div class="comment-box">
 
                                     <div>
@@ -65,7 +65,7 @@
 
 
 <div class="modal-footer">
-    <textarea ng-model="$ctrl.comment" placeholder="Enter comments" style="width:80%; float:left;"></textarea>
+    <textarea ng-model="$ctrl.comment" placeholder="Enter your Reviews" style="width:80%; float:left;"></textarea>
     <button class="btn btn-md btn-primary" ng-click="$ctrl.save()"
             ng-disabled="" >Submit</button>
     <button class="btn btn-md btn-warning" data-dismiss="modal" type="button" ng-click="$ctrl.clearDialog()">Cancel</button>

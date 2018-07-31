@@ -16,11 +16,17 @@
 
         <div class="page-header" style="margin:0">
             <div class="row">
-                <div class="col-md-12"><h4 style="margin-top:0;"><span><strong>External RA</strong></span></h4>
+                <div class="col-md-12"><h4 style="margin-top:0;"><span><strong>{{vm.externalResearch.name}}</strong></span></h4>
                 <div class="pull-right" style="margin-top:-10px;">
                   
         			<button type="button" ng-click="review('Approved')" class="btn btn-md btn-primary" ng-disabled="vm.mydisable">
                   <span class="hidden-sm-down"> Reviews</span>
+                </button>
+                     <button type="button"
+                        ui-sref="external-research.edit({id:vm.externalResearch.id})"
+                        class="btn btn-md btn-primary" has-authority="Admin">
+                    <span class="glyphicon glyphicon-pencil"></span> <span
+                    class="hidden-sm-down"> Edit</span>
                 </button>
                    
                         <button type="submit"
@@ -35,19 +41,19 @@
         </div> 
         
          <dl class="dl-horizontal jh-entity-details">
-        <dt><span>Name:</span></dt>
+       <!--  <dt><span>Name:</span></dt>
         <dd>
             <span>{{vm.externalResearch.name}}</span>          
-        </dd>
+        </dd> -->
         <dt><span>Sector Type:</span></dt>
         <dd>{{vm.externalResearch.sectorType}}</dd>      
         <dt><span>Email Id:</span></dt>
         <dd>{{vm.externalResearch.emailId}}</dd>     
-        <dt><span>Contact No</span></dt>
+        <dt><span>Contact No:</span></dt>
         <dd>{{vm.externalResearch.contactNo}}</dd>
         <dt><span>Address:</span></dt>
         <dd>{{vm.externalResearch.address }}</dd>
-        <dt><span>Description</span></dt>
+        <dt><span>Description:</span></dt>
         <dd>{{vm.externalResearch.description}}</dd>       
     </dl>  
       

@@ -6,6 +6,11 @@
     .col-xs-3{
         padding-right: 0px !important;
     }
+    .thbutton
+    {
+    width:10%
+    }
+    
 
 </style>
 
@@ -19,33 +24,24 @@
 
         <div>
         <div class="row">
-<!--            <div class="col-xs-2">
-                <button class="btn btn-primary" ui-sref="strategy-master.new" >
-                    <span class="glyphicon glyphicon-plus"></span>
-                    <span>
-                        Create New Strategy
-                    </span>
-                </button>
-            </div>-->
-
-        </div>
-    </div>
-       <!-- <div style="margin-bottom: 5px"></div>-->
+        </div></div>
 
     <div class="table-responsive">
         <table class="jh-table table table-striped">
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
 
-                    <th jh-sort-by="strategyName"><span>Name</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="aum"><span>Sector</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="name"><span>Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="sectorType"><span>Sector</span> <span class="glyphicon glyphicon-sort"></span></th>
+                      <th jh-sort-by="contactNo"><span>Contact No</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th jh-sort-by="emailId"><span>Email Id</span> <span class="glyphicon glyphicon-sort"></span></th>
                     
-                    <th>
+                    <th class="thbutton" has-authority="Admin">
                         <div class="pull-right">
                         <div class="col-xs-3">
-                            <button class="btn btn-primary" ui-sref="external-research.new" has-any-authority="Research,Master">
+                            <button class="btn btn-primary" ui-sref="external-research.new"> 
                                 <span></span>
-                                <span style="padding: 10px">Create New External Research</span>
+                                <span style="padding: 10px">Create New External Research Analyst</span>
                             </button>
                         </div>
                         </div>
@@ -60,11 +56,13 @@
                                       ui-sref="external-research.edit({id:externalResearch.id})"
                                       class="btn btn-primary btn-sm"
                                       tooltip="edit"
-                                      tooltip-placement="bottom" has-any-authority="Research,Master">
+                                      tooltip-placement="bottom" has-any-authority="Admin">
                         <span class="glyphicon glyphicon-pencil"></span>
                         <span class="hidden-sm-down"></span>
                     </button> <a ui-sref="external-research-detail({id:externalResearch.id})">{{externalResearch.name}}</a></td>
                     <td>{{externalResearch.sectorType}}</td>
+                     <td>{{externalResearch.contactNo}}</td>
+                      <td>{{externalResearch.emailId}}</td>
 
                     
 
@@ -85,8 +83,8 @@
 
         <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
         <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
-    </div>
-    </div>
+    </div></div>
+    
     <footer class="footer footer-dark" ng-cloak>
         <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.</p>
     </footer>

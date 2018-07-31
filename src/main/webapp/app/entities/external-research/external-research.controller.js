@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('ExternalResearchAnalystController', ExternalResearchAnalystController);
 
-    ExternalResearchAnalystController.$inject = ['ExternalResearchAnalyst', 'ParseLinks', 'AlertService', 'paginationConstants','$scope','$filter','pagingParams'];
+    ExternalResearchAnalystController.$inject = ['ExternalResearchAnalyst', 'ParseLinks', 'AlertService', 'paginationConstants','$scope','$filter','pagingParams','$state','$sce'];
 
-    function ExternalResearchAnalystController(ExternalResearchAnalyst, ParseLinks, AlertService, paginationConstants,$scope,$filter,pagingParams) {
+    function ExternalResearchAnalystController(ExternalResearchAnalyst, ParseLinks, AlertService, paginationConstants, $scope, $filter, pagingParams, $state, $sce) {
 
         var vm = this;
 
@@ -24,7 +24,7 @@
        vm.reset = reset;
       //  vm.reverse = true;
         vm.transition = transition;
-        vm.itemsValue = 'external RA';
+        vm.itemsValue = 'External Research';
 
         vm.loadAll();
 
@@ -62,7 +62,7 @@
             }
 
 
-        }      
+              
 
 
         function reset () {
@@ -84,5 +84,5 @@
             });
         }
     }
-)();
+})();
 
