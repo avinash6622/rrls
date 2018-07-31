@@ -2,6 +2,7 @@ package com.unify.rrls.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,9 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 import com.unify.rrls.domain.ExternalResearchAnalyst;
-import com.unify.rrls.domain.OpportunitySummaryData;
-import com.unify.rrls.domain.StrategyMaster;
+import com.unify.rrls.domain.ReplyReview;
+import com.unify.rrls.domain.ReviewExternal;
 import com.unify.rrls.repository.ExternalResearchAnalystRepository;
+import com.unify.rrls.repository.ReplyReviewRepository;
+import com.unify.rrls.repository.ReviewExternalRepository;
 import com.unify.rrls.web.rest.util.HeaderUtil;
 import com.unify.rrls.web.rest.util.PaginationUtil;
 
@@ -48,10 +51,15 @@ public class ExternalResearchAnalystResource {
     private static final String ENTITY_NAME = "externalResearch";
     @Autowired
     private final ExternalResearchAnalystRepository externalResearchAnalystRepository;
+    private final ReviewExternalRepository reviewExternalRepository;
+    private final ReplyReviewRepository replyReviewRepository;
   
 
-    public ExternalResearchAnalystResource(ExternalResearchAnalystRepository externalResearchAnalystRepository) {
+    public ExternalResearchAnalystResource(ExternalResearchAnalystRepository externalResearchAnalystRepository,
+    		ReviewExternalRepository reviewExternalRepository,ReplyReviewRepository replyReviewRepository) {
         this.externalResearchAnalystRepository = externalResearchAnalystRepository;
+        this.reviewExternalRepository=reviewExternalRepository;
+        this.replyReviewRepository=replyReviewRepository;
        
     }
 
@@ -123,6 +131,23 @@ public class ExternalResearchAnalystResource {
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(externalResearchAnalyst));
     }
 
-  
+	@GetMapping("/external-research/get-reviews/{id}")
+	@Timed
+	public ResponseEntity<List<ReviewExternal>> getReviews(@PathVariable Integer id) {
+		log.debug("REST request to get OpportunityMaster : {}", id);
+
+		ExternalResearchAnalyst externalResearchAnalysts = externalResearchAnalystRepository.findOne(id);
+		List<ReviewExternal> reviewExternal = reviewExternalRepository.findByExternalResearchAnalyst(externalResearchAnalysts);
+		List<ReviewExternal> commentReply = new ArrayList<>();
+		List<ReplyReview> replyreviews;
+
+		for (ReviewExternal comment : reviewExternal) {
+			replyreviews = replyReviewRepository.findByReviewExternal(comment);
+			comment.setReviewExternalList(replyreviews);
+			commentReply.add(comment);
+		}
+
+		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(commentReply));
+	}
    
 }
