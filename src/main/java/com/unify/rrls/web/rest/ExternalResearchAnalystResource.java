@@ -25,12 +25,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
+import com.unify.rrls.domain.ExternalRASector;
 import com.unify.rrls.domain.ExternalResearchAnalyst;
+import com.unify.rrls.domain.OpportunityMaster;
+import com.unify.rrls.domain.OpportunitySector;
 import com.unify.rrls.domain.ReplyReview;
 import com.unify.rrls.domain.ReviewExternal;
+import com.unify.rrls.repository.ExternalRASectorRepository;
 import com.unify.rrls.repository.ExternalResearchAnalystRepository;
+import com.unify.rrls.repository.OpportunitySectorRepository;
 import com.unify.rrls.repository.ReplyReviewRepository;
 import com.unify.rrls.repository.ReviewExternalRepository;
+import com.unify.rrls.security.SecurityUtils;
 import com.unify.rrls.web.rest.util.HeaderUtil;
 import com.unify.rrls.web.rest.util.PaginationUtil;
 
@@ -53,13 +59,18 @@ public class ExternalResearchAnalystResource {
     private final ExternalResearchAnalystRepository externalResearchAnalystRepository;
     private final ReviewExternalRepository reviewExternalRepository;
     private final ReplyReviewRepository replyReviewRepository;
+    private final ExternalRASectorRepository externalRASectorRepository;
+    private final OpportunitySectorRepository opportunitySectorRepository;
   
 
     public ExternalResearchAnalystResource(ExternalResearchAnalystRepository externalResearchAnalystRepository,
-    		ReviewExternalRepository reviewExternalRepository,ReplyReviewRepository replyReviewRepository) {
+    		ReviewExternalRepository reviewExternalRepository,ReplyReviewRepository replyReviewRepository,
+    		ExternalRASectorRepository externalRASectorRepository,OpportunitySectorRepository opportunitySectorRepository) {
         this.externalResearchAnalystRepository = externalResearchAnalystRepository;
         this.reviewExternalRepository=reviewExternalRepository;
         this.replyReviewRepository=replyReviewRepository;
+        this.externalRASectorRepository=externalRASectorRepository;
+        this.opportunitySectorRepository=opportunitySectorRepository;
        
     }
 
@@ -73,7 +84,13 @@ public class ExternalResearchAnalystResource {
         }
         
         ExternalResearchAnalyst result=externalResearchAnalystRepository.save(externalResearchAnalyst);
-       
+         for(ExternalRASector es:externalResearchAnalyst.getExternalRASector())
+         {
+        	 ExternalRASector sectorSave = new ExternalRASector();
+        	 sectorSave.setExternalResearchAnalyst(result);
+        	 sectorSave.setSector(es.getSector());
+        	 externalRASectorRepository.save(sectorSave);
+         }
        return ResponseEntity.created(new URI("/api/external-research/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -148,6 +165,16 @@ public class ExternalResearchAnalystResource {
 		}
 
 		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(commentReply));
+	}
+	
+	@GetMapping("/external-research-sector")
+	@Timed
+	public ResponseEntity<List<OpportunitySector>> getOpportunitySectorList() {
+	
+	    List<OpportunitySector> opportunitySector = opportunitySectorRepository.findAll();  
+	
+	    HttpHeaders headers=new HttpHeaders();
+	    return new ResponseEntity<List<OpportunitySector>>(opportunitySector, headers, HttpStatus.OK);
 	}
    
 }

@@ -170,6 +170,15 @@ public class UserResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
+    
+    @GetMapping("/users-All")
+    @Timed
+    public ResponseEntity<List<User>> getAllUsersName() {
+         List<User> page = userRepository.findAll();
+        System.out.println("GET DETAILS users---->"+page);
+        HttpHeaders headers = new HttpHeaders();
+        return new ResponseEntity<>(page, headers, HttpStatus.OK);
+    }
 
     /**
      * @return a string list of the all of the roles

@@ -1,6 +1,7 @@
 package com.unify.rrls.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -40,6 +42,9 @@ public class ExternalResearchAnalyst  extends AbstractAuditingEntity implements 
 	
 	@Column(name = "description")
 	private String description;
+	
+	@Transient
+	private List<ExternalRASector> externalRASector;
 
 	public Integer getId() {
 		return id;
@@ -97,5 +102,11 @@ public class ExternalResearchAnalyst  extends AbstractAuditingEntity implements 
 		this.sectorType = sectorType;
 	}	
 	
+	public List<ExternalRASector> getExternalRASector() {
+		return externalRASector;
+	}
+	public void setExternalRASector(List<ExternalRASector> externalRASector) {
+		this.externalRASector = externalRASector;
+	}
 	
 }

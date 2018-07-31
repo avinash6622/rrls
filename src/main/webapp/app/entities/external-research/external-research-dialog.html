@@ -32,11 +32,11 @@
         </div>
         
         <div class="form-group" ng-show="!vm.externalResearch.id">
-
-            <input type="text" class="form-control" name="sectorType" id="field_sectorType"
-                   ng-model="vm.externalResearch.sectorType"  auto-complete="vm.autoCompleteOptions"
-                   placeholder="Sector"/>
-     
+   
+   <multiple-autocomplete ng-model="vm.externalResearch.externalRASector" 
+     object-property="sectorName"
+     suggestions-arr="vm.autoCompleteOptions" after-remove-item="afterSelectItem" click-selected="clickTaggedOpportunity">
+</multiple-autocomplete>
         </div>
         
         <div class="form-group" ng-show="vm.externalResearch.id">
