@@ -62,21 +62,42 @@
      
         </div>
         
-         <div class="form-group" ng-show="vm.externalResearch.id">
+        <!--  <div class="form-group" ng-show="vm.externalResearch.id">
 
             <input type="text" class="form-control" name="contactNo" id="field_contactNo"
                    ng-model="vm.externalResearch.contactNo"
                    placeholder="Contact No"/>
      
+        </div> -->
+        
+          <div class="form-group">
+
+                    <label for="field_oppcontactName">Contact Details</label><br>
+           <fieldset ng-repeat="contact in vm.externalResearch.externalRAContacts" class="fieldContact">           
+
+	            <div class="col-xs-2">
+	                <input class="form-control contactText" name="field_oppcontactNo" id="field_oppcontactNo" type="text" placeholder="Contact No" ng-model="contact.contactNo">
+	            
+	            </div>
+	            <div class="col-xs-1 deleteContact">
+				<button class="btn btn-default" ng-click="removeContact(contact)">X</button></div>
+             </fieldset>
+     
+			     <!--   <fieldset ng-repeat="contact in vm.externalResearch.externalRAContacts" 
+			       style="display: inline-block;vertical-align: top;">           
+			
+			            <div class="col-xs-2">
+			                <input class="form-control" name="field_oppcontactNo" id="field_oppcontactNo" type="text" placeholder="Contact Number" ng-model="contact.contactNo" style="width: 105px !important;"> 
+			            </div>
+			            <div class="col-xs-1" style="margin-left: 60px;">
+							<button class="btn btn-default" ng-click="removeContact(contact)">X</button></div>
+             		</fieldset> -->
+           
         </div>
         
-          <div class="form-group" ng-show="!vm.externalResearch.id">
+         <div class="form-group"><button type="button" ng-click="addContact()" style="padding: 2px;padding-right:4px" class="btn btn-primary">Add Contact</button></div>
 
-            <input type="text" class="form-control" name="contactNo" id="field_contactNo"
-                   ng-model="vm.externalResearch.contactNo"
-                   placeholder="Contact No"/>
-     
-        </div>
+        
         
          <div class="form-group" ng-show="!vm.externalResearch.id">
 

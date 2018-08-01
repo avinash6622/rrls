@@ -474,3 +474,14 @@ table tr:focus, table tr:active {
 .addReview{
 	   padding: 0px 0px 0px 10px !important
 }
+.fieldContact{
+	display: inline-block;
+	vertical-align: top;
+}
+.contactText{
+	width: 105px !important;
+}
+.deleteContact{
+	margin-left: 60px;
+}
+}

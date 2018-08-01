@@ -54,7 +54,12 @@
         <dt><span>Email Id:</span></dt>
         <dd>{{vm.externalResearch.emailId}}</dd>     
         <dt><span>Contact No:</span></dt>
-        <dd>{{vm.externalResearch.contactNo}}</dd>
+        <dd>
+         <ul class="list-unstyled">
+                <li ng-repeat="contacts in vm.externalResearch.externalRAContacts">
+                    <span >{{contacts.contactNo}}</span>
+                </li>
+            </ul></dd>
         <dt><span>Address:</span></dt>
         <dd>{{vm.externalResearch.address }}</dd>
         <dt><span>Description:</span></dt>

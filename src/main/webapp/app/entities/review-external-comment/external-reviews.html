@@ -26,12 +26,12 @@
                                <span ng-bind-html="review.reviewText"></span>
                             </div>
                             <!-- <textarea ng-show="showTextArea" placeholder="Enter your Reply" ng-model="$ctrl.answerText" style="width:70%; float:left;"></textarea> -->
-                            <div ng-show="showTextArea">  <div ckeditor="ckOptionsUpdate"
-						ng-model="$ctrl.updateReview.reviewText" ready="onReady()"
-						ng-change="changeCKeditor()"></div></div>
                             <button ng-show="showTextArea" class="btn btn-sm btn-primary" style="margin-left: 3px;" ng-click="$ctrl.update($ctrl.updateReview,$index);showTextArea = false;">Save</button>
                             <button  ng-show="showTextArea" class="btn btn-sm btn-warning" ng-click="showTextArea=false">Cancel</button>
-
+                           <div ng-show="showTextArea">  <div ckeditor="ckOptionsUpdate"
+						ng-model="$ctrl.updateReview.reviewText" ready="onReady()"
+						ng-change="changeCKeditor()"></div></div>
+                           
                         </div>
                     </div>
                  
@@ -69,16 +69,17 @@
         </ul>
     </div>
     <div class="addReview">
-       <button class="btn btn-md btn-warning" type="button"
+       <button ng-if="!$ctrl.showLearning" class="btn btn-md btn-warning" type="button"
 				ng-click="$ctrl.showLearning=true;">Add	Reviews</button>
+		 <button class="btn btn-md btn-primary" ng-show="$ctrl.showLearning" ng-click="$ctrl.save()"
+            ng-disabled="" >Save</button>
                    <div ng-show="$ctrl.showLearning"> <div ckeditor="ckOptionsAdd" ng-model="$ctrl.comment"
 					ready="onReady()" ng-change="changeCKeditor()"></div></div></div>
 </div>
 
 
 <div class="modal-footer">
-    <button class="btn btn-md btn-primary" ng-click="$ctrl.save()"
-            ng-disabled="" >Submit</button>
+   
     <button class="btn btn-md btn-warning" data-dismiss="modal" type="button" ng-click="$ctrl.clearDialog()">Cancel</button>
 </div>
 

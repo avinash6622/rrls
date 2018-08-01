@@ -25,12 +25,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
+import com.unify.rrls.domain.ExternalRAContacts;
 import com.unify.rrls.domain.ExternalRASector;
 import com.unify.rrls.domain.ExternalResearchAnalyst;
 import com.unify.rrls.domain.OpportunityMaster;
 import com.unify.rrls.domain.OpportunitySector;
 import com.unify.rrls.domain.ReplyReview;
 import com.unify.rrls.domain.ReviewExternal;
+import com.unify.rrls.repository.ExternalRAContactsRepository;
 import com.unify.rrls.repository.ExternalRASectorRepository;
 import com.unify.rrls.repository.ExternalResearchAnalystRepository;
 import com.unify.rrls.repository.OpportunitySectorRepository;
@@ -61,16 +63,19 @@ public class ExternalResearchAnalystResource {
     private final ReplyReviewRepository replyReviewRepository;
     private final ExternalRASectorRepository externalRASectorRepository;
     private final OpportunitySectorRepository opportunitySectorRepository;
+    private final ExternalRAContactsRepository externalRAContactsRepository;
   
 
     public ExternalResearchAnalystResource(ExternalResearchAnalystRepository externalResearchAnalystRepository,
     		ReviewExternalRepository reviewExternalRepository,ReplyReviewRepository replyReviewRepository,
-    		ExternalRASectorRepository externalRASectorRepository,OpportunitySectorRepository opportunitySectorRepository) {
+    		ExternalRASectorRepository externalRASectorRepository,OpportunitySectorRepository opportunitySectorRepository,
+    		ExternalRAContactsRepository externalRAContactsRepository) {
         this.externalResearchAnalystRepository = externalResearchAnalystRepository;
         this.reviewExternalRepository=reviewExternalRepository;
         this.replyReviewRepository=replyReviewRepository;
         this.externalRASectorRepository=externalRASectorRepository;
         this.opportunitySectorRepository=opportunitySectorRepository;
+        this.externalRAContactsRepository=externalRAContactsRepository;
        
     }
 
@@ -90,6 +95,12 @@ public class ExternalResearchAnalystResource {
         	 sectorSave.setExternalResearchAnalyst(result);
         	 sectorSave.setSector(es);
         	 externalRASectorRepository.save(sectorSave);
+         }
+         for(ExternalRAContacts exc:externalResearchAnalyst.getExternalRAContacts()){
+        	 ExternalRAContacts externalRAContacts=new ExternalRAContacts();
+        	 externalRAContacts.setExternalResearchAnalyst(result);
+        	 externalRAContacts.setContactNo(exc.getContactNo());
+        	 externalRAContactsRepository.save(externalRAContacts);
          }
        return ResponseEntity.created(new URI("/api/external-research/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -125,6 +136,18 @@ public class ExternalResearchAnalystResource {
       	 sectorSave.setSector(es);
       	 externalRASectorRepository.save(sectorSave);
        }
+       List<ExternalRAContacts> listContacts=externalRAContactsRepository.findByExternalResearchAnalyst(externalResearchAnalyst);
+       for(ExternalRAContacts excc :listContacts)
+       {
+    	   externalRAContactsRepository.delete(excc); 
+       }
+       for(ExternalRAContacts exc :externalResearchAnalyst.getExternalRAContacts())
+       {
+    	   exc.setExternalResearchAnalyst(result);
+    	   externalRAContactsRepository.save(exc);
+       }
+      
+      
      
             return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, result.getId().toString()))
@@ -140,10 +163,21 @@ public class ExternalResearchAnalystResource {
     @GetMapping("/external-research")
     @Timed
     public ResponseEntity<List<ExternalResearchAnalyst>> getAllExternalResearch(@ApiParam Pageable pageable) {
-        log.debug("REST request to get a page of ExternalResearchAnalysts");
-      List<ExternalResearchAnalyst> listAll = externalResearchAnalystRepository.findAll();
-      System.out.println(listAll);
+        log.debug("REST request to get a page of ExternalResearchAnalysts");    
         Page<ExternalResearchAnalyst> page = externalResearchAnalystRepository.findAll(pageable);
+        List<ExternalRASector> externalRASectorMap = new ArrayList<ExternalRASector>();
+        List<ExternalRAContacts> externalRAContactsMap = new ArrayList<ExternalRAContacts>();
+        List<OpportunitySector> opportunitySectorMap;
+        for(ExternalResearchAnalyst exRa :page){
+        	opportunitySectorMap=new ArrayList<OpportunitySector>();
+        	externalRASectorMap=externalRASectorRepository.findByExternalResearchAnalyst(exRa);
+        	externalRAContactsMap=externalRAContactsRepository.findByExternalResearchAnalyst(exRa);
+        	exRa.setExternalRAContacts(externalRAContactsMap);
+        	for(ExternalRASector exSector:externalRASectorMap){
+        		opportunitySectorMap.add(exSector.getSector());
+        	}
+        	exRa.setOpportunitySector(opportunitySectorMap);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/external-research");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -160,7 +194,8 @@ public class ExternalResearchAnalystResource {
         for(ExternalRASector ex:exsa){
         	os.add(ex.getSector());
         }
-
+        List<ExternalRAContacts> listContacts=externalRAContactsRepository.findByExternalResearchAnalyst(externalResearchAnalyst);
+        externalResearchAnalyst.setExternalRAContacts(listContacts);
         externalResearchAnalyst.setOpportunitySector(os);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(externalResearchAnalyst));
     }

@@ -45,6 +45,10 @@ public class ExternalResearchAnalyst  extends AbstractAuditingEntity implements 
 	@Transient
 	@JsonProperty
 	private List<OpportunitySector> opportunitySector;
+	
+	@Transient
+	@JsonProperty
+	private List<ExternalRAContacts> externalRAContacts;
 
 	public Integer getId() {
 		return id;
@@ -102,7 +106,12 @@ public class ExternalResearchAnalyst  extends AbstractAuditingEntity implements 
 		this.opportunitySector = opportunitySector;
 	}
 
-	
-	
+	public List<ExternalRAContacts> getExternalRAContacts() {
+		return externalRAContacts;
+	}
+
+	public void setExternalRAContacts(List<ExternalRAContacts> externalRAContacts) {
+		this.externalRAContacts = externalRAContacts;
+	}	
 	
 }

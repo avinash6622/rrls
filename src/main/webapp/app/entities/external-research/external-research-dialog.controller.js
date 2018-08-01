@@ -12,6 +12,8 @@
 
         vm.externalResearch = entity;
         vm.opportunitySectors=[];
+        vm.externalResearch.externalRAContacts = vm.externalResearch.externalRAContacts ? vm.externalResearch.externalRAContacts
+				: [ {} ];
         vm.clear = clear;
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
@@ -65,6 +67,14 @@
                    // state.airport = e.item;
                }
            }
+       $scope.addContact = function() {
+    	   vm.externalResearch.externalRAContacts.push({})
+		}
+       $scope.removeContact = function(contactToRemove) {
+			var index = this.vm.externalResearch.externalRAContacts
+					.indexOf(contactToRemove);
+			this.vm.externalResearch.externalRAContacts.splice(index, 1);
+		}
         
         function save () {
             vm.isSaving = true;

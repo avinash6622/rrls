@@ -60,8 +60,12 @@
                         <span class="glyphicon glyphicon-pencil"></span>
                         <span class="hidden-sm-down"></span>
                     </button> <a ui-sref="external-research-detail({id:externalResearch.id})">{{externalResearch.name}}</a></td>
-                    <td>{{externalResearch.sectorType}}</td>
-                     <td>{{externalResearch.contactNo}}</td>
+                    <td><span ng-repeat="sector in externalResearch.opportunitySector">
+                   <div> {{sector.sectorName}}</div>
+                    </span></td>
+                     <td><span ng-repeat="contacts in externalResearch.externalRAContacts">
+                    <div>{{contacts.contactNo}}</div>
+                    </span></td>
                       <td>{{externalResearch.emailId}}</td>
 
                     
