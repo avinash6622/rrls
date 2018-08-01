@@ -5,14 +5,13 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('ReviewExternalController', ReviewExternalController);
 
-    ReviewExternalController.$inject = ['ReviewExternal','ReplyReview', 'ParseLinks', '$uibModalInstance', 'AlertService', 'paginationConstants', 'options','$filter','$scope'];
+    ReviewExternalController.$inject = ['ReviewExternal', 'ParseLinks', '$uibModalInstance', 'AlertService', 'paginationConstants', 'options','$filter','$scope'];
 
-    function ReviewExternalController(ReviewExternal,ReplyReview,ParseLinks, $uibModalInstance, AlertService, paginationConstants, options,$filter,$scope) {
+    function ReviewExternalController(ReviewExternal,ParseLinks, $uibModalInstance, AlertService, paginationConstants, options,$filter,$scope) {
 
         var $ctrl=this;
         $ctrl.clear = clear;
-        $ctrl.clearDialog = dialog;
-        $ctrl.answerSubmit=submit;
+        $ctrl.clearDialog = dialog;       
         $ctrl.save=save;
         $ctrl.display=display;
         $ctrl.updateReview='';
@@ -65,31 +64,7 @@
             $ctrl.answerText.clear();
             $uibModalInstance.dismiss('cancel');
         }
-        function submit(id, parentId, index,index1){
-            console.log(index);
-            console.log(parentId);
-            var name='Replied';
-            console.log('skdjk',id);
-
-            ReplyReview.save({replyText : $ctrl.answerText, reviewExternal :id, replyReview :parentId,commentStatuscol:name}, function(resp) {
-                console.log(resp);
-               if(index !== null) {
-                    if($ctrl.reviews[index].reviewExternalList !== null) {
-                        $ctrl.reviews[index].reviewExternalList.push(resp);
-                    } else {
-                        $ctrl.reviews[index].reviewExternalList = [];
-                        $ctrl.reviews[index].reviewExternalList.push(resp)
-                    }
-                }
-
-
-                $ctrl.answerText='';
-                console.log('answer',$ctrl.reviews);
-            }, function(err) {
-                console.log(err);
-            });
-
-        }
+     
         function load(){
             $ctrl.reviews;
         }

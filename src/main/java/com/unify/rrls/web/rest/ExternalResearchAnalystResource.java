@@ -28,17 +28,13 @@ import com.codahale.metrics.annotation.Timed;
 import com.unify.rrls.domain.ExternalRAContacts;
 import com.unify.rrls.domain.ExternalRASector;
 import com.unify.rrls.domain.ExternalResearchAnalyst;
-import com.unify.rrls.domain.OpportunityMaster;
 import com.unify.rrls.domain.OpportunitySector;
-import com.unify.rrls.domain.ReplyReview;
 import com.unify.rrls.domain.ReviewExternal;
 import com.unify.rrls.repository.ExternalRAContactsRepository;
 import com.unify.rrls.repository.ExternalRASectorRepository;
 import com.unify.rrls.repository.ExternalResearchAnalystRepository;
 import com.unify.rrls.repository.OpportunitySectorRepository;
-import com.unify.rrls.repository.ReplyReviewRepository;
 import com.unify.rrls.repository.ReviewExternalRepository;
-import com.unify.rrls.security.SecurityUtils;
 import com.unify.rrls.web.rest.util.HeaderUtil;
 import com.unify.rrls.web.rest.util.PaginationUtil;
 
@@ -60,19 +56,16 @@ public class ExternalResearchAnalystResource {
     @Autowired
     private final ExternalResearchAnalystRepository externalResearchAnalystRepository;
     private final ReviewExternalRepository reviewExternalRepository;
-    private final ReplyReviewRepository replyReviewRepository;
     private final ExternalRASectorRepository externalRASectorRepository;
     private final OpportunitySectorRepository opportunitySectorRepository;
     private final ExternalRAContactsRepository externalRAContactsRepository;
   
 
     public ExternalResearchAnalystResource(ExternalResearchAnalystRepository externalResearchAnalystRepository,
-    		ReviewExternalRepository reviewExternalRepository,ReplyReviewRepository replyReviewRepository,
-    		ExternalRASectorRepository externalRASectorRepository,OpportunitySectorRepository opportunitySectorRepository,
+    		ReviewExternalRepository reviewExternalRepository,ExternalRASectorRepository externalRASectorRepository,OpportunitySectorRepository opportunitySectorRepository,
     		ExternalRAContactsRepository externalRAContactsRepository) {
         this.externalResearchAnalystRepository = externalResearchAnalystRepository;
-        this.reviewExternalRepository=reviewExternalRepository;
-        this.replyReviewRepository=replyReviewRepository;
+        this.reviewExternalRepository=reviewExternalRepository;       
         this.externalRASectorRepository=externalRASectorRepository;
         this.opportunitySectorRepository=opportunitySectorRepository;
         this.externalRAContactsRepository=externalRAContactsRepository;
@@ -207,16 +200,9 @@ public class ExternalResearchAnalystResource {
 
 		ExternalResearchAnalyst externalResearchAnalysts = externalResearchAnalystRepository.findOne(id);
 		List<ReviewExternal> reviewExternal = reviewExternalRepository.findByExternalResearchAnalyst(externalResearchAnalysts);
-		List<ReviewExternal> commentReply = new ArrayList<>();
-		List<ReplyReview> replyreviews;
+		
 
-		for (ReviewExternal comment : reviewExternal) {
-			replyreviews = replyReviewRepository.findByReviewExternal(comment);
-			comment.setReviewExternalList(replyreviews);
-			commentReply.add(comment);
-		}
-
-		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(commentReply));
+		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(reviewExternal));
 	}
 	
 	@GetMapping("/external-research-sector")

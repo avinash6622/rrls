@@ -1,12 +1,19 @@
 package com.unify.rrls.domain;
 
 
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "reviews_external")
@@ -26,11 +33,7 @@ public class ReviewExternal extends AbstractAuditingEntity implements Serializab
     @ManyToOne
     @JoinColumn(name = "external_ra_id")
     private ExternalResearchAnalyst externalResearchAnalyst;
-
-    @OneToMany(mappedBy="reviewExternal")
-    private List<ReplyReview> reviewExternalList;
-
-
+ 
     public Long getId() {
         return id;
     }
@@ -55,12 +58,5 @@ public class ReviewExternal extends AbstractAuditingEntity implements Serializab
 		this.externalResearchAnalyst = externalResearchAnalyst;
 	}
 
-	public List<ReplyReview> getReviewExternalList() {
-		return reviewExternalList;
-	}
-
-	public void setReviewExternalList(List<ReplyReview> reviewExternalList) {
-		this.reviewExternalList = reviewExternalList;
-	}
 
 }
