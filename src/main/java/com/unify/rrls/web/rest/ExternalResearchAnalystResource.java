@@ -77,18 +77,18 @@ public class ExternalResearchAnalystResource {
    
     @PostMapping("/external-research")
     @Timed
-    public ResponseEntity<ExternalResearchAnalyst> createExternalResearchAnalyst(@Valid @RequestBody ExternalResearchAnalyst externalResearchAnalyst) throws URISyntaxException {
-        log.debug("REST request to save ExternalResearchAnalyst : {}", externalResearchAnalyst);
+    public ResponseEntity<ExternalResearchAnalyst> createExternalResearchAnalyst( @RequestBody ExternalResearchAnalyst externalResearchAnalyst) throws URISyntaxException {
+        log.debug("REST request to save ExternalResearchAnalyst : {}", externalResearchAnalyst.getOpportunitySector());
         if (externalResearchAnalyst.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new ExternalResearchAnalyst cannot already have an ID")).body(null);
         }
         
         ExternalResearchAnalyst result=externalResearchAnalystRepository.save(externalResearchAnalyst);
-         for(ExternalRASector es:externalResearchAnalyst.getExternalRASector())
+         for(OpportunitySector es:externalResearchAnalyst.getOpportunitySector())
          {
         	 ExternalRASector sectorSave = new ExternalRASector();
         	 sectorSave.setExternalResearchAnalyst(result);
-        	 sectorSave.setSector(es.getSector());
+        	 sectorSave.setSector(es);
         	 externalRASectorRepository.save(sectorSave);
          }
        return ResponseEntity.created(new URI("/api/external-research/" + result.getId()))
@@ -113,8 +113,20 @@ public class ExternalResearchAnalystResource {
             return createExternalResearchAnalyst(externalResearchAnalyst);
         }
        ExternalResearchAnalyst result = externalResearchAnalystRepository.save(externalResearchAnalyst);
-       
-        return ResponseEntity.ok()
+      
+       List<ExternalRASector> exsa=externalRASectorRepository.findByExternalResearchAnalyst(result);
+       for(ExternalRASector ex:exsa){
+          	externalRASectorRepository.delete(ex);
+          }
+       for(OpportunitySector es:externalResearchAnalyst.getOpportunitySector())
+       {
+      	 ExternalRASector sectorSave = new ExternalRASector();
+      	 sectorSave.setExternalResearchAnalyst(result);
+      	 sectorSave.setSector(es);
+      	 externalRASectorRepository.save(sectorSave);
+       }
+     
+            return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
@@ -143,8 +155,13 @@ public class ExternalResearchAnalystResource {
     public ResponseEntity<ExternalResearchAnalyst> getExternalResearchAnalyst(@PathVariable Integer id) {
         log.debug("REST request to get ExternalResearchAnalyst : {}", id);
         ExternalResearchAnalyst externalResearchAnalyst = externalResearchAnalystRepository.findOne(id);
+        List<ExternalRASector> exsa=externalRASectorRepository.findByExternalResearchAnalyst(externalResearchAnalyst);
+        List<OpportunitySector> os=new ArrayList<OpportunitySector>();
+        for(ExternalRASector ex:exsa){
+        	os.add(ex.getSector());
+        }
 
-       
+        externalResearchAnalyst.setOpportunitySector(os);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(externalResearchAnalyst));
     }
 

@@ -14,6 +14,8 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name = "external_research")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -28,9 +30,6 @@ public class ExternalResearchAnalyst  extends AbstractAuditingEntity implements 
 	@Column(name = "ext_name")
 	private String name;
 	
-	@Column(name="sector_type")
-	private String sectorType;
-	
 	@Column(name = "email_id")
 	private String emailId;
 	
@@ -44,7 +43,8 @@ public class ExternalResearchAnalyst  extends AbstractAuditingEntity implements 
 	private String description;
 	
 	@Transient
-	private List<ExternalRASector> externalRASector;
+	@JsonProperty
+	private List<OpportunitySector> opportunitySector;
 
 	public Integer getId() {
 		return id;
@@ -94,19 +94,15 @@ public class ExternalResearchAnalyst  extends AbstractAuditingEntity implements 
 		this.description = description;
 	}
 
-	public String getSectorType() {
-		return sectorType;
+	public List<OpportunitySector> getOpportunitySector() {
+		return opportunitySector;
 	}
 
-	public void setSectorType(String sectorType) {
-		this.sectorType = sectorType;
-	}	
+	public void setOpportunitySector(List<OpportunitySector> opportunitySector) {
+		this.opportunitySector = opportunitySector;
+	}
+
 	
-	public List<ExternalRASector> getExternalRASector() {
-		return externalRASector;
-	}
-	public void setExternalRASector(List<ExternalRASector> externalRASector) {
-		this.externalRASector = externalRASector;
-	}
+	
 	
 }

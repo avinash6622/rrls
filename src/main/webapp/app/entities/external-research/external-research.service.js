@@ -41,7 +41,11 @@
                     copy.createdDate = DateUtils.convertLocalDateToServer(copy.createdDate);
                     return angular.toJson(copy);
                 }
-            }
+            },
+            'multipleSector': {
+            	  url:'api/external-research-sector',
+            	method: 'GET',
+            	isArray: true},
         });
 
     }

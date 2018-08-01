@@ -14,6 +14,21 @@
                 method:'GET',
                 isArray: true
             },
+            'get':{
+            	url:'api/external-review/:id',
+                method:'GET'
+
+
+            },
+            'update':{
+            	url:'api/external-review',
+            	  method: 'PUT',
+                  transformRequest: function (data) {
+                      var copy = angular.copy(data);
+
+                      return angular.toJson(copy);
+                  }
+            },
             'save':{
                 url:'api/external-review',
                 method:'POST',

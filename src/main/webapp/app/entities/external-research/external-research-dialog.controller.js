@@ -11,6 +11,7 @@
         var vm = this;
 
         vm.externalResearch = entity;
+        vm.opportunitySectors=[];
         vm.clear = clear;
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
@@ -18,6 +19,8 @@
         vm.clear = clear;
         vm.selectedSector = null;
         vm.sectorType = '';
+        vm.loadAll = loadAll;	
+        vm.loadAll();
 
         var myDate = new Date();
         
@@ -65,7 +68,8 @@
         
         function save () {
             vm.isSaving = true;
-            if (vm.externalResearch.id !== null) {
+            console.log('list',vm.externalResearch);
+            if (vm.externalResearch.id !== null) {            	
             	ExternalResearchAnalyst.update(vm.externalResearch, onSaveSuccess, onSaveError);
             } else {
             	ExternalResearchAnalyst.save(vm.externalResearch, onSaveSuccess, onSaveError);
@@ -88,6 +92,21 @@
         function openCalendar (date) {
             vm.datePickerOpenStatus[date] = true;
         }
+        
+    	function loadAll() {
+		
+    		ExternalResearchAnalyst.multipleSector(onSuccessSector, onError);
+
+		}
+    	 function onSuccessSector (data,headers) {
+            vm.opportunitySectors=data;
+            console.log('Sector',vm.opportunitySectors);
+         }
+    	 
+    	 function onError(error){
+    		 AlertService.error(error.data.message);
+    		 
+    	 }
         
         function clear() {
 			$state.go($state.current.parent, {}, {

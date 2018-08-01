@@ -46,7 +46,11 @@
             <span>{{vm.externalResearch.name}}</span>          
         </dd> -->
         <dt><span>Sector Type:</span></dt>
-        <dd>{{vm.externalResearch.sectorType}}</dd>      
+        <dd> <ul class="list-unstyled">
+                <li ng-repeat="sectors in vm.externalResearch.opportunitySector">
+                    <span >{{sectors.sectorName}}</span>
+                </li>
+            </ul></dd>      
         <dt><span>Email Id:</span></dt>
         <dd>{{vm.externalResearch.emailId}}</dd>     
         <dt><span>Contact No:</span></dt>

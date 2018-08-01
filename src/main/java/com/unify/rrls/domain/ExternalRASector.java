@@ -25,8 +25,9 @@ public class ExternalRASector {
 	@JoinColumn(name = "external_ra_id")
 	private ExternalResearchAnalyst externalResearchAnalyst;	
 	
-	@Column(name = "sector_name")
-	private String sector;
+	@ManyToOne
+	@JoinColumn(name = "sector_name")
+	private OpportunitySector sector;
 
 	public Long getId() {
 		return id;
@@ -44,13 +45,12 @@ public class ExternalRASector {
 		this.externalResearchAnalyst = externalResearchAnalyst;
 	}
 
-	public String getSector() {
+	public OpportunitySector getSector() {
 		return sector;
 	}
 
-	public void setSector(String sector) {
+	public void setSector(OpportunitySector sector) {
 		this.sector = sector;
 	}
-	
 
 }

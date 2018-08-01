@@ -155,6 +155,7 @@ dl {
     border-bottom: 1px solid #e5e5e5;
 
  }
+ 
  .reply btn-info{
     display: inline-block;
     margin-bottom: 0;
@@ -460,4 +461,16 @@ table tr:focus, table tr:active {
 }
 #notitime .text-muted {
     font-weight: bold;
+}
+
+/* Review CSS */
+
+#review .modal-title {
+    margin: 0;
+    line-height: 0.5;
+    padding: 10px 0px 0px 10px;
+}
+
+.addReview{
+	   padding: 0px 0px 0px 10px !important
 }
