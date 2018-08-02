@@ -36,7 +36,7 @@
                       <th jh-sort-by="contactNo"><span>Contact No</span> <span class="glyphicon glyphicon-sort"></span></th>
                         <th jh-sort-by="emailId"><span>Email Id</span> <span class="glyphicon glyphicon-sort"></span></th>
                     
-                    <th class="thbutton" has-authority="Admin">
+                    <th class="thbutton" has-any-authority="Admin,Research">
                         <div class="pull-right">
                         <div class="col-xs-3">
                             <button class="btn btn-primary" ui-sref="external-research.new"> 
@@ -56,7 +56,7 @@
                                       ui-sref="external-research.edit({id:externalResearch.id})"
                                       class="btn btn-primary btn-sm"
                                       tooltip="edit"
-                                      tooltip-placement="bottom" has-any-authority="Admin">
+                                      tooltip-placement="bottom" has-any-authority="Admin,Research">
                         <span class="glyphicon glyphicon-pencil"></span>
                         <span class="hidden-sm-down"></span>
                     </button> <a ui-sref="external-research-detail({id:externalResearch.id})">{{externalResearch.name}}</a></td>
