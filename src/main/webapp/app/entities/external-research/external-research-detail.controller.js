@@ -5,14 +5,33 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('ExternalResearchDetailController', ExternalResearchDetailController);
 
-    ExternalResearchDetailController.$inject = ['$stateParams', 'ExternalResearchAnalyst','$scope','$filter','$uibModal'];
+    ExternalResearchDetailController.$inject = ['$stateParams', 'Principal','ExternalResearchAnalyst','$scope','$filter','$uibModal'];
 
-    function ExternalResearchDetailController($stateParams, ExternalResearchAnalyst,$scope,$filter,$uibModal) {
+    function ExternalResearchDetailController($stateParams,Principal, ExternalResearchAnalyst,$scope,$filter,$uibModal) {
         var vm = this;
 
         vm.load = load;
+        vm.loadAll = loadAll;
         vm.externalResearch;     
         vm.load($stateParams.id);
+        
+        vm.loadAll();
+        
+        function loadAll () {      	
+      	  
+      	  $scope.$on('authenticationSuccess', function() {
+                getAccount();});          
+      }
+	  getAccount();
+
+    function getAccount() {
+        Principal.identity().then(function(account) {
+            vm.account = account;
+            vm.isAuthenticated = Principal.isAuthenticated;
+       
+        });
+
+    }
        
         var myDate=new Date();
         

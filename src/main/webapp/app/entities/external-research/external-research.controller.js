@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('ExternalResearchAnalystController', ExternalResearchAnalystController);
 
-    ExternalResearchAnalystController.$inject = ['ExternalResearchAnalyst', 'ParseLinks', 'AlertService', 'paginationConstants','$scope','$filter','pagingParams','$state','$sce'];
+    ExternalResearchAnalystController.$inject = ['ExternalResearchAnalyst', 'Principal','ParseLinks', 'AlertService', 'paginationConstants','$scope','$filter','pagingParams','$state','$sce'];
 
-    function ExternalResearchAnalystController(ExternalResearchAnalyst, ParseLinks, AlertService, paginationConstants, $scope, $filter, pagingParams, $state, $sce) {
+    function ExternalResearchAnalystController(ExternalResearchAnalyst,Principal, ParseLinks, AlertService, paginationConstants, $scope, $filter, pagingParams, $state, $sce) {
 
         var vm = this;
 
@@ -39,7 +39,20 @@
                   size: vm.itemsPerPage,
                   sort: sort()
               }, onSuccess, onError);
+        	  
+        	  $scope.$on('authenticationSuccess', function() {
+                  getAccount();});          
         }
+  	  getAccount();
+
+      function getAccount() {
+          Principal.identity().then(function(account) {
+              vm.account = account;
+              vm.isAuthenticated = Principal.isAuthenticated;
+          
+          });
+
+      }
             function sort() {
                 var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
                 if (vm.predicate !== 'id') {

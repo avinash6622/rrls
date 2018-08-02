@@ -24,7 +24,7 @@
                 </button>
                      <button type="button"
                         ui-sref="external-research.edit({id:vm.externalResearch.id})"
-                        class="btn btn-md btn-primary" has-any-authority="Admin,Research">
+                        class="btn btn-md btn-primary" ng-if="vm.account.login==vm.externalResearch.createdBy">
                     <span class="glyphicon glyphicon-pencil"></span> <span
                     class="hidden-sm-down"> Edit</span>
                 </button>
