@@ -62,9 +62,12 @@ import com.unify.rrls.domain.FileUploadComments;
 import com.unify.rrls.domain.FinancialSummaryData;
 import com.unify.rrls.domain.FixedLearning;
 import com.unify.rrls.domain.FixedLearningMapping;
+import com.unify.rrls.domain.LearningAIF;
+import com.unify.rrls.domain.LearningAIFMapping;
 import com.unify.rrls.domain.NonFinancialSummaryData;
 import com.unify.rrls.domain.OpportunityAutomation;
 import com.unify.rrls.domain.OpportunityLearning;
+import com.unify.rrls.domain.OpportunityLearningAIF;
 import com.unify.rrls.domain.OpportunityMaster;
 import com.unify.rrls.domain.OpportunityMasterContact;
 import com.unify.rrls.domain.OpportunityName;
@@ -82,8 +85,11 @@ import com.unify.rrls.repository.FileUploadRepository;
 import com.unify.rrls.repository.FinancialSummaryDataRepository;
 import com.unify.rrls.repository.FixedLearningMappingRepository;
 import com.unify.rrls.repository.FixedLearningRepository;
+import com.unify.rrls.repository.LearningAIFRepository;
+import com.unify.rrls.repository.LearningsAIFMappingRepository;
 import com.unify.rrls.repository.NonFinancialSummaryDataRepository;
 import com.unify.rrls.repository.OpportunityAutomationRepository;
+import com.unify.rrls.repository.OpportunityLearningAIFRepository;
 import com.unify.rrls.repository.OpportunityLearningRepository;
 import com.unify.rrls.repository.OpportunityMasterContactRepository;
 import com.unify.rrls.repository.OpportunityMasterRepository;
@@ -156,6 +162,9 @@ public class OpportunityMasterResource {
 	private final UserRepository userRepository;
 	private final FixedLearningRepository fixedLearningRepository;
 	private final FixedLearningMappingRepository fixedLearningMappingRepository;
+	private final OpportunityLearningAIFRepository opportunityLearningAIFRepository;
+	private final LearningAIFRepository learningAIFRepository;
+	private final LearningsAIFMappingRepository learningsAIFMappingRepository;
 
 	@Autowired
 	NotificationServiceResource notificationServiceResource;
@@ -181,7 +190,9 @@ public class OpportunityMasterResource {
 			ReplyCommentRepository replyCommentRepository,
 			OpportunityLearningRepository opportunityLearningRepository,
 			DecimalConfigurationRepository decimalConfigurationRepository,UserRepository userRepository,
-			FixedLearningRepository fixedLearningRepository,FixedLearningMappingRepository fixedLearningMappingRepository) {
+			FixedLearningRepository fixedLearningRepository,FixedLearningMappingRepository fixedLearningMappingRepository,
+			OpportunityLearningAIFRepository opportunityLearningAIFRepository,LearningAIFRepository learningAIFRepository,
+			LearningsAIFMappingRepository learningsAIFMappingRepository) {
 		this.opportunityMasterRepository = opportunityMasterRepository;
 		this.fileUploadRepository = fileUploadRepository;
 		this.fileUploadCommentsRepository = fileUploadCommentsRepository;
@@ -202,6 +213,9 @@ public class OpportunityMasterResource {
 		this.userRepository=userRepository;
 		this.fixedLearningRepository=fixedLearningRepository;
 		this.fixedLearningMappingRepository=fixedLearningMappingRepository;
+		this.opportunityLearningAIFRepository=opportunityLearningAIFRepository;
+		this.learningAIFRepository=learningAIFRepository;
+		this.learningsAIFMappingRepository=learningsAIFMappingRepository;
 	}
 
 	/**
@@ -1081,8 +1095,33 @@ public class OpportunityMasterResource {
 
 		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(commentReply));
 	}
+	
+	@GetMapping("/opportunity-masters/get-learning-aif/{id}")
+	@Timed
+	public ResponseEntity<List<OpportunityLearningAIF>> getLearningAIFAnswer(@PathVariable Long id) {
+		log.debug("REST request to get OpportunityLearningAIF : {}", id);
 
-	public String convertHTMLToDoc(String xhtml, String destinationPath, String fileName) {
+		OpportunityMaster opportunityMasters = opportunityMasterRepository.findOne(id);
+		List<OpportunityLearningAIF> opportunityLearningsAIF = opportunityLearningAIFRepository
+				.findByOpportunityMaster(opportunityMasters);
+		List<OpportunityLearningAIF> opportunityLearningAIF=new ArrayList<>();
+		for(OpportunityLearningAIF ol:opportunityLearningsAIF)
+		{
+			LearningAIF learningAIF=learningAIFRepository.findBySubject(ol.getSubject());
+			LearningAIFMapping learningAIFMapping=learningsAIFMappingRepository.
+					findByOpportunityMasterAndLearningAIF(ol.getOpportunityMaster(), learningAIF);
+			if(learningAIFMapping==null){
+				opportunityLearningAIFRepository.delete(ol);
+			}
+			else{
+				opportunityLearningAIF.add(ol);
+			}
+		}
+
+		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(opportunityLearningAIF));
+	}
+
+	public String convertHTMLToDoc(String xhtml, String destinationPath, String fileNameAIF) {
 		log.info("HTML to DOC conversion\n--------------------------------------\nstarted....\n" + xhtml);
 		try {
 

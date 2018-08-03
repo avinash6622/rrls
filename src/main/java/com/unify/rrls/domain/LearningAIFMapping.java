@@ -12,7 +12,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
-@Table(name = "fixed_learning_tag")
+@Table(name = "learning_aif_tag")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class LearningAIFMapping {
 	

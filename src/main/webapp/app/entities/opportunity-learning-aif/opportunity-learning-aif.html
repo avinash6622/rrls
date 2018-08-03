@@ -1,0 +1,83 @@
+<style>
+    .col-xs-3 .btn{
+    padding:0px !important;
+
+}
+    .col-xs-3{
+        padding-right: 0px !important;
+    }
+      body {
+      padding: 15px;
+    }
+
+    .select2 > .select2-choice.ui-select-match {
+      /* Because of the inclusion of Bootstrap */
+      height: 29px;
+    }
+
+    .selectize-control > .selectize-dropdown {
+      top: 36px;
+    }
+
+</style>
+
+<div>
+    <div class="well">   
+        
+     <jhi-alert></jhi-alert>
+       <div class="table-responsive">
+        <table class="jh-table table table-striped">  
+         <thead>
+         <tr>
+             <th></th>
+
+                    <th><span>Learning AIF</span> <button class="btn btn-md btn-warning pull-right"
+		type="button" ui-sref="learning-aif.new" has-authority="Admin,Research">Add Learning AIF</button></th>
+                 </tr>
+            </thead>       
+            <tbody>
+            
+            <tr ng-repeat-start="fixed in vm.learningAIF" ng-click="vm.fixedCollapse($index, !fixed.expanded)">
+ 		<td><button class="btn btn-md btn-primary" ng-if="fixed.expanded" ng-click="vm.fixedCollapse($index,fixed.expanded)">-</button>
+              <button class="btn btn-md btn-primary" ng-if="!fixed.expanded" ng-click="vm.fixedCollapse($index,fixed.expanded)">+</button></td>
+
+
+              			<td><a><strong>{{fixed.subject}}</strong></a></td>
+
+              			 </tr>
+
+
+<tr ng-if="fixed.expanded" ng-repeat-end="">
+   <td colspan="3">
+ 
+   <multiple-autocomplete ng-model="fixed.opportunityMaster" 
+     object-property="oppName"
+     suggestions-arr="vm.opportunityMasters" after-remove-item="afterSelectItem" click-selected="clickTaggedOpportunity">
+</multiple-autocomplete>
+   <button class="btn btn-md btn-primary" ng-click="vm.fixedMap(fixed)">Save</button>           			
+     </td> </tr>
+
+
+            </tbody>
+
+
+        </table>
+
+</div>
+  
+        
+        <div class="text-center" style="margin-bottom: -5px">
+            <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
+            <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+        </div>
+       
+   
+     
+    </div>
+    <footer class="footer footer-dark" ng-cloak>
+        <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.</p>
+    </footer>
+
+</div>
+
+

@@ -79,7 +79,7 @@ public class LearningAIFResource {
 			return new ResponseEntity<>(pageFixed.getContent(), headers, HttpStatus.OK);
 		}
 	  
-	  @GetMapping("/learning-aif_all")
+	  @GetMapping("/learning-aif-all")
 	  @Timed
 		public ResponseEntity<List<LearningAIF>> getAllLearningAIF() {
 			log.debug("REST request to get LearningAIF : {}");

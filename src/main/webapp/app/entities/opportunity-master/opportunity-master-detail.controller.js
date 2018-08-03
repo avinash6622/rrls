@@ -635,6 +635,22 @@
 
 
         };
+        $scope.learningAIF = function () {
+
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/entities/opportunity-master-learn-aif/opportunity-master-learn-aif.html',
+                controllerAs: '$ctrl',
+                controller: 'OpportunityLearningAIFController',
+              size: 'lg',
+               resolve: {
+                	options: function() {
+                		return vm.opportunityMaster;
+                	}
+                }
+            });
+
+
+        };
 
         $scope.commentstemp = function(){
 
