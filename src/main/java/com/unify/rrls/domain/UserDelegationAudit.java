@@ -32,9 +32,11 @@ public class UserDelegationAudit extends AbstractAuditingEntity implements Seria
     private String deleUserName;
     
     @Transient
+    @JsonProperty
     private String fromName;
     
     @Transient
+    @JsonProperty
     private List<OpportunityMaster> selectedOpportunity;
 
 

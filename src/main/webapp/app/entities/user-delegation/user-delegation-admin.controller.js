@@ -170,12 +170,11 @@
         }
 
         function save(){
-            UserDelegationAudit.save({deleUserName:vm.deleUserName,oppName:vm.oppName,loginName:vm.account.login},function(response){
+        	console.log(vm.selectedOpportunity);
+
+            UserDelegationAudit.delegateAdmin({deleUserName:vm.deleUserName, selectedOpportunity:vm.selectedOpportunity,loginName: vm.account.login},function(response){
                 console.log(response)
-                /*$ctrl.learnings.push(response);
-                $ctrl.showLearning=false;
-                $ctrl.subject='';
-                $ctrl.description='';*/
+             
             });
         }
 

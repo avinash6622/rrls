@@ -31,18 +31,18 @@
                      <div class="form-group">
 
             <label for="field_opportunityMaster">Opportunities</label>
-             <select class="form-control" id="field_opportunityMaster" multiple name="selectedStrategyMaster" ng-value="selectedStrategyMaster" ng-model="vm.opportunityMaster.selectedStrategyMaster"
-                    ng-options="strategyMaster as strategyMaster.strategyName for strategyMaster in vm.strategymasters  | filter: {strategyName: '!Unallocated Strategy'} track by strategyMaster.id">
+             <select class="form-control" id="field_opportunityMaster" multiple name="selectedOpportunity" ng-model="vm.selectedOpportunity"
+                    ng-options="opportunityMaster as opportunityMaster.masterName.oppName for opportunityMaster in vm.opportunityMasters track by opportunityMaster.id">
 
              </select>
 
         </div>
-
+<!-- 
                     <div class="form-group">
                         <label for="field_opportunityName"></label>
                         <input class="form-control" type="text" name="opportunityName" id="field_opportunityName" ng-model="vm.oppName"  auto-complete="vm.autoCompleteOptionsopp" placeholder="Opportunity Name"/>
 
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                         <label for="field_userName"></label>

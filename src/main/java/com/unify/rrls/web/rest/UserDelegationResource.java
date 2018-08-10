@@ -141,6 +141,52 @@ public class UserDelegationResource {
         return new ResponseEntity<>(page, headers,HttpStatus.OK);
 
     }
+    
+    @PostMapping("/delegate-admin")
+    @Timed
+    public ResponseEntity<UserDelegationAudit> userAdminDelegation(@RequestBody UserDelegationAudit userDelegationAudit)
+        throws URISyntaxException, IOException {
+    	
+    	String reponse="";
+    	UserDelegationAudit result=new UserDelegationAudit();
+       
+        String username = SecurityUtils.getCurrentUserLogin();
+        for(OpportunityMaster om :userDelegationAudit.getSelectedOpportunity()){
+        	userDelegationAudit.setId(null);        	
+        	userDelegationAudit.setOppName(om.getMasterName().getOppName());        	
+
+        result =userDelegationAuditRepository.save(userDelegationAudit);
+
+        System.out.println(result.getCreatedBy());
+
+        OpportunityName opportunityName = opportunityNameRepository.findByOppName(result.getOppName());
+
+        OpportunityMaster master = opportunityMasterRepository.findByMasterName(opportunityName);
+
+        master.setCreatedBy(result.getDeleUserName());
+        opportunityMasterRepository.save(master);
+        List<OpportunitySummaryData> opportunitySummaryData = opportunitySummaryDataRepository.findByOpportunityMasterid(master);
+
+        for(OpportunitySummaryData opportunitySummaryData1:opportunitySummaryData)
+        {
+            opportunitySummaryData1.setCreatedBy(result.getDeleUserName());
+            opportunitySummaryDataRepository.save(opportunitySummaryData1);
+        }
+
+       reponse = username+" "+"delegated"+" "+result.getOppName()+" "+"to "+result.getDeleUserName();
+
+        String page = "Opportunity";
+
+        Long id = userResource.getUserId(result.getCreatedBy());
+
+
+        notificationServiceResource.notificationHistorysave(result.getOppName(), result.getCreatedBy(), "",
+            result.getCreatedDate(), "delegated", page, result.getDeleUserName(), id,master.getId(),Long.parseLong("0"),Long.parseLong("0"));
+    }
+
+        return ResponseEntity.created(new URI("/api/delegate-admin/" + result.getId()))
+            .headers(HeaderUtil.createAlert(reponse, result.getId().toString())).body(result);
+    }  
 
 
 

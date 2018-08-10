@@ -25,6 +25,17 @@
                 method:'GET',
                 url: 'api/user-delegation/:fromName',
                 isArray: true
+            },
+            'delegateAdmin':{
+                method:'POST',
+                url: 'api/delegate-admin',
+                transformRequest: function (data) {
+
+                    var copy = angular.copy(data);
+                    copy.createdDate = DateUtils.convertLocalDateToServer(copy.createdDate);
+
+                    return angular.toJson(copy);
+                }
             }
         });
     }
