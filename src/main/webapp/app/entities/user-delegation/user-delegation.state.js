@@ -34,6 +34,32 @@
                         };*/
                     }
                 }
+            })
+              .state('opportunity-admin-delegation', {
+                parent: 'entity',
+                url: '/user-admin',
+                data: {
+                    authorities: ['User'],
+                    pageTitle: 'User Delegation'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'app/entities/user-delegation/user-delegation-admin.html',
+                        controller: 'UserDelegationAdminController',
+                        controllerAs: 'vm'
+                    }
+                },
+                resolve: {
+                    entity: function () {
+                  /*      return {
+                            oppName: null,
+                            sectorType: null,
+                            securityCode: null,
+                            segment: null,
+                            id: null
+                        };*/
+                    }
+                }
             });
     }
 

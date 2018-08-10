@@ -1,5 +1,6 @@
-<div>
-    <div class="well">
+<div class="container">
+ <div class="col-md-6 col-md-offset-3">
+    <div class="well wellDialog">
 
     <div>
      <jhi-alert></jhi-alert>
@@ -8,9 +9,9 @@
                     ng-click="vm.clear()">Go Back</button>-->
         <h4 style="text-align: center;"><strong>Create Unlisted Opportunity</strong></h4>
     </div>
-
+  
 <div class="row">
-    <div class="col-md-6 col-md-offset-3">
+ 
     <form name="editForm" role="form" novalidate ng-submit="vm.save()">
 
 
@@ -55,8 +56,9 @@
 </form>
 </div>
 </div>
-</div>
-    <footer class="footer footer-dark" ng-cloak>
+  <footer class="footer footer-dark" ng-cloak>
         <p data-translate="footer" class="col-md-offset-3" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.</p>
     </footer>
+</div>
+  
 </div>

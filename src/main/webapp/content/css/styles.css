@@ -91,6 +91,9 @@
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 }
+.wellDialog{
+	 padding: 25px !important;
+}
 .dl-horizontal.jh-entity-details > dt {
     margin-bottom: 0px !important;
 }
@@ -483,5 +486,8 @@ table tr:focus, table tr:active {
 }
 .deleteContact{
 	margin-left: 60px;
+}
+.column-mouse-over:hover{
+	color:#878787;
 }
 }

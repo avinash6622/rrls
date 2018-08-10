@@ -128,6 +128,19 @@ public class UserDelegationResource {
             .headers(HeaderUtil.createAlert(reponse, result.getId().toString())).body(result);
     }  
     
+    @GetMapping("/user-delegation/{fromName}")
+    @Timed
+    public ResponseEntity<List<OpportunityMaster>> getAllOpportunitiesCreated(@PathVariable String fromName) {
+        log.debug("REST request to get a page of OpportunityMasters Admin Role");
+        List<OpportunityMaster> page = null;
+      
+        page = opportunityMasterRepository.findAllByCreatedBy(fromName);
+        System.out.println(page);
+
+        HttpHeaders headers=new HttpHeaders();
+        return new ResponseEntity<>(page, headers,HttpStatus.OK);
+
+    }
 
 
 

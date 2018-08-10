@@ -73,8 +73,8 @@
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="entity-menu">
                         <span>
                             <span class="glyphicon glyphicon-th-list"></span>
-                            <span class="hidden-sm">
-                                Main Menu
+                            <span class="hidden-sm"><b>
+                                Main Menu</b>
                             </span>
                             <b class="caret"></b>
                         </span>
@@ -130,8 +130,8 @@
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="account-menu">
                         <span>
                             <span class="glyphicon glyphicon-user"></span>
-                            <span class="hidden-sm">
-                               {{vm.account.firstName |capitalize}}
+                            <span class="hidden-sm"><b>
+                               {{vm.account.firstName |capitalize}}</b>
                             </span>
                             <b class="caret"></b>
                         </span>
@@ -151,7 +151,13 @@
                                 <span>User Delegation</span>
                             </a>
                         </li>
-
+						
+						<!--  <li ui-sref-active="active" has-authority="Admin">
+                            <a ui-sref="opportunity-admin-delegation" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span>User Delegation</span>
+                            </a>
+                        </li> -->
                         <li ui-sref-active="active">
                             <a ui-sref="password" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-lock"></span>&nbsp;

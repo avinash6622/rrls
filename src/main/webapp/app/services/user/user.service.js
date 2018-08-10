@@ -20,7 +20,11 @@
             },
             'save': { method:'POST' },
             'update': { method:'PUT' },
-            'delete':{ method:'DELETE'}
+            'delete':{ method:'DELETE'},
+            'userDelagation':{
+            	url: 'api/users-All',
+            	method: 'GET', isArray: true
+            }
         });
 
         return service;

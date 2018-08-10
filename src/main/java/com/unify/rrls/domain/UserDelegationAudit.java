@@ -8,6 +8,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -29,9 +30,12 @@ public class UserDelegationAudit extends AbstractAuditingEntity implements Seria
 
     @Column(name="delegated_user_name")
     private String deleUserName;
-
-
-
+    
+    @Transient
+    private String fromName;
+    
+    @Transient
+    private List<OpportunityMaster> selectedOpportunity;
 
 
     public Long getId() {
@@ -65,6 +69,19 @@ public class UserDelegationAudit extends AbstractAuditingEntity implements Seria
     public void setDeleUserName(String deleUserName) {
         this.deleUserName = deleUserName;
     }
-
+    
+    public String getFromName() {
+		return fromName;
+	}
+    
+    public void setFromName(String fromName) {
+		this.fromName = fromName;
+	}
+    public List<OpportunityMaster> getSelectedOpportunity() {
+		return selectedOpportunity;
+	}
+    public void setSelectedOpportunity(List<OpportunityMaster> selectedOpportunity) {
+		this.selectedOpportunity = selectedOpportunity;
+	}
 
 }

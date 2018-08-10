@@ -20,6 +20,11 @@
 
                     return angular.toJson(copy);
                 }
+            },
+            'admin':{
+                method:'GET',
+                url: 'api/user-delegation/:fromName',
+                isArray: true
             }
         });
     }

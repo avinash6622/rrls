@@ -168,8 +168,22 @@
 			}, onSuccessFixed, onError);
 		
 			OpportunityMaster.tagOpportunity(onSuccess3, onError);
+			
+			  $scope.$on('authenticationSuccess', function() {
+                  getAccount();});       
 
 		}
+		
+		  getAccount();
+
+	      function getAccount() {
+	          Principal.identity().then(function(account) {
+	              vm.account = account;
+	              vm.isAuthenticated = Principal.isAuthenticated;
+	          
+	          });
+
+	      }
 		
 
 		function onSuccess3(data2, headers) {
