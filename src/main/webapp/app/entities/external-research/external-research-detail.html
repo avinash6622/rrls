@@ -63,7 +63,43 @@
         <dt><span>Address:</span></dt>
         <dd>{{vm.externalResearch.address }}</dd>
         <dt><span>Description:</span></dt>
-        <dd>{{vm.externalResearch.description}}</dd>       
+        <dd>{{vm.externalResearch.description}}</dd>  
+        
+        <dt has-any-authority="Research,Master">
+			<span>Select File Format:</span>
+		</dt>
+
+
+		<dd has-any-authority="Research,Master">
+			<select ng-model="selitem" ng-change="getselectval()">
+				<option ng-repeat="x in fileformat">{{x}}</option>
+			</select>
+		</dd>
+
+		<dt has-any-authority="Research,Master">
+			<span>Description:</span>
+		</dt>
+		<dd has-any-authority="Research,Master">
+			<input type="text" class="col-sm-6" id="fileid" name="fileid"
+				ng-model="vm.uploadfileName" style="padding-left: 0px;padding-right: 0px"/>
+		</dd>
+
+		<dt has-any-authority="Research,Master">
+			<span>Upload:</span>
+		</dt>
+		<dd has-any-authority="Research,Master">
+			<div class="form-group">
+                <div>
+                <label for="file_upload" class="btn btn-md btn-primary col-md-1">Choose File</label>
+                    <div class="col-md-4">{{vm.opportunityMaster.fileUpload.name}}</div></div>
+				<input type="file" ngf-select="vm.selectFile($file)" name="file" style="display: none;"
+					id="file_upload"
+					ngf-pattern=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx,.docx,.doc,.log,.msg,.rtf,.txt,.csv,.dat,.pptx,.xml,.aif,.tif,.zip,.zipx,.rar,.pdf"
+					accept=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx,.docx,.doc,.log,.msg,.rtf,.txt,.csv,.dat,.pptx,.xml,.aif,.tif,.zip,.zipx,.rar,.pdf" required="">
+				<br />
+				<button type="button" class="btn btn-default fileUpload" ng-click="vm.upload()">Upload</button>
+			</div>
+		</dd>     
     </dl>  
       
 
