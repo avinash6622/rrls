@@ -70,28 +70,27 @@
 		</dt>
 
 
-		<dd has-any-authority="Research,Master">
-			<select ng-model="selitem" ng-change="getselectval()">
-				<option ng-repeat="x in fileformat">{{x}}</option>
-			</select>
+		<dd has-any-authority="Research,Master,Admin">
+		 <span class="col-md-4 input-group" style="padding-left: 18px;"><input class="form-control ng-pristine ng-valid clearable" ng-model="vm.name"  auto-complete="vm.autoCompleteOpportunity" type="text" placeholder="Search"></span>
+        
 		</dd>
 
-		<dt has-any-authority="Research,Master">
+		<dt has-any-authority="Research,Master,Admin">
 			<span>Description:</span>
 		</dt>
-		<dd has-any-authority="Research,Master">
+		<dd has-any-authority="Research,Master,Admin">
 			<input type="text" class="col-sm-6" id="fileid" name="fileid"
 				ng-model="vm.uploadfileName" style="padding-left: 0px;padding-right: 0px"/>
 		</dd>
 
-		<dt has-any-authority="Research,Master">
+		<dt has-any-authority="Research,Master,Admin">
 			<span>Upload:</span>
 		</dt>
-		<dd has-any-authority="Research,Master">
+		<dd has-any-authority="Research,Master,Admin">
 			<div class="form-group">
                 <div>
                 <label for="file_upload" class="btn btn-md btn-primary col-md-1">Choose File</label>
-                    <div class="col-md-4">{{vm.opportunityMaster.fileUpload.name}}</div></div>
+                    <div class="col-md-4">{{vm.externalResearch.fileUpload.name}}</div></div>
 				<input type="file" ngf-select="vm.selectFile($file)" name="file" style="display: none;"
 					id="file_upload"
 					ngf-pattern=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx,.docx,.doc,.log,.msg,.rtf,.txt,.csv,.dat,.pptx,.xml,.aif,.tif,.zip,.zipx,.rar,.pdf"

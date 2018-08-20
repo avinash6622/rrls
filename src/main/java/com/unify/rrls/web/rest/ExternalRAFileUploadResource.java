@@ -16,14 +16,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.codahale.metrics.annotation.Timed;
 import com.unify.rrls.domain.ExternalRAFileUpload;
+import com.unify.rrls.domain.ExternalResearchAnalyst;
 import com.unify.rrls.domain.OpportunityMaster;
 import com.unify.rrls.repository.ExternalRAFileUploadRepository;
+import com.unify.rrls.repository.ExternalResearchAnalystRepository;
 import com.unify.rrls.repository.OpportunityMasterRepository;
 import com.unify.rrls.security.SecurityUtils;
 import com.unify.rrls.web.rest.util.HeaderUtil;
@@ -39,11 +42,13 @@ public class ExternalRAFileUploadResource {
 	  @Autowired
 	  private final OpportunityMasterRepository opportunityMasterRepository;
 	  private final ExternalRAFileUploadRepository externalRAFileUploadRepository;
+	  private final ExternalResearchAnalystRepository externalResearchAnalystRepository;
 	  
 	  public ExternalRAFileUploadResource(OpportunityMasterRepository opportunityMasterRepository,
-			  ExternalRAFileUploadRepository externalRAFileUploadRepository) {
+			  ExternalRAFileUploadRepository externalRAFileUploadRepository,ExternalResearchAnalystRepository externalResearchAnalystRepository) {
 	        this.opportunityMasterRepository = opportunityMasterRepository;
 	        this.externalRAFileUploadRepository=externalRAFileUploadRepository;
+	        this.externalResearchAnalystRepository=externalResearchAnalystRepository;
 	       
 	    }
 
@@ -66,23 +71,17 @@ public class ExternalRAFileUploadResource {
 			this.fileName = fileName;
 		}
 		
-		  /**
-	     * POST  /file-uploads : Create a new fileUpload.
-	     *
-	     * @param fileUpload the fileUpload to create
-	     * @return the ResponseEntity with status 201 (Created) and with body the new fileUpload, or with status 400 (Bad Request) if the fileUpload has already an ID
-	     * @throws URISyntaxException if the Location URI syntax is incorrect
-	     * @throws IOException
-	     */
-	    @RequestMapping("/external-upload")	  
+		 
+	    @RequestMapping(value="/external-upload", method =RequestMethod.POST)	  
 	    @Timed
-	    public ResponseEntity<ExternalRAFileUpload> createExternalFileUpload(@RequestParam(value="oppId")Long oppId,@RequestParam(value="fileUploads")
+	    public ResponseEntity<ExternalRAFileUpload> createExternalFileUpload(@RequestParam(required=false,value="oppId")Long oppId, @RequestParam(value="fileUploads")
 	    		MultipartFile[] fileUploads,@RequestParam(value="filetype") String filetype,@RequestParam(value="uploadfileName") String uploadfileName,
-	    		@RequestParam(value="externalId")Long externalId) throws URISyntaxException, IOException, MissingServletRequestParameterException {
+	    		@RequestParam(value="externalId")Integer externalId) throws URISyntaxException, IOException, MissingServletRequestParameterException {
 	      
 	    	log.debug("REST request to save ExternalRAFileUpload : {}", fileUploads);
 	        
 	        OpportunityMaster opp=opportunityMasterRepository.findOne(oppId);
+	        ExternalResearchAnalyst exRa=externalResearchAnalystRepository.findOne(externalId);
 	    
 	        String user= SecurityUtils.getCurrentUserLogin();
 	        String  sFilesDirectory =  "C:/RRLS_Backup/RRLS/External/"+opp.getMasterName().getOppName()+"/"+user;
@@ -114,10 +113,8 @@ public class ExternalRAFileUploadResource {
 	    	fileUploaded.setFileName(uploadfileName);	    	
 	    	fileUploaded.setOpportunityMasterId(opp);
 	    	fileUploaded.setFiletype(filetype);
+	    	fileUploaded.setExternalResearchAnalyst(exRa);
 	    	result=externalRAFileUploadRepository.save(fileUploaded);
-
-
-
 
 	      }
 	       

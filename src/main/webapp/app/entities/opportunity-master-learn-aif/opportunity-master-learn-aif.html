@@ -57,7 +57,7 @@
 </div>
 <div class="modal-footer">
 	<button class="btn btn-md btn-primary" ng-click="$ctrl.save()"
-		ng-show="$ctrl.learnings.length !== 0 && ($ctrl.account.login === $ctrl.opportunityMaster.createdBy || $ctrl.account.authorities[0]=='Master') && !$ctrl.editLearning">Submit</button>
+		ng-show="($ctrl.showLearning || $ctrl.learnings.length == 0) && ($ctrl.account.login === $ctrl.opportunityMaster.createdBy || $ctrl.account.authorities[0]=='Master') && !$ctrl.editLearning">Submit</button>
 	<button class="btn btn-md btn-warning" data-dismiss="modal"
 		type="button" ng-click="$ctrl.clear()">Cancel</button>
 </div>

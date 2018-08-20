@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -49,6 +50,10 @@ public class ExternalResearchAnalyst  extends AbstractAuditingEntity implements 
 	@Transient
 	@JsonProperty
 	private List<ExternalRAContacts> externalRAContacts;
+	
+	@OneToMany(mappedBy = "externalResearchAnalyst")
+	private List<ExternalRAFileUpload> fileUploads;
+
 
 	public Integer getId() {
 		return id;
@@ -112,6 +117,12 @@ public class ExternalResearchAnalyst  extends AbstractAuditingEntity implements 
 
 	public void setExternalRAContacts(List<ExternalRAContacts> externalRAContacts) {
 		this.externalRAContacts = externalRAContacts;
-	}	
+	}
+	public List<ExternalRAFileUpload> getFileUploads() {
+		return fileUploads;
+	}
+	public void setFileUploads(List<ExternalRAFileUpload> fileUploads) {
+		this.fileUploads = fileUploads;
+	}
 	
 }
