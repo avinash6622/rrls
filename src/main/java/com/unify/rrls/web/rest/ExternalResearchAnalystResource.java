@@ -26,11 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 import com.unify.rrls.domain.ExternalRAContacts;
+import com.unify.rrls.domain.ExternalRAFileUpload;
 import com.unify.rrls.domain.ExternalRASector;
 import com.unify.rrls.domain.ExternalResearchAnalyst;
 import com.unify.rrls.domain.OpportunitySector;
 import com.unify.rrls.domain.ReviewExternal;
 import com.unify.rrls.repository.ExternalRAContactsRepository;
+import com.unify.rrls.repository.ExternalRAFileUploadRepository;
 import com.unify.rrls.repository.ExternalRASectorRepository;
 import com.unify.rrls.repository.ExternalResearchAnalystRepository;
 import com.unify.rrls.repository.OpportunitySectorRepository;
@@ -59,16 +61,18 @@ public class ExternalResearchAnalystResource {
     private final ExternalRASectorRepository externalRASectorRepository;
     private final OpportunitySectorRepository opportunitySectorRepository;
     private final ExternalRAContactsRepository externalRAContactsRepository;
+    private final ExternalRAFileUploadRepository externalRAFileUploadRepository;
   
 
     public ExternalResearchAnalystResource(ExternalResearchAnalystRepository externalResearchAnalystRepository,
     		ReviewExternalRepository reviewExternalRepository,ExternalRASectorRepository externalRASectorRepository,OpportunitySectorRepository opportunitySectorRepository,
-    		ExternalRAContactsRepository externalRAContactsRepository) {
+    		ExternalRAContactsRepository externalRAContactsRepository,ExternalRAFileUploadRepository externalRAFileUploadRepository) {
         this.externalResearchAnalystRepository = externalResearchAnalystRepository;
         this.reviewExternalRepository=reviewExternalRepository;       
         this.externalRASectorRepository=externalRASectorRepository;
         this.opportunitySectorRepository=opportunitySectorRepository;
         this.externalRAContactsRepository=externalRAContactsRepository;
+        this.externalRAFileUploadRepository=externalRAFileUploadRepository;
        
     }
 
@@ -183,12 +187,14 @@ public class ExternalResearchAnalystResource {
         log.debug("REST request to get ExternalResearchAnalyst : {}", id);
         ExternalResearchAnalyst externalResearchAnalyst = externalResearchAnalystRepository.findOne(id);
         List<ExternalRASector> exsa=externalRASectorRepository.findByExternalResearchAnalyst(externalResearchAnalyst);
+        List<ExternalRAFileUpload> exFileUpload=externalRAFileUploadRepository.findByExternalResearchAnalyst(externalResearchAnalyst);
         List<OpportunitySector> os=new ArrayList<OpportunitySector>();
         for(ExternalRASector ex:exsa){
         	os.add(ex.getSector());
         }
         List<ExternalRAContacts> listContacts=externalRAContactsRepository.findByExternalResearchAnalyst(externalResearchAnalyst);
         externalResearchAnalyst.setExternalRAContacts(listContacts);
+        externalResearchAnalyst.setFileUploads(exFileUpload);
         externalResearchAnalyst.setOpportunitySector(os);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(externalResearchAnalyst));
     }

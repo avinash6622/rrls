@@ -65,6 +65,24 @@
         <dt><span>Description:</span></dt>
         <dd>{{vm.externalResearch.description}}</dd>  
         
+        <div class="row" ng-show="vm.externalResearch.fileUploads">
+			<div class="col-md-3">
+				<div class="panel panel-info">
+					<div class="panel-heading"><strong>ExternalFile Upload</strong></div>
+					<div
+						style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
+						<div class="panel-body"
+							ng-repeat="fileUploads in vm.externalResearch.fileUploads | filter: {filetype: 'External'}">
+							<a ui-sref="opportunity-master-detail({id:fileUploads.opportunityMasterId.id})">{{fileUploads.opportunityMasterId.masterName.oppName}} :</a>
+							<a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
+							<b> - {{fileUploads.createdBy | capitalize}}</b> <span
+								class="date sub-text"> on {{fileUploads.createdDate |
+								date :"MMM d, y h:mm:ss a"}}</span>
+						</div>
+					</div>
+				</div>
+			</div></div>
+        
         <dt has-any-authority="Research,Master">
 			<span>Select File Format:</span>
 		</dt>

@@ -14,6 +14,7 @@
         vm.oppMasterId='';
         vm.upload = upload;
         vm.selectFile = selectFile;
+        vm.loadFileContent = loadFileContent;
         vm.load = load;
         vm.loadAll = loadAll;
         vm.externalResearch;     
@@ -108,8 +109,7 @@
          function onSuccess1(data, headers){
         	 
                  vm.opportunityMasters = data;
-                 vm.oppMasterId=vm.opportunityMasters[0].id;
-                 console.log(  vm.oppMasterId,'data');
+                 vm.oppMasterId=vm.opportunityMasters[0].id;                
                
          }
           function onError1() {
@@ -117,8 +117,14 @@
 
           }
           
-          function upload () {
-              console.log('uploading....'+vm.oppMasterId +vm.externalResearch.id);
+          function loadFileContent(fileID) {
+
+              window.open('/download-external/' + fileID, '_blank');
+
+           }
+          
+          
+          function upload () {             
 
               var selectitem = $scope.selitem;
                   vm.isSaving = true;
@@ -127,10 +133,8 @@
                       Upload.upload({
                           url: 'api/external-upload',
                           data: {fileUploads: vm.externalResearch.fileUpload},
-                          params: {oppId: vm.oppMasterId,filetype:'Test',uploadfileName:vm.uploadfileName,externalId:vm.externalResearch.id}// {oppCode: inputData.oppCode, oppName: inputData.oppName, oppDescription: inputData.oppDescription, strategyMasterId: inputData.strategyMasterId.id}
+                          params: {oppId: vm.oppMasterId,filetype:'External',uploadfileName:vm.uploadfileName,externalId:vm.externalResearch.id}// {oppCode: inputData.oppCode, oppName: inputData.oppName, oppDescription: inputData.oppDescription, strategyMasterId: inputData.strategyMasterId.id}
                       }).then(function (resp) {
-
-                          console.log(resp);
 
                           if(resp.status == 201) {
                               if(vm.externalResearch.fileUploads==null)

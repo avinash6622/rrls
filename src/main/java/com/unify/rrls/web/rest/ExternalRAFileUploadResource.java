@@ -84,7 +84,7 @@ public class ExternalRAFileUploadResource {
 	        ExternalResearchAnalyst exRa=externalResearchAnalystRepository.findOne(externalId);
 	    
 	        String user= SecurityUtils.getCurrentUserLogin();
-	        String  sFilesDirectory =  "C:/RRLS_Backup/RRLS/External/"+opp.getMasterName().getOppName()+"/"+user;
+	        String  sFilesDirectory =  "C:/RRLS_Backup/RRLS/External/"+opp.getMasterName().getOppName()+"/"+user+"-"+uploadfileName;
 	      
 	      File dirFiles = new File(sFilesDirectory);
 	      dirFiles.mkdirs();
