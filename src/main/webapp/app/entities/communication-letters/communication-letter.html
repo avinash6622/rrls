@@ -1,0 +1,82 @@
+<style>
+    .col-xs-3 .btn{
+    padding:0px !important;
+
+}
+    .col-xs-3{
+        padding-right: 0px !important;
+    }
+      body {
+      padding: 15px;
+    }
+
+    .select2 > .select2-choice.ui-select-match {
+      /* Because of the inclusion of Bootstrap */
+      height: 29px;
+    }
+
+    .selectize-control > .selectize-dropdown {
+      top: 36px;
+    }
+
+</style>
+
+<div>
+    <div class="well">   
+        
+     <jhi-alert></jhi-alert>
+       <div class="table-responsive">
+        <table class="jh-table table table-striped">  
+         <thead>
+         <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+          <th jh-sort-by="subject"><span>Subject</span> <span class="glyphicon glyphicon-sort"></span></th> 
+          <th jh-sort-by="opportunityMasterId.masterName.oppName"><span>Opportunity</span> <span class="glyphicon glyphicon-sort"></span></th>
+          <th jh-sort-by="createdBy"><span>Created By</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th><button class="btn btn-md btn-warning pull-right"
+		type="button" ui-sref="communication-letter.new" has-authority="Admin">Add Communication</button></th>
+		
+                 </tr>
+            </thead>       
+            <tbody>
+            
+        <tr ng-repeat="communication in vm.communicationLetters | orderBy:predicate:reverse">
+			<td>{{communication.subject}}</td>
+
+            <td><a ui-sref="opportunity-master-detail({id:communication.opportunityMasterId.id})">{{communication.opportunityMasterId.masterName.oppName}}
+                    </a></td>
+                   
+                     <td><a ui-sref="home-research({createdBy:communication.createdBy})">{{communication.createdBy |capitalize}}</a>
+                    </td>
+
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                    
+
+                        </div>
+                    </td>
+                </tr>
+
+
+            </tbody>
+
+
+        </table>
+
+</div>
+  
+        
+        <div class="text-center" style="margin-bottom: -5px">
+            <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
+            <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+        </div>
+       
+   
+     
+    </div>
+    <footer class="footer footer-dark" ng-cloak>
+        <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.</p>
+    </footer>
+
+</div>
+
+
