@@ -8,7 +8,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -21,6 +26,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,8 +37,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.codahale.metrics.annotation.Timed;
 import com.unify.rrls.domain.CommunicationLetters;
-import com.unify.rrls.domain.OpportunityLearningAIF;
 import com.unify.rrls.domain.OpportunityMaster;
+import com.unify.rrls.domain.OpportunityName;
 import com.unify.rrls.repository.CommunicationLettersRepository;
 import com.unify.rrls.repository.OpportunityMasterRepository;
 import com.unify.rrls.security.SecurityUtils;
@@ -75,6 +83,9 @@ public class CommunicationLettersResource {
 		public void setFileName(String fileName) {
 			this.fileName = fileName;
 		}
+		
+		 @PersistenceContext
+		 EntityManager em;
 	
 	    @RequestMapping(value = "/communication-letter", method =RequestMethod.POST)
 	    @Timed
@@ -140,7 +151,59 @@ public class CommunicationLettersResource {
 			return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 		}
 
-	
+	    @GetMapping("/communication-letter/opportunity")
+	    @Timed
+	    public ResponseEntity<List<OpportunityName>> getAllOpportunityMastersforauto() {
+	        log.debug("REST request to get a page of OpportunityMasters");
+	        List<OpportunityName> list =new ArrayList<>();
+
+	       // String role = SecurityUtils.getCurrentRoleLogin();
+	       // String username = SecurityUtils.getCurrentUserLogin();
+
+
+	        Query q = em.createNativeQuery("select * from opportunity_name where id  in(select master_name from opportunity_master where id in (select distinct(opportunity_master_id) from communication_letters) )",OpportunityName.class);
+
+	        list   = q.getResultList();
+	        HttpHeaders headers=new HttpHeaders();
+	        return new ResponseEntity<>(list, headers,HttpStatus.OK);
+
+	    }
+	    
+	    @PostMapping("/communication-letter/search-opp")
+		@Timed
+		public ResponseEntity<List<CommunicationLetters>> searchOpportunities(@RequestBody OpportunityName opportunityName, Pageable pageable) throws URISyntaxException {
+		   OpportunityMaster opportunityMaster=opportunityMasterRepository.findByMasterName(opportunityName);
+	    	Page<CommunicationLetters> page = communicationLettersRepository.findByOpportunityMasterId(opportunityMaster,pageable);
+		    HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/communication-letter");
+		    return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+		}
+	    
+	    @GetMapping("/communication-letter/subject")
+	    @Timed
+	    public ResponseEntity<List<CommunicationLetters>> getAllSubjectforauto() {
+	        log.debug("REST request to get a page of OpportunityMasters");
+	        List<CommunicationLetters> list =new ArrayList<>();
+
+	       // String role = SecurityUtils.getCurrentRoleLogin();
+	       // String username = SecurityUtils.getCurrentUserLogin();
+
+
+	        Query q = em.createNativeQuery("select * from communication_letters",CommunicationLetters.class);
+
+	        list   = q.getResultList();
+	        HttpHeaders headers=new HttpHeaders();
+	        return new ResponseEntity<>(list, headers,HttpStatus.OK);
+
+	    }
+	    
+	    @PostMapping("/communication-letter/search-sub")
+		@Timed
+		public ResponseEntity<List<CommunicationLetters>> searchSubject(@RequestBody CommunicationLetters communicationLetter, Pageable pageable) throws URISyntaxException {
+		 
+	    	Page<CommunicationLetters> page = communicationLettersRepository.findBySubject(communicationLetter.getSubject(),pageable);
+		    HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/communication-letter");
+		    return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+		}
 	    
 	    public void writeFile(byte[] fileStream, File file) throws IOException {
 			InputStream in;

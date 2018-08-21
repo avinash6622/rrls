@@ -10,7 +10,17 @@
         var resourceUrl =  'api/communication-letter';
 
         return $resource(resourceUrl, {}, {
-            'query': { method: 'GET', isArray: true}
+            'query': { method: 'GET', isArray: true},
+            'getSearchOpportunity': {
+               	url: 'api/communication-letter/search-opp',
+                   method: 'POST',
+                   isArray: true
+               },
+               'getSearchSubject': {
+                  	url: 'api/communication-letter/search-sub',
+                      method: 'POST',
+                      isArray: true
+                  }
         });
     }
 })();

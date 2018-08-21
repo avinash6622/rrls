@@ -64,8 +64,64 @@
         <dd>{{vm.externalResearch.address }}</dd>
         <dt><span>Description:</span></dt>
         <dd>{{vm.externalResearch.description}}</dd>  
-        
+          <br>
+          <dt><span>File Upload:</span></dt>
         <div class="row" ng-show="vm.externalResearch.fileUploads">
+			<div class="col-md-3">
+				<div class="panel panel-info">
+					<div class="panel-heading"><strong>External File Upload</strong></div>
+					<div
+						style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
+						<div class="panel-body"
+							ng-repeat="fileUploads in vm.externalResearch.fileUploads | filter: {filetype: 'External'}">
+							<a ui-sref="opportunity-master-detail({id:fileUploads.opportunityMasterId.id})">{{fileUploads.opportunityMasterId.masterName.oppName}} :</a>
+							<a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
+							<b> - {{fileUploads.createdBy | capitalize}}</b> <span
+								class="date sub-text"> on {{fileUploads.createdDate |
+								date :"MMM d, y h:mm:ss a"}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-7">
+			   
+        <dt has-any-authority="Research,Master">
+			<span>Select File Format:</span>
+		</dt>
+
+
+		<dd has-any-authority="Research,Master,Admin">
+		 <span class="col-md-6 input-group" style="padding-left: 0px;"><input class="form-control ng-pristine ng-valid clearable" ng-model="vm.name"  auto-complete="vm.autoCompleteOpportunity" type="text" placeholder="Opporunity Name"></span>
+        
+		</dd>
+
+		
+		<dd has-any-authority="Research,Master,Admin">
+			<input type="text" class="col-sm-6" id="fileid" name="fileid"
+				ng-model="vm.uploadfileName" style="padding-left: 0px;padding-right: 0px"placeholder="&nbsp;&nbsp;&nbsp;&nbsp;File Name"/>
+		</dd>
+
+
+		
+		<dd has-any-authority="Research,Master,Admin">
+			<div class="form-group">
+                <div>
+                <label for="file_upload" class="btn btn-md btn-primary col-md-2">Choose File</label>
+                    <div class="col-md-4">{{vm.externalResearch.fileUpload.name}}</div></div>
+				<input type="file" ngf-select="vm.selectFile($file)" name="file" style="display: none;"
+					id="file_upload"
+					ngf-pattern=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx,.docx,.doc,.log,.msg,.rtf,.txt,.csv,.dat,.pptx,.xml,.aif,.tif,.zip,.zipx,.rar,.pdf"
+					accept=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx,.docx,.doc,.log,.msg,.rtf,.txt,.csv,.dat,.pptx,.xml,.aif,.tif,.zip,.zipx,.rar,.pdf" required="">
+				<br />
+				<button type="button" class="btn btn-default fileUpload" ng-click="vm.upload()">Upload</button>
+			</div>
+		</dd>  </div>   </div>
+    </dl>  
+      
+
+</div>
+        
+        <!-- <div class="row" ng-show="vm.externalResearch.fileUploads">
 			<div class="col-md-3">
 				<div class="panel panel-info">
 					<div class="panel-heading"><strong>ExternalFile Upload</strong></div>
@@ -120,7 +176,7 @@
     </dl>  
       
 
-</div>
+</div> -->
 </div>
     <footer class="footer footer-dark" ng-cloak>
         <p data-translate="footer" style="font-size: 12px;margin-left: 9px">&copy;{{currentYear}}, All rights reserved.</p>
