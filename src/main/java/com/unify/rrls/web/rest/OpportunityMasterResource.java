@@ -56,7 +56,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.codahale.metrics.annotation.Timed;
 import com.unify.rrls.domain.AnswerComment;
 import com.unify.rrls.domain.CommentOpportunity;
+import com.unify.rrls.domain.CommunicationLetters;
 import com.unify.rrls.domain.DocumentCreationBean;
+import com.unify.rrls.domain.ExternalRAFileUpload;
 import com.unify.rrls.domain.FileUpload;
 import com.unify.rrls.domain.FileUploadComments;
 import com.unify.rrls.domain.FinancialSummaryData;
@@ -79,7 +81,9 @@ import com.unify.rrls.domain.StrategyMaster;
 import com.unify.rrls.repository.AdditionalFileUploadRepository;
 import com.unify.rrls.repository.AnswerCommentRepository;
 import com.unify.rrls.repository.CommentOpportunityRepository;
+import com.unify.rrls.repository.CommunicationLettersRepository;
 import com.unify.rrls.repository.DecimalConfigurationRepository;
+import com.unify.rrls.repository.ExternalRAFileUploadRepository;
 import com.unify.rrls.repository.FileUploadCommentsRepository;
 import com.unify.rrls.repository.FileUploadRepository;
 import com.unify.rrls.repository.FinancialSummaryDataRepository;
@@ -165,6 +169,8 @@ public class OpportunityMasterResource {
 	private final OpportunityLearningAIFRepository opportunityLearningAIFRepository;
 	private final LearningAIFRepository learningAIFRepository;
 	private final LearningsAIFMappingRepository learningsAIFMappingRepository;
+	private final ExternalRAFileUploadRepository externalRAFileUploadRepository;
+	private final CommunicationLettersRepository communicationLettersRepository;
 
 	@Autowired
 	NotificationServiceResource notificationServiceResource;
@@ -192,7 +198,8 @@ public class OpportunityMasterResource {
 			DecimalConfigurationRepository decimalConfigurationRepository,UserRepository userRepository,
 			FixedLearningRepository fixedLearningRepository,FixedLearningMappingRepository fixedLearningMappingRepository,
 			OpportunityLearningAIFRepository opportunityLearningAIFRepository,LearningAIFRepository learningAIFRepository,
-			LearningsAIFMappingRepository learningsAIFMappingRepository) {
+			LearningsAIFMappingRepository learningsAIFMappingRepository,ExternalRAFileUploadRepository externalRAFileUploadRepository,
+			CommunicationLettersRepository communicationLettersRepository) {
 		this.opportunityMasterRepository = opportunityMasterRepository;
 		this.fileUploadRepository = fileUploadRepository;
 		this.fileUploadCommentsRepository = fileUploadCommentsRepository;
@@ -216,6 +223,8 @@ public class OpportunityMasterResource {
 		this.opportunityLearningAIFRepository=opportunityLearningAIFRepository;
 		this.learningAIFRepository=learningAIFRepository;
 		this.learningsAIFMappingRepository=learningsAIFMappingRepository;
+		this.externalRAFileUploadRepository=externalRAFileUploadRepository;
+		this.communicationLettersRepository=communicationLettersRepository;
 	}
 
 	/**
@@ -937,6 +946,8 @@ public class OpportunityMasterResource {
 		DecimalConfiguration decimalValue=decimalConfigurationRepository.findByUser(user);
 		opportunityMaster.setDecimalPoint(decimalValue.getDecimalValue());*/
 		List<FileUpload> fileUploads = fileUploadRepository.findByOpportunityMasterId(opportunityMaster);
+		List<ExternalRAFileUpload> externalRAFileUploads=externalRAFileUploadRepository.findByOpportunityMasterId(opportunityMaster);
+		List<CommunicationLetters> communicationLetters=communicationLettersRepository.findByOpportunityMasterId(opportunityMaster);
 		List<StrategyMapping> strategyMappings = strategyMappingRepository.findByOpportunityMaster(opportunityMaster);
 		opportunityAutomation = opportunityAutomationRepository.findByOpportunityMaster(opportunityMaster);
 
@@ -970,6 +981,8 @@ public class OpportunityMasterResource {
 		System.out.println("MAPPINGvfn----->" + nonFinancialSummaryData);
 		List<FileUploadComments> fileComments = fileUploadCommentsRepository.findByOpportunityMaster(opportunityMaster);
 		opportunityMaster.setFileUploadCommentList(fileComments);
+		opportunityMaster.setExternalRAFileUpload(externalRAFileUploads);
+		opportunityMaster.setCommunicationLetters(communicationLetters);
 		if (!fileUploads.isEmpty()) {
 			try {
 				for (FileUpload fm : fileUploads) {

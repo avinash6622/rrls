@@ -22,6 +22,8 @@
         vm.saveComment = saveComment;
         vm.load = load;
         vm.loadFileContent = loadFileContent;
+        vm.loadFileExternal = loadFileExternal;
+        vm.loadFileCommunication = loadFileCommunication;
         vm.fileId='';
         vm.createFile = createFile;
         vm.approveFile=approveFile;
@@ -777,6 +779,18 @@
            window.open('/download/' + fileID, '_blank');
 
         }
+        
+        function loadFileExternal(fileID) {
+
+            window.open('/download-external/' + fileID, '_blank');
+
+         }
+        function loadFileCommunication(fileID) {
+
+            window.open('/download-communication/' + fileID, '_blank');
+
+         }
+
 
 
         function onSaveSuccess (result) {

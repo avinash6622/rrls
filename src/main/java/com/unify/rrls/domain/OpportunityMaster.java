@@ -87,6 +87,12 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 
 	@OneToMany(mappedBy = "opportunityMasterId")
 	private List<FileUpload> fileUploads;
+	
+	@OneToMany(mappedBy = "opportunityMasterId")
+	private List<CommunicationLetters> communicationLetters;
+	
+	@OneToMany(mappedBy = "opportunityMasterId")
+	private List<ExternalRAFileUpload> externalRAFileUpload;
 
 	@ManyToOne
 	@JoinColumn(name = "master_name")
@@ -249,6 +255,22 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 
 	public void setStatus(String status) {
 		this.status = status;
+	}	
+	
+	public List<CommunicationLetters> getCommunicationLetters() {
+		return communicationLetters;
+	}
+
+	public void setCommunicationLetters(List<CommunicationLetters> communicationLetters) {
+		this.communicationLetters = communicationLetters;
+	}
+
+	public List<ExternalRAFileUpload> getExternalRAFileUpload() {
+		return externalRAFileUpload;
+	}
+
+	public void setExternalRAFileUpload(List<ExternalRAFileUpload> externalRAFileUpload) {
+		this.externalRAFileUpload = externalRAFileUpload;
 	}
 
 	@Override

@@ -74,6 +74,7 @@ public class CacheConfiguration {
             cm.createCache(com.unify.rrls.domain.LearningAIF.class.getName(), jcacheConfiguration);
             cm.createCache(com.unify.rrls.domain.LearningAIFMapping.class.getName(), jcacheConfiguration);
             cm.createCache(com.unify.rrls.domain.ExternalRAFileUpload.class.getName(), jcacheConfiguration);
+            cm.createCache(com.unify.rrls.domain.CommunicationLetters.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

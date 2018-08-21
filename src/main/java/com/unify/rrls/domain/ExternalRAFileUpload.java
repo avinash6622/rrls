@@ -29,7 +29,7 @@ public class ExternalRAFileUpload extends AbstractAuditingEntity implements Seri
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Long id;
 	   
-	    @Column(name = "file_name", length = 65)
+	    @Column(name = "file_name")
 	    private String fileName;
 
 	    @Column(name = "file_data")
