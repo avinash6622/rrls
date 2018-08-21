@@ -65,6 +65,7 @@
         <dd>{{vm.externalResearch.description}}</dd>  
           <br>
           <dt><span>File Upload:</span></dt>
+          <dd>
         <div class="row" ng-show="vm.externalResearch.fileUploads">
 			<div class="col-md-3">
 				<div class="panel panel-info">
@@ -81,22 +82,21 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="col-md-7">
+			</div></div></dd>			
 			   
-        <dt has-any-authority="Research,Master">
-			<span>Select File Format:</span>
+        <dt has-any-authority="Research,Master,Admin">
+			<span></span>
 		</dt>
 
 
 		<dd has-any-authority="Research,Master,Admin">
-		 <span class="col-md-6 input-group" style="padding-left: 0px;"><input class="form-control ng-pristine ng-valid clearable" ng-model="vm.name"  auto-complete="vm.autoCompleteOpportunity" type="text" placeholder="Opporunity Name"></span>
+		 <span class="col-md-4 input-group" style="padding-left: 0px;"><input class="form-control ng-pristine ng-valid clearable" ng-model="vm.name"  auto-complete="vm.autoCompleteOpportunity" type="text" placeholder="Opporunity Name"></span>
         
 		</dd>
 
 		
 		<dd has-any-authority="Research,Master,Admin">
-			<input type="text" class="col-sm-6" id="fileid" name="fileid"
+			<input type="text" class="col-sm-4" id="fileid" name="fileid"
 				ng-model="vm.uploadfileName" style="padding-left: 0px;padding-right: 0px"placeholder="&nbsp;&nbsp;&nbsp;&nbsp;File Name"/>
 		</dd>
 
@@ -105,7 +105,7 @@
 		<dd has-any-authority="Research,Master,Admin">
 			<div class="form-group">
                 <div>
-                <label for="file_upload" class="btn btn-md btn-primary col-md-2">Choose File</label>
+                <label for="file_upload" class="btn btn-md btn-primary col-md-1">Choose File</label>
                     <div class="col-md-4">{{vm.externalResearch.fileUpload.name}}</div></div>
 				<input type="file" ngf-select="vm.selectFile($file)" name="file" style="display: none;"
 					id="file_upload"
@@ -114,7 +114,7 @@
 				<br />
 				<button type="button" class="btn btn-default fileUpload" ng-click="vm.upload()">Upload</button>
 			</div>
-		</dd>  </div>   </div>
+		</dd> 
     </dl>  
       
 
