@@ -56,7 +56,7 @@
                     controller: 'CommunicationLettersDialogController',
                     controllerAs: 'vm'
                 }
-            }            ,
+            },
             resolve: {
                 entity: function () {
                     return {

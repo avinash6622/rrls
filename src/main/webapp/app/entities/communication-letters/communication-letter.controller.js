@@ -28,8 +28,8 @@
 			last : 0
 		};
 		
-		vm.reset = reset;		
-		vm.reverse = true;		
+		//vm.reset = reset;		
+		//vm.reverse = true;		
 		vm.transition = transition;		
 		vm.itemsValue = 'Communication Letters';
 		vm.account = null;
@@ -199,17 +199,19 @@
 		
 
 	
-		function onSuccessFixed(data1, headers) {
+		function onSuccessFixed(data, headers) {
 		
 			vm.links = ParseLinks.parse(headers('link'));
 			vm.totalItems = headers('X-Total-Count');
-			for (var i = 0; i < data1.length; i++) {
-				vm.communicationLetters.push(data1[i]);
+			for (var i = 0; i < data.length; i++) {
+				vm.communicationLetters.push(data[i]);
 				
 			}
 			console.log('Letters',vm.communicationLetters);
 			vm.queryCount = vm.totalItems;
 			vm.page = pagingParams.page;
+			vm.communicationLetters=data;
+			console.log('Letters2',vm.communicationLetters);
 		}
 	
 		function onError(error) {
