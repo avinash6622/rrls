@@ -490,6 +490,17 @@ table tr:focus, table tr:active {
 .column-mouse-over:hover{
 	color:#878787;
 }
+
+
+.dashboard{
+         
+	    font-size:21px;
+}
+
+.admin{
+	    color: white !important;
+}
+
 }
 
 
