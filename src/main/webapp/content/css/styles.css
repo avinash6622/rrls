@@ -493,12 +493,14 @@ table tr:focus, table tr:active {
 
 
 .dashboard{
-         
 	    font-size:21px;
 }
 
 .admin{
-	    color: white !important;
+	    color:white !important;
+}
+.border{
+	border-width: 1.6px !important;
 }
 
 }
