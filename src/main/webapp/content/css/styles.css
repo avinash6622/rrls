@@ -498,10 +498,34 @@ table tr:focus, table tr:active {
 
 .admin{
 	    color:white !important;
-}
+	    }
 .border{
 	border-width: 1.6px !important;
+	height: 285px;
+	 padding-right: -26px !important;
+	 
 }
+
+.StrategyMaster
+{
+	   margin-top: -90px;
+       margin-bottom: 131px;
+}
+.Learnings
+{
+	 
+	    margin-left: 2.66667% !important;
+	    width: 46.33333% !important;
+}
+
+.newborder{
+	height: 385px !important;
+}
+
+.newrow{
+	    margin-top: 20px !important;
+}
+
 
 }
 
