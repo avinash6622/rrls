@@ -446,8 +446,7 @@ li.answer-list.level-3{
     position: relative;
     float: left;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, 20%);
+   
 }
 .col-md-3.col-md-offset-3.colCust {
     margin-left: 12%;
@@ -508,8 +507,8 @@ table tr:focus, table tr:active {
 
 .StrategyMaster
 {
-	   margin-top: -90px;
-       margin-bottom: 131px;
+	   margin-top: 40px
+      
 }
 .Learnings
 {
@@ -523,7 +522,7 @@ table tr:focus, table tr:active {
 }
 
 .newrow{
-	    margin-top: 20px !important;
+	    margin-top: 100px !important;
 }
 
 
