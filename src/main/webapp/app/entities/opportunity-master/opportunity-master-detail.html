@@ -243,7 +243,7 @@ padding :none !important}
 					<div
 						style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
 						<div class="panel-body"
-							ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Presentation'}">
+							ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Presentation'} | orderBy: '-createdDate'">
 							<a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
 							<b> - {{fileUploads.createdBy | capitalize}}</b> <span
 								class="date sub-text"> on {{fileUploads.createdDate |
@@ -260,7 +260,7 @@ padding :none !important}
 					<div
 						style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
 						<div class="panel-body"
-							ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Excel Model'}">
+							ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Excel Model'} | orderBy: '-createdDate'">
 							<a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
 							<b> - {{fileUploads.createdBy | capitalize}}</b> <span
 								class="date sub-text"> on {{fileUploads.createdDate |
@@ -275,7 +275,7 @@ padding :none !important}
 					<div
 						style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
 						<div class="panel-body"
-							ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Quarterly updates'}">
+							ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Quarterly updates'} | orderBy: '-createdDate'">
 							<a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
 							<b> - {{fileUploads.createdBy | capitalize}}</b> <span
 								class="date sub-text"> on {{fileUploads.createdDate |
@@ -291,7 +291,7 @@ padding :none !important}
 					<div
 						style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
 						<div class="panel-body"
-							ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Miscellaneous'}">
+							ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Miscellaneous'} | orderBy: '-createdDate'">
 							<a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
 							<b> - {{fileUploads.createdBy | capitalize}}</b> <span
 								class="date sub-text"> on {{fileUploads.createdDate |
@@ -306,7 +306,7 @@ padding :none !important}
 					<div
 						style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
 						<div class="panel-body"
-							ng-repeat="fileUploads in vm.opportunityMaster.externalRAFileUpload">
+							ng-repeat="fileUploads in vm.opportunityMaster.externalRAFileUpload | orderBy: '-createdDate'">
 							<a ng-click="vm.loadFileExternal(fileUploads.id)">{{fileUploads.fileName}}</a>
 							<b> - {{fileUploads.createdBy | capitalize}}</b> <span
 								class="date sub-text"> on {{fileUploads.createdDate |
@@ -321,7 +321,7 @@ padding :none !important}
 					<div
 						style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
 						<div class="panel-body"
-							ng-repeat="fileUploads in vm.opportunityMaster.communicationLetters">
+							ng-repeat="fileUploads in vm.opportunityMaster.communicationLetters | orderBy: '-createdDate'">
 							<a ng-click="vm.loadFileCommunication(fileUploads.id)">{{fileUploads.fileName}}</a>
 							<b> - {{fileUploads.createdBy | capitalize}}</b> <span
 								class="date sub-text"> on {{fileUploads.createdDate |

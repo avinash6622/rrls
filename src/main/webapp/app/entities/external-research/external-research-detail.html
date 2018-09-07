@@ -73,7 +73,7 @@
 					<div
 						style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
 						<div class="panel-body"
-							ng-repeat="fileUploads in vm.externalResearch.fileUploads | filter: {filetype: 'External'}">
+							ng-repeat="fileUploads in vm.externalResearch.fileUploads | filter: {filetype: 'External'} | orderBy: '-createdDate'">
 							<a ui-sref="opportunity-master-detail({id:fileUploads.opportunityMasterId.id})">{{fileUploads.opportunityMasterId.masterName.oppName}} :</a>
 							<a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
 							<b> - {{fileUploads.createdBy | capitalize}}</b> <span
