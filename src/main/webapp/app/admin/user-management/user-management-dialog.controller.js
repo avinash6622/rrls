@@ -11,7 +11,7 @@
     function UserManagementDialogController ($stateParams, $uibModalInstance, entity, User,RoleMaster) {
         var vm = this;
 
-        vm.authorities = ['Admin','Research','CIO','Dealer','Sale','RM','Master'];
+        vm.authorities = ['Admin','Research','CIO','Dealer','Sale','RM','Master','Communication_Letters'];
         vm.roleMasters = RoleMaster.query();
         vm.users=User.query();
         vm.clear = clear;
