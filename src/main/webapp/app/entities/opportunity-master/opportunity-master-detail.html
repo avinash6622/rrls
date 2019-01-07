@@ -411,8 +411,8 @@ padding :none !important}
                     <div class="col-md-4">{{vm.opportunityMaster.fileUpload.name}}</div></div>
 				<input type="file" ngf-select="vm.selectFile($file)" name="file" style="display: none;"
 					id="file_upload"
-					ngf-pattern=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx,.docx,.doc,.log,.msg,.rtf,.txt,.csv,.dat,.pptx,.xml,.aif,.tif,.zip,.zipx,.rar,.pdf"
-					accept=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx,.docx,.doc,.log,.msg,.rtf,.txt,.csv,.dat,.pptx,.xml,.aif,.tif,.zip,.zipx,.rar,.pdf" required="">
+					ngf-pattern=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx,.docx,.doc,.log,.msg,.rtf,.txt,.csv,.dat,.pptx,.xml,.aif,.tif,.zip,.zipx,.rar,.pdf,audio/*,video/*"
+					accept=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx,.docx,.doc,.log,.msg,.rtf,.txt,.csv,.dat,.pptx,.xml,.aif,.tif,.zip,.zipx,.rar,.pdf,audio/*,video/*" required="">
 				<br />
 				<button type="button" class="btn btn-default fileUpload" ng-click="vm.upload()">Upload</button>
 			</div>
