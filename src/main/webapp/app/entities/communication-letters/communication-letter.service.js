@@ -9,6 +9,8 @@
     function CommunicationLetters ($resource, DateUtils) {
         var resourceUrl =  'api/communication-letter';
 
+        console.log('resourceUrl');
+        console.log(resourceUrl);
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true},
             'getSearchOpportunity': {

@@ -44,24 +44,22 @@
 		
 
 		var myDate = new Date();
-
 		$scope.currentYear = $filter('date')(myDate, 'yyyy');
-		
-		
 			function clear() {			
 				vm.communicationLetters=[];			
 			vm.name = '';
-			loadAll();			
-
+			loadAll();
 		}
 			  vm.autoCompleteOpportunity = {
 		                minimumChars : 1,
 		                dropdownHeight : '200px',
-
-		                data : function(searchText) {
+	                data : function(searchText) {
 		                    return $http.get('api/communication-letter/opportunity').then(
 		                        function(response) {
-		                            searchText = searchText.toLowerCase();
+                                    // console.log('searchText - ' + searchText);
+                                    // console.log('comm letter response');
+                                    // console.log(response);
+                                    searchText = searchText.toLowerCase();
 		                          //  console.log(searchText);
 		                           // console.log(response);
 
@@ -79,7 +77,9 @@
 		                        });
 		                },
 		                renderItem : function(item) {
-		                    return {
+                            console.log('item in autocomplete');
+                            console.log(item);
+                            return {
 		                        value : item,
 		                        label : $sce.trustAsHtml("<p class='auto-complete'>"
 		                            + item.oppName + "</p>")
@@ -87,14 +87,13 @@
 		                },
 
 		                itemSelected : function(e) {
-
-		                    console.log(e);
+                            console.log('itemSelected call invoked');
+                            console.log(e);
 		                	vm.selectedName = e;
 		                    vm.name = e.item.oppName;
 		                    vm.opportunityName=e.item;
-		                    console.log(vm.opportunityName.id,'NAme');
-
-
+		                    console.log(vm.opportunityName.id,'Name');
+                            // console.log(vm.communicationLetters);
 		                    CommunicationLetters.getSearchOpportunity(vm.opportunityName,onSuccess1,onError1);
 		                }
 		            }
@@ -137,15 +136,14 @@
 		                	vm.subject = e.item.subject;
 		                    vm.communicationLetters=e.item;
 		                    console.log( vm.communicationLetters.id,'NAme');
-
-
-		                    CommunicationLetters.getSearchSubject(vm.communicationLetters,onSuccess,onError1);
+                            console.log(vm.communicationLetters);
+                            CommunicationLetters.getSearchSubject(vm.communicationLetters,onSuccess,onError1);
 		                }
 		            }
 			  function onSuccess1(data, headers){
 
+		            console.log('data in onsuccess');
 		            console.log(data);
-
 		            console.log(vm.name);
 
 
@@ -161,47 +159,42 @@
 
 
 		         }
-
 		         function clearOpp() {
-		             vm.name = '';
+                     console.log('clearOpp function invoked');
+                     vm.name = '';
 		             vm.communicationLetters=[];
 		             loadAll();
 		         }
 		         function clearSub() {
+                     console.log('clearSub function invoked');
 		             vm.subject = '';
 		             vm.communicationLetters=[];
 		             loadAll();
 		         }
-
 		function loadAll() {
-			CommunicationLetters.query({
+            console.log('loadAll function invoked');
+            CommunicationLetters.query({
 				page : pagingParams.page - 1,
 				size : vm.itemsPerPage,
 				sort : sort()
 			}, onSuccessFixed, onError);
-		
-			
-			  $scope.$on('authenticationSuccess', function() {
+            $scope.$on('authenticationSuccess', function() {
                   getAccount();});       
 
 		}
-		
 		  getAccount();
-
-	      function getAccount() {
-	          Principal.identity().then(function(account) {
+			function getAccount() {
+              console.log('getAccount function invoked');
+              Principal.identity().then(function(account) {
 	              vm.account = account;
 	              vm.isAuthenticated = Principal.isAuthenticated;
 	          
 	          });
 
 	      }
-		
-
-	
-		function onSuccessFixed(data, headers) {
-		
-			vm.links = ParseLinks.parse(headers('link'));
+	      function onSuccessFixed(data, headers) {
+              console.log('onSuccessFixed function invoked');
+              vm.links = ParseLinks.parse(headers('link'));
 			vm.totalItems = headers('X-Total-Count');
 			for (var i = 0; i < data.length; i++) {
 				vm.communicationLetters.push(data[i]);
@@ -219,7 +212,8 @@
 		}
 
 		function sort() {
-			var result = [ vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc') ];
+            console.log('sort function invoked');
+            var result = [ vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc') ];
 			console.log(vm.reverse);
 			if (vm.predicate !== 'id') {
 				result.push('id');
@@ -229,18 +223,20 @@
 		}
 	
 		function reset() {
-			vm.page = 0;
+            console.log('reset function invoked');
+            vm.page = 0;
 			 vm.communicationLetters = [];
 			loadAll();
 		}
 		
 		function loadPage(page) {
-			vm.page = page;
+            console.log('loadPage function invoked');
+            vm.page = page;
 			vm.transition();
 		}
 	
 		function transition() {
-			console.log($state.$current);
+
 			$state.transitionTo($state.$current, {
 				page : vm.page,
 				sort : vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),

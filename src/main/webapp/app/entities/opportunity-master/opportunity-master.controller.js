@@ -6,7 +6,7 @@
         .controller('OpportunityMasterController', OpportunityMasterController)
 
 
-    OpportunityMasterController.$inject = ['OpportunityMaster', 'ParseLinks','Principal', 'AlertService', 'paginationConstants','$scope','$filter','pagingParams','$state','$http','$sce'];
+    OpportunityMasterController.$inject = ['OpportunityMaster', 'ParseLinks','Principal', 'AlertService', 'paginationConstants','$scope','$filter','pagingParams','$state','$http','$sce','$q'];
 
     function OpportunityMasterController(OpportunityMaster, ParseLinks,Principal, AlertService, paginationConstants,$scope,$filter,pagingParams,$state,$http,$sce) {
 
@@ -43,7 +43,7 @@
             Principal.identity().then(function(account) {
                 vm.account = account;
                 vm.isAuthenticated = Principal.isAuthenticated;
-             console.log('Account',account)
+                console.log(Principal.isAuthenticated);
             });
 
         }
@@ -117,8 +117,6 @@ function filterName(id){
              vm.name = '';
              loadAll();
          }
-
-
 
         var myDate=new Date();
 

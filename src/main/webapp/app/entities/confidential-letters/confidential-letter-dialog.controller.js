@@ -3,12 +3,13 @@
 
     angular
         .module('researchRepositoryLearningSystemApp')
-        .controller('CommunicationLettersDialogController', CommunicationLettersDialogController);
+        .controller('ConfidentialLettersDialogController', ConfidentialLettersDialogController);
 
-    CommunicationLettersDialogController.$inject = ['OpportunityMaster', 'Principal', '$state', 'CommunicationLetters', '$scope', '$filter', '$http', '$sce', 'Upload'];
+    ConfidentialLettersDialogController.$inject = ['OpportunityMaster', 'Principal', '$state', 'ConfidentialLetters', '$scope', '$filter', '$http', '$sce', 'Upload'];
 
-    function CommunicationLettersDialogController(OpportunityMaster, Principal, $state, CommunicationLetters, $scope, $filter, $http, $sce, Upload) {
+    function ConfidentialLettersDialogController(OpportunityMaster, Principal, $state, ConfidentialLetters, $scope, $filter, $http, $sce, Upload) {
         var vm = this;
+
         vm.opportunityMasters = [];
         vm.oppMasterId = '';
         vm.upload = upload;
@@ -16,7 +17,7 @@
         vm.selectFile = selectFile;
         vm.fileUpload = '';
         vm.loadAll = loadAll;
-        vm.communicationLetters;
+        vm.confidentialLetters;
 
         vm.loadAll();
 
@@ -52,14 +53,8 @@
                 return $http.get('api/opportunity-masters/all').then(
                     function (response) {
                         searchText = searchText.toLowerCase();
-                        //  console.log(searchText);
-                        // console.log(response);
-
-
-                        // ideally filtering should be done on the server
                         var states = _.filter(response.data,
                             function (state) {
-                                // console.log(state);
                                 return (state.oppName).toLowerCase()
                                     .startsWith(searchText);
 
@@ -83,17 +78,13 @@
                 vm.name = e.item.oppName;
                 vm.opportunityName = e.item;
                 console.log(vm.opportunityName.id, 'NAme');
-
-
                 OpportunityMaster.getSearchOpportunity(vm.opportunityName, onSuccess1, onError1);
             }
         }
 
         function onSuccess1(data, headers) {
-
             vm.opportunityMasters = data;
             vm.oppMasterId = vm.opportunityMasters[0].id;
-
         }
 
         function onError1() {
@@ -115,7 +106,7 @@
                     oppId: vm.oppMasterId,
                     filetype: 'Communication',
                     uploadfileName: vm.uploadfileName,
-                    subject: vm.communicationLetter.subject
+                    subject: vm.confidentialLetters.subject
                 }// {oppCode: inputData.oppCode, oppName: inputData.oppName, oppDescription: inputData.oppDescription, strategyMasterId: inputData.strategyMasterId.id}
             }).then(function (resp) {
 

@@ -42,19 +42,19 @@
                 <!--<div class="col-md-2"><h4>Opportunity</h4></div>-->
                 <div class="col-md-3 pull-right">
                     <button class="btn btn-md btn-warning pull-right"
-                            type="button" ui-sref="communication-letter.new" has-any-authority="Admin,Research,Master">
+                            type="button" ui-sref="confidential-letter.new" has-any-authority="Admin,Research,Master">
                         <span class="glyphicon glyphicon-plus"></span>
                         <span>
-                       Add Communication
+                       Add Confidential Letter
                     </span>
                     </button>
                 </div>
 
                 <div class="col-md-3" style="padding-left: 18px;">
                     <input class="form-control ng-pristine ng-valid clearable autoComplClose" ng-model="vm.name"
-                    auto-complete="vm.autoCompleteOpportunity" type="text" placeholder="Search Opportunity">
+                           auto-complete="vm.autoCompleteOpportunity1" type="text" placeholder="Search Opportunity">
                     <span class="input-group-btn autoClose"><button type="button" class="btn btn-default" ng-show="vm.name"
-                                                              ng-click="vm.clearOpp()">X</button></span></div>
+                                                                    ng-click="vm.clearOpp()">X</button></span></div>
                 <div class="col-md-3"><input class="form-control ng-pristine ng-valid clearable autoComplClose"
                                              ng-model="vm.subject" auto-complete="vm.autoCompleteSubject" type="text"
                                              placeholder="Search Subject"> <span class="input-group-btn autoClose"><button

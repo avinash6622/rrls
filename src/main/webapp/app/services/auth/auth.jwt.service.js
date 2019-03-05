@@ -46,6 +46,8 @@
             var deferred = $q.defer();
 
             if (angular.isDefined(jwt)) {
+                console.log('jwt in auth service');
+                console.log(jwt);
                 this.storeAuthenticationToken(jwt, rememberMe);
                 deferred.resolve(jwt);
             } else {

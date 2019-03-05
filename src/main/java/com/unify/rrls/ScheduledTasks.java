@@ -55,9 +55,9 @@ public class ScheduledTasks {
 	  private static final Logger logger = LoggerFactory.getLogger(ScheduledTasks.class);
 	  private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");	   
 	  
-	  @Timed
-	/*  @Scheduled(fixedDelay = 10000000, initialDelay = 5000)*/
-	  @Scheduled(cron = "0 0 6-7 * * ?")
+//	  @Timed
+//	/*  @Scheduled(fixedDelay = 10000000, initialDelay = 5000)*/
+//	  @Scheduled(cron = "0 0 6-7 * * ?")
 	  public void scheduleTaskWithFixedRate() {
 	      logger.info("Fixed Rate Task :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()) );
 	      

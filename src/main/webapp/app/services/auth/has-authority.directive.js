@@ -16,6 +16,8 @@
         return directive;
 
         function linkFunc(scope, element, attrs) {
+            // console.log('authority');
+            // console.log(authority);
             var authority = attrs.hasAuthority.replace(/\s+/g, '');
 
             var setVisible = function () {
@@ -32,7 +34,10 @@
 
                     Principal.hasAuthority(authority)
                         .then(function (result) {
+                            // console.log('Principal hasAuthority');
+                            // console.log(result);
                             if (result) {
+
                                 setVisible();
                             } else {
                                 setHidden();

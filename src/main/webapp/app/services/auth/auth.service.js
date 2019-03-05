@@ -64,7 +64,7 @@
                         $state.go('accessdenied');
                     }
                     else {
-                        // user is not authenticated. stow the state they wanted before you
+                        // user is not authenticated. show the state they wanted before you
                         // send them to the login service, so you can return them when you're done
                         storePreviousState($rootScope.toState.name, $rootScope.toStateParams);
 

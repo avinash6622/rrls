@@ -199,7 +199,7 @@ public class CommunicationLettersResource {
 	    @PostMapping("/communication-letter/search-sub")
 		@Timed
 		public ResponseEntity<List<CommunicationLetters>> searchSubject(@RequestBody CommunicationLetters communicationLetter, Pageable pageable) throws URISyntaxException {
-		 
+
 	    	Page<CommunicationLetters> page = communicationLettersRepository.findBySubject(communicationLetter.getSubject(),pageable);
 		    HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/communication-letter");
 		    return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);

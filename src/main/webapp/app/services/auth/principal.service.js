@@ -60,10 +60,10 @@
                 _identity = undefined;
             }
 
-            // check and see if we have retrieved the identity data from the server.
-            // if we have, reuse it by immediately resolving
             if (angular.isDefined(_identity)) {
                 deferred.resolve(_identity);
+
+
 
                 return deferred.promise;
             }
@@ -76,6 +76,8 @@
             return deferred.promise;
 
             function getAccountThen (account) {
+                // console.log('get account service');
+                // console.log(account.data);
                 _identity = account.data;
                 _authenticated = true;
                 deferred.resolve(_identity);

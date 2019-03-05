@@ -61,7 +61,7 @@
 
 
 
-                        console.log(vm.notificationValues);
+                        // console.log(vm.notificationValues);
 
 
                     });
@@ -121,7 +121,7 @@
 
             if (item.dStatus !== 'Read') {
                 OpportunityMaster.notification({notiId :id,userId:userid,status:status}, function(resp){
-                    console.log(resp);
+                    // console.log(resp);
 
                 });
             }
