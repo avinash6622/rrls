@@ -100,7 +100,7 @@
 
 
             Upload.upload({
-                url: 'api/communication-letter',
+                url: 'api/confidenctial-letters',
                 data: {fileUploads: vm.fileUpload},
                 params: {
                     oppId: vm.oppMasterId,

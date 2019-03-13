@@ -52,7 +52,7 @@
             dropdownHeight : '200px',
 
             data : function(searchText) {
-                return $http.get('api/communication-letter/opportunity').then(
+                return $http.get('api/confidenctial-letters/opportunity').then(
                     function(response) {
                         searchText = searchText.toLowerCase();
                         var states = _.filter(response.data,
@@ -89,7 +89,7 @@
             dropdownHeight : '200px',
 
             data : function(searchText) {
-                return $http.get('api/communication-letter/subject').then(
+                return $http.get('api/confidenctial-letters/subject').then(
                     function(response) {
                         searchText = searchText.toLowerCase();
                         var states = _.filter(response.data,
