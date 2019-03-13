@@ -69,6 +69,13 @@
         padding-left: 12px !important;
 
     }
+    .gridCol{
+        width: 13.999%!important;
+        padding: 10px 10px 10px 10px;
+    }
+    .rowGrid{
+        margin-left: 10px;
+    }
 </style>
 <div>
 
@@ -257,9 +264,9 @@
                     </div>
                 </dd>
 
-                <div class="row"
+                <div class="row rowGrid"
                      ng-show="vm.opportunityMaster.fileUploads || vm.opportunityMaster.communicationLetters">
-                    <div class="col-md-2">
+                    <div class="col-md-2 gridCol">
                         <div class="panel panel-info">
                             <div class="panel-heading"><strong>Presentation</strong></div>
                             <div
@@ -285,9 +292,7 @@
                             </div>
                         </div>
                     </div>
-
-
-                    <div class="col-md-2">
+                    <div class="col-md-2 gridCol">
                         <div class="panel panel-info">
                             <div class="panel-heading"><strong>Excel Model</strong></div>
                             <div
@@ -302,7 +307,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2 gridCol">
                         <div class="panel panel-info">
                             <div class="panel-heading"><strong>Quarterly Updates</strong></div>
                             <div
@@ -317,8 +322,7 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-md-2">
+                    <div class="col-md-2 gridCol">
                         <div class="panel panel-info">
                             <div class="panel-heading"><strong>Miscellaneous</strong></div>
                             <div
@@ -333,7 +337,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2 gridCol">
                         <div class="panel panel-info">
                             <div class="panel-heading"><strong>External RA</strong></div>
                             <div
@@ -348,9 +352,24 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2 gridCol">
                         <div class="panel panel-info">
                             <div class="panel-heading"><strong>Communication Letters</strong></div>
+                            <div
+                                style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
+                                <div class="panel-body"
+                                     ng-repeat="fileUploads in vm.opportunityMaster.communicationLetters | orderBy: '-createdDate'">
+                                    <a ng-click="vm.loadFileCommunication(fileUploads.id)">{{fileUploads.fileName}}</a>
+                                    <b> - {{fileUploads.createdBy | capitalize}}</b> <span
+                                    class="date sub-text"> on {{fileUploads.createdDate |
+								date :"MMM d, y h:mm:ss a"}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 gridCol">
+                        <div class="panel panel-info">
+                            <div class="panel-heading"><strong>Confidential Letters</strong></div>
                             <div
                                 style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
                                 <div class="panel-body"
