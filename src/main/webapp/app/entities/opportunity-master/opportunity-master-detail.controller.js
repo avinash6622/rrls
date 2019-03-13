@@ -10,6 +10,7 @@
     function OpportunityMasterDetailController($scope, $rootScope, Principal, $stateParams, previousState, entity, OpportunityMaster, StrategyMaster, Upload, FileUploadComments, FileUpload, $uibModal, $filter, $http, OpportunityQuestion, DecimalConfiguration, CommentOpportunity) {
         var vm = this;
         vm.opportunityMaster = entity;
+
         vm.previousState = previousState.name;
         vm.opportunityMaster.financialSummaryData = vm.opportunityMaster.financialSummaryData ? vm.opportunityMaster.financialSummaryData : null;
         vm.opportunityMaster.nonFinancialSummaryData = vm.opportunityMaster.nonFinancialSummaryData ? vm.opportunityMaster.nonFinancialSummaryData : null;
@@ -70,8 +71,6 @@
 
 
         function getDecimalConfig() {
-
-
             DecimalConfiguration.get({id: vm.account.id}, function (resp) {
 
                 if (vm.account.login == vm.opportunityMaster.createdBy) {
@@ -130,8 +129,9 @@
         $scope.neYearNext = $filter('date')(nextYearNext, 'yyyy');
 
         $scope.submitTable = function () {
+            console.log('vm.opportunityMaster');
+            console.log(vm.opportunityMaster);
             OpportunityMaster.summarydatavalues(vm.opportunityMaster, function (resp) {
-
                 $scope.isDisabled = true;
             }, function (err) {
                 console.log(err);
@@ -738,7 +738,6 @@
         }
 
         function createFile() {
-
             var doc = "<body>" + vm.newdoc + "</body>";
             OpportunityMaster.wordCreation({
                 fileContent: doc, fileName: vm.fileName, oppId: vm.opportunityMaster.id,
@@ -748,8 +747,6 @@
                 vm.opportunityMaster.fileUploads.push(result);
                 clear();
             }, onSaveError);
-
-
         }
 
         function saveComment() {
@@ -818,6 +815,7 @@
         }
 
         $scope.getDataFromGSheet = function () {
+            var FinancialSummaryData = {}, NonFinancialSummaryData = {};
             vm.googleSheetData = [];
             var jsonObj = {};
             var gsID = vm.googleSheetLink;
@@ -830,15 +828,36 @@
                 });
                 for (var i = 0; i < gsColumns.length; i++) {
                     var value = gsColumns[i].split('gsx$')[1];
+
                     if (!vm.googleSheetHeading.includes(value)) {
                         vm.googleSheetHeading.push(value);
                     }
                 }
                 var length = vm.googleSheetHeading.length;
                 for (var i = 0; i < gsColumns.length; i++) {
-                    jsonObj[vm.googleSheetHeading[i]] = entry[gsColumns[i]]['$t'];
+                    // console.log('value -' + entry[gsColumns[i]]['$t']);
+                    if (entry[gsColumns[i]]['$t']) {
+                        jsonObj[vm.googleSheetHeading[i]] = entry[gsColumns[i]]['$t'];
+                    } else {
+                        jsonObj[vm.googleSheetHeading[i]] = '0';
+                    }
+
                 }
                 return jsonObj;
+            }
+            var generateObj = function (objKey, obj) {
+                FinancialSummaryData[objKey + 'One'] = parseFloat(Object.values(obj)[1].replace(/[^-\d.]/g, ''));
+                FinancialSummaryData[objKey + 'Two'] = parseFloat(Object.values(obj)[2].replace(/[^-\d.]/g, ''));
+                FinancialSummaryData[objKey + 'Three'] = parseFloat(Object.values(obj)[3].replace(/[^-\d.]/g, ''));
+                FinancialSummaryData[objKey + 'Four'] = parseFloat(Object.values(obj)[4].replace(/[^-\d.]/g, ''));
+                FinancialSummaryData[objKey + 'Five'] = parseFloat(Object.values(obj)[5].replace(/[^-\d.]/g, ''));
+            }
+            var generateNonFinObj = function (objKey, obj) {
+                NonFinancialSummaryData[objKey + 'One'] = parseFloat(Object.values(obj)[1].replace(/[^-\d.]/g, ''));
+                NonFinancialSummaryData[objKey + 'Two'] = parseFloat(Object.values(obj)[2].replace(/[^-\d.]/g, ''));
+                NonFinancialSummaryData[objKey + 'Three'] = parseFloat(Object.values(obj)[3].replace(/[^-\d.]/g, ''));
+                NonFinancialSummaryData[objKey + 'Four'] = parseFloat(Object.values(obj)[4].replace(/[^-\d.]/g, ''));
+                NonFinancialSummaryData[objKey + 'Five'] = parseFloat(Object.values(obj)[5].replace(/[^-\d.]/g, ''));
             }
             $http.get(url)
                 .success(function (response) {
@@ -848,6 +867,150 @@
                         var content = entries[key];
                         vm.googleSheetData.push(parse(content));
                     }
+                    if (vm.opportunityMaster.nonFinancialSummaryData === null) {
+                        console.log("Financial Opportunity");
+                        FinancialSummaryData = {};
+                        for (var gs in vm.googleSheetData) {
+                            var obj = vm.googleSheetData[gs];
+                            for (var key in obj) {
+                                if (obj[key] === 'Net Interest Income') {
+                                    generateObj('netInt', obj);
+                                }
+                                if (obj[key] === 'Non Interest Income') {
+                                    generateObj('nonInt', obj);
+                                }
+                                if (obj[key] === 'Operating Expenses') {
+                                    generateObj('opExp', obj);
+                                }
+                                if (obj[key] === 'Total Income') {
+                                    generateObj('totInc', obj);
+
+                                }
+                                if (obj[key] === 'Operating Profit') {
+                                    generateObj('opPro', obj);
+                                }
+                                if (obj[key] === 'Provisions') {
+                                    generateObj('provisions', obj);
+
+                                }
+                                if (obj[key] === 'Exceptional Item 1') {
+                                    generateObj('exception', obj);
+
+                                }
+                                if (obj[key] === 'Exceptional Item 2') {
+                                    generateObj('exceptionItem', obj);
+
+                                }
+                                if (obj[key] === 'PAT') {
+                                    generateObj('pat', obj);
+
+                                }
+                                if (obj[key] === 'EPS') {
+                                    generateObj('eps', obj);
+
+                                }
+                                if (obj[key] === 'Market Cap') {
+                                    generateObj('marCap', obj)
+
+                                }
+                                if (obj[key] === 'AUM') {
+                                    generateObj('aum', obj);
+
+                                }
+                                if (obj[key] === 'Networth') {
+                                    generateObj('networth', obj);
+                                }
+                                if (obj[key] === 'ROE') {
+                                    generateObj('roe', obj);
+                                }
+                                if (obj[key] === 'PBV') {
+                                    generateObj('pbv', obj);
+                                }
+                                if (obj[key] === 'PE') {
+                                    generateObj('pe', obj);
+                                }
+                            }
+
+                        }
+                        console.log('FinancialSummaryData');
+                        console.log(FinancialSummaryData);
+
+                    } else {
+                        console.log("Non Financial Opportunity");
+                        NonFinancialSummaryData={}
+                        for (var gs in vm.googleSheetData) {
+                            var obj = vm.googleSheetData[gs];
+                            for (var key in obj) {
+                                if (obj[key] === 'Revenues') {
+                                    generateNonFinObj('revenue', obj);
+                                }
+                                if (obj[key] === 'Rev.Growth(%)') {
+                                    generateNonFinObj('revGrowth', obj);
+                                }
+                                if (obj[key] === 'EBITDA') {
+                                    generateNonFinObj('ebitda', obj);
+                                }
+                                if (obj[key] === 'Margin(%)') {
+                                    generateNonFinObj('margin', obj);
+                                }
+                                if (obj[key] === 'EBI.Growth(%)') {
+                                    generateNonFinObj('ebitdaGrowth', obj);
+                                }
+                                if (obj[key] === 'Other Income') {
+                                    generateNonFinObj('otherInc', obj);
+                                }
+                                if (obj[key] === 'Interest Exp') {
+                                    generateNonFinObj('intExp', obj);
+                                }
+                                if (obj[key] === 'Depriciation') {
+                                    generateNonFinObj('dep', obj);
+                                }
+                                if (obj[key] === 'PBT') {
+                                    generateNonFinObj('pbt', obj);
+                                }
+                                if (obj[key] === 'Exceptional Item 1') {
+                                    generateNonFinObj('exception', obj);
+                                }
+                                if (obj[key] === 'Exceptional Item 2') {
+                                    generateNonFinObj('exceptionItem', obj);
+                                }
+                                if (obj[key] === 'Tax') {
+                                    generateNonFinObj('tax', obj);
+                                }
+                                if (obj[key] === 'PAT') {
+                                    generateNonFinObj('pat', obj);
+                                }
+                                if (obj[key] === 'PAT.Growth(%)') {
+                                    generateNonFinObj('patGrowth', obj);
+                                }
+                                if (obj[key] === 'Market Cap') {
+                                    generateNonFinObj('marketCap', obj);
+                                }
+                                if (obj[key] === 'Networth') {
+                                    generateNonFinObj('networth', obj);
+                                }
+                                if (obj[key] === 'ROE(%)') {
+                                    generateNonFinObj('roe', obj);
+                                }
+                                if (obj[key] === 'Total Debt') {
+                                    generateNonFinObj('totDeb', obj);
+                                }
+                                if (obj[key] === 'DE') {
+                                    generateNonFinObj('de', obj);
+                                }
+                                if (obj[key] === 'Deprciation Rate') {
+                                    generateNonFinObj('depRate', obj);
+                                }
+                                if (obj[key] === 'Weight') {
+                                    generateNonFinObj('weight', obj);
+                                }
+                            }
+                        }
+
+                        console.log('NonFinancialSummaryData');
+                        console.log(NonFinancialSummaryData);
+                    }
+
 
                 }).error(function (err) {
                 console.log('error occured');
@@ -871,7 +1034,6 @@
                 $scope.img = e.target.result;
             });
         }
-
 
     }
 
