@@ -90,6 +90,17 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	
 	@OneToMany(mappedBy = "opportunityMasterId")
 	private List<CommunicationLetters> communicationLetters;
+
+//    public List<ConfidenctialLetters> getConfidenctialLetters() {
+//        return confidenctialLetters;
+//    }
+//
+//    public void setConfidenctialLetters(List<ConfidenctialLetters> confidenctialLetters) {
+//        this.confidenctialLetters = confidenctialLetters;
+//    }
+
+    @OneToMany(mappedBy = "opportunityMasterId")
+	private List<ConfidenctialLetters> confidenctialLetters;
 	
 	@OneToMany(mappedBy = "opportunityMasterId")
 	private List<ExternalRAFileUpload> externalRAFileUpload;
@@ -98,8 +109,8 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 	@JoinColumn(name = "master_name")
 	private OpportunityName masterName;
 
-	 @OneToMany(mappedBy="opportunityMaster")
-	 private List<OpportunityQuestion> opportunityQuestions;
+    @OneToMany(mappedBy="opportunityMaster")
+    private List<OpportunityQuestion> opportunityQuestions;
 
 	 @Transient
 	 @JsonProperty
@@ -273,6 +284,14 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 		this.externalRAFileUpload = externalRAFileUpload;
 	}
 
+
+    public List<ConfidenctialLetters> getConfidenctialLetters() {
+        return confidenctialLetters;
+    }
+
+    public void setConfidenctialLetters(List<ConfidenctialLetters> confidenctialLetters) {
+        this.confidenctialLetters = confidenctialLetters;
+    }
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {

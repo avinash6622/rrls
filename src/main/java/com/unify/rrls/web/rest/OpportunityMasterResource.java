@@ -57,6 +57,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.unify.rrls.domain.AnswerComment;
 import com.unify.rrls.domain.CommentOpportunity;
 import com.unify.rrls.domain.CommunicationLetters;
+import com.unify.rrls.domain.ConfidenctialLetters;
 import com.unify.rrls.domain.DocumentCreationBean;
 import com.unify.rrls.domain.ExternalRAFileUpload;
 import com.unify.rrls.domain.FileUpload;
@@ -82,6 +83,7 @@ import com.unify.rrls.repository.AdditionalFileUploadRepository;
 import com.unify.rrls.repository.AnswerCommentRepository;
 import com.unify.rrls.repository.CommentOpportunityRepository;
 import com.unify.rrls.repository.CommunicationLettersRepository;
+import com.unify.rrls.repository.ConfidenctialLettersRepository;
 import com.unify.rrls.repository.DecimalConfigurationRepository;
 import com.unify.rrls.repository.ExternalRAFileUploadRepository;
 import com.unify.rrls.repository.FileUploadCommentsRepository;
@@ -171,6 +173,7 @@ public class OpportunityMasterResource {
 	private final LearningsAIFMappingRepository learningsAIFMappingRepository;
 	private final ExternalRAFileUploadRepository externalRAFileUploadRepository;
 	private final CommunicationLettersRepository communicationLettersRepository;
+	private final ConfidenctialLettersRepository confidenctialLettersRepository;
 
 	@Autowired
 	NotificationServiceResource notificationServiceResource;
@@ -199,7 +202,7 @@ public class OpportunityMasterResource {
 			FixedLearningRepository fixedLearningRepository,FixedLearningMappingRepository fixedLearningMappingRepository,
 			OpportunityLearningAIFRepository opportunityLearningAIFRepository,LearningAIFRepository learningAIFRepository,
 			LearningsAIFMappingRepository learningsAIFMappingRepository,ExternalRAFileUploadRepository externalRAFileUploadRepository,
-			CommunicationLettersRepository communicationLettersRepository) {
+			CommunicationLettersRepository communicationLettersRepository,ConfidenctialLettersRepository confidenctialLettersRepository) {
 		this.opportunityMasterRepository = opportunityMasterRepository;
 		this.fileUploadRepository = fileUploadRepository;
 		this.fileUploadCommentsRepository = fileUploadCommentsRepository;
@@ -225,6 +228,7 @@ public class OpportunityMasterResource {
 		this.learningsAIFMappingRepository=learningsAIFMappingRepository;
 		this.externalRAFileUploadRepository=externalRAFileUploadRepository;
 		this.communicationLettersRepository=communicationLettersRepository;
+		this.confidenctialLettersRepository=confidenctialLettersRepository;
 	}
 
 	/**
@@ -948,6 +952,7 @@ public class OpportunityMasterResource {
 		List<FileUpload> fileUploads = fileUploadRepository.findByOpportunityMasterId(opportunityMaster);
 		List<ExternalRAFileUpload> externalRAFileUploads=externalRAFileUploadRepository.findByOpportunityMasterId(opportunityMaster);
 		List<CommunicationLetters> communicationLetters=communicationLettersRepository.findByOpportunityMasterId(opportunityMaster);
+        List<ConfidenctialLetters> confidenctialLetters=confidenctialLettersRepository.findByOpportunityMasterId(opportunityMaster);
 		List<StrategyMapping> strategyMappings = strategyMappingRepository.findByOpportunityMaster(opportunityMaster);
 		opportunityAutomation = opportunityAutomationRepository.findByOpportunityMaster(opportunityMaster);
 
@@ -983,6 +988,8 @@ public class OpportunityMasterResource {
 		opportunityMaster.setFileUploadCommentList(fileComments);
 		opportunityMaster.setExternalRAFileUpload(externalRAFileUploads);
 		opportunityMaster.setCommunicationLetters(communicationLetters);
+		opportunityMaster.setConfidenctialLetters(confidenctialLetters);
+
 		if (!fileUploads.isEmpty()) {
 			try {
 				for (FileUpload fm : fileUploads) {
