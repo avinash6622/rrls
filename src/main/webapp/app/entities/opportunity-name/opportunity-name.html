@@ -1,64 +1,65 @@
 <div class="container">
- <div class="col-md-6 col-md-offset-3">
-    <div class="well wellDialog">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="well wellDialog">
 
-    <div>
-     <jhi-alert></jhi-alert>
-    
-        <!--    <button type="button" class="btn btn-default pull-right"
-                    ng-click="vm.clear()">Go Back</button>-->
-        <h4 style="text-align: center;"><strong>Create Unlisted Opportunity</strong></h4>
+            <div>
+                <jhi-alert></jhi-alert>
+
+                <!--    <button type="button" class="btn btn-default pull-right"
+                            ng-click="vm.clear()">Go Back</button>-->
+                <h4 style="text-align: center;"><strong>Create Unlisted Opportunity</strong></h4>
+            </div>
+
+            <div class="row">
+
+                <form name="editForm" role="form" novalidate ng-submit="vm.save()">
+                    <div class="form-group">
+                        <label for="field_opportunitySecurityCode"></label>
+                        <input class="form-control" type="text" name="securityCode" id="field_opportunitySecurityCode"
+                               ng-pattern="/^[0-9]*$/" ng-model="vm.opportunityNames.securityCode"
+                               placeholder="Security Code"/>
+                        <span ng-show="editForm.securityCode.$error.pattern">Not a valid number!</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="field_opportunitySecurityId"></label>
+                        <input class="form-control" type="text" name="securityId" id="field_opportunitySecurityId"
+                               ng-model="vm.opportunityNames.securityId" placeholder="Security ID"/>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="field_opportunityMasterName"></label>
+                        <input class="form-control" type="text" name="oppName" id="field_opportunityMasterName"
+                               ng-model="vm.opportunityNames.oppName" placeholder="Opportunity Name"/>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="field_opportunityMasterSector"></label>
+                        <input class="form-control" type="text" name="sectorType" id="field_opportunityMasterSector"
+                               ng-model="vm.opportunityNames.sectorType" auto-complete="vm.autoCompleteOptions"
+                               placeholder="Sector"/>
+
+                    </div>
+
+
+                    <!--   <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+                           <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+                       </button>-->
+                    <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving"
+                            class="btn btn-primary pull-right" style="padding:2px;padding-right:4px">
+                        <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+                    </button>
+
+
+                </form>
+            </div>
+        </div>
+        <footer class="footer footer-dark" ng-cloak>
+            <p data-translate="footer" class="col-md-offset-3" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}},
+                All rights reserved.</p>
+        </footer>
     </div>
-  
-<div class="row">
- 
-    <form name="editForm" role="form" novalidate ng-submit="vm.save()">
 
-
-
-        <div class="form-group">
-            <label for="field_opportunitySecurityCode"></label>
-            <input class="form-control" type="text" name="securityCode" id="field_opportunitySecurityCode" ng-pattern="/^[0-9]*$/" ng-model="vm.opportunityNames.securityCode" placeholder="Security Code"/>
- 			<span ng-show="editForm.securityCode.$error.pattern">Not a valid number!</span>
-        </div>
-
-        <div class="form-group">
-            <label for="field_opportunitySecurityId"></label>
-            <input class="form-control" type="text" name="securityId" id="field_opportunitySecurityId" ng-model="vm.opportunityNames.securityId" placeholder="Security ID"/>
-
-        </div>
-
-        <div class="form-group">
-            <label for="field_opportunityMasterName"></label>
-            <input class="form-control" type="text" name="oppName" id="field_opportunityMasterName" ng-model="vm.opportunityNames.oppName"placeholder="Opportunity Name"/>
-
-        </div>
-
-        <div class="form-group">
-            <label for="field_opportunityMasterSector"></label>
-            <input class="form-control" type="text" name="sectorType" id="field_opportunityMasterSector" ng-model="vm.opportunityNames.sectorType"  auto-complete="vm.autoCompleteOptions" placeholder="Sector"/>
-
-        </div>
-
-
-
-
-
-
-     <!--   <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
-            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
-        </button>-->
-        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary pull-right" style="padding:2px;padding-right:4px">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
-        </button>
-
-
-</form>
-</div>
-</div>
-  <footer class="footer footer-dark" ng-cloak>
-        <p data-translate="footer" class="col-md-offset-3" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.</p>
-    </footer>
-</div>
-  
 </div>

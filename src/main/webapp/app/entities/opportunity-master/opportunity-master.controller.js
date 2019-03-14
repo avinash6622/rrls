@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -6,9 +6,9 @@
         .controller('OpportunityMasterController', OpportunityMasterController)
 
 
-    OpportunityMasterController.$inject = ['OpportunityMaster', 'ParseLinks','Principal', 'AlertService', 'paginationConstants','$scope','$filter','pagingParams','$state','$http','$sce','$q'];
+    OpportunityMasterController.$inject = ['OpportunityMaster', 'ParseLinks', 'Principal', 'AlertService', 'paginationConstants', '$scope', '$filter', 'pagingParams', '$state', '$http', '$sce', '$q'];
 
-    function OpportunityMasterController(OpportunityMaster, ParseLinks,Principal, AlertService, paginationConstants,$scope,$filter,pagingParams,$state,$http,$sce) {
+    function OpportunityMasterController(OpportunityMaster, ParseLinks, Principal, AlertService, paginationConstants, $scope, $filter, pagingParams, $state, $http, $sce) {
 
         var vm = this;
 
@@ -22,107 +22,107 @@
         vm.page = 1;
         vm.links = null;
 
-      //  vm.reset = reset;
-      //  vm.reverse = true;
+        //  vm.reset = reset;
+        //  vm.reverse = true;
         vm.transition = transition;
         vm.itemsValue = 'Opportunities';
         vm.account = null;
-        vm.opportunityName='';
-        vm.name='';
-        vm.filterName=filterName;
+        vm.opportunityName = '';
+        vm.name = '';
+        vm.filterName = filterName;
         vm.clear = clear;
 
-       vm.loadAll();
-        $scope.$on('authenticationSuccess', function() {
+        vm.loadAll();
+        $scope.$on('authenticationSuccess', function () {
             getAccount();
         });
 
-  	  getAccount();
+        getAccount();
 
         function getAccount() {
-            Principal.identity().then(function(account) {
+            Principal.identity().then(function (account) {
                 vm.account = account;
                 vm.isAuthenticated = Principal.isAuthenticated;
                 console.log(Principal.isAuthenticated);
             });
 
         }
-function filterName(id){
-/*	console.log('Full',id);*/
-}
+
+        function filterName(id) {
+            /*	console.log('Full',id);*/
+        }
+
         vm.autoCompleteOpportunity = {
-                minimumChars : 1,
-                dropdownHeight : '200px',
+            minimumChars: 1,
+            dropdownHeight: '200px',
 
-                data : function(searchText) {
-                    return $http.get('api/opportunity-masters/all').then(
-                        function(response) {
-                            searchText = searchText.toLowerCase();
-                          //  console.log(searchText);
-                           // console.log(response);
-
-
-                            // ideally filtering should be done on the server
-                            var states = _.filter(response.data,
-                                function(state) {
-                               // console.log(state);
-                                    return (state.oppName).toLowerCase()
-                                        .startsWith(searchText);
-
-                                });
-
-                          return states;
-                        });
-                },
-                renderItem : function(item) {
-                    return {
-                        value : item,
-                        label : $sce.trustAsHtml("<p class='auto-complete'>"
-                            + item.oppName + "</p>")
-                    };
-                },
-
-                itemSelected : function(e) {
-
-                    console.log(e);
-                	vm.selectedName = e;
-                    vm.name = e.item.oppName;
-                    vm.opportunityName=e.item;
-                    console.log(vm.opportunityName.id,'NAme');
+            data: function (searchText) {
+                return $http.get('api/opportunity-masters/all').then(
+                    function (response) {
+                        searchText = searchText.toLowerCase();
+                        //  console.log(searchText);
+                        // console.log(response);
 
 
-                    OpportunityMaster.getSearchOpportunity(vm.opportunityName,onSuccess1,onError1);
-                }
+                        // ideally filtering should be done on the server
+                        var states = _.filter(response.data,
+                            function (state) {
+                                // console.log(state);
+                                return (state.oppName).toLowerCase()
+                                    .startsWith(searchText);
+
+                            });
+
+                        return states;
+                    });
+            },
+            renderItem: function (item) {
+                return {
+                    value: item,
+                    label: $sce.trustAsHtml("<p class='auto-complete'>"
+                        + item.oppName + "</p>")
+                };
+            },
+
+            itemSelected: function (e) {
+
+                console.log(e);
+                vm.selectedName = e;
+                vm.name = e.item.oppName;
+                vm.opportunityName = e.item;
+                console.log(vm.opportunityName.id, 'NAme');
+
+
+                OpportunityMaster.getSearchOpportunity(vm.opportunityName, onSuccess1, onError1);
             }
+        }
 
 
-
-
-        function onSuccess1(data, headers){
+        function onSuccess1(data, headers) {
 
             console.log(data);
-
             console.log(vm.name);
-
-
-                vm.opportunityMasters = data;
+            vm.opportunityMasters = data;
 
         }
-         function onError1() {
+
+        function onError1() {
 
 
-         }
+        }
 
-         function clear() {
-             vm.name = '';
-             loadAll();
-         }
+        function clear() {
+            vm.name = '';
+            loadAll();
+        }
 
-        var myDate=new Date();
+        var myDate = new Date();
 
-        $scope.currentYear = $filter('date')(myDate,'yyyy');
+        $scope.currentYear = $filter('date')(myDate, 'yyyy');
 
-       function loadAll () {
+        function loadAll() {
+            console.log('opp master all');
+
             OpportunityMaster.query({
                 page: pagingParams.page - 1,
                 size: vm.itemsPerPage,
@@ -132,18 +132,21 @@ function filterName(id){
 
         }
 
-
         function onSuccess(data, headers) {
-
+            // console.log(headers);
+            console.log('link - '+headers('link'));
+            console.log(headers('X-Total-Count'));
             vm.links = ParseLinks.parse(headers('link'));
             vm.totalItems = headers('X-Total-Count');
-         /*   for (var i = 0; i < data.length; i++) {
-                vm.opportunityMasters.push(data[i]);
-            }*/
+            /*   for (var i = 0; i < data.length; i++) {
+                   vm.opportunityMasters.push(data[i]);
+               }*/
 
             vm.queryCount = vm.totalItems;
             vm.page = pagingParams.page;
             vm.opportunityMasters = data;
+            console.log('vm.opportunityMasters');
+            console.log(vm.opportunityMasters);
 
 
         }
@@ -162,7 +165,7 @@ function filterName(id){
             return result;
         }
 
-        function reset () {
+        function reset() {
             vm.page = 0;
             vm.opportunityMasters = [];
             loadAll();
@@ -173,7 +176,7 @@ function filterName(id){
             vm.transition();
         }
 
-        function transition () {
+        function transition() {
             $state.transitionTo($state.$current, {
                 page: vm.page,
                 sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
@@ -182,7 +185,6 @@ function filterName(id){
         }
     }
 })();
-
 
 
 /*

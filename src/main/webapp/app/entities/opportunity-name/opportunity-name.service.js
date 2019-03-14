@@ -4,9 +4,9 @@
         .module('researchRepositoryLearningSystemApp')
         .factory('OpportunityName', OpportunityName);
 
-    OpportunityName.$inject = ['$resource', 'DateUtils'];
+    OpportunityName.$inject = ['$resource', 'DateUtils','$window'];
 
-    function OpportunityName ($resource, DateUtils) {
+    function OpportunityName ($resource, DateUtils,$window) {
         var resourceUrl =  'api/opportunity-names/:id/:inputData';
 
         return $resource(resourceUrl, {}, {

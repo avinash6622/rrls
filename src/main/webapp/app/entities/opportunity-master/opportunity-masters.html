@@ -1,98 +1,112 @@
 <div>
     <div class="well">
 
-    <jhi-alert></jhi-alert>
-    <div>
-        <div class="row">
+        <jhi-alert></jhi-alert>
+        <div>
+            <div class="row">
 
-            <!--<div class="col-md-2"><h4>Opportunity</h4></div>-->
-            <div class="col-md-8 pull-right">
-                <button class="btn btn-primary pull-right" ui-sref="opportunity-master.new" has-any-authority="Research,Master">
-                    <span class="glyphicon glyphicon-plus"></span>
-                    <span>
+                <!--<div class="col-md-2"><h4>Opportunity</h4></div>-->
+                <div class="col-md-8 pull-right">
+                    <button class="btn btn-primary pull-right" ui-sref="opportunity-master.new"
+                            has-any-authority="Research,Master">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span>
                         Create New Opportunity
                     </span>
-                </button>
+                    </button>
+                </div>
+
+                <div class="col-md-4 input-group" style="padding-left: 18px;"><input
+                    class="form-control ng-pristine ng-valid clearable" ng-model="vm.name"
+                    auto-complete="vm.autoCompleteOpportunity" type="text" placeholder="Search"> <span
+                    class="input-group-btn"><button type="button" class="btn btn-default" ng-show="vm.name"
+                                                    ng-click="vm.clear()">X</button></span></div>
             </div>
-
-            <div class="col-md-4 input-group" style="padding-left: 18px;"><input class="form-control ng-pristine ng-valid clearable" ng-model="vm.name"  auto-complete="vm.autoCompleteOpportunity" type="text" placeholder="Search"> <span class="input-group-btn" ><button type= "button" class="btn btn-default" ng-show="vm.name" ng-click="vm.clear()">X</button></span></div>
         </div>
-    </div>
-     <div style="margin-bottom: 5px"></div>
-    <div class="table-responsive">
-        <table class="jh-table table table-striped">
-            <thead>
+        <div style="margin-bottom: 5px"></div>
+        <div class="table-responsive">
+            <table class="jh-table table table-striped">
+                <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
-                 <!--    <th jh-sort-by="oppCode"><span>Opp Code</span> <span class="glyphicon glyphicon-sort"></span></th> -->
-                 <th jh-sort-by="masterName.oppName"><span>Opportunity</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <!--    <th jh-sort-by="oppCode"><span>Opp Code</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+                    <th jh-sort-by="masterName.oppName"><span>Opportunity</span> <span
+                        class="glyphicon glyphicon-sort"></span></th>
 
-                  	<th jh-sort-by="masterName.sectorType"><span>Sector</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="masterName.sectorType"><span>Sector</span> <span
+                        class="glyphicon glyphicon-sort"></span></th>
                     <th class=descrOpp><span>Description</span></th>
                     <th><span>Strategy</span></th>
-                  <th jh-sort-by="createdBy"><span>Created By</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="createdBy"><span>Created By</span> <span class="glyphicon glyphicon-sort"></span>
+                    </th>
                     <th></th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
 
-            <tr ng-repeat="opportunityMaster in vm.opportunityMasters | orderBy:predicate:reverse">
+                <tr ng-repeat="opportunityMaster in vm.opportunityMasters | orderBy:predicate:reverse">
+                    <td>
+                        <button type="submit"
+                                ui-sref="opportunity-master.edit({id:opportunityMaster.id})"
+                                class="btn btn-primary btn-sm"
+                                ng-if="vm.account.login==opportunityMaster.createdBy || vm.account.authorities[0]=='Master'">
 
-
-            <td> <button type="submit"
-                                 ui-sref="opportunity-master.edit({id:opportunityMaster.id})"
-                                 class="btn btn-primary btn-sm" ng-if="vm.account.login==opportunityMaster.createdBy || vm.account.authorities[0]=='Master'">
-
-                        <span class="glyphicon glyphicon-pencil"></span>
-                        <span class="hidden-sm-down"></span>
-                    </button> <a ui-sref="opportunity-master-detail({id:opportunityMaster.id})">{{opportunityMaster.masterName.oppName}}
-                    </a></td>
-                     <td> {{opportunityMaster.masterName.sectorType}}</td>
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            <span class="hidden-sm-down"></span>
+                        </button>
+                        <a ui-sref="opportunity-master-detail({id:opportunityMaster.id})">{{opportunityMaster.masterName.oppName}}
+                        </a></td>
+                    <td> {{opportunityMaster.masterName.sectorType}}</td>
                     <td>{{opportunityMaster.oppDescription}}</td>
 
 
-                    <td><span ng-repeat="selectedStrategyMaster in opportunityMaster.selectedStrategyMaster"><a ui-sref="strategy-master-detail({id:selectedStrategyMaster.id})">
+                    <td><span ng-repeat="selectedStrategyMaster in opportunityMaster.selectedStrategyMaster"><a
+                        ui-sref="strategy-master-detail({id:selectedStrategyMaster.id})">
                       <div>{{selectedStrategyMaster.strategyName}}</div>
                     </a></span>
                     </td>
-                     <td><a ui-sref="home-research({createdBy:opportunityMaster.createdBy})">{{opportunityMaster.createdBy |capitalize}}</a>
+                    <td><a ui-sref="home-research({createdBy:opportunityMaster.createdBy})">{{opportunityMaster.createdBy
+                        |capitalize}}</a>
                     </td>
 
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
-                       <!--     <button type="submit"
-                                    ui-sref="opportunity-master-detail({id:opportunityMaster.id})"
-                                    class="btn btn-info btn-sm">
-                                <span class="glyphicon glyphicon-eye-open"></span>
-                                <span class="hidden-sm-down"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="opportunity-master.edit({id:opportunityMaster.id})"
-                                    class="btn btn-primary btn-sm" ng-if="vm.account.login==opportunityMaster.createdBy">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="hidden-sm-down"></span>
-                            </button>
+                            <!--     <button type="submit"
+                                         ui-sref="opportunity-master-detail({id:opportunityMaster.id})"
+                                         class="btn btn-info btn-sm">
+                                     <span class="glyphicon glyphicon-eye-open"></span>
+                                     <span class="hidden-sm-down"></span>
+                                 </button>
+                                 <button type="submit"
+                                         ui-sref="opportunity-master.edit({id:opportunityMaster.id})"
+                                         class="btn btn-primary btn-sm" ng-if="vm.account.login==opportunityMaster.createdBy">
+                                     <span class="glyphicon glyphicon-pencil"></span>
+                                     <span class="hidden-sm-down"></span>
+                                 </button>
 
-                      <!--       <button type="submit"
-                                    ui-sref="opportunity-master.delete({id:opportunityMaster.id})"
-                                    class="btn btn-danger btn-sm">
-                                <span class="glyphicon glyphicon-remove-circle"></span>
-                                <span class="hidden-sm-down"></span>
-                            </button>-->
+                           <!--       <button type="submit"
+                                         ui-sref="opportunity-master.delete({id:opportunityMaster.id})"
+                                         class="btn btn-danger btn-sm">
+                                     <span class="glyphicon glyphicon-remove-circle"></span>
+                                     <span class="hidden-sm-down"></span>
+                                 </button>-->
 
                         </div>
                     </td>
                 </tr>
-            </tbody>
-        </table>
-    </div>
+                </tbody>
+            </table>
+        </div>
 
         <div class="text-center" style="margin-bottom: -5px">
-            <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
-            <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()" previous-text="&lsaquo;" next-text="&rsaquo;"></uib-pagination>
+            <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"
+                            item="vm.itemsValue"></jhi-item-count>
+            <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page"
+                            ng-change="vm.transition()" previous-text="&lsaquo;" next-text="&rsaquo;"></uib-pagination>
         </div>
-</div>
+    </div>
 
     <footer class="footer footer-dark" ng-cloak>
-        <p data-translate="footer" style="font-size: 12px;margin-left: 9px">&copy;{{currentYear}}, All rights reserved.</p>
+        <p data-translate="footer" style="font-size: 12px;margin-left: 9px">&copy;{{currentYear}}, All rights
+            reserved.</p>
     </footer>
 </div>
