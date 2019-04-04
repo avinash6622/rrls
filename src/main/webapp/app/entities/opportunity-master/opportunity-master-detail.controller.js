@@ -791,16 +791,14 @@
         }
 
         function loadFileContent(fileID) {
-
             window.open('/download/' + fileID, '_blank');
-
         }
 
         function loadFilePreview(fileName) {
             console.log('file preview function invoked');
             var data = fileName;
             data = data.replace(/\\/g, "/");
-            var url = "http://localhost:7070" + data.split('webapp')[1];
+            var url = "http://localhost:8080" + data.split('webapp')[1];
             window.open(url, '_blank');
         }
 
