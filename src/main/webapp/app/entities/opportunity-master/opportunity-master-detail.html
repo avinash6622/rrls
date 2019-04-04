@@ -137,8 +137,6 @@
                     </div>
                 </div>
             </div>
-
-
             <jhi-alert-error></jhi-alert-error>
             <div class="dl-horizontal jh-entity-details">
                 <dt>
@@ -276,17 +274,6 @@
                                 <div class="panel-body"
                                      ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Presentation'} | orderBy: '-createdDate'">
                                     <a ng-click="vm.loadFilePreview(fileUploads.fileData)">{{fileUploads.fileName}}</a>
-
-                                    <!-- File Preview Starts -->
-                                    </br>
-                                    <!--<a ng-href="file:///" +{{fileUploads.fileData}}>Local Resource</a>-->
-                                    <!--<a >loadFilePreview</a>-->
-                                    <!--<a ng-href="http://localhost:8080/content/images/Daily Progress.xlsx">Excel</a>-->
-                                    <!--<a ng-href="http://localhost:8080/content/images/Questions.docx">Word</a>-->
-                                    <!--<a ng-href="http://localhost:8080/content/images/Leave Policy Document.pdf">Pdf</a>-->
-
-                                    <!--File Preview End-->
-
                                     <b> - {{fileUploads.createdBy | capitalize}}</b> <span
                                     class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
@@ -396,15 +383,6 @@
                                      ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Presentation'} | orderBy: '-createdDate'">
                                     <a ng-click="vm.loadFilePreview(fileUploads.fileData)">{{fileUploads.fileName}}</a>
 
-                                    <!-- File Preview Starts -->
-                                    <!--</br>-->
-                                    <!--<a ng-href="file:///" +{{fileUploads.fileData}}>Local Resource</a>-->
-                                    <!--<a ng-click="vm.loadFilePreview(fileUploads.fileData)">loadFilePreview</a>-->
-                                    <!--<a ng-href="http://localhost:8080/content/images/Daily Progress.xlsx">Excel</a>-->
-                                    <!--<a ng-href="http://localhost:8080/content/images/Questions.docx">Word</a>-->
-                                    <!--<a ng-href="http://localhost:8080/content/images/Leave Policy Document.pdf">Pdf</a>-->
-
-                                    <!--File Preview End-->
 
                                     <b> - {{fileUploads.createdBy | capitalize}}</b> <span
                                     class="date sub-text"> on {{fileUploads.createdDate |

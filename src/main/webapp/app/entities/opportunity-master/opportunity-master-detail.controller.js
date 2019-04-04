@@ -61,9 +61,7 @@
         function getAccount() {
             Principal.identity().then(function (account) {
                 vm.account = account;
-
                 vm.isAuthenticated = Principal.isAuthenticated;
-
                 console.log(vm.account.authorities[1]);
                 console.log('vm.account.authorities');
                 console.log(vm.account.authorities);
