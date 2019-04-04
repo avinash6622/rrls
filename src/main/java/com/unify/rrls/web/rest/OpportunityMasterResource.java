@@ -769,7 +769,8 @@ public class OpportunityMasterResource {
         @RequestBody DocumentCreationBean documentCreationBean) throws URISyntaxException, IOException {
         String sFilesDirectory = "";
         String user = SecurityUtils.getCurrentUserLogin();
-        sFilesDirectory = "src/main/resources/" + documentCreationBean.getOppName() + "/" + user + "/docx/";
+//        sFilesDirectory = "src/main/resources/" + documentCreationBean.getOppName() + "/" + user + "/docx/";
+        sFilesDirectory = "src/main/webapp/content/fileUpload/" + documentCreationBean.getOppName() + "/" + user + "/docx/";
         String sFile = documentCreationBean.getFileName() + ".docx";
         String extension = "";
         String name = "";

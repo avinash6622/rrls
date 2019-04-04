@@ -85,7 +85,7 @@ public class ExternalRAFileUploadResource {
 	    
 	        String user= SecurityUtils.getCurrentUserLogin();
 //	        String  sFilesDirectory =  "C:/RRLS_Backup/RRLS/External/"+opp.getMasterName().getOppName()+"/"+user+"-"+uploadfileName;
-            String  sFilesDirectory =  "src/main/webapp/content/fileUpload/"+opp.getMasterName().getOppName()+"/"+user+"-"+uploadfileName;
+            String  sFilesDirectory =  "src/main/webapp/content/fileUpload/External/"+opp.getMasterName().getOppName()+"/"+user+"-"+uploadfileName;
 	      
 	      File dirFiles = new File(sFilesDirectory);
 	      dirFiles.mkdirs();

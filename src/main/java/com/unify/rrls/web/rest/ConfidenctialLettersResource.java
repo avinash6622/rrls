@@ -97,7 +97,7 @@ public class ConfidenctialLettersResource {
         OpportunityMaster opp = opportunityMasterRepository.findOne(oppId);
 
         String user = SecurityUtils.getCurrentUserLogin();
-        String sFilesDirectory = "src/main/webapp/content/fileUpload/" + opp.getMasterName().getOppName() + "/" + user + "-" + uploadfileName;
+        String sFilesDirectory = "src/main/webapp/content/fileUpload/Confidential/" + opp.getMasterName().getOppName() + "/" + user + "-" + uploadfileName;
 
         File dirFiles = new File(sFilesDirectory);
         dirFiles.mkdirs();

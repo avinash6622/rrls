@@ -227,7 +227,8 @@ public class FileUploadResource {
         int iCurrRowNum=0;
 
         String user= SecurityUtils.getCurrentUserLogin();
-        String  sFilesDirectory =  "src/main/resources/"+opportunityMaster.getMasterName().getOppName()+"/summary/"+user;
+//        String  sFilesDirectory =  "src/main/resources/"+opportunityMaster.getMasterName().getOppName()+"/summary/"+user;
+        String  sFilesDirectory =  "src/main/webapp/content/fileUpload/"+opportunityMaster.getMasterName().getOppName()+"/summary/"+user;
 
       File dirFiles = new File(sFilesDirectory);
       dirFiles.mkdirs();
