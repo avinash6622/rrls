@@ -54,7 +54,6 @@ public class ExternalResearchAnalyst  extends AbstractAuditingEntity implements 
 	@OneToMany(mappedBy = "externalResearchAnalyst")
 	private List<ExternalRAFileUpload> fileUploads;
 
-
 	public Integer getId() {
 		return id;
 	}

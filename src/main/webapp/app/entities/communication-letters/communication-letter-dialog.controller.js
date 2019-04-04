@@ -106,8 +106,6 @@
 
             var selectitem = $scope.selitem;
             vm.isSaving = true;
-
-
             Upload.upload({
                 url: 'api/communication-letter',
                 data: {fileUploads: vm.fileUpload},

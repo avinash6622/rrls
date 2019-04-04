@@ -13,7 +13,7 @@
                 parent: 'entity',
                 url: '/confidential-letter?page&sort',
                 data: {
-                    authorities: ['User'],
+                    authorities: ['Admin'],
                     pageTitle: 'Confidential Letter'
                 },
                 views: {
@@ -48,7 +48,7 @@
                 parent: 'confidential-letter',
                 url: '/confidential-letter/new',
                 data: {
-                    authorities: ['User']
+                    authorities: ['Admin']
                 },
                 views: {
                     'content@': {

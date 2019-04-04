@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('ExternalResearchAnalystController', ExternalResearchAnalystController);
 
-    ExternalResearchAnalystController.$inject = ['ExternalResearchAnalyst', 'Principal','ParseLinks', 'AlertService', 'paginationConstants','$scope','$filter','pagingParams','$state','$sce'];
+    ExternalResearchAnalystController.$inject = ['ExternalResearchAnalyst', 'Principal','ParseLinks', 'AlertService', 'paginationConstants','$scope','$filter','pagingParams','$state','$sce','$http'];
 
-    function ExternalResearchAnalystController(ExternalResearchAnalyst,Principal, ParseLinks, AlertService, paginationConstants, $scope, $filter, pagingParams, $state, $sce) {
+    function ExternalResearchAnalystController(ExternalResearchAnalyst,Principal, ParseLinks, AlertService, paginationConstants, $scope, $filter, pagingParams, $state, $sce,$http) {
 
         var vm = this;
 
@@ -25,6 +25,7 @@
       //  vm.reverse = true;
         vm.transition = transition;
         vm.itemsValue = 'External Research';
+        vm.deleteResearch=deleteResearch;
 
         vm.loadAll();
 
@@ -96,6 +97,24 @@
                 search: vm.currentSearch
             });
         }
+        function deleteResearch(externalResearch) {
+            console.log("externalResearch delete");
+            console.log(externalResearch);
+            return $http.delete('/api/external-research-sector/' + externalResearch.id).then(
+                function (response) {
+                    console.log('response in delete');
+                    console.log(response);
+                    loadAll();
+                }).catch(function (error) {
+                console.log(error);
+            });
+
+        }
+
     }
 })();
+
+
+
+
 

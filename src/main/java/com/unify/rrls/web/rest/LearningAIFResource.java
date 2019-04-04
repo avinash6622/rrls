@@ -32,6 +32,8 @@ import com.unify.rrls.repository.LearningsAIFMappingRepository;
 import com.unify.rrls.repository.OpportunityLearningAIFRepository;
 import com.unify.rrls.web.rest.util.HeaderUtil;
 import com.unify.rrls.web.rest.util.PaginationUtil;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import io.swagger.annotations.ApiParam;
 
@@ -143,5 +145,14 @@ public class LearningAIFResource {
 					 .headers(HeaderUtil.createAlert( "A Learning is created with identifier " + result.getId().toString(), result.getSubject()))			          
 			         .body(result);
 		}
-	
+
+    @DeleteMapping("/learning-aif-delete/{id}")
+    @Timed
+    public ResponseEntity<Void> deleteLearningAIF(@PathVariable Long id) {
+        log.debug("REST request to delete learning aif: {}", id);
+        learningAIFRepository.delete(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert("A Learning AIF is deleted with identifier " + id, id.toString())).build();
+    }
+
+
 }

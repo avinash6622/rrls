@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +31,7 @@ import com.unify.rrls.repository.FixedLearningRepository;
 import com.unify.rrls.repository.OpportunityLearningRepository;
 import com.unify.rrls.web.rest.util.HeaderUtil;
 import com.unify.rrls.web.rest.util.PaginationUtil;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import io.swagger.annotations.ApiParam;
 
@@ -141,5 +143,13 @@ public class FixedLearningResource {
 					 .headers(HeaderUtil.createAlert( "A Learning is created with identifier " + result.getId().toString(), result.getSubject()))			          
 			         .body(result);
 		}
+
+    @DeleteMapping("/fixed-learning-delete/{id}")
+    @Timed
+    public ResponseEntity<Void> deleteFixedLearning(@PathVariable Long id) {
+        log.debug("REST request to delete FixedLearning : {}", id);
+        fixedLearningRepository.delete(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert("A fixed learning subject is deleted with identifier " + id, id.toString())).build();
+    }
 	
 }

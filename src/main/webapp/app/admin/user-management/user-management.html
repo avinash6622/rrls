@@ -24,6 +24,7 @@
                 <th jh-sort-by="createdDate"><span>Created Date</span> <span class="glyphicon glyphicon-sort"></span></th>
                 <th><span>Status</span></th>
                 <th><span>Roles</span></th>
+                <th has-authority="Admin">Action</th>
 
                <!--  <th jh-sort-by="Roles"><span>Roles</span> <span class="glyphicon glyphicon-sort"></span></th> -->
 				<!-- <th jh-sort-by="Roles"><span>Research Analyst</span> <span class="glyphicon glyphicon-sort"></span></th> -->
@@ -54,6 +55,14 @@
                     <div ng-repeat="authority in user.authorities">
                         <span class="label label-info" ng-if="authority!='User'">{{ authority }}</span>
                     </div>
+                </td>
+                <td has-authority="Admin">
+                    <button type="submit"
+                                 ui-sref="user-management.delete({login:user.login})"
+                                 class="btn btn-primary btn-sm" ng-disabled="vm.currentAccount.login === user.login">
+                             <span class="glyphicon glyphicon-trash"></span>
+
+                         </button>
                 </td>
 
 

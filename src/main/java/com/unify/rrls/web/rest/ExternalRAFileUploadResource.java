@@ -84,7 +84,8 @@ public class ExternalRAFileUploadResource {
 	        ExternalResearchAnalyst exRa=externalResearchAnalystRepository.findOne(externalId);
 	    
 	        String user= SecurityUtils.getCurrentUserLogin();
-	        String  sFilesDirectory =  "C:/RRLS_Backup/RRLS/External/"+opp.getMasterName().getOppName()+"/"+user+"-"+uploadfileName;
+//	        String  sFilesDirectory =  "C:/RRLS_Backup/RRLS/External/"+opp.getMasterName().getOppName()+"/"+user+"-"+uploadfileName;
+            String  sFilesDirectory =  "src/main/webapp/content/fileUpload/"+opp.getMasterName().getOppName()+"/"+user+"-"+uploadfileName;
 	      
 	      File dirFiles = new File(sFilesDirectory);
 	      dirFiles.mkdirs();
@@ -105,7 +106,7 @@ public class ExternalRAFileUploadResource {
 	              writeFile(fileStream, sFiles);
 	              fileUploaded.setFileData(sFiles.toString());
 	   
-	          int idxOfDot =sFile.getOriginalFilename().lastIndexOf('.');   //Get the last index of . to separate extension
+	          int idxOfDot =sFile.getOriginalFilename().lastIndexOf('.');
 	          extension = sFile.getOriginalFilename().substring(idxOfDot + 1).toLowerCase();
 	          name = sFile.getOriginalFilename().substring(0, idxOfDot);
 

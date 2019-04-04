@@ -11,5 +11,4 @@ import com.unify.rrls.domain.OpportunitySummaryData;
 @Repository
 public interface FinancialSummaryDataRepository extends JpaRepository<FinancialSummaryData, Long>  {
     FinancialSummaryData findByOpportunityMasterId(OpportunityMaster opportunityMaster);
-
 }

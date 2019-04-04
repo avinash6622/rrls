@@ -38,7 +38,7 @@
                     <th><span>Strategy</span></th>
                     <th jh-sort-by="createdBy"><span>Created By</span> <span class="glyphicon glyphicon-sort"></span>
                     </th>
-                    <th></th>
+                    <th has-authority="Admin">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -68,29 +68,32 @@
                         |capitalize}}</a>
                     </td>
 
-                    <td class="text-right">
-                        <div class="btn-group flex-btn-group-container">
-                            <!--     <button type="submit"
-                                         ui-sref="opportunity-master-detail({id:opportunityMaster.id})"
-                                         class="btn btn-info btn-sm">
-                                     <span class="glyphicon glyphicon-eye-open"></span>
-                                     <span class="hidden-sm-down"></span>
-                                 </button>
-                                 <button type="submit"
-                                         ui-sref="opportunity-master.edit({id:opportunityMaster.id})"
-                                         class="btn btn-primary btn-sm" ng-if="vm.account.login==opportunityMaster.createdBy">
-                                     <span class="glyphicon glyphicon-pencil"></span>
-                                     <span class="hidden-sm-down"></span>
-                                 </button>
+                    <!--<td class="text-right">-->
+                        <!--<div class="btn-group flex-btn-group-container">-->
+                            <!--&lt;!&ndash;     <button type="submit"-->
+                                         <!--ui-sref="opportunity-master-detail({id:opportunityMaster.id})"-->
+                                         <!--class="btn btn-info btn-sm">-->
+                                     <!--<span class="glyphicon glyphicon-eye-open"></span>-->
+                                     <!--<span class="hidden-sm-down"></span>-->
+                                 <!--</button>-->
+                                 <!--<button type="submit"-->
+                                         <!--ui-sref="opportunity-master.edit({id:opportunityMaster.id})"-->
+                                         <!--class="btn btn-primary btn-sm" ng-if="vm.account.login==opportunityMaster.createdBy">-->
+                                     <!--<span class="glyphicon glyphicon-pencil"></span>-->
+                                     <!--<span class="hidden-sm-down"></span>-->
+                                 <!--</button>&ndash;&gt;-->
 
-                           <!--       <button type="submit"
-                                         ui-sref="opportunity-master.delete({id:opportunityMaster.id})"
-                                         class="btn btn-danger btn-sm">
-                                     <span class="glyphicon glyphicon-remove-circle"></span>
-                                     <span class="hidden-sm-down"></span>
-                                 </button>-->
 
-                        </div>
+
+                        <!--</div>-->
+                    <!--</td>-->
+                    <td has-authority="Admin">
+                        <button type="submit"
+                                ui-sref="opportunity-master.delete({id:opportunityMaster.id})"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-trash"></span>
+
+                        </button>
                     </td>
                 </tr>
                 </tbody>

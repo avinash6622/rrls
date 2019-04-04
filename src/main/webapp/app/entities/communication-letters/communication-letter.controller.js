@@ -27,6 +27,7 @@
 		vm.links = {
 			last : 0
 		};
+		vm.deleteCommunication=deleteCommunication;
 		
 		//vm.reset = reset;		
 		//vm.reverse = true;		
@@ -245,6 +246,17 @@
 
 
 		}
+		function deleteCommunication(communicationLetter) {
+            console.log('communicationLetter');
+            console.log(communicationLetter.id);
+            return $http.delete('/api/communication-letter/' + communicationLetter.id).then(
+                function (response) {
+                    console.log('response in delete');
+                    console.log(response);
+                }).catch(function (error) {
+                console.log(error);
+            });
+        }
 
 		
 	}

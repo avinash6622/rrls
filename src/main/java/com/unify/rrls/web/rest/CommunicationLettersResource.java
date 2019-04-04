@@ -43,182 +43,195 @@ import com.unify.rrls.repository.OpportunityMasterRepository;
 import com.unify.rrls.security.SecurityUtils;
 import com.unify.rrls.web.rest.util.HeaderUtil;
 import com.unify.rrls.web.rest.util.PaginationUtil;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/api")
 public class CommunicationLettersResource {
-	
-	 private final Logger log = LoggerFactory.getLogger(CommunicationLettersResource.class);
 
-	    private static final String ENTITY_NAME = "communicationLetters";
-	    
-	    @Autowired
-	    private final CommunicationLettersRepository communicationLettersRepository;
-	    private final OpportunityMasterRepository opportunityMasterRepository;
-	    
-	    public CommunicationLettersResource(CommunicationLettersRepository communicationLettersRepository,
-	    		OpportunityMasterRepository opportunityMasterRepository) {
-	        this.communicationLettersRepository=communicationLettersRepository;
-	        this.opportunityMasterRepository=opportunityMasterRepository;	       
-	    }
-	    
-	    private byte[] fileStream;
-		private String fileName;
+    private final Logger log = LoggerFactory.getLogger(CommunicationLettersResource.class);
 
-		public byte[] getFileStream() {
-			return fileStream;
-		}
+    private static final String ENTITY_NAME = "communicationLetters";
 
-		public void setFileStream(byte[] fileStream) {
-			this.fileStream = fileStream;
-		}
+    @Autowired
+    private final CommunicationLettersRepository communicationLettersRepository;
+    private final OpportunityMasterRepository opportunityMasterRepository;
 
-		public String getFileName() {
-			return fileName;
-		}
+    public CommunicationLettersResource(CommunicationLettersRepository communicationLettersRepository,
+                                        OpportunityMasterRepository opportunityMasterRepository) {
+        this.communicationLettersRepository = communicationLettersRepository;
+        this.opportunityMasterRepository = opportunityMasterRepository;
+    }
 
-		public void setFileName(String fileName) {
-			this.fileName = fileName;
-		}
-		
-		 @PersistenceContext
-		 EntityManager em;
-	
-	    @RequestMapping(value = "/communication-letter", method =RequestMethod.POST)
-	    @Timed
-	    public ResponseEntity<CommunicationLetters> createCommunicationLetters(@RequestParam(value="oppId")Long oppId,
-	    		@RequestParam(value="fileUploads")MultipartFile[] fileUploads,@RequestParam(value="filetype") String filetype,
-	    		@RequestParam(value="uploadfileName") String uploadfileName,@RequestParam(value="subject") String subject) throws URISyntaxException, IOException, MissingServletRequestParameterException {
-	      
-	      OpportunityMaster opp=opportunityMasterRepository.findOne(oppId);
-	     
-	        String user= SecurityUtils.getCurrentUserLogin();
-	        String  sFilesDirectory =  "C:/RRLS_Backup/RRLS/Communication/"+opp.getMasterName().getOppName()+"/"+user+"-"+uploadfileName;
-	    
-	      File dirFiles = new File(sFilesDirectory);
-	      dirFiles.mkdirs();
-	    
-	      CommunicationLetters fileUploaded=new CommunicationLetters();
-	      CommunicationLetters result =new CommunicationLetters();
+    private byte[] fileStream;
+    private String fileName;
 
-	        String extension = "";
-	        String name = "";
+    public byte[] getFileStream() {
+        return fileStream;
+    }
 
-	      for (MultipartFile sFile : fileUploads) {
+    public void setFileStream(byte[] fileStream) {
+        this.fileStream = fileStream;
+    }
 
-	    	setFileName(sFile.getOriginalFilename());
-	    	fileStream = IOUtils.toByteArray(sFile.getInputStream());
+    public String getFileName() {
+        return fileName;
+    }
 
-	          System.out.println("FILE NAME--->"+fileName);
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
-	              File sFiles = new File(dirFiles, fileName);
-	              writeFile(fileStream, sFiles);
-	              fileUploaded.setFileData(sFiles.toString());
-	    
-	          int idxOfDot =sFile.getOriginalFilename().lastIndexOf('.');   //Get the last index of . to separate extension
-	          extension = sFile.getOriginalFilename().substring(idxOfDot + 1).toLowerCase();
-	          name = sFile.getOriginalFilename().substring(0, idxOfDot);
+    @PersistenceContext
+    EntityManager em;
 
-	    
-	    	fileUploaded.setFileName(uploadfileName);	    	
-	    	fileUploaded.setOpportunityMasterId(opp);
-	    	fileUploaded.setFiletype(filetype);
-	    	fileUploaded.setSubject(subject);
-	    	result=communicationLettersRepository.save(fileUploaded);
+    @RequestMapping(value = "/communication-letter", method = RequestMethod.POST)
+    @Timed
+    public ResponseEntity<CommunicationLetters> createCommunicationLetters(@RequestParam(value = "oppId") Long oppId,
+                                                                           @RequestParam(value = "fileUploads") MultipartFile[] fileUploads, @RequestParam(value = "filetype") String filetype,
+                                                                           @RequestParam(value = "uploadfileName") String uploadfileName, @RequestParam(value = "subject") String subject) throws URISyntaxException, IOException, MissingServletRequestParameterException {
+
+        OpportunityMaster opp = opportunityMasterRepository.findOne(oppId);
+
+        String user = SecurityUtils.getCurrentUserLogin();
+        String sFilesDirectory = "src/main/webapp/content/fileUpload/" + opp.getMasterName().getOppName() + "/" + user + "-" + uploadfileName;
+
+        File dirFiles = new File(sFilesDirectory);
+        dirFiles.mkdirs();
+
+        CommunicationLetters fileUploaded = new CommunicationLetters();
+        CommunicationLetters result = new CommunicationLetters();
+
+        String extension = "";
+        String name = "";
+
+        for (MultipartFile sFile : fileUploads) {
+
+            setFileName(sFile.getOriginalFilename());
+            fileStream = IOUtils.toByteArray(sFile.getInputStream());
+
+            System.out.println("FILE NAME--->" + fileName);
+
+            File sFiles = new File(dirFiles, fileName);
+            writeFile(fileStream, sFiles);
+            fileUploaded.setFileData(sFiles.toString());
+
+            int idxOfDot = sFile.getOriginalFilename().lastIndexOf('.');   //Get the last index of . to separate extension
+            extension = sFile.getOriginalFilename().substring(idxOfDot + 1).toLowerCase();
+            name = sFile.getOriginalFilename().substring(0, idxOfDot);
 
 
-
-	      }
-	        
-	        return ResponseEntity.created(new URI("/api/communication-letter/" + result.getId()))
-	            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-	            .body(result);
-	    }
-	    
-	    @GetMapping("/communication-letter")
-		@Timed
-		public ResponseEntity<List<CommunicationLetters>> getAllCommunicationLetters(@ApiParam Pageable pageable) {
-			log.debug("REST request to get a page of CommunicationLetters");
-			Page<CommunicationLetters> page = null;
-
-			page = communicationLettersRepository.findAll(pageable);
-
-			HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/communication-letter");
-
-			return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-		}
-
-	    @GetMapping("/communication-letter/opportunity")
-	    @Timed
-	    public ResponseEntity<List<OpportunityName>> getAllOpportunityMastersforauto() {
-	        log.debug("REST request to get a page of OpportunityMasters");
-	        List<OpportunityName> list =new ArrayList<>();
-
-	       // String role = SecurityUtils.getCurrentRoleLogin();
-	       // String username = SecurityUtils.getCurrentUserLogin();
+            fileUploaded.setFileName(uploadfileName);
+            fileUploaded.setOpportunityMasterId(opp);
+            fileUploaded.setFiletype(filetype);
+            fileUploaded.setSubject(subject);
+            result = communicationLettersRepository.save(fileUploaded);
 
 
-	        Query q = em.createNativeQuery("select * from opportunity_name where id  in(select master_name from opportunity_master where id in (select distinct(opportunity_master_id) from communication_letters) )",OpportunityName.class);
+        }
 
-	        list   = q.getResultList();
-	        HttpHeaders headers=new HttpHeaders();
-	        return new ResponseEntity<>(list, headers,HttpStatus.OK);
+        return ResponseEntity.created(new URI("/api/communication-letter/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
 
-	    }
-	    
-	    @PostMapping("/communication-letter/search-opp")
-		@Timed
-		public ResponseEntity<List<CommunicationLetters>> searchOpportunities(@RequestBody OpportunityName opportunityName, Pageable pageable) throws URISyntaxException {
-		   OpportunityMaster opportunityMaster=opportunityMasterRepository.findByMasterName(opportunityName);
-	    	Page<CommunicationLetters> page = communicationLettersRepository.findByOpportunityMasterId(opportunityMaster,pageable);
-		    HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/communication-letter");
-		    return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-		}
-	    
-	    @GetMapping("/communication-letter/subject")
-	    @Timed
-	    public ResponseEntity<List<CommunicationLetters>> getAllSubjectforauto() {
-	        log.debug("REST request to get a page of OpportunityMasters");
-	        List<CommunicationLetters> list =new ArrayList<>();
+    @GetMapping("/communication-letter")
+    @Timed
+    public ResponseEntity<List<CommunicationLetters>> getAllCommunicationLetters(@ApiParam Pageable pageable) {
+        log.debug("REST request to get a page of CommunicationLetters");
+        Page<CommunicationLetters> page = null;
 
-	       // String role = SecurityUtils.getCurrentRoleLogin();
-	       // String username = SecurityUtils.getCurrentUserLogin();
+        page = communicationLettersRepository.findAll(pageable);
+
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/communication-letter");
+
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/communication-letter/opportunity")
+    @Timed
+    public ResponseEntity<List<OpportunityName>> getAllOpportunityMastersforauto() {
+        log.debug("REST request to get a page of OpportunityMasters");
+        List<OpportunityName> list = new ArrayList<>();
+
+        // String role = SecurityUtils.getCurrentRoleLogin();
+        // String username = SecurityUtils.getCurrentUserLogin();
 
 
-	        Query q = em.createNativeQuery("select * from communication_letters",CommunicationLetters.class);
+        Query q = em.createNativeQuery("select * from opportunity_name where id  in(select master_name from opportunity_master where id in (select distinct(opportunity_master_id) from communication_letters) )", OpportunityName.class);
 
-	        list   = q.getResultList();
-	        HttpHeaders headers=new HttpHeaders();
-	        return new ResponseEntity<>(list, headers,HttpStatus.OK);
+        list = q.getResultList();
+        HttpHeaders headers = new HttpHeaders();
+        return new ResponseEntity<>(list, headers, HttpStatus.OK);
 
-	    }
-	    
-	    @PostMapping("/communication-letter/search-sub")
-		@Timed
-		public ResponseEntity<List<CommunicationLetters>> searchSubject(@RequestBody CommunicationLetters communicationLetter, Pageable pageable) throws URISyntaxException {
+    }
 
-	    	Page<CommunicationLetters> page = communicationLettersRepository.findBySubject(communicationLetter.getSubject(),pageable);
-		    HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/communication-letter");
-		    return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-		}
-	    
-	    public void writeFile(byte[] fileStream, File file) throws IOException {
-			InputStream in;
+    @PostMapping("/communication-letter/search-opp")
+    @Timed
+    public ResponseEntity<List<CommunicationLetters>> searchOpportunities(@RequestBody OpportunityName opportunityName, Pageable pageable) throws URISyntaxException {
+        OpportunityMaster opportunityMaster = opportunityMasterRepository.findByMasterName(opportunityName);
+        Page<CommunicationLetters> page = communicationLettersRepository.findByOpportunityMasterId(opportunityMaster, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/communication-letter");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
 
-			System.out.println(file);
-			in = new ByteArrayInputStream(fileStream);
-			OutputStream out = new FileOutputStream(file);
-			byte buf[] = new byte[1024];
-			int len;
-			while ((len = in.read(buf)) > 0) {
-				out.write(buf, 0, len);
-			}
-			in.close();
-			out.flush();
-			out.close();
-			System.out.println("File Uploading is Completed");
-		}
+    @GetMapping("/communication-letter/subject")
+    @Timed
+    public ResponseEntity<List<CommunicationLetters>> getAllSubjectforauto() {
+        log.debug("REST request to get a page of OpportunityMasters");
+        List<CommunicationLetters> list = new ArrayList<>();
+
+        // String role = SecurityUtils.getCurrentRoleLogin();
+        // String username = SecurityUtils.getCurrentUserLogin();
+
+
+        Query q = em.createNativeQuery("select * from communication_letters", CommunicationLetters.class);
+
+        list = q.getResultList();
+        HttpHeaders headers = new HttpHeaders();
+        return new ResponseEntity<>(list, headers, HttpStatus.OK);
+
+    }
+
+    @PostMapping("/communication-letter/search-sub")
+    @Timed
+    public ResponseEntity<List<CommunicationLetters>> searchSubject(@RequestBody CommunicationLetters communicationLetter, Pageable pageable) throws URISyntaxException {
+
+        Page<CommunicationLetters> page = communicationLettersRepository.findBySubject(communicationLetter.getSubject(), pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/communication-letter");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    public void writeFile(byte[] fileStream, File file) throws IOException {
+        InputStream in;
+
+        System.out.println(file);
+        in = new ByteArrayInputStream(fileStream);
+        OutputStream out = new FileOutputStream(file);
+        byte buf[] = new byte[1024];
+        int len;
+        while ((len = in.read(buf)) > 0) {
+            out.write(buf, 0, len);
+        }
+        in.close();
+        out.flush();
+        out.close();
+        System.out.println("File Uploading is Completed");
+    }
+
+    @DeleteMapping("/communication-letter/{id}")
+    @Timed
+    public ResponseEntity<Void> deleteCommunicationLetter(@PathVariable Long id) {
+        log.debug("REST request to delete communication letter: {}", id);
+        CommunicationLetters communicationLetter = communicationLettersRepository.findOne(id);
+        System.out.println("After find");
+        System.out.println(communicationLetter);
+        communicationLettersRepository.delete(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert("A communication letter is deleted with identifier " + id, id.toString())).build();
+    }
 
 }

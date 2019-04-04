@@ -71,7 +71,6 @@ public class OpportunitySummaryDataResource {
 	@Timed
 	public String updateOpportunitySummaryData(
         @Valid @RequestBody OpportunityMaster opportunityMaster) throws URISyntaxException {
-
 		OpportunityAutomation opportunityAutomation=new OpportunityAutomation();
 		opportunityAutomation=opportunityAutomationRepository.findByOpportunityMaster(opportunityMaster);
 		log.debug("REST request to save OpportunitySummaryData : {}", opportunityMaster.getOpportunitySummaryData());
@@ -84,7 +83,6 @@ public class OpportunitySummaryDataResource {
         {
         financialSummaryDataRepository.save(opportunityMaster.getFinancialSummaryData());
         List<OpportunitySummaryData> opportunitySummaryDataList = opportunitySummaryDataRepository.findByOpportunityMasterid(opportunityMaster);
-
 
         for (OpportunitySummaryData sm : opportunitySummaryDataList) {
            // OpportunitySummaryData opportunitySummaryData = new OpportunitySummaryData();

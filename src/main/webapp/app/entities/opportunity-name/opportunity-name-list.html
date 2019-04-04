@@ -1,21 +1,75 @@
+<style>
+    .add-opportunity-name
+    {
+        margin-bottom: 10px;
+        margin-top: -2%;
+    }
+</style>
+
 <div>
     <div class="well">
+        <jhi-alert></jhi-alert>
+        <div class="row">
+            <div class="col-md-4 input-group" style="padding-left: 18px;"><input
+                class="form-control ng-pristine ng-valid clearable" ng-model="vm.name"
+                auto-complete="vm.autoCompleteOpportunity" type="text" placeholder="Search"> <span
+                class="input-group-btn"><button type="button" class="btn btn-default" ng-show="vm.name"
+                                                ng-click="vm.clear()">X</button></span></div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4 pull-right add-opportunity-name">
+                <button class="btn btn-md btn-warning pull-right"
+                        type="button" ui-sref="opportunity-name" has-authority="Admin">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span>
+                       Add Opportunity Name
+                    </span>
+                </button>
+            </div>
+        </div>
         <div class="table-responsive">
             <table class="jh-table table table-striped">
                 <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
-                    <th jh-sort-by="masterName.oppName"><span>Opportunity</span> <span
+                    <th jh-sort-by="oppName"><span>Opportunity</span> <span
                         class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="masterName.sectorType"><span>Sector</span> <span
+                    <th jh-sort-by="sectorType"><span>Sector</span> <span
                         class="glyphicon glyphicon-sort"></span></th>
-                    <th class=descrOpp><span>Description</span></th>
-                    <th><span>Strategy</span></th>
+                    <th jh-sort-by="securityCode" class=descrOpp><span>Security Code</span><span
+                        class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="securityId" class=descrOpp><span>Security ID</span><span
+                        class="glyphicon glyphicon-sort"></span></th>
+                    <th>Segment</th>
                     <th jh-sort-by="createdBy"><span>Created By</span> <span class="glyphicon glyphicon-sort"></span>
                     </th>
-                    <th></th>
+                    <th jh-sort-by="createdDate"><span>Created Date</span><span
+                        class="glyphicon glyphicon-sort"></span></th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
+                <tr ng-repeat="opportunityName in vm.opportunityNames | orderBy:predicate:reverse">
+                    <td>{{opportunityName.oppName}}</td>
+                    <td>{{opportunityName.sectorType}}</td>
+                    <td>{{opportunityName.securityCode}}</td>
+                    <td>{{opportunityName.securityId}}</td>
+                    <td>{{opportunityName.segment}}</td>
+                    <td><a ui-sref="home-research({createdBy:opportunityName.createdBy})">{{opportunityName.createdBy
+                        |capitalize}}</a>
+                    </td>
+                    <td>{{opportunityName.createdDate
+                        |date}}
+                    </td>
+                    <td>
+                        <button ng-click="vm.deleteOpportunityName(opportunityName)" type="submit"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                        </div>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>

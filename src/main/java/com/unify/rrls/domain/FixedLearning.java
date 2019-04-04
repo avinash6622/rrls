@@ -77,4 +77,11 @@ public class FixedLearning extends AbstractAuditingEntity implements Serializabl
 	public void setRemoveOpportunityMaster(List<OpportunityMaster> removeOpportunityMaster) {
 		this.removeOpportunityMaster = removeOpportunityMaster;
 	}
+    @Override
+    public String toString() {
+        return "fixedLearning{" +
+            "subject='" + subject + '\'' +
+            ", id='" + id + '\'' +
+            "}";
+    }
 }

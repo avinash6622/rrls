@@ -45,6 +45,7 @@
 		vm.loadAll = loadAll;		
 		vm.name = '';
 		vm.selectedList = [];
+		vm.deleteLearning=deleteLearning;
 		
 		vm.loadAll();
 		
@@ -99,14 +100,16 @@
 	            });
 
 
+
 	        };
 		var myDate = new Date();
 
 		$scope.currentYear = $filter('date')(myDate, 'yyyy');
 		
-		function fixedCollapse(index, state) {
-			
-			vm.fixedLearnings.forEach(function(value, key) {
+		function fixedCollapse(index, state,val) {
+            console.log("Value in click");
+
+            vm.fixedLearnings.forEach(function(value, key) {
 				if (key === index) {
 					value.expanded = state;
 				} else {
@@ -225,6 +228,18 @@
 
 
 		}
+		function  deleteLearning(learning) {
+            console.log('Learning deletion');
+            console.log(learning);
+            return $http.delete('/api/fixed-learning-delete/' + learning.id).then(
+                function (response) {
+                    console.log('response in delete');
+                    // console.log(response);
+                    // loadAll();
+                }).catch(function (error) {
+                console.log(error);
+            });
+        }
 
 		
 	}

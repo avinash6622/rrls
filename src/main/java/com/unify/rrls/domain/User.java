@@ -254,7 +254,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
             ", langKey='" + langKey + '\'' +
             ", activationKey='" + activationKey + '\'' +
             ", roleMaster='" + roleMaster + '\'' +
-             ", userId='" + userId + '\'' +
+            ", userId='" + userId + '\'' +
+            ", Id='" + id + '\'' +
             "}";
     }
 }

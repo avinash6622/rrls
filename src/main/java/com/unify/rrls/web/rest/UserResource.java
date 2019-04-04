@@ -78,7 +78,7 @@ public class UserResource {
     private final UserService userService;
 
     public UserResource(UserRepository userRepository, MailService mailService,
-            UserService userService) {
+                        UserService userService) {
 
         this.userRepository = userRepository;
         this.mailService = mailService;
@@ -105,7 +105,7 @@ public class UserResource {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new user cannot already have an ID"))
                 .body(null);
-        // Lowercase the user login before comparing with database
+            // Lowercase the user login before comparing with database
         } else if (userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase()).isPresent()) {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "userexists", "Login already in use"))
@@ -118,14 +118,14 @@ public class UserResource {
             User newUser = userService.createUser(managedUserVM);
             mailService.sendCreationEmail(newUser);
 
-            String page="User";
+            String page = "User";
             Long id = getUserId(newUser.getCreatedBy());
 
-            notificationServiceResource.notificationHistorysave(newUser.getLogin(),newUser.getCreatedBy(),newUser.getLastModifiedBy(),newUser.getCreatedDate(),"created",page,"",id,Long.parseLong("0"),Long.parseLong("0"),Long.parseLong("0"));
+            notificationServiceResource.notificationHistorysave(newUser.getLogin(), newUser.getCreatedBy(), newUser.getLastModifiedBy(), newUser.getCreatedDate(), "created", page, "", id, Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
 
 
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
-                .headers(HeaderUtil.createAlert( "A user is created with identifier " + newUser.getLogin(), newUser.getLogin()))
+                .headers(HeaderUtil.createAlert("A user is created with identifier " + newUser.getLogin(), newUser.getLogin()))
                 .body(newUser);
         }
     }
@@ -166,16 +166,16 @@ public class UserResource {
     @Timed
     public ResponseEntity<List<UserDTO>> getAllUsers(@ApiParam Pageable pageable) {
         final Page<UserDTO> page = userService.getAllManagedUsers(pageable);
-        System.out.println("GET DETAILS---->"+page);
+        System.out.println("GET DETAILS---->" + page);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
-    
+
     @GetMapping("/users-All")
     @Timed
     public ResponseEntity<List<User>> getAllUsersName() {
-         List<User> page = userRepository.findAll();
-        System.out.println("GET DETAILS users---->"+page);
+        List<User> page = userRepository.findAll();
+        System.out.println("GET DETAILS users---->" + page);
         HttpHeaders headers = new HttpHeaders();
         return new ResponseEntity<>(page, headers, HttpStatus.OK);
     }
@@ -212,74 +212,75 @@ public class UserResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/users/{login:" + Constants.LOGIN_REGEX + "}")
-    @Timed   
+    @Timed
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {
         log.debug("REST request to delete User: {}", login);
         userService.deleteUser(login);
-        return ResponseEntity.ok().headers(HeaderUtil.createAlert( "A user is deleted with identifier " + login, login)).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert("A user is deleted with identifier " + login, login)).build();
     }
 
-    public Long getUserId(String username)
-    {
+    public Long getUserId(String username) {
 
         User user = userRepository.findByLogin(username);
         return user.getId();
     }
+
     @PersistenceContext
     EntityManager em;
-    
+
     @GetMapping("/usersMail/{login:" + Constants.LOGIN_REGEX + "}")
     @Timed
-    public String getUserMail(@PathVariable String login){
-    	
-    	 Calendar now = Calendar.getInstance();
-    	 now.add(Calendar.DATE, -1);    	
-         now.set(Calendar.MINUTE, 0);
-         now.set(Calendar.SECOND, 0);        
-         now.set(Calendar.HOUR_OF_DAY,17 );
-        User user=userRepository.findByLogin(login);
-        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    
-    	Date date = new Date();
-    	DateFormat sdate = new SimpleDateFormat("E");    
-    	String sday=sdate.format(date);
-    	System.out.println(sday);
-        String fromDate=sdf.format(now.getTime());
-    	String hDate=sdf.format(date);
-    
-   /*	 List<User> user = userRepository.findAll();*/
-	 
-	   List<HistoryLogs> list = null;
-         if(sday.equals("Tue") || sday.equals("Wed") || sday.equals("Thu") ||sday.equals("Fri")){
-         //  Query q = em.createNativeQuery("select * from history_logs where opp_created_date between '"+fromDate+"' and '"+hDate+"'",HistoryLogs.class);
-	  	   Query q = em.createNativeQuery(" SELECT * FROM history_logs where sub_content like '%Learning%' and action='added' and opp_created_date between '"+fromDate+"' and '"+hDate+"' or id in(select id from history_logs where action not in('Answered','added','Replied','delegated') and page!='User' and opp_created_date between '"+fromDate+"' and '"+hDate+"')",HistoryLogs.class);
+    public String getUserMail(@PathVariable String login) {
 
-           list   = q.getResultList();
-           if(list.size()!=0){
-/*for(User users:user){*/
-        	   
-	     mailService.sendNotification(user,list);
+        Calendar now = Calendar.getInstance();
+        now.add(Calendar.DATE, -1);
+        now.set(Calendar.MINUTE, 0);
+        now.set(Calendar.SECOND, 0);
+        now.set(Calendar.HOUR_OF_DAY, 17);
+        User user = userRepository.findByLogin(login);
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        DateFormat sdate = new SimpleDateFormat("E");
+        String sday = sdate.format(date);
+        System.out.println(sday);
+        String fromDate = sdf.format(now.getTime());
+        String hDate = sdf.format(date);
+
+        /*	 List<User> user = userRepository.findAll();*/
+
+        List<HistoryLogs> list = null;
+        if (sday.equals("Tue") || sday.equals("Wed") || sday.equals("Thu") || sday.equals("Fri")) {
+            //  Query q = em.createNativeQuery("select * from history_logs where opp_created_date between '"+fromDate+"' and '"+hDate+"'",HistoryLogs.class);
+            Query q = em.createNativeQuery(" SELECT * FROM history_logs where sub_content like '%Learning%' and action='added' and opp_created_date between '" + fromDate + "' and '" + hDate + "' or id in(select id from history_logs where action not in('Answered','added','Replied','delegated') and page!='User' and opp_created_date between '" + fromDate + "' and '" + hDate + "')", HistoryLogs.class);
+
+            list = q.getResultList();
+            if (list.size() != 0) {
+                /*for(User users:user){*/
+
+                mailService.sendNotification(user, list);
 //}
-}}
-         if(sday.equals("Mon")){
-        	 Calendar nows = Calendar.getInstance();
-        	 nows.add(Calendar.DATE, -3);    	
-             nows.set(Calendar.MINUTE, 0);
-             nows.set(Calendar.SECOND, 0);        
-             nows.set(Calendar.HOUR_OF_DAY,17 );          
-        	
-            String fromDateMon=sdf.format(nows.getTime());
-            System.out.println(fromDateMon);
-        	  Query q = em.createNativeQuery(" SELECT * FROM history_logs where sub_content like '%Learning%' and action='added' and opp_created_date between '"+fromDate+"' and '"+hDate+"' or id in(select id from history_logs where action not in('Answered','added','Replied','delegated') and page!='User' and opp_created_date between '"+fromDate+"' and '"+hDate+"')",HistoryLogs.class);
+            }
+        }
+        if (sday.equals("Mon")) {
+            Calendar nows = Calendar.getInstance();
+            nows.add(Calendar.DATE, -3);
+            nows.set(Calendar.MINUTE, 0);
+            nows.set(Calendar.SECOND, 0);
+            nows.set(Calendar.HOUR_OF_DAY, 17);
 
-              list   = q.getResultList();
-              if(list.size()!=0){
-   /*for(User users:user){*/
-           	   
-   	     mailService.sendNotification(user,list);
-   //}
-   }	 
-         }
-		return null;
-    	
+            String fromDateMon = sdf.format(nows.getTime());
+            System.out.println(fromDateMon);
+            Query q = em.createNativeQuery(" SELECT * FROM history_logs where sub_content like '%Learning%' and action='added' and opp_created_date between '" + fromDate + "' and '" + hDate + "' or id in(select id from history_logs where action not in('Answered','added','Replied','delegated') and page!='User' and opp_created_date between '" + fromDate + "' and '" + hDate + "')", HistoryLogs.class);
+
+            list = q.getResultList();
+            if (list.size() != 0) {
+                /*for(User users:user){*/
+
+                mailService.sendNotification(user, list);
+                //}
+            }
+        }
+        return null;
+
     }
 }

@@ -45,6 +45,7 @@
 		vm.loadAll = loadAll;		
 		vm.name = '';
 		vm.selectedList = [];
+        vm.deleteLearningAIF=deleteLearningAIF;
 		
 		vm.loadAll();
 		
@@ -239,6 +240,19 @@
 
 
 		}
+
+        function  deleteLearningAIF(learning) {
+            console.log('Learning deletion AIF');
+            console.log(learning);
+            return $http.delete('/api/learning-aif-delete/' + learning.id).then(
+                function (response) {
+                    console.log('response in delete');
+                    console.log(response);
+                    vm.loadAll();
+                }).catch(function (error) {
+                console.log(error);
+            });
+        }
 
 		
 	}

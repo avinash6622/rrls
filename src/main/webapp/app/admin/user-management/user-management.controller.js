@@ -26,6 +26,7 @@
         vm.itemsPerPage = paginationConstants.itemsPerPage;
         vm.transition = transition;
         vm.itemsValue = 'Users';
+        vm.deleteUserManagement=deleteUserManagement;
 
         vm.loadAll();
         Principal.identity().then(function(account) {
@@ -93,6 +94,9 @@
                 sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
                 search: vm.currentSearch
             });
+        }
+        function deleteUserManagement(){
+
         }
     }
 })();

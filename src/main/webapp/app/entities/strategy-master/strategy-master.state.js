@@ -182,7 +182,7 @@
             parent: 'strategy-master',
             url: '/{id}/delete',
             data: {
-                authorities: ['User']
+                authorities: ['Admin']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({

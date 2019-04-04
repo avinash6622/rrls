@@ -10,7 +10,4 @@ import com.unify.rrls.domain.FixedLearning;
 public interface FixedLearningRepository extends JpaRepository<FixedLearning, Long>  {
 	
 	FixedLearning findBySubject(String name);
-	
-	
-
 }

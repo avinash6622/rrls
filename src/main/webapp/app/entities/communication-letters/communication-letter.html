@@ -38,7 +38,6 @@
         <jhi-alert></jhi-alert>
         <div>
             <div class="row">
-
                 <!--<div class="col-md-2"><h4>Opportunity</h4></div>-->
                 <div class="col-md-3 pull-right">
                     <button class="btn btn-md btn-warning pull-right"
@@ -70,7 +69,9 @@
                     <th jh-sort-by="opportunityMasterId.masterName.oppName"><span>Opportunity</span> <span
                         class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="createdBy"><span>Created By</span> <span class="glyphicon glyphicon-sort"></span>
+                    <th jh-sort-by="createdDate"><span>Created Date</span> <span class="glyphicon glyphicon-sort"></span>
                     </th>
+                    <th has-authority="Admin">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -84,12 +85,19 @@
                     <td><a ui-sref="home-research({createdBy:communication.createdBy})">{{communication.createdBy
                         |capitalize}}</a>
                     </td>
+                    <td>{{communication.createdDate
+                        |date}}
+                    </td>
 
-                    <td class="text-right">
-                        <div class="btn-group flex-btn-group-container">
+                    <!--<td class="text-right">-->
+                        <!--<div class="btn-group flex-btn-group-container">-->
 
-
-                        </div>
+                        <!--</div>-->
+                    <!--</td>-->
+                    <td has-authority="Admin">
+                        <button ng-click="vm.deleteCommunication(communication)" type="submit" class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
                     </td>
                 </tr>
 

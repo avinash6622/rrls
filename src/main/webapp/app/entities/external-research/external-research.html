@@ -1,96 +1,102 @@
 <style>
-    .col-xs-3 .btn{
-    padding:0px !important;
+    .col-xs-3 .btn {
+        padding: 0px !important;
 
-}
-    .col-xs-3{
+    }
+
+    .col-xs-3 {
         padding-right: 0px !important;
     }
-    .thbutton
-    {
-    width:10%
+
+    .thbutton {
+        width: 10%
     }
-    
+
 
 </style>
 
 
-
 <div>
     <div class="well">
-
-
-    <jhi-alert></jhi-alert>
+        <jhi-alert></jhi-alert>
 
         <div>
-        <div class="row">
-        </div></div>
+            <div class="row">
+            </div>
+        </div>
 
-    <div class="table-responsive">
-        <table class="jh-table table table-striped">
-            <thead>
+        <div class="table-responsive">
+            <table class="jh-table table table-striped">
+                <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
-
                     <th jh-sort-by="name"><span>Name</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="sectorType"><span>Sector</span> <span class="glyphicon glyphicon-sort"></span></th>
-                      <th jh-sort-by="contactNo"><span>Contact No</span> <span class="glyphicon glyphicon-sort"></span></th>
-                        <th jh-sort-by="emailId"><span>Email Id</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    
+                    <th jh-sort-by="contactNo"><span>Contact No</span> <span class="glyphicon glyphicon-sort"></span>
+                    </th>
+                    <th jh-sort-by="emailId"><span>Email Id</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th has-authority="Admin" >Action</th>
                     <th class="thbutton" has-any-authority="Admin,Research">
                         <div class="pull-right">
-                        <div class="col-xs-3">
-                            <button class="btn btn-primary" ui-sref="external-research.new"> 
-                                <span></span>
-                                <span style="padding: 10px">Create New External Research Analyst</span>
-                            </button>
+                            <div class="col-xs-3">
+                                <button class="btn btn-primary" ui-sref="external-research.new">
+                                    <span></span>
+                                    <span style="padding: 10px">Create New External Research Analyst</span>
+                                </button>
+                            </div>
                         </div>
-                        </div>
-
                     </th>
-                </tr>
-            </thead>
-            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
-                <tr ng-repeat="externalResearch in vm.externalResearch track by externalResearch.id">
 
-                    <td><button type="submit"
-                                      ui-sref="external-research.edit({id:externalResearch.id})"
-                                      class="btn btn-primary btn-sm"
-                                      tooltip="edit"
-                                      tooltip-placement="bottom"ng-if="vm.account.login==externalResearch.createdBy">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                        <span class="hidden-sm-down"></span>
-                    </button> <a ui-sref="external-research-detail({id:externalResearch.id})">{{externalResearch.name}}</a></td>
+                </tr>
+                </thead>
+                <tbody infinite-scroll="vm.loadPage(vm.page + 1)"
+                       infinite-scroll-disabled="vm.page >= vm.links['last']">
+                <tr ng-repeat="externalResearch in vm.externalResearch track by externalResearch.id">
+                    <td>
+                        <button type="submit"
+                                ui-sref="external-research.edit({id:externalResearch.id})"
+                                class="btn btn-primary btn-sm"
+                                tooltip="edit"
+                                tooltip-placement="bottom" ng-if="vm.account.login==externalResearch.createdBy">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            <span class="hidden-sm-down"></span>
+                        </button>
+                        <a ui-sref="external-research-detail({id:externalResearch.id})">{{externalResearch.name}}</a>
+                    </td>
                     <td><span ng-repeat="sector in externalResearch.opportunitySector">
                    <div> {{sector.sectorName}}</div>
                     </span></td>
-                     <td><span ng-repeat="contacts in externalResearch.externalRAContacts">
+                    <td><span ng-repeat="contacts in externalResearch.externalRAContacts">
                     <div>{{contacts.contactNo}}</div>
                     </span></td>
-                      <td>{{externalResearch.emailId}}</td>
+                    <td>{{externalResearch.emailId}}</td>
 
-                    
-
+                    <td has-authority="Admin" >
+                        <button type="submit" class="btn btn-primary btn-sm" ng-click="vm.deleteResearch(externalResearch)">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
-                      
+
                         </div>
                     </td>
                 </tr>
-             
-            </tbody>
+                </tbody>
+            </table>
 
+        </div>
+        <div class="text-center" style="margin-bottom: -5px">
 
-        </table>
+            <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"
+                            item="vm.itemsValue"></jhi-item-count>
+            <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page"
+                            ng-change="vm.transition()"></uib-pagination>
+        </div>
+    </div>
 
-</div>
-   <div class="text-center" style="margin-bottom: -5px">
-
-        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
-        <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
-    </div></div>
-    
     <footer class="footer footer-dark" ng-cloak>
-        <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.</p>
+        <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights
+            reserved.</p>
     </footer>
 
 </div>

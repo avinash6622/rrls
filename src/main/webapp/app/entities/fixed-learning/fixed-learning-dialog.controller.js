@@ -13,8 +13,6 @@
     	  $ctrl.clear = clear;
     	  $ctrl.save=save;
     	  $ctrl.fixedLearning=[];
-    	  
-    	 
     	  function save(){        	
           	FixedLearning.save({subject:$ctrl.subject},function(response){
           		 $uibModalInstance.close(response);

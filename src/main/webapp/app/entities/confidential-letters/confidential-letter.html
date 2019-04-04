@@ -71,25 +71,36 @@
                         class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="createdBy"><span>Created By</span> <span class="glyphicon glyphicon-sort"></span>
                     </th>
+                    <th jh-sort-by="createdDate"><span>Created Date</span><span
+                        class="glyphicon glyphicon-sort"></span></th>
+                    <th has-authority="Admin">Action</th>
                 </tr>
                 </thead>
                 <tbody>
 
-                <tr ng-repeat="communication in vm.communicationLetters | orderBy:predicate:reverse">
-                    <td>{{communication.subject}}</td>
+                <tr ng-repeat="confidential in vm.confidentialLetters | orderBy:predicate:reverse">
+                    <td>{{confidential.subject}}</td>
 
-                    <td><a ui-sref="opportunity-master-detail({id:communication.opportunityMasterId.id})">{{communication.opportunityMasterId.masterName.oppName}}
+                    <td><a ui-sref="opportunity-master-detail({id:confidential.opportunityMasterId.id})">{{confidential.opportunityMasterId.masterName.oppName}}
                     </a></td>
 
-                    <td><a ui-sref="home-research({createdBy:communication.createdBy})">{{communication.createdBy
+                    <td><a ui-sref="home-research({createdBy:confidential.createdBy})">{{confidential.createdBy
                         |capitalize}}</a>
                     </td>
+                    <td>{{confidential.createdDate
+                        |date}}
+                    </td>
 
-                    <td class="text-right">
-                        <div class="btn-group flex-btn-group-container">
+                    <!--<td class="text-right">-->
+                        <!--<div class="btn-group flex-btn-group-container">-->
 
 
-                        </div>
+                        <!--</div>-->
+                    <!--</td>-->
+                    <td has-authority="Admin">
+                        <button ng-click="vm.deleteConfidential(confidential)" type="submit" class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
                     </td>
                 </tr>
 

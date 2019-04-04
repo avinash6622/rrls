@@ -40,7 +40,10 @@
         vm.googleSheetLink = '';
         vm.googleSheetData = [];
         vm.googleSheetHeading = [];
+        vm.subHeading = [];
         vm.previewFileExtension = '';
+        vm.AdminFiles = false;
+        vm.googleHeading = false;
 
 
         console.log('Decimal value', vm.opportunityMaster.decimalPoint);
@@ -62,10 +65,24 @@
                 vm.isAuthenticated = Principal.isAuthenticated;
 
                 console.log(vm.account.authorities[1]);
+                console.log('vm.account.authorities');
+                console.log(vm.account.authorities);
 
                 if (vm.account.authorities[1] == 'Research' || vm.account.authorities[1] == 'CIO') {
                     vm.mydisable = false;
                 }
+
+                for (var i = 0; i < vm.account.authorities.length; i++) {
+                    console.log('vm.account');
+                    console.log(vm.account);
+                    if (vm.account.authorities[i] == 'Admin' || (vm.account.firstName == 'Sarath' && vm.account.authorities[i] == 'CIO') || (vm.account.firstName == 'Baidik' && vm.account.authorities[i] == 'Research')) {
+                        vm.AdminFiles = true;
+                    } else {
+                        vm.AdminFiles = false;
+                    }
+                }
+
+
             });
 
         }
@@ -785,9 +802,8 @@
             console.log('file preview function invoked');
             var data = fileName;
             data = data.replace(/\\/g, "/");
-            console.log(data);
-            vm.previewFileExtension = fileName.split('.')[1];
-            console.log('Doc Type - ' + vm.previewFileExtension);
+            var url = "http://localhost:7070" + data.split('webapp')[1];
+            window.open(url, '_blank');
         }
 
 
@@ -798,6 +814,9 @@
         }
 
         function loadFileCommunication(fileID) {
+            console.log('fileID comm -');
+
+            console.log(fileID);
 
             window.open('/download-communication/' + fileID, '_blank');
 
@@ -815,209 +834,7 @@
             vm.isSaving = false;
         }
 
-        $scope.getDataFromGSheet = function () {
-            var FinancialSummaryData = {}, NonFinancialSummaryData = {};
-            vm.googleSheetData = [];
-            var jsonObj = {};
-            var gsID = vm.googleSheetLink;
-            gsID = gsID.match(/[-\w]{25,}/)[0];
-            var url = 'https://spreadsheets.google.com/feeds/list/' + gsID + '/1/public/values?alt=json';
-            var parse = function (entry) {
-                jsonObj = {}, vm.googleSheetHeading = [];
-                var gsColumns = Object.keys(entry).filter(function (columnValue) {
-                    return columnValue.indexOf("gsx$") === 0;
-                });
-                for (var i = 0; i < gsColumns.length; i++) {
-                    var value = gsColumns[i].split('gsx$')[1];
 
-                    if (!vm.googleSheetHeading.includes(value)) {
-                        vm.googleSheetHeading.push(value);
-                    }
-                }
-                var length = vm.googleSheetHeading.length;
-                for (var i = 0; i < gsColumns.length; i++) {
-                    // console.log('value -' + entry[gsColumns[i]]['$t']);
-                    if (entry[gsColumns[i]]['$t']) {
-                        jsonObj[vm.googleSheetHeading[i]] = entry[gsColumns[i]]['$t'];
-                    } else {
-                        jsonObj[vm.googleSheetHeading[i]] = '0';
-                    }
-
-                }
-                return jsonObj;
-            }
-            var generateObj = function (objKey, obj) {
-                FinancialSummaryData[objKey + 'One'] = parseFloat(Object.values(obj)[1].replace(/[^-\d.]/g, ''));
-                FinancialSummaryData[objKey + 'Two'] = parseFloat(Object.values(obj)[2].replace(/[^-\d.]/g, ''));
-                FinancialSummaryData[objKey + 'Three'] = parseFloat(Object.values(obj)[3].replace(/[^-\d.]/g, ''));
-                FinancialSummaryData[objKey + 'Four'] = parseFloat(Object.values(obj)[4].replace(/[^-\d.]/g, ''));
-                FinancialSummaryData[objKey + 'Five'] = parseFloat(Object.values(obj)[5].replace(/[^-\d.]/g, ''));
-            }
-            var generateNonFinObj = function (objKey, obj) {
-                NonFinancialSummaryData[objKey + 'One'] = parseFloat(Object.values(obj)[1].replace(/[^-\d.]/g, ''));
-                NonFinancialSummaryData[objKey + 'Two'] = parseFloat(Object.values(obj)[2].replace(/[^-\d.]/g, ''));
-                NonFinancialSummaryData[objKey + 'Three'] = parseFloat(Object.values(obj)[3].replace(/[^-\d.]/g, ''));
-                NonFinancialSummaryData[objKey + 'Four'] = parseFloat(Object.values(obj)[4].replace(/[^-\d.]/g, ''));
-                NonFinancialSummaryData[objKey + 'Five'] = parseFloat(Object.values(obj)[5].replace(/[^-\d.]/g, ''));
-            }
-            $http.get(url)
-                .success(function (response) {
-                    var entries = response['feed']['entry'];
-                    $scope.parsedEntries = [];
-                    for (var key in entries) {
-                        var content = entries[key];
-                        vm.googleSheetData.push(parse(content));
-                    }
-                    if (vm.opportunityMaster.nonFinancialSummaryData === null) {
-                        console.log("Financial Opportunity");
-                        FinancialSummaryData = {};
-                        for (var gs in vm.googleSheetData) {
-                            var obj = vm.googleSheetData[gs];
-                            for (var key in obj) {
-                                if (obj[key] === 'Net Interest Income') {
-                                    generateObj('netInt', obj);
-                                }
-                                if (obj[key] === 'Non Interest Income') {
-                                    generateObj('nonInt', obj);
-                                }
-                                if (obj[key] === 'Operating Expenses') {
-                                    generateObj('opExp', obj);
-                                }
-                                if (obj[key] === 'Total Income') {
-                                    generateObj('totInc', obj);
-
-                                }
-                                if (obj[key] === 'Operating Profit') {
-                                    generateObj('opPro', obj);
-                                }
-                                if (obj[key] === 'Provisions') {
-                                    generateObj('provisions', obj);
-
-                                }
-                                if (obj[key] === 'Exceptional Item 1') {
-                                    generateObj('exception', obj);
-
-                                }
-                                if (obj[key] === 'Exceptional Item 2') {
-                                    generateObj('exceptionItem', obj);
-
-                                }
-                                if (obj[key] === 'PAT') {
-                                    generateObj('pat', obj);
-
-                                }
-                                if (obj[key] === 'EPS') {
-                                    generateObj('eps', obj);
-
-                                }
-                                if (obj[key] === 'Market Cap') {
-                                    generateObj('marCap', obj)
-
-                                }
-                                if (obj[key] === 'AUM') {
-                                    generateObj('aum', obj);
-
-                                }
-                                if (obj[key] === 'Networth') {
-                                    generateObj('networth', obj);
-                                }
-                                if (obj[key] === 'ROE') {
-                                    generateObj('roe', obj);
-                                }
-                                if (obj[key] === 'PBV') {
-                                    generateObj('pbv', obj);
-                                }
-                                if (obj[key] === 'PE') {
-                                    generateObj('pe', obj);
-                                }
-                            }
-
-                        }
-                        console.log('FinancialSummaryData');
-                        console.log(FinancialSummaryData);
-
-                    } else {
-                        console.log("Non Financial Opportunity");
-                        NonFinancialSummaryData={}
-                        for (var gs in vm.googleSheetData) {
-                            var obj = vm.googleSheetData[gs];
-                            for (var key in obj) {
-                                if (obj[key] === 'Revenues') {
-                                    generateNonFinObj('revenue', obj);
-                                }
-                                if (obj[key] === 'Rev.Growth(%)') {
-                                    generateNonFinObj('revGrowth', obj);
-                                }
-                                if (obj[key] === 'EBITDA') {
-                                    generateNonFinObj('ebitda', obj);
-                                }
-                                if (obj[key] === 'Margin(%)') {
-                                    generateNonFinObj('margin', obj);
-                                }
-                                if (obj[key] === 'EBI.Growth(%)') {
-                                    generateNonFinObj('ebitdaGrowth', obj);
-                                }
-                                if (obj[key] === 'Other Income') {
-                                    generateNonFinObj('otherInc', obj);
-                                }
-                                if (obj[key] === 'Interest Exp') {
-                                    generateNonFinObj('intExp', obj);
-                                }
-                                if (obj[key] === 'Depriciation') {
-                                    generateNonFinObj('dep', obj);
-                                }
-                                if (obj[key] === 'PBT') {
-                                    generateNonFinObj('pbt', obj);
-                                }
-                                if (obj[key] === 'Exceptional Item 1') {
-                                    generateNonFinObj('exception', obj);
-                                }
-                                if (obj[key] === 'Exceptional Item 2') {
-                                    generateNonFinObj('exceptionItem', obj);
-                                }
-                                if (obj[key] === 'Tax') {
-                                    generateNonFinObj('tax', obj);
-                                }
-                                if (obj[key] === 'PAT') {
-                                    generateNonFinObj('pat', obj);
-                                }
-                                if (obj[key] === 'PAT.Growth(%)') {
-                                    generateNonFinObj('patGrowth', obj);
-                                }
-                                if (obj[key] === 'Market Cap') {
-                                    generateNonFinObj('marketCap', obj);
-                                }
-                                if (obj[key] === 'Networth') {
-                                    generateNonFinObj('networth', obj);
-                                }
-                                if (obj[key] === 'ROE(%)') {
-                                    generateNonFinObj('roe', obj);
-                                }
-                                if (obj[key] === 'Total Debt') {
-                                    generateNonFinObj('totDeb', obj);
-                                }
-                                if (obj[key] === 'DE') {
-                                    generateNonFinObj('de', obj);
-                                }
-                                if (obj[key] === 'Deprciation Rate') {
-                                    generateNonFinObj('depRate', obj);
-                                }
-                                if (obj[key] === 'Weight') {
-                                    generateNonFinObj('weight', obj);
-                                }
-                            }
-                        }
-
-                        console.log('NonFinancialSummaryData');
-                        console.log(NonFinancialSummaryData);
-                    }
-
-
-                }).error(function (err) {
-                console.log('error occured');
-
-            })
-        }
 
         $scope.imageUpload = function (event) {
             var files = event.target.files;
@@ -1036,6 +853,9 @@
             });
         }
 
+
     }
 
 })();
+
+

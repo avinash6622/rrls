@@ -284,7 +284,6 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 		this.externalRAFileUpload = externalRAFileUpload;
 	}
 
-
     public List<ConfidenctialLetters> getConfidenctialLetters() {
         return confidenctialLetters;
     }

@@ -9,4 +9,5 @@ import com.unify.rrls.domain.ExternalResearchAnalyst;
 @Repository
 public interface ExternalResearchAnalystRepository extends JpaRepository<ExternalResearchAnalyst, Integer> {
 
+
 }

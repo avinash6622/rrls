@@ -16,7 +16,7 @@
 
         var vm = this;
 
-        vm.communicationLetters = [];
+        vm.confidentialLetters = [];
         vm.loadPage = loadPage;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
         vm.predicate = pagingParams.predicate;
@@ -28,7 +28,7 @@
             last : 0
         };
         vm.transition = transition;
-        vm.itemsValue = 'Communication Letters';
+        vm.itemsValue = 'Confidential Letters';
         vm.account = null;
         vm.clearOpp = clearOpp;
         vm.clearSub = clearSub;
@@ -36,6 +36,7 @@
         vm.loadAll = loadAll;
         vm.name = '';
         vm.subject='';
+        vm.deleteConfidential=deleteConfidential;
 
         vm.loadAll();
 
@@ -43,7 +44,7 @@
         var myDate = new Date();
         $scope.currentYear = $filter('date')(myDate, 'yyyy');
         function clear() {
-            vm.communicationLetters=[];
+            vm.confidentialLetters=[];
             vm.name = '';
             loadAll();
         }
@@ -116,33 +117,33 @@
                 console.log(e);
                 vm.selectedName = e;
                 vm.subject = e.item.subject;
-                vm.communicationLetters=e.item;
-                console.log( vm.communicationLetters.id,'NAme');
+                vm.confidentialLetters=e.item;
+                console.log( vm.confidentialLetters.id,'NAme');
 
 
-                ConfidentialLetters.getSearchSubject(vm.communicationLetters,onSuccess,onError1);
+                ConfidentialLetters.getSearchSubject(vm.confidentialLetters,onSuccess,onError1);
             }
         }
         function onSuccess1(data, headers){
             console.log(data);
             console.log(vm.name);
-            vm.communicationLetters = data;
+            vm.confidentialLetters = data;
 
         }
         function onSuccess(data, headers){
-            vm.communicationLetters = data;
+            vm.confidentialLetters = data;
         }
         function onError1() {
         }
         function clearOpp() {
 
             vm.name = '';
-            vm.communicationLetters=[];
+            vm.confidentialLetters=[];
             loadAll();
         }
         function clearSub() {
             vm.subject = '';
-            vm.communicationLetters=[];
+            vm.confidentialLetters=[];
             loadAll();
         }
         function loadAll() {
@@ -168,12 +169,12 @@
             vm.links = ParseLinks.parse(headers('link'));
             vm.totalItems = headers('X-Total-Count');
             for (var i = 0; i < data.length; i++) {
-                vm.communicationLetters.push(data[i]);
+                vm.confidentialLetters.push(data[i]);
 
             }
             vm.queryCount = vm.totalItems;
             vm.page = pagingParams.page;
-            vm.communicationLetters=data;
+            vm.confidentialLetters=data;
         }
 
         function onError(error) {
@@ -191,7 +192,7 @@
 
         function reset() {
             vm.page = 0;
-            vm.communicationLetters = [];
+            vm.confidentialLetters = [];
             loadAll();
         }
 
@@ -209,6 +210,18 @@
             });
 
 
+        }
+        function deleteConfidential(confidentialLetter) {
+            console.log('confidential letter');
+            console.log(confidentialLetter);
+            return $http.delete('/api/confidential-letter/' + confidentialLetter.id).then(
+                function (response) {
+                    console.log('response in delete');
+                    console.log(response);
+                    vm.loadAll();
+                }).catch(function (error) {
+                console.log(error);
+            })
         }
 
 

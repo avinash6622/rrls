@@ -21,7 +21,6 @@
         vm.totalItems = null;
         vm.page = 1;
         vm.links = null;
-
         //  vm.reset = reset;
         //  vm.reverse = true;
         vm.transition = transition;
@@ -52,25 +51,19 @@
             /*	console.log('Full',id);*/
         }
 
+
         vm.autoCompleteOpportunity = {
             minimumChars: 1,
             dropdownHeight: '200px',
-
             data: function (searchText) {
                 return $http.get('api/opportunity-masters/all').then(
                     function (response) {
                         searchText = searchText.toLowerCase();
-                        //  console.log(searchText);
-                        // console.log(response);
-
-
-                        // ideally filtering should be done on the server
                         var states = _.filter(response.data,
                             function (state) {
                                 // console.log(state);
                                 return (state.oppName).toLowerCase()
                                     .startsWith(searchText);
-
                             });
 
                         return states;
@@ -83,20 +76,14 @@
                         + item.oppName + "</p>")
                 };
             },
-
             itemSelected: function (e) {
-
                 console.log(e);
                 vm.selectedName = e;
                 vm.name = e.item.oppName;
                 vm.opportunityName = e.item;
-                console.log(vm.opportunityName.id, 'NAme');
-
-
                 OpportunityMaster.getSearchOpportunity(vm.opportunityName, onSuccess1, onError1);
             }
         }
-
 
         function onSuccess1(data, headers) {
 
@@ -145,8 +132,8 @@
             vm.queryCount = vm.totalItems;
             vm.page = pagingParams.page;
             vm.opportunityMasters = data;
-            console.log('vm.opportunityMasters');
-            console.log(vm.opportunityMasters);
+            // console.log('vm.opportunityMasters');
+            // console.log(vm.opportunityMasters);
 
 
         }
