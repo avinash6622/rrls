@@ -9,11 +9,27 @@
          padding-bottom: 0px!important;
          border-bottom: 0px !important;
 }
+    .btn-circle{
+        width: 15px;
+        height: 15px;
+        text-align: center;
+        font-size: 9px;
+        border-radius: 15px;
+        float:right;
+    }
+    .glyph_icon {
+        top: 0px;
+    }
+    .btn.btn-sm {
+        padding: 2px !important;
+        line-height: 1 !important;
+    }
 </style>
 <div>
     <div class="well">
 
         <div class="page-header" style="margin:0">
+            <jhi-alert></jhi-alert>
             <div class="row">
                 <div class="col-md-12"><h4 style="margin-top:0;"><span><strong>{{vm.externalResearch.name}}</strong></span></h4>
                 <div class="pull-right" style="margin-top:-10px;">
@@ -76,7 +92,12 @@
 							ng-repeat="fileUploads in vm.externalResearch.fileUploads | filter: {filetype: 'External'} | orderBy: '-createdDate'">
 							<a ui-sref="opportunity-master-detail({id:fileUploads.opportunityMasterId.id})">{{fileUploads.opportunityMasterId.masterName.oppName}} :</a>
 							<a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>
-							<b> - {{fileUploads.createdBy | capitalize}}</b> <span
+                            <button type="button" ng-click="vm.externalRAFileDelete(fileUploads)"
+                                    class="btn btn-warning btn-circle btn-sm">
+                                <span class="glyphicon glyphicon-remove glyph_icon"></span>
+                            </button>
+                            </br>
+							<b>{{fileUploads.createdBy | capitalize}}</b> <span
 								class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
 						</div>

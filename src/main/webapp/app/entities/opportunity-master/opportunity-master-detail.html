@@ -78,12 +78,29 @@
     .rowGrid {
         margin-left: 10px;
     }
+    .btn-circle{
+        width: 15px;
+        height: 15px;
+        text-align: center;
+        font-size: 9px;
+        border-radius: 15px;
+        float:right;
+    }
+    .glyph_icon {
+        top: 0px;
+    }
+    .btn.btn-sm {
+        padding: 2px !important;
+        line-height: 1 !important;
+    }
+
 </style>
 <div>
 
     <div class="well">
         <div>
             <div class="page-header" style="margin:0">
+                <jhi-alert></jhi-alert>
                 <div class="row">
 
                     <div class="col-md-4"><h4><strong>{{vm.opportunityMaster.masterName.oppName}}<span
@@ -273,10 +290,18 @@
                                 style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
                                 <div class="panel-body"
                                      ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Presentation'} | orderBy: '-createdDate'">
-                                    <a ng-click="vm.loadFilePreview(fileUploads.fileData)">{{fileUploads.fileName}}</a>
-                                    <b> - {{fileUploads.createdBy | capitalize}}</b> <span
+                                    <a ng-click="vm.loadFilePreview(fileUploads.fileData)">{{fileUploads.fileName}}</a><button  type="button"
+                                                                                                                               ng-click="vm.raFileDelete(fileUploads)"
+                                                                                                                               class="btn btn-warning btn-circle btn-sm">
+                                    <span class="glyphicon glyphicon-remove glyph_icon"></span>
+                                </button>
+                                </br>
+                                    <b>{{fileUploads.createdBy | capitalize}}</b>
+
+                                    <span
                                     class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
+
                                 </div>
                             </div>
                         </div>
@@ -288,10 +313,16 @@
                                 style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
                                 <div class="panel-body"
                                      ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Excel Model'} | orderBy: '-createdDate'">
-                                    <a ng-click="vm.loadFilePreview(fileUploads.fileData)">{{fileUploads.fileName}}</a>
-                                    <b> - {{fileUploads.createdBy | capitalize}}</b> <span
+                                    <a ng-click="vm.loadFilePreview(fileUploads.fileData)">{{fileUploads.fileName}}</a><button type="button"
+                                                                                                                               ng-click="vm.raFileDelete(fileUploads)"
+                                                                                                                               class="btn btn-warning btn-circle btn-sm">
+                                    <span class="glyphicon glyphicon-remove glyph_icon"></span>
+                                </button>
+                                </br>
+                                    <b>{{fileUploads.createdBy | capitalize}}</b> <span
                                     class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
+
                                 </div>
                             </div>
                         </div>
@@ -304,9 +335,16 @@
                                 <div class="panel-body"
                                      ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Quarterly updates'} | orderBy: '-createdDate'">
                                     <a ng-click="vm.loadFilePreview(fileUploads.fileData)">{{fileUploads.fileName}}</a>
-                                    <b> - {{fileUploads.createdBy | capitalize}}</b> <span
+                                    <button type="button"
+                                            ng-click="vm.raFileDelete(fileUploads)"
+                                            class="btn btn-warning btn-circle btn-sm">
+                                        <span class="glyphicon glyphicon-remove glyph_icon"></span>
+                                    </button>
+                                </br>
+                                    <b>{{fileUploads.createdBy | capitalize}}</b> <span
                                     class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
+
                                 </div>
                             </div>
                         </div>
@@ -319,9 +357,16 @@
                                 <div class="panel-body"
                                      ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Miscellaneous'} | orderBy: '-createdDate'">
                                     <a ng-click="vm.loadFilePreview(fileUploads.fileData)">{{fileUploads.fileName}}</a>
-                                    <b> - {{fileUploads.createdBy | capitalize}}</b> <span
+                                    <button type="button"
+                                            ng-click="vm.raFileDelete(fileUploads)"
+                                            class="btn btn-warning btn-circle btn-sm">
+                                        <span class="glyphicon glyphicon-remove glyph_icon"></span>
+                                    </button>
+                                    </br>
+                                    <b>{{fileUploads.createdBy | capitalize}}</b> <span
                                     class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
+
                                 </div>
                             </div>
                         </div>
@@ -334,9 +379,16 @@
                                 <div class="panel-body"
                                      ng-repeat="fileUploads in vm.opportunityMaster.externalRAFileUpload | orderBy: '-createdDate'">
                                     <a ng-click="vm.loadFilePreview(fileUploads.fileData)">{{fileUploads.fileName}}</a>
-                                    <b> - {{fileUploads.createdBy | capitalize}}</b> <span
+                                    <button type="button"
+                                            ng-click="vm.externalFileDelete(fileUploads)"
+                                            class="btn btn-warning btn-circle btn-sm">
+                                        <span class="glyphicon glyphicon-remove glyph_icon"></span>
+                                    </button>
+                                </br>
+                                    <b>{{fileUploads.createdBy | capitalize}}</b> <span
                                     class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
+
                                 </div>
                             </div>
                         </div>
@@ -349,9 +401,16 @@
                                 <div class="panel-body"
                                      ng-repeat="fileUploads in vm.opportunityMaster.communicationLetters | orderBy: '-createdDate'">
                                     <a ng-click="vm.loadFilePreview(fileUploads.fileData)" ng-href="">{{fileUploads.fileName}}</a>
-                                    <b> - {{fileUploads.createdBy | capitalize}}</b> <span
+                                    <button type="button"
+                                            ng-click="vm.communicationFileDelete(fileUploads)"
+                                            class="btn btn-warning btn-circle btn-sm">
+                                        <span class="glyphicon glyphicon-remove glyph_icon"></span>
+                                    </button>
+                                    </br>
+                                    <b>{{fileUploads.createdBy | capitalize}}</b> <span
                                     class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
+
                                 </div>
                             </div>
                         </div>
@@ -364,9 +423,16 @@
                                 <div class="panel-body"
                                      ng-repeat="fileUploads in vm.opportunityMaster.confidenctialLetters | orderBy: '-createdDate'">
                                     <a ng-click="vm.loadFilePreview(fileUploads.fileData)">{{fileUploads.fileName}}</a>
-                                    <b> - {{fileUploads.createdBy | capitalize}}</b> <span
+                                    <button type="button"
+                                            ng-click="vm.confidentialFileDelete(fileUploads)"
+                                            class="btn btn-warning btn-circle btn-sm">
+                                        <span class="glyphicon glyphicon-remove glyph_icon"></span>
+                                    </button>
+                                    </br>
+                                    <b>{{fileUploads.createdBy | capitalize}}</b> <span
                                     class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
+
                                 </div>
                             </div>
                         </div>
@@ -382,11 +448,16 @@
                                 <div class="panel-body"
                                      ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Presentation'} | orderBy: '-createdDate'">
                                     <a ng-click="vm.loadFilePreview(fileUploads.fileData)">{{fileUploads.fileName}}</a>
-
-
-                                    <b> - {{fileUploads.createdBy | capitalize}}</b> <span
+                                    <button type="button"
+                                            ng-click="vm.raFileDelete(fileUploads)"
+                                            class="btn btn-warning btn-circle btn-sm">
+                                        <span class="glyphicon glyphicon-remove glyph_icon"></span>
+                                    </button>
+                                </br>
+                                    <b>{{fileUploads.createdBy | capitalize}}</b> <span
                                     class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
+
                                 </div>
                             </div>
                         </div>
@@ -399,9 +470,16 @@
                                 <div class="panel-body"
                                      ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Excel Model'} | orderBy: '-createdDate'">
                                     <a ng-click="vm.loadFilePreview(fileUploads.fileData)">{{fileUploads.fileName}}</a>
-                                    <b> - {{fileUploads.createdBy | capitalize}}</b> <span
+                                    <button type="button"
+                                            ng-click="vm.raFileDelete(fileUploads)"
+                                            class="btn btn-warning btn-circle btn-sm">
+                                        <span class="glyphicon glyphicon-remove glyph_icon"></span>
+                                    </button>
+                                    </br>
+                                    <b>{{fileUploads.createdBy | capitalize}}</b> <span
                                     class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
+
                                 </div>
                             </div>
                         </div>
@@ -414,9 +492,16 @@
                                 <div class="panel-body"
                                      ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Quarterly updates'} | orderBy: '-createdDate'">
                                     <a ng-click="vm.loadFilePreview(fileUploads.fileData)">{{fileUploads.fileName}}</a>
-                                    <b> - {{fileUploads.createdBy | capitalize}}</b> <span
+                                    <button type="button"
+                                            ng-click="vm.raFileDelete(fileUploads)"
+                                            class="btn btn-warning btn-circle btn-sm">
+                                        <span class="glyphicon glyphicon-remove glyph_icon"></span>
+                                    </button>
+                                    </br>
+                                    <b>{{fileUploads.createdBy | capitalize}}</b> <span
                                     class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
+
                                 </div>
                             </div>
                         </div>
@@ -429,9 +514,16 @@
                                 <div class="panel-body"
                                      ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Miscellaneous'} | orderBy: '-createdDate'">
                                     <a ng-click="vm.loadFilePreview(fileUploads.fileData)">{{fileUploads.fileName}}</a>
-                                    <b> - {{fileUploads.createdBy | capitalize}}</b> <span
+                                    <button type="button"
+                                            ng-click="vm.raFileDelete(fileUploads)"
+                                            class="btn btn-warning btn-circle btn-sm">
+                                        <span class="glyphicon glyphicon-remove glyph_icon"></span>
+                                    </button>
+                                </br>
+                                    <b>{{fileUploads.createdBy | capitalize}}</b> <span
                                     class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
+
                                 </div>
                             </div>
                         </div>
@@ -444,9 +536,16 @@
                                 <div class="panel-body"
                                      ng-repeat="fileUploads in vm.opportunityMaster.externalRAFileUpload | orderBy: '-createdDate'">
                                     <a ng-click="vm.loadFileExternal(fileUploads.id)">{{fileUploads.fileName}}</a>
-                                    <b> - {{fileUploads.createdBy | capitalize}}</b> <span
+                                    <button type="button"
+                                            ng-click="vm.externalFileDelete(fileUploads)"
+                                            class="btn btn-warning btn-circle btn-sm">
+                                        <span class="glyphicon glyphicon-remove glyph_icon"></span>
+                                    </button>
+                                    </br>
+                                    <b>{{fileUploads.createdBy | capitalize}}</b> <span
                                     class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
+
                                 </div>
                             </div>
                         </div>
@@ -459,9 +558,16 @@
                                 <div class="panel-body"
                                      ng-repeat="fileUploads in vm.opportunityMaster.communicationLetters | orderBy: '-createdDate'">
                                     <a ng-click="vm.loadFilePreview(fileUploads.fileData)">{{fileUploads.fileName}}</a>
-                                    <b> - {{fileUploads.createdBy | capitalize}}</b> <span
+                                    <button type="button"
+                                            ng-click="vm.communicationFileDelete(fileUploads)"
+                                            class="btn btn-warning btn-circle btn-sm">
+                                        <span class="glyphicon glyphicon-remove glyph_icon"></span>
+                                    </button>
+                                    </br>
+                                    <b>{{fileUploads.createdBy | capitalize}}</b> <span
                                     class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
+
                                 </div>
                             </div>
                         </div>
@@ -1732,18 +1838,18 @@
                         </div>
                     </div>
 
+                </div>
+
             </div>
 
         </div>
-
     </div>
-</div>
 
 
-<footer class="footer footer-dark" ng-cloak>
-    <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights
-        reserved.</p>
-</footer>
+    <footer class="footer footer-dark" ng-cloak>
+        <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights
+            reserved.</p>
+    </footer>
 
 </div>
 <!-- </form> -->

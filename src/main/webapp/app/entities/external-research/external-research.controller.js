@@ -19,10 +19,10 @@
         vm.reverse = pagingParams.ascending;
         vm.totalItems = null;
         vm.page = 1;
-        vm.links = null;
 
-       vm.reset = reset;
-      //  vm.reverse = true;
+        vm.links = null;
+        vm.reset = reset;
+        //  vm.reverse = true;
         vm.transition = transition;
         vm.itemsValue = 'External Research';
         vm.deleteResearch=deleteResearch;
@@ -110,6 +110,7 @@
             });
 
         }
+
 
     }
 })();

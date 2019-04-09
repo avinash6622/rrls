@@ -44,6 +44,13 @@
         vm.previewFileExtension = '';
         vm.AdminFiles = false;
         vm.googleHeading = false;
+        // vm.fileDelete=fileDelete;
+        vm.communicationFileDelete=communicationFileDelete;
+        vm.confidentialFileDelete=confidentialFileDelete;
+        vm.externalFileDelete=externalFileDelete;
+        vm.raFileDelete=raFileDelete;
+        vm.getOpportunityMaster=getOpportunityMaster;
+
 
 
         console.log('Decimal value', vm.opportunityMaster.decimalPoint);
@@ -333,7 +340,7 @@
             var result = parseFloat(val1) / parseFloat(val2);
             result = (result * 100);
             result = (isNaN(result) || result == Infinity) ? 0 : result;
-            //console.log('result',result);
+            console.log('result',result);
 
             switch (val3) {
                 case 1:
@@ -759,7 +766,6 @@
                 fileContent: doc, fileName: vm.fileName, oppId: vm.opportunityMaster.id,
                 oppName: vm.opportunityMaster.masterName.oppName, oppId: vm.opportunityMaster.id
             }, function (result) {
-
                 vm.opportunityMaster.fileUploads.push(result);
                 clear();
             }, onSaveError);
@@ -794,11 +800,15 @@
             window.open('/download/' + fileID, '_blank');
         }
 
+
         function loadFilePreview(fileName) {
-            console.log('file preview function invoked');
+            console.log('file preview function invoked', fileName);
+            let IP = vm.getIP;
+            var data = fileName.replace(/\\/g, "/");
             var data = fileName;
             data = data.replace(/\\/g, "/");
-            var url = "http://localhost:8080" + data.split('webapp')[1];
+            var url = window.location.origin + data.split('webapp')[1];
+            console.log("url -" + url);
             window.open(url, '_blank');
         }
 
@@ -831,7 +841,6 @@
         }
 
 
-
         $scope.imageUpload = function (event) {
             var files = event.target.files;
 
@@ -847,6 +856,35 @@
             $scope.$apply(function () {
                 $scope.img = e.target.result;
             });
+        }
+
+        function getOpportunityMaster() {
+            OpportunityMaster.get({id: $stateParams.id}, function(result) {
+                vm.opportunityMaster = result;
+                console.log(vm.opportunityMaster);
+            });
+        }
+
+        function raFileDelete(file) {
+            console.log('File for ra Deletion');
+            console.log(file);
+
+        }
+        function externalFileDelete(file) {
+            console.log('File for external Deletion');
+            console.log(file);
+
+        }
+        function communicationFileDelete(file) {
+            console.log('File for communication Deletion');
+            console.log(file);
+            console.log(file.id);
+
+        }
+        function confidentialFileDelete(file) {
+            console.log('File for confidential Deletion');
+            console.log(file);
+
         }
 
 

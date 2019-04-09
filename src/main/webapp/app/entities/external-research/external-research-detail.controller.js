@@ -17,6 +17,7 @@
         vm.loadFileContent = loadFileContent;
         vm.load = load;
         vm.loadAll = loadAll;
+        vm.externalRAFileDelete=externalRAFileDelete;
         vm.externalResearch;     
         vm.load($stateParams.id);
         
@@ -168,6 +169,19 @@
         	ExternalResearchAnalyst.get({id: id}, function(result) {
         		vm.externalResearch = result;
         		console.log(vm.externalResearch);
+            });
+        }
+
+        function externalRAFileDelete(file) {
+            console.log('File for external Deletion');
+            console.log(file);
+            return $http.delete('/api/externalRA/' + file.id).then(
+                function (response) {
+                    console.log('response in delete');
+                    console.log(response);
+                    vm.load($stateParams.id);
+                }).catch(function (error) {
+                console.log(error);
             });
         }
     }

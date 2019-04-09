@@ -19,7 +19,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.core.io.FileSystemResource;
+
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.docx4j.Docx4J;
 import org.docx4j.Docx4jProperties;
 import org.docx4j.XmlUtils;
@@ -52,6 +55,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 //import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.MediaType;
 
 import com.codahale.metrics.annotation.Timed;
 import com.unify.rrls.domain.AnswerComment;
@@ -1229,5 +1233,28 @@ public class OpportunityMasterResource {
         out.close();
         System.out.println("File Uploading is Completed");
     }
+
+    // File Preview
+    @Timed
+    @GetMapping(value = "/filePreview/{filePath}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, name = "name of api")
+    public ResponseEntity getFile(@PathVariable("filePath") @ApiParam(value = "File Path") String filePath) throws IOException {
+        System.out.println("filePath");
+        System.out.println(filePath);
+        if (filePath != null) {
+            File file = new File(filePath);
+            if (file.exists()) {
+                return ResponseEntity.ok()
+                    .header("Content-Disposition", "inline; filename=" + file.getName() + "." + FilenameUtils.getExtension(filePath))
+                    .contentLength(file.length())
+                    .lastModified(file.lastModified())
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(new FileSystemResource(file));
+            } else {
+                return ResponseEntity.ok().body("file not found");
+            }
+        }
+        return null;
+    }
+
 
 }

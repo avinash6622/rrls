@@ -30,6 +30,8 @@ import com.unify.rrls.repository.ExternalResearchAnalystRepository;
 import com.unify.rrls.repository.OpportunityMasterRepository;
 import com.unify.rrls.security.SecurityUtils;
 import com.unify.rrls.web.rest.util.HeaderUtil;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 @RestController
 @RequestMapping("/api")
@@ -140,5 +142,12 @@ public class ExternalRAFileUploadResource {
 			out.close();
 			System.out.println("File Uploading is Completed");
 		}
+    @DeleteMapping("/externalRA/{id}")
+    @Timed
+    public ResponseEntity<Void> deleteExternalRA(@PathVariable Long id) {
+        log.debug("REST request to delete external RA research: {}", id);
+        externalRAFileUploadRepository.delete(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert("A External RA is deleted with identifier " + id, id.toString())).build();
+    }
 
 }
