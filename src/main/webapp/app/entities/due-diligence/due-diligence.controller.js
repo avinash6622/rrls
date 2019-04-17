@@ -2,21 +2,21 @@
     'use strict';
 
     angular.module('researchRepositoryLearningSystemApp').controller(
-        'ConfidentialLetterController', ConfidentialLetterController);
+        'DueDiligenceController', DueDiligenceController);
 
-    ConfidentialLetterController.$inject = [ 'ConfidentialLetters',
+    DueDiligenceController.$inject = [ 'DueDiligences',
         'OpportunityMaster', 'ParseLinks', 'Principal',
         'AlertService', 'paginationConstants', '$scope', '$filter',
         'pagingParams', '$state', '$http', '$sce'];
 
-    function ConfidentialLetterController(ConfidentialLetters,
+    function DueDiligenceController(DueDiligences,
                                            OpportunityMaster, ParseLinks, Principal,
                                            AlertService, paginationConstants, $scope, $filter, pagingParams,
                                            $state, $http, $sce) {
 
         var vm = this;
 
-        vm.confidentialLetters = [];
+        vm.dueDiligences = [];
         vm.loadPage = loadPage;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
         vm.predicate = pagingParams.predicate;
@@ -28,7 +28,7 @@
             last : 0
         };
         vm.transition = transition;
-        vm.itemsValue = 'Confidential Letters';
+        vm.itemsValue = 'Due Diligence';
         vm.account = null;
         vm.clearOpp = clearOpp;
         vm.clearSub = clearSub;
@@ -36,7 +36,7 @@
         vm.loadAll = loadAll;
         vm.name = '';
         vm.subject='';
-        vm.deleteConfidential=deleteConfidential;
+        vm.deleteDueDiligence=deleteDueDiligence;
 
         vm.loadAll();
 
@@ -44,7 +44,7 @@
         var myDate = new Date();
         $scope.currentYear = $filter('date')(myDate, 'yyyy');
         function clear() {
-            vm.confidentialLetters=[];
+            vm.dueDiligences=[];
             vm.name = '';
             loadAll();
         }
@@ -53,7 +53,7 @@
             dropdownHeight : '200px',
 
             data : function(searchText) {
-                return $http.get('api/confidenctial-letters/opportunity').then(
+                return $http.get('api/due-diligence/opportunity').then(
                     function(response) {
                         searchText = searchText.toLowerCase();
                         var states = _.filter(response.data,
@@ -81,16 +81,15 @@
                 vm.selectedName = e;
                 vm.name = e.item.oppName;
                 vm.opportunityName=e.item;
-                console.log(vm.opportunityName.id,'NAme');
-                ConfidentialLetters.getSearchOpportunity(vm.opportunityName,onSuccess1,onError1);
+                console.log(vm.opportunityName.id,'Name');
+                DueDiligences.getSearchOpportunity(vm.opportunityName,onSuccess1,onError1);
             }
         }
         vm.autoCompleteSubject = {
             minimumChars : 1,
             dropdownHeight : '200px',
-
             data : function(searchText) {
-                return $http.get('api/confidenctial-letters/subject').then(
+                return $http.get('api/due-diligence/subject').then(
                     function(response) {
                         searchText = searchText.toLowerCase();
                         var states = _.filter(response.data,
@@ -117,37 +116,35 @@
                 console.log(e);
                 vm.selectedName = e;
                 vm.subject = e.item.subject;
-                vm.confidentialLetters=e.item;
-                console.log( vm.confidentialLetters.id,'NAme');
-
-
-                ConfidentialLetters.getSearchSubject(vm.confidentialLetters,onSuccess,onError1);
+                vm.dueDiligences=e.item;
+                console.log( vm.dueDiligences.id,'NAme');
+                DueDiligences.getSearchSubject(vm.dueDiligences,onSuccess,onError1);
             }
         }
         function onSuccess1(data, headers){
             console.log(data);
             console.log(vm.name);
-            vm.confidentialLetters = data;
+            vm.dueDiligences = data;
 
         }
         function onSuccess(data, headers){
-            vm.confidentialLetters = data;
+            vm.dueDiligences = data;
         }
         function onError1() {
         }
         function clearOpp() {
 
             vm.name = '';
-            vm.confidentialLetters=[];
+            vm.dueDiligences=[];
             loadAll();
         }
         function clearSub() {
             vm.subject = '';
-            vm.confidentialLetters=[];
+            vm.dueDiligences=[];
             loadAll();
         }
         function loadAll() {
-            ConfidentialLetters.query({
+            DueDiligences.query({
                 page : pagingParams.page - 1,
                 size : vm.itemsPerPage,
                 sort : sort()
@@ -169,12 +166,12 @@
             vm.links = ParseLinks.parse(headers('link'));
             vm.totalItems = headers('X-Total-Count');
             for (var i = 0; i < data.length; i++) {
-                vm.confidentialLetters.push(data[i]);
+                vm.dueDiligences.push(data[i]);
 
             }
             vm.queryCount = vm.totalItems;
             vm.page = pagingParams.page;
-            vm.confidentialLetters=data;
+            vm.dueDiligences=data;
         }
 
         function onError(error) {
@@ -192,7 +189,7 @@
 
         function reset() {
             vm.page = 0;
-            vm.confidentialLetters = [];
+            vm.dueDiligences = [];
             loadAll();
         }
 
@@ -211,10 +208,10 @@
 
 
         }
-        function deleteConfidential(confidentialLetter) {
+        function deleteDueDiligence(dueDiligence) {
             console.log('confidential letter');
-            console.log(confidentialLetter);
-            return $http.delete('/api/confidential-letter/' + confidentialLetter.id).then(
+            console.log(dueDiligence);
+            return $http.delete('/api/due-diligence/' + dueDiligence.id).then(
                 function (response) {
                     console.log('response in delete');
                     console.log(response);

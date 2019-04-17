@@ -37,7 +37,7 @@
         })
             .state('opportunity-name-list', {
             parent: 'opportunity-name',
-            url: '/opportunity-name-list?page&sort',
+            url: '/opportunity-name-list?page&sort&type',
             data: {
                 authorities: ['User'],
                 pageTitle: 'Opportunity Names'
@@ -57,6 +57,10 @@
                     sort: {
                         value: 'id,asc',
                         squash: true
+                    },
+                    type: {
+                        value: 'manual',
+                        squash: true
                     }
                 },
                 resolve: {
@@ -64,6 +68,7 @@
                         return {
                             page: PaginationUtil.parsePage($stateParams.page),
                             sort: $stateParams.sort,
+                            type: $stateParams.type,
                             predicate: PaginationUtil.parsePredicate($stateParams.sort),
                             ascending: PaginationUtil.parseAscending($stateParams.sort)
                         };

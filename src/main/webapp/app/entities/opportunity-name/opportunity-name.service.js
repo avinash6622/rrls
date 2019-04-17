@@ -38,7 +38,11 @@
 
                     return angular.toJson(data);
                 }
-            }
+            },
+            'createdByNull':{url: 'api/opportunity-names-createdbyisnull',
+                                            method: 'GET', isArray: true},
+            'createdByNotNull':{url: 'api/opportunity-names-createdbyisnotnull',
+                                               method: 'GET', isArray: true},
 
         });
     }

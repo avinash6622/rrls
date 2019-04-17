@@ -63,7 +63,6 @@ public class OpportunityNameResource {
     @GetMapping("/opportunity-names")
     @Timed
     public ResponseEntity<List<OpportunityName>> getAllOpportunityNames(@ApiParam Pageable pageable) {
-
         log.debug("REST request to get a page of OpportunityNames");
         Page<OpportunityName> page = null;
         String role = SecurityUtils.getCurrentRoleLogin();
@@ -154,5 +153,52 @@ public class OpportunityNameResource {
         }
         HttpHeaders headers = new HttpHeaders();
         return new ResponseEntity<List<OpportunityName>>(listName, headers, HttpStatus.OK);
+    }
+
+//    @GetMapping("/opp-name")
+//    @Timed
+//    public ResponseEntity<List<OpportunityName>> impotedList(@ApiParam Pageable pageable){
+//        log.debug("REST request to get a page of OpportunityNames with categories - Imported");
+//        Page<OpportunityName> page = null;
+//        String role = SecurityUtils.getCurrentRoleLogin();
+//        String username = SecurityUtils.getCurrentUserLogin();
+//        page = opportunityNameRepository.findAllByImportedOppoName(pageable);
+//        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opp-name");
+//        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+//    }
+//    @GetMapping("/oppo-name")
+//    @Timed
+//    public ResponseEntity<List<OpportunityName>> manualList(@ApiParam Pageable pageable){
+//        log.debug("REST request to get a page of OpportunityNames with categories - Manual");
+//        Page<OpportunityName> page = null;
+//        String role = SecurityUtils.getCurrentRoleLogin();
+//        String username = SecurityUtils.getCurrentUserLogin();
+//        page = opportunityNameRepository.findAllByManualOppoName(pageable);
+//        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/oppo-name");
+//        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+//    }
+
+    @GetMapping("/opportunity-names-createdbyisnotnull")
+    @Timed
+    public ResponseEntity<List<OpportunityName>> createdByIsNotNull(@ApiParam Pageable pageable) {
+        log.debug("REST request to get a page of OpportunityNames with categories - Manual");
+        Page<OpportunityName> page = null;
+        String role = SecurityUtils.getCurrentRoleLogin();
+        String username = SecurityUtils.getCurrentUserLogin();
+        page = opportunityNameRepository.findByCreatedByIsNotNull(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-names-createdbyisnotnull");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/opportunity-names-createdbyisnull")
+    @Timed
+    public ResponseEntity<List<OpportunityName>> createdByIsNull(@ApiParam Pageable pageable) {
+        log.debug("REST request to get a page of OpportunityNames with categories - Import");
+        Page<OpportunityName> page = null;
+        String role = SecurityUtils.getCurrentRoleLogin();
+        String username = SecurityUtils.getCurrentUserLogin();
+        page = opportunityNameRepository.findByCreatedByIsNull(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/opportunity-names-createdbyisnull");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 }

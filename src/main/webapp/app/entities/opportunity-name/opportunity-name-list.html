@@ -4,6 +4,13 @@
         margin-bottom: 10px;
         margin-top: -2%;
     }
+    .oppo{
+    float: right;
+    margin-right: 17px;
+    padding: 5px;
+    }
+
+
 </style>
 
 <div>
@@ -15,7 +22,9 @@
                 auto-complete="vm.autoCompleteOpportunity" type="text" placeholder="Search"> <span
                 class="input-group-btn"><button type="button" class="btn btn-default" ng-show="vm.name"
                                                 ng-click="vm.clear()">X</button></span></div>
-            <div class="col-md-4"></div>
+            <div class="col-md-4 ">
+
+            </div>
             <div class="col-md-4 pull-right add-opportunity-name">
                 <button class="btn btn-md btn-warning pull-right"
                         type="button" ui-sref="opportunity-name" has-authority="Admin">
@@ -24,6 +33,18 @@
                        Add Opportunity Name
                     </span>
                 </button>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="oppo">
+<!--                ng-model="vm.toggleName"
+ng-model="vm.toggleName"-->
+            <input type="radio" id="radio3" name="name" value="manual" ng-model="vm.type"   ng-click="vm.oppoNameChange()"  />
+                <label for="radio3">Manually Created</label>
+                <input type="radio" id="radio4" name="name" value="import" ng-model="vm.type"   ng-click="vm.oppoNameChange()" />
+                <label for="radio4">Imported</label>
+
             </div>
         </div>
         <div class="table-responsive">

@@ -1,0 +1,122 @@
+<style>
+    .col-xs-3 .btn {
+        padding: 0px !important;
+
+    }
+
+    .col-xs-3 {
+        padding-right: 0px !important;
+    }
+
+    body {
+        padding: 15px;
+    }
+
+    .select2 > .select2-choice.ui-select-match {
+        /* Because of the inclusion of Bootstrap */
+        height: 29px;
+    }
+
+    .selectize-control > .selectize-dropdown {
+        top: 36px;
+    }
+
+    .autoComplClose {
+        width: 90% !important;
+        float: left;
+    }
+
+    .autoClose {
+        float: left;
+    }
+
+</style>
+
+<div>
+    <div class="well">
+
+        <jhi-alert></jhi-alert>
+        <div>
+            <div class="row">
+
+                <div class="col-md-3 pull-right">
+                    <button class="btn btn-md btn-warning pull-right"
+                            type="button" ui-sref="due-diligence.new" has-any-authority="Admin,Research,Master">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span>
+                       Add Due Diligence
+                    </span>
+                    </button>
+                </div>
+
+                <div class="col-md-3" style="padding-left: 18px;">
+                    <input class="form-control ng-pristine ng-valid clearable autoComplClose" ng-model="vm.name"
+                           auto-complete="vm.autoCompleteOpportunity1" type="text" placeholder="Search Opportunity">
+                    <span class="input-group-btn autoClose"><button type="button" class="btn btn-default" ng-show="vm.name"
+                                                                    ng-click="vm.clearOpp()">X</button></span></div>
+                <div class="col-md-3"><input class="form-control ng-pristine ng-valid clearable autoComplClose"
+                                             ng-model="vm.subject" auto-complete="vm.autoCompleteSubject" type="text"
+                                             placeholder="Search Subject"> <span class="input-group-btn autoClose"><button
+                    type="button" class="btn btn-default" ng-show="vm.subject"
+                    ng-click="vm.clearSub()">X</button></span></div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="jh-table table table-striped">
+                <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="subject"><span>Subject</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="opportunityMasterId.masterName.oppName"><span>Opportunity</span> <span
+                        class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="createdBy"><span>Created By</span> <span class="glyphicon glyphicon-sort"></span>
+                    </th>
+                    <th jh-sort-by="createdDate"><span>Created Date</span><span
+                        class="glyphicon glyphicon-sort"></span></th>
+                    <th has-authority="Admin">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr ng-repeat="duediligence in vm.dueDiligences | orderBy:predicate:reverse">
+                    <td>{{duediligence.subject}}</td>
+
+                    <td><a ui-sref="opportunity-master-detail({id:duediligence.opportunityMasterId.id})">{{duediligence.opportunityMasterId.masterName.oppName}}
+                    </a></td>
+
+                    <td><a ui-sref="home-research({createdBy:duediligence.createdBy})">{{duediligence.createdBy
+                        |capitalize}}</a>
+                    </td>
+                    <td>{{duediligence.createdDate
+                        |date}}
+                    </td>
+                    <td>
+                        <button ng-click="vm.deleteDueDiligence(duediligence)" type="submit" class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+
+
+            </table>
+
+        </div>
+
+
+        <div class="text-center" style="margin-bottom: -5px">
+            <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"
+                            item="vm.itemsValue"></jhi-item-count>
+            <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page"
+                            ng-change="vm.transition()"></uib-pagination>
+        </div>
+
+
+    </div>
+    <footer class="footer footer-dark" ng-cloak>
+        <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights
+            reserved.</p>
+    </footer>
+
+</div>
+
+

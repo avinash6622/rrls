@@ -1,11 +1,6 @@
 package com.unify.rrls.web.rest;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
@@ -18,6 +13,7 @@ import java.util.regex.Pattern;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.ws.rs.Produces;
 
 import org.springframework.core.io.FileSystemResource;
 
@@ -62,6 +58,7 @@ import com.unify.rrls.domain.AnswerComment;
 import com.unify.rrls.domain.CommentOpportunity;
 import com.unify.rrls.domain.CommunicationLetters;
 import com.unify.rrls.domain.ConfidenctialLetters;
+import com.unify.rrls.domain.DueDiligence;
 import com.unify.rrls.domain.DocumentCreationBean;
 import com.unify.rrls.domain.ExternalRAFileUpload;
 import com.unify.rrls.domain.FileUpload;
@@ -88,6 +85,7 @@ import com.unify.rrls.repository.AnswerCommentRepository;
 import com.unify.rrls.repository.CommentOpportunityRepository;
 import com.unify.rrls.repository.CommunicationLettersRepository;
 import com.unify.rrls.repository.ConfidenctialLettersRepository;
+import com.unify.rrls.repository.DueDiligenceRepository;
 import com.unify.rrls.repository.DecimalConfigurationRepository;
 import com.unify.rrls.repository.ExternalRAFileUploadRepository;
 import com.unify.rrls.repository.FileUploadCommentsRepository;
@@ -178,6 +176,7 @@ public class OpportunityMasterResource {
     private final ExternalRAFileUploadRepository externalRAFileUploadRepository;
     private final CommunicationLettersRepository communicationLettersRepository;
     private final ConfidenctialLettersRepository confidenctialLettersRepository;
+    private final DueDiligenceRepository dueDiligenceRepository;
 
     @Autowired
     NotificationServiceResource notificationServiceResource;
@@ -206,7 +205,8 @@ public class OpportunityMasterResource {
                                      FixedLearningRepository fixedLearningRepository, FixedLearningMappingRepository fixedLearningMappingRepository,
                                      OpportunityLearningAIFRepository opportunityLearningAIFRepository, LearningAIFRepository learningAIFRepository,
                                      LearningsAIFMappingRepository learningsAIFMappingRepository, ExternalRAFileUploadRepository externalRAFileUploadRepository,
-                                     CommunicationLettersRepository communicationLettersRepository, ConfidenctialLettersRepository confidenctialLettersRepository) {
+                                     CommunicationLettersRepository communicationLettersRepository, ConfidenctialLettersRepository confidenctialLettersRepository,
+    DueDiligenceRepository dueDiligenceRepository) {
         this.opportunityMasterRepository = opportunityMasterRepository;
         this.fileUploadRepository = fileUploadRepository;
         this.fileUploadCommentsRepository = fileUploadCommentsRepository;
@@ -233,6 +233,7 @@ public class OpportunityMasterResource {
         this.externalRAFileUploadRepository = externalRAFileUploadRepository;
         this.communicationLettersRepository = communicationLettersRepository;
         this.confidenctialLettersRepository = confidenctialLettersRepository;
+        this.dueDiligenceRepository=dueDiligenceRepository;
     }
 
     /**
@@ -942,6 +943,7 @@ public class OpportunityMasterResource {
         List<ExternalRAFileUpload> externalRAFileUploads = externalRAFileUploadRepository.findByOpportunityMasterId(opportunityMaster);
         List<CommunicationLetters> communicationLetters = communicationLettersRepository.findByOpportunityMasterId(opportunityMaster);
         List<ConfidenctialLetters> confidenctialLetters = confidenctialLettersRepository.findByOpportunityMasterId(opportunityMaster);
+        List<DueDiligence> dueDiligences=dueDiligenceRepository.findByOpportunityMasterId(opportunityMaster);
         List<StrategyMapping> strategyMappings = strategyMappingRepository.findByOpportunityMaster(opportunityMaster);
         opportunityAutomation = opportunityAutomationRepository.findByOpportunityMaster(opportunityMaster);
 
@@ -978,6 +980,10 @@ public class OpportunityMasterResource {
         opportunityMaster.setExternalRAFileUpload(externalRAFileUploads);
         opportunityMaster.setCommunicationLetters(communicationLetters);
         opportunityMaster.setConfidenctialLetters(confidenctialLetters);
+        opportunityMaster.setDueDiligences(dueDiligences);
+
+
+
 
         if (!fileUploads.isEmpty()) {
             try {
@@ -1254,6 +1260,17 @@ public class OpportunityMasterResource {
             }
         }
         return null;
+    }
+
+    @GetMapping
+    @Produces("/filePreview")
+    public javax.ws.rs.core.Response getPdf() throws Exception {
+        File file = new File("D:\\Data\\Official\\RRLS\\PDF misc template.pdf");
+        FileInputStream fileInputStream = new FileInputStream(file);
+        javax.ws.rs.core.Response.ResponseBuilder responseBuilder = javax.ws.rs.core.Response.ok((Object) fileInputStream);
+        responseBuilder.type("application/pdf");
+        responseBuilder.header("Content-Disposition", "filename=test.pdf");
+        return responseBuilder.build();
     }
 
 

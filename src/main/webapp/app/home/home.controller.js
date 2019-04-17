@@ -172,8 +172,6 @@
 
         function loadAll(){
                    console.log($state.params);
-
-
             if ($state.params && $state.params.createdBy){
                 OpportunityMaster.opportunitysummaryDataCreatedBy({
                     page: pagingParams.page - 1,
@@ -187,8 +185,6 @@
                 OpportunityMaster.opportunitysummaryData({
                     page: pagingParams.page - 1,
                     size: vm.itemsPerPage,
-
-
                 }, onSuccess, onError);
 
             }

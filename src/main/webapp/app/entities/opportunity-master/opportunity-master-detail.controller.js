@@ -5,9 +5,9 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('OpportunityMasterDetailController', OpportunityMasterDetailController);
 
-    OpportunityMasterDetailController.$inject = ['$scope', '$rootScope', 'Principal', '$stateParams', 'previousState', 'entity', 'OpportunityMaster', 'StrategyMaster', 'Upload', 'FileUploadComments', 'FileUpload', '$uibModal', '$filter', '$http', 'OpportunityQuestion', 'DecimalConfiguration', 'CommentOpportunity'];
+    OpportunityMasterDetailController.$inject = ['$scope', '$rootScope', 'Principal', '$stateParams', 'previousState', 'entity', 'OpportunityMaster', 'StrategyMaster', 'Upload', 'FileUploadComments', 'FileUpload', '$uibModal', '$filter', '$http', 'OpportunityQuestion', 'DecimalConfiguration', 'CommentOpportunity','$location'];
 
-    function OpportunityMasterDetailController($scope, $rootScope, Principal, $stateParams, previousState, entity, OpportunityMaster, StrategyMaster, Upload, FileUploadComments, FileUpload, $uibModal, $filter, $http, OpportunityQuestion, DecimalConfiguration, CommentOpportunity) {
+    function OpportunityMasterDetailController($scope, $rootScope, Principal, $stateParams, previousState, entity, OpportunityMaster, StrategyMaster, Upload, FileUploadComments, FileUpload, $uibModal, $filter, $http, OpportunityQuestion, DecimalConfiguration, CommentOpportunity,$location) {
         var vm = this;
         vm.opportunityMaster = entity;
         console.log('opportunityMaster ');
@@ -47,6 +47,7 @@
         // vm.fileDelete=fileDelete;
         vm.communicationFileDelete=communicationFileDelete;
         vm.confidentialFileDelete=confidentialFileDelete;
+        vm.dueDiligenceDelete=dueDiligenceDelete;
         vm.externalFileDelete=externalFileDelete;
         vm.raFileDelete=raFileDelete;
         vm.getOpportunityMaster=getOpportunityMaster;
@@ -69,14 +70,12 @@
             Principal.identity().then(function (account) {
                 vm.account = account;
                 vm.isAuthenticated = Principal.isAuthenticated;
-                console.log(vm.account.authorities[1]);
                 console.log('vm.account.authorities');
+                console.log(vm.account.authorities[1]);
                 console.log(vm.account.authorities);
-
                 if (vm.account.authorities[1] == 'Research' || vm.account.authorities[1] == 'CIO') {
                     vm.mydisable = false;
                 }
-
                 for (var i = 0; i < vm.account.authorities.length; i++) {
                     console.log('vm.account');
                     console.log(vm.account);
@@ -340,7 +339,7 @@
             var result = parseFloat(val1) / parseFloat(val2);
             result = (result * 100);
             result = (isNaN(result) || result == Infinity) ? 0 : result;
-            console.log('result',result);
+//            console.log('result',result);
 
             switch (val3) {
                 case 1:
@@ -594,9 +593,7 @@
                     this.message = 'some message';
 
                     this.ok = function () {
-
-
-                        var val = this.description;
+ var val = this.description;
 
                         OpportunityMaster.description({
                             statusDes: val,
@@ -683,9 +680,7 @@
         };
 
         $scope.commentstemp = function () {
-
             var modalInstance = $uibModal.open({
-
                 templateUrl: 'app/entities/opportunity-master/opportunity-comment.html',
                 controllerAs: '$ctrl',
                 controller: 'OpportunityCommentController',
@@ -702,7 +697,6 @@
 
 
         function load() {
-
             /*vm.opportunityMaster.fileUploadCommentList = OpportunityMaster.get({id : $stateParams.id}, function(resp){
              console.log(resp);*/
             vm.opportunityMaster.fileUploadCommentList;
@@ -785,7 +779,6 @@
         }
 
         function approveFile(status) {
-
             vm.opportunityMaster.oppStatus = status;
 
             OpportunityMaster.update(vm.opportunityMaster, function (resp) {
@@ -802,15 +795,33 @@
 
 
         function loadFilePreview(fileName) {
-            console.log('file preview function invoked', fileName);
-            let IP = vm.getIP;
-            var data = fileName.replace(/\\/g, "/");
-            var data = fileName;
-            data = data.replace(/\\/g, "/");
-            var url = window.location.origin + data.split('webapp')[1];
-            console.log("url -" + url);
-            window.open(url, '_blank');
+           console.log('file preview function invoked');
+                var data = fileName;
+                data = data.replace(/\\/g, "/");
+                data = data.replace("./", "/");
+                var url = window.location.origin + data.split('webapp')[1];
+                 console.log("url -" + url);
+                 window.open(url, '_blank');
+
+//after replace
+// var data='src/main/webapp/content/fileUpload/Aarti Inds./saravanan/Aarti Q3__9M_FY_18_Results_Presentation.pdf';
+// var data='src/main/webapp/content/fileUpload/Communication/Kirloskar Brothers Ltd/sreemant-Questions to Management for Meeting.Copy/Letter to Mr. Sanjay Kirloskar.pdf';
+// var data='src/main/webapp/content/fileUpload/Communication/Kirloskar Brothers Ltd/sreemant-Questions to Management for Meeting/Letter to Mr. Sanjay Kirloskar.pdf';
+// var data='src/main/webapp/content/fileUpload/Kirloskar Indus/sreedevi/Kirloskar Industries..xlsx';
+
+// var dataArr=data.split('/');
+// console.log(dataArr);
+// var fileName=dataArr[dataArr.length-1];
+// console.log('fileName -'+fileName);
+// console.log(dataArr);
+// data = data.replace("./", "/");
+// var url = window.location.origin + data.split('webapp')[1];
+//             console.log("url -" + url);
+//             window.open(url, '_blank');
+
         }
+
+
 
 
         function loadFileExternal(fileID) {
@@ -861,34 +872,76 @@
         function getOpportunityMaster() {
             OpportunityMaster.get({id: $stateParams.id}, function(result) {
                 vm.opportunityMaster = result;
+                console.log('Refresh after file delete');
                 console.log(vm.opportunityMaster);
             });
         }
 
-        function raFileDelete(file) {
-            console.log('File for ra Deletion');
-            console.log(file);
+function raFileDelete(file) {
+    console.log('File for ra Deletion');
+    console.log(file);
+    return $http.delete('/api/file-uploads/' + file.id).then(
+        function (response) {
+            console.log('response in delete ra file');
+            console.log(response);
+            vm.getOpportunityMaster();
+            }).catch(function (error) {
+        console.log(error);
+    });
+}
+function externalFileDelete(file) {
+    console.log('File for external Deletion ');
+    console.log(file);
+    return $http.delete('/api/externalRA/' + file.id).then(
+        function (response) {
+            console.log('response in delete external');
+            console.log(response);
+            vm.getOpportunityMaster();
+        }).catch(function (error) {
+        console.log(error);
+    });
+}
+function communicationFileDelete(file) {
+    console.log('File for communication Deletion');
+    console.log(file);
+    console.log(file.id);
+    return $http.delete('/api/communication-letter/' + file.id).then(
+        function (response) {
+            console.log('response in communication file delete');
+            console.log(response);
+           vm.getOpportunityMaster();
+        }).catch(function (error) {
+        console.log(error);
+    });
+}
+function confidentialFileDelete(file) {
+    console.log('File for confidential Deletion');
+    console.log(file);
+    return $http.delete('/api/confidential-letter/' + file.id).then(
+        function (response) {
+            console.log('response in confidential file delete');
+            console.log(response);
+            vm.getOpportunityMaster();
+        }).catch(function (error) {
+        console.log(error);
+    })
+}
+function dueDiligenceDelete(file) {
+    console.log('File for due diligence Deletion');
+    console.log(file);
+    return $http.delete('/api/due-diligence/' + file.id).then(
+        function (response) {
+            console.log('response in due diligence file delete');
+            console.log(response);
+            vm.getOpportunityMaster();
+        }).catch(function (error) {
+        console.log(error);
+    })
+}
 
-        }
-        function externalFileDelete(file) {
-            console.log('File for external Deletion');
-            console.log(file);
-
-        }
-        function communicationFileDelete(file) {
-            console.log('File for communication Deletion');
-            console.log(file);
-            console.log(file.id);
-
-        }
-        function confidentialFileDelete(file) {
-            console.log('File for confidential Deletion');
-            console.log(file);
-
-        }
 
 
-    }
+}
 
 })();
 

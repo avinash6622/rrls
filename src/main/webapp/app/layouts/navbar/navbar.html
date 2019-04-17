@@ -42,6 +42,8 @@
         text-align: center;
 
     }
+
+
 </style>
 
 
@@ -62,14 +64,15 @@
 
         <div class="navbar-collapse" uib-collapse="vm.isNavbarCollapsed" ng-switch="vm.isAuthenticated()">
             <ul class="nav navbar-nav navbar-right">
-                <li ui-sref-active="active" ng-switch-when="true" has-any-authority = "Research,Master,RM">
+                <li ui-sref-active="active" ng-switch-when="true" has-any-authority="Research,Master,RM">
                     <a ui-sref="home" ng-click="vm.collapseNavbar()">
                         <span class="glyphicon glyphicon-home"></span>
                         <span class="hidden-sm">Home</span>
                     </a>
                 </li>
                 <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-                <li ng-class="{active: vm.$state.includes('entity')}" ng-switch-when="true" uib-dropdown class="dropdown pointer">
+                <li ng-class="{active: vm.$state.includes('entity')}" ng-switch-when="true" uib-dropdown
+                    class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="entity-menu">
                         <span>
                             <span class="glyphicon glyphicon-th-list"></span>
@@ -86,7 +89,7 @@
                                 <span>External Research</span>
                             </a>
                         </li>
-                          <li has-any-authority="Communication_Letters" ui-sref-active="active">
+                        <li has-any-authority="Communication_Letters" ui-sref-active="active">
                             <a ui-sref="communication-letter" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span>Communication Letter</span>
@@ -99,13 +102,13 @@
                                 <span>Confidential Letter</span>
                             </a>
                         </li>
-                      <li has-any-authority="Admin,Research,Master,CIO" ui-sref-active="active">
+                        <li has-any-authority="Admin,Research,Master,CIO" ui-sref-active="active">
                             <a ui-sref="fixed-learnings" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span>Learnings - PMS</span>
                             </a>
                         </li>
-                         <li has-any-authority="Admin,Research,Master,CIO" ui-sref-active="active">
+                        <li has-any-authority="Admin,Research,Master,CIO" ui-sref-active="active">
                             <a ui-sref="learning-aif" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span>Learnings AIF - HYF</span>
@@ -135,17 +138,24 @@
                                 <span>Opportunity Name</span>
                             </a>
                         </li>
-                        <!--<li has-authority="Admin">-->
-                            <!--<a ui-sref="opportunity-name-list" ng-click="vm.collapseNavbar()">-->
-                                <!--<span class="glyphicon glyphicon-asterisk"></span>&nbsp;-->
-                                <!--<span>Opportunity Name List</span>-->
-                            <!--</a>-->
-                        <!--</li>-->
+                        <li has-authority="Admin">
+                            <a ui-sref="due-diligence" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span>Due Diligence</span>
+                            </a>
+                        </li>
+                        <!--                        <li has-authority="Admin">-->
+                        <!--                        <a ui-sref="opportunity-name-list" ng-click="vm.collapseNavbar()">-->
+                        <!--                        <span class="glyphicon glyphicon-asterisk"></span>&nbsp;-->
+                        <!--                        <span>Opportunity Name List</span>-->
+                        <!--                        </a>-->
+                        <!--                        </li>-->
 
 
                     </ul>
                 </li>
-                <li ng-class="{active: vm.$state.includes('account')}" uib-dropdown class="dropdown pointer" ng-switch-when="true">
+                <li ng-class="{active: vm.$state.includes('account')}" uib-dropdown class="dropdown pointer"
+                    ng-switch-when="true">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="account-menu">
                         <span>
                             <span class="glyphicon glyphicon-user"></span>
@@ -157,7 +167,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-left" uib-dropdown-menu>
 
-                     <li ui-sref-active="active">
+                        <li ui-sref-active="active">
                             <a ui-sref="decimal-configuration.get({id:vm.account.id})" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span>Configuration</span>
@@ -170,8 +180,8 @@
                                 <span>User Delegation</span>
                             </a>
                         </li>
-						
-						 <li ui-sref-active="active" has-authority="Admin">
+
+                        <li ui-sref-active="active" has-authority="Admin">
                             <a ui-sref="opportunity-admin-delegation" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span>User Delegation</span>
@@ -192,48 +202,65 @@
                         </li>
 
                     </ul>
-                    
+
                 </li>
 
 
                 <li uib-dropdown class="dropdown pointer notification" ng-switch-when="true">
 
-                 <!--   <a class="dropdown-toggle" uib-dropdown-toggle href="" id="noti_menu">
+                    <!--   <a class="dropdown-toggle" uib-dropdown-toggle href="" id="noti_menu">
 
-                      <notification-icon animation="my-custom-animation" ng-init="vm.customPending = 0" count=vm.count style="width:10px;height: 10px">
-                        <i class="glyphicon glyphicon-bell"></i>
-                    </notification-icon>
-                            &lt;!&ndash;<span class="glyphicon glyphicon-bell"></span>&ndash;&gt;
+                         <notification-icon animation="my-custom-animation" ng-init="vm.customPending = 0" count=vm.count style="width:10px;height: 10px">
+                           <i class="glyphicon glyphicon-bell"></i>
+                       </notification-icon>
+                               &lt;!&ndash;<span class="glyphicon glyphicon-bell"></span>&ndash;&gt;
 
 
 
-                    </a>-->
+                       </a>-->
 
-                    <a uib-dropdown-toggle href="" class="dropdown-toggle glyphicon glyphicon-bell" ng-style="{'color': vm.notificationValues.length > 0 ? '#da251c':''}">
+                    <a uib-dropdown-toggle href="" class="dropdown-toggle glyphicon glyphicon-bell"
+                       ng-style="{'color': vm.notificationValues.length > 0 ? '#da251c':''}">
                         <span class="fa fa-comment"></span>
-                        <span class="num" ng-repeat="x in vm.notificationValues | filter : {'dStatus' : 'UnRead'} as read">{{read.length}}</span>
+                        <span class="num"
+                              ng-repeat="x in vm.notificationValues | filter : {'dStatus' : 'UnRead'} as read">{{read.length}}</span>
 
                     </a>
 
 
-                    <ul class="dropdown-menu dropdown-messages" uib-dropdown-menu ng-style="{'height': vm.notificationValues.length > 5 ? '215px': 'auto'}">
-                      <li ng-show="vm.notificationValues.length"><span><a class="pull-right" style="padding-right:23px;" ng-click="vm.clearNoti(vm.account.id);$event.stopPropagation()">Clear All</a><br /></span></li>
+                    <ul class="dropdown-menu dropdown-messages" uib-dropdown-menu
+                        ng-style="{'height': vm.notificationValues.length > 5 ? '215px': 'auto'}">
+                        <li ng-show="vm.notificationValues.length"><span><a class="pull-right"
+                                                                            style="padding-right:23px;"
+                                                                            ng-click="vm.clearNoti(vm.account.id);$event.stopPropagation()">Clear All</a><br/></span>
+                        </li>
                         <div class="primary-aligned">
 					
                         <span ng-show="vm.notificationValues.length" ng-repeat="noti in vm.notificationValues">
                             <li>
 
                                 <div id="notitime">
-                                    <span ng-click="vm.readstatus(noti.id,vm.account.id,'Read', noti)"  ng-disabled="noti.dStatus === 'Read'">
-                                        <span ng-if="noti.action !== 'delegated' && noti.page !='Opportunity Name'"><a ui-sref="home-research({createdBy:noti.createdBy})">{{noti.createdBy | capitalize}}</a> {{noti.action}} <span ng-if="noti.fileNamecontent"><strong>"{{noti.fileNamecontent}}"</strong></span> {{noti.page}} <a ui-sref="{{noti.page == 'Strategy' ? 'strategy-master-detail({id:noti.oppId})' : noti.page == 'Opportunity' ? 'opportunity-master-detail({id:noti.oppId})' : 'user-management-detail({login:noti.oppname})'}}">{{noti.oppname}}</a></span>
-                                        <span ng-if="noti.action !== 'delegated' && noti.page == 'Opportunity Name'"><a ui-sref="home-research({createdBy:noti.createdBy})">{{noti.createdBy | capitalize}}</a> {{noti.action}} <span ng-if="noti.fileNamecontent"><strong>"{{noti.fileNamecontent}}"</strong></span> {{noti.page}} {{noti.oppname}}</span>
+                                    <span ng-click="vm.readstatus(noti.id,vm.account.id,'Read', noti)"
+                                          ng-disabled="noti.dStatus === 'Read'">
+                                        <span ng-if="noti.action !== 'delegated' && noti.page !='Opportunity Name'"><a
+                                            ui-sref="home-research({createdBy:noti.createdBy})">{{noti.createdBy | capitalize}}</a> {{noti.action}} <span
+                                            ng-if="noti.fileNamecontent"><strong>"{{noti.fileNamecontent}}"</strong></span> {{noti.page}} <a
+                                            ui-sref="{{noti.page == 'Strategy' ? 'strategy-master-detail({id:noti.oppId})' : noti.page == 'Opportunity' ? 'opportunity-master-detail({id:noti.oppId})' : 'user-management-detail({login:noti.oppname})'}}">{{noti.oppname}}</a></span>
+                                        <span ng-if="noti.action !== 'delegated' && noti.page == 'Opportunity Name'"><a
+                                            ui-sref="home-research({createdBy:noti.createdBy})">{{noti.createdBy | capitalize}}</a> {{noti.action}} <span
+                                            ng-if="noti.fileNamecontent"><strong>"{{noti.fileNamecontent}}"</strong></span> {{noti.page}} {{noti.oppname}}</span>
 
-                                        <span ng-if="noti.action === 'delegated'"><a ui-sref="home-research({createdBy:noti.createdBy})">{{noti.createdBy | capitalize}}</a> {{noti.action}} {{noti.page}} <a ui-sref="opportunity-master-detail({id:noti.oppId})">{{noti.oppname}} </a><span ng-if="noti.fileNamecontent">to {{noti.fileNamecontent}}</span> </span>
+                                        <span ng-if="noti.action === 'delegated'"><a
+                                            ui-sref="home-research({createdBy:noti.createdBy})">{{noti.createdBy | capitalize}}</a> {{noti.action}} {{noti.page}} <a
+                                            ui-sref="opportunity-master-detail({id:noti.oppId})">{{noti.oppname}} </a><span
+                                            ng-if="noti.fileNamecontent">to {{noti.fileNamecontent}}</span> </span>
                                         <!--<span ng-if="noti.page === 'Strategy'"><a ui-sref="home-research({createdBy:noti.createdBy})">{{noti.createdBy | capitalize}}</a> {{noti.action}} {{noti.page}} <a ui-sref="strategy-master-detail({id:noti.oppId})">{{noti.oppname}}</a></span>-->
 
                                     </span>
-                                    <span ng-style="{'color': noti.dStatus=='Read' ? 'black':'red'}" class="pull-right text-muted small">{{noti.createdDate | date :"MMM d, y h:mm:ss a" }}&nbsp;&nbsp;
-                                    <button type="button" class="close" ng-click="vm.close(noti.id,vm.account.id,$index,'deleted');$event.stopPropagation()">
+                                    <span ng-style="{'color': noti.dStatus=='Read' ? 'black':'red'}"
+                                          class="pull-right text-muted small">{{noti.createdDate | date :"MMM d, y h:mm:ss a" }}&nbsp;&nbsp;
+                                    <button type="button" class="close"
+                                            ng-click="vm.close(noti.id,vm.account.id,$index,'deleted');$event.stopPropagation()">
                                     <span aria-hidden="true">&times;</span>
                                     </button>
                                     </span>
@@ -255,15 +282,10 @@
                         </div>
 
 
-
                     </ul>
 
 
                 </li>
-
-
-
-
 
 
                 <!--  <li ng-class="{active: vm.$state.includes('admin')}"  ng-switch-when="true" has-authority="Admin" uib-dropdown class="dropdown pointer">

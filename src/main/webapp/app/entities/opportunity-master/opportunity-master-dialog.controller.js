@@ -46,12 +46,10 @@
 			minimumChars : 1,
 			dropdownHeight : '200px',
 			data : function(searchText) {
-				return $http.get('api/opportunity-names').then(
+				return $http.get('api/opportunity-name-all').then(
 						function(response) {
                             searchText = searchText.toLowerCase();
                             console.log(searchText);
-
-
 
 							// ideally filtering should be done on the server
 							var states = _.filter(response.data,

@@ -101,6 +101,17 @@ public class OpportunityMaster extends AbstractAuditingEntity implements Seriali
 
     @OneToMany(mappedBy = "opportunityMasterId")
 	private List<ConfidenctialLetters> confidenctialLetters;
+
+    public List<DueDiligence> getDueDiligences() {
+        return dueDiligences;
+    }
+
+    public void setDueDiligences(List<DueDiligence> dueDiligences) {
+        this.dueDiligences = dueDiligences;
+    }
+
+    @OneToMany(mappedBy = "opportunityMasterId")
+	private List<DueDiligence> dueDiligences;
 	
 	@OneToMany(mappedBy = "opportunityMasterId")
 	private List<ExternalRAFileUpload> externalRAFileUpload;

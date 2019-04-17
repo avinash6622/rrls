@@ -137,19 +137,19 @@
                           data: {fileUploads: vm.externalResearch.fileUpload},
                           params: {oppId: vm.oppMasterId,filetype:'External',uploadfileName:vm.uploadfileName,externalId:vm.externalResearch.id}// {oppCode: inputData.oppCode, oppName: inputData.oppName, oppDescription: inputData.oppDescription, strategyMasterId: inputData.strategyMasterId.id}
                       }).then(function (resp) {
-
                           if(resp.status == 201) {
                               if(vm.externalResearch.fileUploads==null)
                               {
                                   vm.externalResearch.fileUploads = [];
 
                               }
-                           //   console.log("gashgdjgasudgua",vm.opportunityMaster.fileUploads);
-
-                          	vm.externalResearch.fileUploads.push(resp.data);
+                                vm.name='';
+                                vm.uploadfileName='';
+                           vm.externalResearch.fileUploads.push(resp.data);
                           }
                       }, function (resp) {
                           console.log(resp);
+
                       }, function (evt) {
                           console.log(evt);
 
@@ -173,7 +173,7 @@
         }
 
         function externalRAFileDelete(file) {
-            console.log('File for external Deletion');
+            console.log('File for external RA Deletion');
             console.log(file);
             return $http.delete('/api/externalRA/' + file.id).then(
                 function (response) {

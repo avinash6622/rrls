@@ -15,4 +15,7 @@ import org.springframework.data.jpa.repository.*;
 @Repository
 public interface OpportunityNameRepository extends JpaRepository<OpportunityName, Long> {
     OpportunityName findByOppName(String oppname);
+    Page<OpportunityName> findByCreatedByIsNotNull(Pageable pageable);
+    Page<OpportunityName> findByCreatedByIsNull(Pageable pageable);
+
 }
