@@ -51,6 +51,7 @@
         vm.externalFileDelete=externalFileDelete;
         vm.raFileDelete=raFileDelete;
         vm.getOpportunityMaster=getOpportunityMaster;
+        vm.popUpURL='';
 
 
 
@@ -374,7 +375,6 @@
             return result;
 
         };
-
         $scope.getNonPbt = function (val1, val2, val3, val4, val5) {
 
             var result = (parseFloat(val1) + parseFloat(val2) - parseFloat(val3)
@@ -403,7 +403,6 @@
             }
             return result;
         };
-
         $scope.getNonPat = function (val1, val2, val4, val5, val3) {
 
             var result = (parseFloat(val1) + parseFloat(val2) + parseFloat(val4) - parseFloat(val5));
@@ -524,7 +523,6 @@
             }
             return result;
         };
-
         $scope.getNonTaxRat = function (val1, val2, val3) {
 
             var result = parseFloat(val1) / parseFloat(val2);
@@ -794,32 +792,44 @@
         }
 
 
-        function loadFilePreview(fileName) {
-           console.log('file preview function invoked');
-                var data = fileName;
-                data = data.replace(/\\/g, "/");
-                data = data.replace("./", "/");
-                var url = window.location.origin + data.split('webapp')[1];
-                 console.log("url -" + url);
-                 window.open(url, '_blank');
 
-//after replace
-// var data='src/main/webapp/content/fileUpload/Aarti Inds./saravanan/Aarti Q3__9M_FY_18_Results_Presentation.pdf';
-// var data='src/main/webapp/content/fileUpload/Communication/Kirloskar Brothers Ltd/sreemant-Questions to Management for Meeting.Copy/Letter to Mr. Sanjay Kirloskar.pdf';
-// var data='src/main/webapp/content/fileUpload/Communication/Kirloskar Brothers Ltd/sreemant-Questions to Management for Meeting/Letter to Mr. Sanjay Kirloskar.pdf';
-// var data='src/main/webapp/content/fileUpload/Kirloskar Indus/sreedevi/Kirloskar Industries..xlsx';
 
-// var dataArr=data.split('/');
-// console.log(dataArr);
-// var fileName=dataArr[dataArr.length-1];
-// console.log('fileName -'+fileName);
-// console.log(dataArr);
-// data = data.replace("./", "/");
-// var url = window.location.origin + data.split('webapp')[1];
-//             console.log("url -" + url);
-//             window.open(url, '_blank');
+         function loadFilePreview(fileName) {
+                   console.log('file preview function invoked');
+                        var data = fileName;
+                        data = data.replace(/\\/g, "/");
+                        console.log('After slash replace - '+ data);
 
-        }
+                        let urlValues=data.split('/');
+                        for(var i=0;i<urlValues.length;i++){
+ if(urlValues[i].endsWith('.')){
+                         urlValues[i] = urlValues[i].slice(0,-1);
+                         }
+                        }
+                        console.log(urlValues);
+                         data=urlValues.join('/');
+                        console.log('After dot replace - '+ data);
+                        var url = window.location.origin + data.split('webapp')[1];
+                         console.log("url -" + url);
+                         window.open(url, '_blank');
+
+        //after replace
+        // var data='src/main/webapp/content/fileUpload/Aarti Inds./saravanan/Aarti Q3__9M_FY_18_Results_Presentation.pdf';
+        // var data='src/main/webapp/content/fileUpload/Communication/Kirloskar Brothers Ltd/sreemant-Questions to Management for Meeting.Copy/Letter to Mr. Sanjay Kirloskar.pdf';
+        // var data='src/main/webapp/content/fileUpload/Communication/Kirloskar Brothers Ltd/sreemant-Questions to Management for Meeting/Letter to Mr. Sanjay Kirloskar.pdf';
+        // var data='src/main/webapp/content/fileUpload/Kirloskar Indus/sreedevi/Kirloskar Industries..xlsx';
+
+        // var dataArr=data.split('/');
+        // console.log(dataArr);
+        // var fileName=dataArr[dataArr.length-1];
+        // console.log('fileName -'+fileName);
+        // console.log(dataArr);
+        // data = data.replace("./", "/");
+        // var url = window.location.origin + data.split('webapp')[1];
+        //             console.log("url -" + url);
+        //             window.open(url, '_blank');
+
+                }
 
 
 
@@ -938,6 +948,7 @@ function dueDiligenceDelete(file) {
         console.log(error);
     })
 }
+
 
 
 

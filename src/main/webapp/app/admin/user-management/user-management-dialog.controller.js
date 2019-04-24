@@ -11,7 +11,7 @@
     function UserManagementDialogController ($stateParams, $uibModalInstance, entity, User,RoleMaster) {
         var vm = this;
 
-        vm.authorities = ['Admin','Research','CIO','Dealer','Sale','RM','Master','Communication_Letters'];
+        vm.authorities = ['Admin','Research','CIO','Dealer','Sale','RM','Master','Communication_Letters','Confidential_Letters','Due_Diligence'];
         vm.roleMasters = RoleMaster.query();
         vm.users=User.query();
         vm.clear = clear;
@@ -43,9 +43,5 @@
                 User.save(vm.user, onSaveSuccess, onSaveError);
             }
         }
-
-
-
-
     }
 })();

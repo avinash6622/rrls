@@ -1,8 +1,10 @@
 package com.unify.rrls.web.rest;
 
+import java.awt.*;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -13,7 +15,12 @@ import java.util.regex.Pattern;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.StreamingOutput;
 
 import org.springframework.core.io.FileSystemResource;
 
@@ -40,15 +47,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 //import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.MediaType;
@@ -123,6 +122,8 @@ public class OpportunityMasterResource {
 
     private byte[] fileStream;
     private String fileName;
+    @Autowired
+    ServletContext context;
 
     public byte[] getFileStream() {
         return fileStream;
@@ -1240,38 +1241,102 @@ public class OpportunityMasterResource {
         System.out.println("File Uploading is Completed");
     }
 
+
+//    @GetMapping(value = "/opportunity-masters/preview/", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+//    @Timed
+//    public ResponseEntity getFile(@PathVariable("filePreview"),  String filePath) throws IOException {
+//        System.out.println("filePath");
+//        System.out.println(filePath);
+//        if (filePath != null) {
+//            File file = new File(filePath);
+//            if (file.exists()) {
+//                return ResponseEntity.ok()
+//                    .header("Content-Disposition", "inline; filename=" + file.getName() + "." + FilenameUtils.getExtension(filePath))
+//                    .contentLength(file.length())
+//                    .lastModified(file.lastModified())
+//                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+//                    .body(new FileSystemResource(file));
+//            } else {
+//                return ResponseEntity.ok().body("file not found");
+//            }
+//        }
+//        return null;
+//    }
+
     // File Preview
-    @Timed
-    @GetMapping(value = "/filePreview/{filePath}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, name = "name of api")
-    public ResponseEntity getFile(@PathVariable("filePath") @ApiParam(value = "File Path") String filePath) throws IOException {
-        System.out.println("filePath");
-        System.out.println(filePath);
-        if (filePath != null) {
-            File file = new File(filePath);
+//    @GetMapping("/opportunity-masters/preview")
+//    @Produces("application/pdf")
+//    public javax.ws.rs.core.Response getPdf() throws Exception
+//    {
+//        File file = new File("D:\\Data\\Official\\RRLS\\research-repository-learning-system\\src\\main\\webapp\\content\\fileUpload\\Communication\\Kirloskar Brothers Ltd\\sreemant-Questions to Management for Meeting.Copy\\Letter to Mr. Sanjay Kirloskar.pdf");
+//        FileInputStream fileInputStream = new FileInputStream(file);
+//        javax.ws.rs.core.Response.ResponseBuilder responseBuilder = javax.ws.rs.core.Response.ok((Object) fileInputStream);
+//        responseBuilder.type("application/pdf");
+//        responseBuilder.header("Content-Disposition", "filename=Letter to Mr. Sanjay Kirloskar.pdf");
+//        responseBuil
+//        return responseBuilder.build();
+//    }
+    @RequestMapping(value = "/opportunity-masters/preview/{fileID:.+}",method = RequestMethod.GET)
+    public void previewCommunication(HttpServletRequest request, HttpServletResponse response,
+                                      @PathVariable("fileID")  int fileID) {
+        try {
+
+            Query q = em.createNativeQuery("select file_name, file_data from communication_letters where id = "+fileID+"");
+
+            // String path = (String) q.getSingleResult();
+            Object[] fileupload = (Object[]) q.getSingleResult();
+
+            String path= (String) fileupload[1];
+
+            String name= (String) fileupload[0];
+
+            //  System.out.println("Filename---->"+path);
+
+            int index = path.lastIndexOf("\\");
+            String fileName = path.substring(index + 1);
+
+            String[] array = fileName.split(".");
+            array = fileName.split("\\.");
+
+            array = fileName.split("[.]");
+
+            String extension = array[array.length-1];
+
+
+            String pathName= path.substring(0,path.lastIndexOf(File.separator));
+
+            //String downloadFolder = context.getRealPath(pathName);
+
+            File file = new File(pathName + File.separator + fileName);
+
             if (file.exists()) {
-                return ResponseEntity.ok()
-                    .header("Content-Disposition", "inline; filename=" + file.getName() + "." + FilenameUtils.getExtension(filePath))
-                    .contentLength(file.length())
-                    .lastModified(file.lastModified())
-                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                    .body(new FileSystemResource(file));
+                String mimeType = context.getMimeType(file.getPath());
+
+
+                if (mimeType == null) {
+                    mimeType = "application/octet-stream";
+                }
+
+                response.setContentType(mimeType);
+                response.addHeader("Content-Disposition", "attachment; filename=" + name+"."+extension);
+                response.setContentLength((int) file.length());
+
+                OutputStream os = response.getOutputStream();
+                FileInputStream fis = new FileInputStream(file);
+                byte[] buffer = new byte[4096];
+                int b = -1;
+
+                while ((b = fis.read(buffer)) != -1) {
+                    os.write(buffer, 0, b);
+                }
+
+                fis.close();
+                os.close();
             } else {
-                return ResponseEntity.ok().body("file not found");
+                System.out.println("Requested " + fileName + " file not found!!");
             }
+        } catch (IOException e) {
+            System.out.println("Error:- " + e.getMessage());
         }
-        return null;
     }
-
-    @GetMapping
-    @Produces("/filePreview")
-    public javax.ws.rs.core.Response getPdf() throws Exception {
-        File file = new File("D:\\Data\\Official\\RRLS\\PDF misc template.pdf");
-        FileInputStream fileInputStream = new FileInputStream(file);
-        javax.ws.rs.core.Response.ResponseBuilder responseBuilder = javax.ws.rs.core.Response.ok((Object) fileInputStream);
-        responseBuilder.type("application/pdf");
-        responseBuilder.header("Content-Disposition", "filename=test.pdf");
-        return responseBuilder.build();
-    }
-
-
 }

@@ -196,6 +196,7 @@ public class DownloadController {
                 response.addHeader("Content-Disposition", "attachment; filename=" + name+"."+extension);
                 response.setContentLength((int) file.length());
 
+
                 OutputStream os = response.getOutputStream();
                 FileInputStream fis = new FileInputStream(file);
                 byte[] buffer = new byte[4096];
@@ -207,6 +208,7 @@ public class DownloadController {
 
                 fis.close();
                 os.close();
+//               response.flushBuffer();
             } else {
                 System.out.println("Requested " + fileName + " file not found!!");
             }

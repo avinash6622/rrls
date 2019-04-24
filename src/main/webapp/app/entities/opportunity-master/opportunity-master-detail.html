@@ -97,6 +97,7 @@
     font:unset !important;
     }
 
+
 </style>
 <div>
 
@@ -293,16 +294,17 @@
                                 style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
                                 <div class="panel-body"
                                      ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Presentation'} | orderBy: '-createdDate'">
-                                    <a ng-click="vm.loadFilePreview(fileUploads.fileData)">{{fileUploads.fileName}}</a><button  type="button"
-                                                                                                                               ng-click="vm.raFileDelete(fileUploads)"
-                                                                                                                               class="btn btn-warning btn-circle btn-sm">
-                                    <span class="glyphicon glyphicon-remove glyph_icon"></span>
-                                </button>
-                                </br>
+                                    <a ng-click="vm.loadFilePreview(fileUploads.fileData)">{{fileUploads.fileName}}</a>
+                                    <button type="button"
+                                            ng-click="vm.raFileDelete(fileUploads)"
+                                            class="btn btn-warning btn-circle btn-sm">
+                                        <span class="glyphicon glyphicon-remove glyph_icon"></span>
+                                    </button>
+                                    </br>
                                     <b>{{fileUploads.createdBy | capitalize}}</b>
 
                                     <span
-                                    class="date sub-text"> on {{fileUploads.createdDate |
+                                        class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
 
                                 </div>
@@ -316,12 +318,13 @@
                                 style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
                                 <div class="panel-body"
                                      ng-repeat="fileUploads in vm.opportunityMaster.fileUploads | filter: {filetype: 'Excel Model'} | orderBy: '-createdDate'">
-                                    <a ng-click="vm.loadFilePreview(fileUploads.fileData)">{{fileUploads.fileName}}</a><button type="button"
-                                                                                                                               ng-click="vm.raFileDelete(fileUploads)"
-                                                                                                                               class="btn btn-warning btn-circle btn-sm">
-                                    <span class="glyphicon glyphicon-remove glyph_icon"></span>
-                                </button>
-                                </br>
+                                    <a ng-click="vm.loadFilePreview(fileUploads.fileData)">{{fileUploads.fileName}}</a>
+                                    <button type="button"
+                                            ng-click="vm.raFileDelete(fileUploads)"
+                                            class="btn btn-warning btn-circle btn-sm">
+                                        <span class="glyphicon glyphicon-remove glyph_icon"></span>
+                                    </button>
+                                    </br>
                                     <b>{{fileUploads.createdBy | capitalize}}</b> <span
                                     class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
@@ -343,7 +346,7 @@
                                             class="btn btn-warning btn-circle btn-sm">
                                         <span class="glyphicon glyphicon-remove glyph_icon"></span>
                                     </button>
-                                </br>
+                                    </br>
                                     <b>{{fileUploads.createdBy | capitalize}}</b> <span
                                     class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
@@ -387,7 +390,7 @@
                                             class="btn btn-warning btn-circle btn-sm">
                                         <span class="glyphicon glyphicon-remove glyph_icon"></span>
                                     </button>
-                                </br>
+                                    </br>
                                     <b>{{fileUploads.createdBy | capitalize}}</b> <span
                                     class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
@@ -478,7 +481,7 @@
                                             class="btn btn-warning btn-circle btn-sm">
                                         <span class="glyphicon glyphicon-remove glyph_icon"></span>
                                     </button>
-                                </br>
+                                    </br>
                                     <b>{{fileUploads.createdBy | capitalize}}</b> <span
                                     class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
@@ -544,7 +547,7 @@
                                             class="btn btn-warning btn-circle btn-sm">
                                         <span class="glyphicon glyphicon-remove glyph_icon"></span>
                                     </button>
-                                </br>
+                                    </br>
                                     <b>{{fileUploads.createdBy | capitalize}}</b> <span
                                     class="date sub-text"> on {{fileUploads.createdDate |
 								date :"MMM d, y h:mm:ss a"}}</span>
@@ -1862,6 +1865,8 @@
                             </table>
                         </div>
                     </div>
+
+
                 </div>
 
             </div>
@@ -1870,6 +1875,8 @@
     </div>
 
 
+
+    <!-- /.modal -->
     <footer class="footer footer-dark" ng-cloak>
         <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights
             reserved.</p>
@@ -1877,3 +1884,4 @@
 
 </div>
 <!-- </form> -->
+
