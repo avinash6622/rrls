@@ -1,0 +1,221 @@
+<!--<style>-->
+
+<!--    .col-xs-3 .btn{-->
+<!--        padding:2px !important;-->
+<!--        padding-right: 4px !important;-->
+
+<!--    }-->
+<!--    .page-header{-->
+<!--        padding-bottom: 0px!important;-->
+<!--        border-bottom: 0px !important;-->
+<!--    }-->
+<!--    .btn-circle{-->
+<!--        width: 15px;-->
+<!--        height: 15px;-->
+<!--        text-align: center;-->
+<!--        font-size: 9px;-->
+<!--        border-radius: 15px;-->
+<!--        float:right;-->
+<!--    }-->
+<!--    .glyph_icon {-->
+<!--        top: 0px;-->
+<!--    }-->
+<!--    .btn.btn-sm {-->
+<!--        padding: 2px !important;-->
+<!--        line-height: 1 !important;-->
+<!--    }-->
+<!--</style>-->
+<!--<div>-->
+<!--    <div class="well">-->
+
+<!--        <div class="page-header" style="margin:0">-->
+<!--            <jhi-alert></jhi-alert>-->
+<!--            <div class="row">-->
+<!--                <div class="col-md-12"><h4 style="margin-top:0;"><span><strong>{{vm.policiesFileUpload.name}}</strong></span></h4>-->
+<!--                    <div class="pull-right" style="margin-top:-10px;">-->
+
+<!--&lt;!&ndash;                        <button type="button" ng-click="review('Approved')" class="btn btn-md btn-primary" ng-disabled="vm.mydisable">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <span class="hidden-sm-down"> Reviews</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </button>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <button type="button"&ndash;&gt;-->
+<!--&lt;!&ndash;                                ui-sref="external-research.edit({id:vm.externalResearch.id})"&ndash;&gt;-->
+<!--&lt;!&ndash;                                class="btn btn-md btn-primary" ng-if="vm.account.login==vm.externalResearch.createdBy">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <span class="glyphicon glyphicon-pencil"></span> <span&ndash;&gt;-->
+<!--&lt;!&ndash;                            class="hidden-sm-down"> Edit</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </button>&ndash;&gt;-->
+
+<!--                        <button type="submit"-->
+<!--                                ui-sref="policiesFileUpload"-->
+<!--                                class="btn btn-md btn-info">-->
+<!--                            <span class="glyphicon glyphicon-arrow-left"></span><span>Back</span>-->
+<!--                        </button>-->
+
+
+
+<!--                    </div></div>-->
+<!--            </div>-->
+
+<!--            <dl class="dl-horizontal jh-entity-details">-->
+<!--                <dt><span>Name:</span></dt>-->
+<!--                <dd>-->
+<!--                    <span>{{vm.policiesFileUpload.policyName}}</span>-->
+<!--                </dd>-->
+<!--                <dt><span>File Name:</span></dt>-->
+<!--                <dd>-->
+<!--                    <span>{{vm.policiesFileUpload.fileName}}</span>-->
+<!--                </dd>-->
+<!--                <dt><span>File Data</span></dt>-->
+<!--                <dd>-->
+<!--                    <span>{{vm.policiesFileUpload.fileData}}</span>-->
+<!--                </dd>-->
+<!--                <dt><span>File Type</span></dt>-->
+<!--                <dd>-->
+<!--                    <span>{{vm.policiesFileUpload.filetype}}</span>-->
+<!--                </dd>-->
+<!--                &lt;!&ndash;  <dt><span>Name:</span></dt>-->
+<!--                 <dd>-->
+<!--                     <span>{{vm.externalResearch.name}}</span>-->
+<!--                 </dd> &ndash;&gt;-->
+<!--&lt;!&ndash;                <dt><span>Sector Type:</span></dt>&ndash;&gt;-->
+<!--&lt;!&ndash;                <dd> <ul class="list-unstyled">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <li ng-repeat="sectors in vm.externalResearch.opportunitySector">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <span >{{sectors.sectorName}}</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </li>&ndash;&gt;-->
+<!--&lt;!&ndash;                </ul></dd>&ndash;&gt;-->
+<!--&lt;!&ndash;                <dt><span>Email Id:</span></dt>&ndash;&gt;-->
+<!--&lt;!&ndash;                <dd>{{vm.externalResearch.emailId}}</dd>&ndash;&gt;-->
+<!--&lt;!&ndash;                <dt><span>Contact No:</span></dt>&ndash;&gt;-->
+<!--&lt;!&ndash;                <dd>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <ul class="list-unstyled">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <li ng-repeat="contacts in vm.externalResearch.externalRAContacts">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <span >{{contacts.contactNo}}</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </li>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </ul></dd>&ndash;&gt;-->
+<!--&lt;!&ndash;                <dt><span>Address:</span></dt>&ndash;&gt;-->
+<!--&lt;!&ndash;                <dd>{{vm.externalResearch.address }}</dd>&ndash;&gt;-->
+<!--&lt;!&ndash;                <dt><span>Description:</span></dt>&ndash;&gt;-->
+<!--&lt;!&ndash;                <dd>{{vm.externalResearch.description}}</dd>&ndash;&gt;-->
+<!--                <br>-->
+<!--                <dt><span>File Upload:</span></dt>-->
+<!--                <dd>-->
+<!--                    <div class="row" ng-show="vm.policiesFileUpload.fileUploads">-->
+<!--                        <div class="col-md-3">-->
+<!--                            <div class="panel panel-info">-->
+<!--                                <div class="panel-heading"><strong>Policy File Upload</strong></div>-->
+<!--                                <div-->
+<!--                                    style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">-->
+<!--                                    <div class="panel-body"-->
+<!--                                         ng-repeat="fileUploads in vm.policiesFileUpload.fileUploads | filter: {filetype: 'Policies'} | orderBy: '-createdDate'">-->
+<!--&lt;!&ndash;                                        <a ui-sref="opportunity-master-detail({id:fileUploads.opportunityMasterId.id})">{{fileUploads.opportunityMasterId.masterName.oppName}} :</a>&ndash;&gt;-->
+<!--                                        <a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>-->
+<!--                                        <button type="button" ng-click="vm.policyFileFileDelete(fileUploads)"-->
+<!--                                                class="btn btn-warning btn-circle btn-sm">-->
+<!--                                            <span class="glyphicon glyphicon-remove glyph_icon"></span>-->
+<!--                                        </button>-->
+<!--                                        </br>-->
+<!--                                        <b>{{fileUploads.createdBy | capitalize}}</b> <span-->
+<!--                                        class="date sub-text"> on {{fileUploads.createdDate |-->
+<!--								date :"MMM d, y h:mm:ss a"}}</span>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div></div></dd>-->
+
+<!--                <dt has-any-authority="Policy,Master,Admin">-->
+<!--                    <span></span>-->
+<!--                </dt>-->
+
+
+<!--                <dd has-any-authority="Policy,Master,Admin">-->
+<!--                    <span class="col-md-4 input-group" style="padding-left: 0px;"><input class="form-control ng-pristine ng-valid clearable" ng-model="vm.policyName"></span>-->
+
+<!--                </dd>-->
+
+
+<!--                <dd has-any-authority="Policy,Master,Admin">-->
+<!--                    <input type="text" class="col-sm-4" id="fileid" name="fileid"-->
+<!--                           ng-model="vm.uploadfileName" style="padding-left: 0px;padding-right: 0px"placeholder="&nbsp;&nbsp;&nbsp;&nbsp;File Name"/>-->
+<!--                </dd>-->
+
+
+
+<!--                <dd has-any-authority="Policy,Master,Admin">-->
+<!--                    <div class="form-group">-->
+<!--                        <div>-->
+<!--                            <label for="file_upload" class="btn btn-md btn-primary col-md-1">Choose File</label>-->
+<!--                            <div class="col-md-4">{{vm.policiesFileUpload.fileUpload.name}}</div></div>-->
+<!--                        <input type="file" ngf-select="vm.selectFile($file)" name="file" style="display: none;"-->
+<!--                               id="file_upload"-->
+<!--                               ngf-pattern=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx,.docx,.doc,.log,.msg,.rtf,.txt,.csv,.dat,.pptx,.xml,.aif,.tif,.zip,.zipx,.rar,.pdf"-->
+<!--                               accept=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx,.docx,.doc,.log,.msg,.rtf,.txt,.csv,.dat,.pptx,.xml,.aif,.tif,.zip,.zipx,.rar,.pdf" required="">-->
+<!--                        <br />-->
+<!--                        <button type="button" class="btn btn-default fileUpload" ng-click="vm.upload()">Upload</button>-->
+<!--                    </div>-->
+<!--                </dd>-->
+<!--            </dl>-->
+
+
+<!--        </div>-->
+
+<!--        &lt;!&ndash; <div class="row" ng-show="vm.externalResearch.fileUploads">-->
+<!--			<div class="col-md-3">-->
+<!--				<div class="panel panel-info">-->
+<!--					<div class="panel-heading"><strong>ExternalFile Upload</strong></div>-->
+<!--					<div-->
+<!--						style="height: 200px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">-->
+<!--						<div class="panel-body"-->
+<!--							ng-repeat="fileUploads in vm.externalResearch.fileUploads | filter: {filetype: 'External'}">-->
+<!--							<a ui-sref="opportunity-master-detail({id:fileUploads.opportunityMasterId.id})">{{fileUploads.opportunityMasterId.masterName.oppName}} :</a>-->
+<!--							<a ng-click="vm.loadFileContent(fileUploads.id)">{{fileUploads.fileName}}</a>-->
+<!--							<b> - {{fileUploads.createdBy | capitalize}}</b> <span-->
+<!--								class="date sub-text"> on {{fileUploads.createdDate |-->
+<!--								date :"MMM d, y h:mm:ss a"}}</span>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div></div>-->
+
+<!--        <dt has-any-authority="Research,Master">-->
+<!--			<span>Select File Format:</span>-->
+<!--		</dt>-->
+
+
+<!--		<dd has-any-authority="Research,Master,Admin">-->
+<!--		 <span class="col-md-4 input-group" style="padding-left: 18px;"><input class="form-control ng-pristine ng-valid clearable" ng-model="vm.name"  auto-complete="vm.autoCompleteOpportunity" type="text" placeholder="Search"></span>-->
+
+<!--		</dd>-->
+
+<!--		<dt has-any-authority="Research,Master,Admin">-->
+<!--			<span>Description:</span>-->
+<!--		</dt>-->
+<!--		<dd has-any-authority="Research,Master,Admin">-->
+<!--			<input type="text" class="col-sm-6" id="fileid" name="fileid"-->
+<!--				ng-model="vm.uploadfileName" style="padding-left: 0px;padding-right: 0px"/>-->
+<!--		</dd>-->
+
+<!--		<dt has-any-authority="Research,Master,Admin">-->
+<!--			<span>Upload:</span>-->
+<!--		</dt>-->
+<!--		<dd has-any-authority="Research,Master,Admin">-->
+<!--			<div class="form-group">-->
+<!--                <div>-->
+<!--                <label for="file_upload" class="btn btn-md btn-primary col-md-1">Choose File</label>-->
+<!--                    <div class="col-md-4">{{vm.externalResearch.fileUpload.name}}</div></div>-->
+<!--				<input type="file" ngf-select="vm.selectFile($file)" name="file" style="display: none;"-->
+<!--					id="file_upload"-->
+<!--					ngf-pattern=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx,.docx,.doc,.log,.msg,.rtf,.txt,.csv,.dat,.pptx,.xml,.aif,.tif,.zip,.zipx,.rar,.pdf"-->
+<!--					accept=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx,.docx,.doc,.log,.msg,.rtf,.txt,.csv,.dat,.pptx,.xml,.aif,.tif,.zip,.zipx,.rar,.pdf" required="">-->
+<!--				<br />-->
+<!--				<button type="button" class="btn btn-default fileUpload" ng-click="vm.upload()">Upload</button>-->
+<!--			</div>-->
+<!--		</dd>-->
+<!--    </dl>-->
+
+
+<!--</div> &ndash;&gt;-->
+<!--    </div>-->
+<!--    <footer class="footer footer-dark" ng-cloak>-->
+<!--        <p data-translate="footer" style="font-size: 12px;margin-left: 9px">&copy;{{currentYear}}, All rights reserved.</p>-->
+<!--    </footer>-->
+
+<!--</div>-->

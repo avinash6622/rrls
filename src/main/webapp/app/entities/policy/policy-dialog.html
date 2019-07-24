@@ -1,0 +1,81 @@
+<div class="container">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="well wellDialog">
+            <div class="row">
+
+
+
+                <form name="editForm" role="form" novalidate ng-submit="vm.upload()">
+
+                    <div class="form-group">
+                        <div class="col-xs-3 pull-right">
+
+                            <button type="button" class="btn btn-info pull-right"
+                                    ng-click="vm.clear()"> <span class="glyphicon glyphicon-arrow-left"></span><span> Back</span></button>
+                        </div>
+
+                            <h4 class="modal-title" id="mypolicyLabel" ng-show="!vm.policiesFileUpload.id">Create Policy</h4>
+
+                    </div>
+
+
+                    <jhi-alert></jhi-alert>
+                    <jhi-alert-error></jhi-alert-error>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="policyName" id="field_policyName"
+                               ng-model="vm.policiesFileUpload.policyName"
+                               placeholder="Policy Name"/>
+
+                    </div>
+
+
+<!--                    <div class="form-group">-->
+<!--                        <input type="text" class="form-control" name="fileName" id="field_fileName"-->
+<!--                               ng-model="vm.policiesFileUpload.fileName"-->
+<!--                               placeholder="File Name"/>-->
+
+<!--                    </div>-->
+
+<!--                    <div class="form-group">-->
+<!--                        <input type="text" class="form-control" name=" " id="field_filetype"-->
+<!--                               ng-model="vm.policiesFileUpload.filetype"-->
+<!--                               placeholder="File Type"/>-->
+
+<!--                    </div>-->
+
+                    <div class="form-group">
+
+                        <label for="file_upload" class="btn btn-md btn-primary">Choose File</label>
+                        {{vm.fileUpload.name}}
+                        <input type="file" ngf-select="vm.selectFile($file)" name="file" style="display: none;"
+                               id="file_upload"
+                               ngf-pattern=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx,.docx,.doc,.log,.msg,.rtf,.txt,.csv,.dat,.pptx,.xml,.aif,.tif,.zip,.zipx,.rar,.pdf"
+                               accept=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx,.docx,.doc,.log,.msg,.rtf,.txt,.csv,.dat,.pptx,.xml,.aif,.tif,.zip,.zipx,.rar,.pdf" required="">
+
+                    </div>
+
+
+
+                    <div>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()" style="padding: 2px; padding-right:4px">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary" style="padding: 2px;padding-right:4px">
+                            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+                        </button>
+                    </div>
+
+
+                </form>
+            </div></div>
+        <footer class="footer footer-dark" ng-cloak>
+            <p data-translate="footer" style="font-size: 12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.</p>
+        </footer>
+
+    </div>
+
+</div>
+
+
+
