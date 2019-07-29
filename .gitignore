@@ -2,3 +2,5 @@
 target/
 .idea/
 node_modules/
+src/main/webapp/content/fileUpload/
+src/main/webapp/content/fileUpload_2/
