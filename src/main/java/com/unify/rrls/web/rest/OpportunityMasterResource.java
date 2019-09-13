@@ -365,6 +365,8 @@ public class OpportunityMasterResource {
             List<StrategyMapping> countStrategy = strategyMappingRepository.findByStrategyMaster(strategyMaster.get(0));
             StrategyMaster updateTot = strategyMasterRepository.findOne(strategyMaster.get(0).getId());
             updateTot.setTotalStocks((double) countStrategy.size());
+            System.out.println("oppo selecte str is  null");
+            System.out.println(updateTot);
             strategyMasterRepository.save(updateTot);
 
 
@@ -378,6 +380,8 @@ public class OpportunityMasterResource {
                 List<StrategyMapping> countStrategy = strategyMappingRepository.findByStrategyMaster(sm);
                 StrategyMaster updateTot = strategyMasterRepository.findOne(sm.getId());
                 updateTot.setTotalStocks((double) countStrategy.size());
+                System.out.println("oppo selecte str is ! null");
+                System.out.println(updateTot);
                 strategyMasterRepository.save(updateTot);
 
             }
@@ -412,6 +416,8 @@ public class OpportunityMasterResource {
                 opportunitySummaryData.setStrategyMasterId(sm);
                 opportunitySummaryData.setCreatedBy(opportunityMaster.getCreatedBy());
                 opportunitySummaryData.setLastModifiedBy(opportunityMaster.getLastModifiedBy());
+                System.out.println("opportunitySummaryData");
+                System.out.println(opportunitySummaryData);
                 opportunitySummaryDataRepository.save(opportunitySummaryData);
 
             }
@@ -420,7 +426,6 @@ public class OpportunityMasterResource {
             result.setFinancialSummaryData(addFinance);
 
         } else {
-
             NonFinancialSummaryData nonFinancialSummaryData = opportunityMaster.getNonFinancialSummaryData();
             nonFinancialSummaryData.setOpportunityMaster(result);
             nonFinancialSummaryData.setPethree(0.0);
@@ -434,7 +439,6 @@ public class OpportunityMasterResource {
             nonFinancialSummaryData.setPatGrowthFive(0.0);
             nonFinancialSummaryData.setMarketCapThree(0.0);
             nonFinancialSummaryDataRepository.save(nonFinancialSummaryData);
-
             for (StrategyMaster sm : opportunityMaster.getSelectedStrategyMaster()) {
                 OpportunitySummaryData opportunitySummaryData = new OpportunitySummaryData();
                 opportunitySummaryData.setMarketCap(nonFinancialSummaryData.getMarketCapThree());
@@ -467,7 +471,6 @@ public class OpportunityMasterResource {
                 opportunitySummaryData.setCreatedBy(opportunityMaster.getCreatedBy());
                 opportunitySummaryData.setLastModifiedBy(opportunityMaster.getLastModifiedBy());
                 opportunitySummaryData.setStrategyMasterId(sm);
-
                 if ((nonFinancialSummaryData.getPethree() != 0.0 && nonFinancialSummaryData.getPatGrowthThree() != 0.0) &&
                     (nonFinancialSummaryData.getPethree() != null && nonFinancialSummaryData.getPatGrowthThree() != null)) {
                     opportunitySummaryData.setPegOj((nonFinancialSummaryData.getPethree() / nonFinancialSummaryData.getPatGrowthThree()));
@@ -502,6 +505,8 @@ public class OpportunityMasterResource {
                         opportunitySummaryData.setPegYearPeg(nonFinancialSummaryData.getWeight()
                             * (nonFinancialSummaryData.getPethree() / nonFinancialSummaryData.getPatGrowthThree()));
                 }
+                System.out.println("opportunitySummaryData");
+                System.out.println(opportunitySummaryData);
                 opportunitySummaryDataRepository.save(opportunitySummaryData);
             }
 

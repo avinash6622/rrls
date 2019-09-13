@@ -5,10 +5,11 @@
         .module('researchRepositoryLearningSystemApp')
         .controller('OpportunityMasterDetailController', OpportunityMasterDetailController);
 
-    OpportunityMasterDetailController.$inject = ['$scope', '$rootScope', 'Principal', '$stateParams', 'previousState', 'entity', 'OpportunityMaster', 'StrategyMaster', 'Upload', 'FileUploadComments', 'FileUpload', '$uibModal', '$filter', '$http', 'OpportunityQuestion', 'DecimalConfiguration', 'CommentOpportunity','$location'];
+    OpportunityMasterDetailController.$inject = ['$scope', '$rootScope', 'Principal', '$stateParams', 'previousState', 'entity', 'OpportunityMaster', 'StrategyMaster', 'Upload', 'FileUploadComments', 'FileUpload', '$uibModal', '$filter', '$http', 'OpportunityQuestion', 'DecimalConfiguration', 'CommentOpportunity', '$location', '$q'];
 
-    function OpportunityMasterDetailController($scope, $rootScope, Principal, $stateParams, previousState, entity, OpportunityMaster, StrategyMaster, Upload, FileUploadComments, FileUpload, $uibModal, $filter, $http, OpportunityQuestion, DecimalConfiguration, CommentOpportunity,$location) {
+    function OpportunityMasterDetailController($scope, $rootScope, Principal, $stateParams, previousState, entity, OpportunityMaster, StrategyMaster, Upload, FileUploadComments, FileUpload, $uibModal, $filter, $http, OpportunityQuestion, DecimalConfiguration, CommentOpportunity, $location, $q) {
         var vm = this;
+        vm.AdminFiles = false;
         vm.opportunityMaster = entity;
         console.log('opportunityMaster ');
         console.log(vm.opportunityMaster);
@@ -42,17 +43,19 @@
         vm.googleSheetHeading = [];
         vm.subHeading = [];
         vm.previewFileExtension = '';
-        vm.AdminFiles = false;
         vm.googleHeading = false;
         // vm.fileDelete=fileDelete;
-        vm.communicationFileDelete=communicationFileDelete;
-        vm.confidentialFileDelete=confidentialFileDelete;
-        vm.dueDiligenceDelete=dueDiligenceDelete;
-        vm.externalFileDelete=externalFileDelete;
-        vm.raFileDelete=raFileDelete;
-        vm.getOpportunityMaster=getOpportunityMaster;
-        vm.popUpURL='';
-
+        vm.communicationFileDelete = communicationFileDelete;
+        vm.confidentialFileDelete = confidentialFileDelete;
+        vm.dueDiligenceDelete = dueDiligenceDelete;
+        vm.externalFileDelete = externalFileDelete;
+        vm.raFileDelete = raFileDelete;
+        vm.getOpportunityMaster = getOpportunityMaster;
+        vm.popUpURL = '';
+        vm.tab = 1;
+//vm.setTab=setTab;
+//vm.isSet=isSet;
+        vm.sheets = []
 
 
         console.log('Decimal value', vm.opportunityMaster.decimalPoint);
@@ -66,23 +69,21 @@
             getDecimalConfig();
         }, 3000);
 
-
         function getAccount() {
+            console.log('get Account invoked');
             Principal.identity().then(function (account) {
                 vm.account = account;
                 vm.isAuthenticated = Principal.isAuthenticated;
-                console.log('vm.account.authorities');
-                console.log(vm.account.authorities[1]);
-                console.log(vm.account.authorities);
                 if (vm.account.authorities[1] == 'Research' || vm.account.authorities[1] == 'CIO') {
                     vm.mydisable = false;
                 }
                 for (var i = 0; i < vm.account.authorities.length; i++) {
-                    console.log('vm.account');
-                    console.log(vm.account);
                     if (vm.account.authorities[i] == 'Admin' || (vm.account.firstName == 'Sarath' && vm.account.authorities[i] == 'CIO') || (vm.account.firstName == 'Baidik' && vm.account.authorities[i] == 'Research')) {
                         vm.AdminFiles = true;
+                        $scope.$apply();
+                        // console.log('vm.AdminFiles' + vm.AdminFiles);
                     } else {
+                        // vm.AdminFiles = false;
                         vm.AdminFiles = false;
                     }
                 }
@@ -130,7 +131,7 @@
 
         };
 
-        $scope.fileformat = ["Presentation", "Excel Model", "Quarterly Updates", "Miscellaneous"];
+        $scope.fileformat = ["Presentation", "Excel Model", "Quarterly Updates","Risk","Miscellaneous"];
 
         $scope.getselectval = function () {
 
@@ -340,7 +341,7 @@
             var result = parseFloat(val1) / parseFloat(val2);
             result = (result * 100);
             result = (isNaN(result) || result == Infinity) ? 0 : result;
-//            console.log('result',result);
+            //            console.log('result',result);
 
             switch (val3) {
                 case 1:
@@ -551,7 +552,6 @@
             }
             return result;
         };
-
         $scope.getNonIntRat = function (val1, val2, val3) {
 
             var result = parseFloat(val1) / parseFloat(val2);
@@ -591,7 +591,7 @@
                     this.message = 'some message';
 
                     this.ok = function () {
- var val = this.description;
+                        var val = this.description;
 
                         OpportunityMaster.description({
                             statusDes: val,
@@ -716,7 +716,6 @@
 
         function upload() {
             console.log('uploading....');
-
             var selectitem = $scope.selitem;
             vm.isSaving = true;
 
@@ -792,47 +791,42 @@
         }
 
 
+        function loadFilePreview(fileName) {
+            console.log('file preview function invoked');
+            var data = fileName;
+            data = data.replace(/\\/g, "/");
+            console.log('After slash replace - ' + data);
 
-
-         function loadFilePreview(fileName) {
-                   console.log('file preview function invoked');
-                        var data = fileName;
-                        data = data.replace(/\\/g, "/");
-                        console.log('After slash replace - '+ data);
-
-                        let urlValues=data.split('/');
-                        for(var i=0;i<urlValues.length;i++){
- if(urlValues[i].endsWith('.')){
-                         urlValues[i] = urlValues[i].slice(0,-1);
-                         }
-                        }
-                        console.log(urlValues);
-                         data=urlValues.join('/');
-                        console.log('After dot replace - '+ data);
-                        var url = window.location.origin + data.split('webapp')[1];
-                         console.log("url -" + url);
-                         window.open(url, '_blank');
-
-        //after replace
-        // var data='src/main/webapp/content/fileUpload/Aarti Inds./saravanan/Aarti Q3__9M_FY_18_Results_Presentation.pdf';
-        // var data='src/main/webapp/content/fileUpload/Communication/Kirloskar Brothers Ltd/sreemant-Questions to Management for Meeting.Copy/Letter to Mr. Sanjay Kirloskar.pdf';
-        // var data='src/main/webapp/content/fileUpload/Communication/Kirloskar Brothers Ltd/sreemant-Questions to Management for Meeting/Letter to Mr. Sanjay Kirloskar.pdf';
-        // var data='src/main/webapp/content/fileUpload/Kirloskar Indus/sreedevi/Kirloskar Industries..xlsx';
-
-        // var dataArr=data.split('/');
-        // console.log(dataArr);
-        // var fileName=dataArr[dataArr.length-1];
-        // console.log('fileName -'+fileName);
-        // console.log(dataArr);
-        // data = data.replace("./", "/");
-        // var url = window.location.origin + data.split('webapp')[1];
-        //             console.log("url -" + url);
-        //             window.open(url, '_blank');
-
+            let urlValues = data.split('/');
+            for (var i = 0; i < urlValues.length; i++) {
+                if (urlValues[i].endsWith('.')) {
+                    urlValues[i] = urlValues[i].slice(0, -1);
                 }
+            }
+            console.log(urlValues);
+            data = urlValues.join('/');
+            console.log('After dot replace - ' + data);
+            var url = window.location.origin + data.split('webapp')[1];
+            console.log("url -" + url);
+            window.open(url, '_blank');
 
+            //after replace
+            // var data='src/main/webapp/content/fileUpload/Aarti Inds./saravanan/Aarti Q3__9M_FY_18_Results_Presentation.pdf';
+            // var data='src/main/webapp/content/fileUpload/Communication/Kirloskar Brothers Ltd/sreemant-Questions to Management for Meeting.Copy/Letter to Mr. Sanjay Kirloskar.pdf';
+            // var data='src/main/webapp/content/fileUpload/Communication/Kirloskar Brothers Ltd/sreemant-Questions to Management for Meeting/Letter to Mr. Sanjay Kirloskar.pdf';
+            // var data='src/main/webapp/content/fileUpload/Kirloskar Indus/sreedevi/Kirloskar Industries..xlsx';
 
+            // var dataArr=data.split('/');
+            // console.log(dataArr);
+            // var fileName=dataArr[dataArr.length-1];
+            // console.log('fileName -'+fileName);
+            // console.log(dataArr);
+            // data = data.replace("./", "/");
+            // var url = window.location.origin + data.split('webapp')[1];
+            //             console.log("url -" + url);
+            //             window.open(url, '_blank');
 
+        }
 
         function loadFileExternal(fileID) {
 
@@ -880,79 +874,294 @@
         }
 
         function getOpportunityMaster() {
-            OpportunityMaster.get({id: $stateParams.id}, function(result) {
+            OpportunityMaster.get({id: $stateParams.id}, function (result) {
                 vm.opportunityMaster = result;
                 console.log('Refresh after file delete');
                 console.log(vm.opportunityMaster);
             });
         }
 
-function raFileDelete(file) {
-    console.log('File for ra Deletion');
-    console.log(file);
-    return $http.delete('/api/file-uploads/' + file.id).then(
-        function (response) {
-            console.log('response in delete ra file');
-            console.log(response);
-            vm.getOpportunityMaster();
-            }).catch(function (error) {
-        console.log(error);
-    });
-}
-function externalFileDelete(file) {
-    console.log('File for external Deletion ');
-    console.log(file);
-    return $http.delete('/api/externalRA/' + file.id).then(
-        function (response) {
-            console.log('response in delete external');
-            console.log(response);
-            vm.getOpportunityMaster();
-        }).catch(function (error) {
-        console.log(error);
-    });
-}
-function communicationFileDelete(file) {
-    console.log('File for communication Deletion');
-    console.log(file);
-    console.log(file.id);
-    return $http.delete('/api/communication-letter/' + file.id).then(
-        function (response) {
-            console.log('response in communication file delete');
-            console.log(response);
-           vm.getOpportunityMaster();
-        }).catch(function (error) {
-        console.log(error);
-    });
-}
-function confidentialFileDelete(file) {
-    console.log('File for confidential Deletion');
-    console.log(file);
-    return $http.delete('/api/confidential-letter/' + file.id).then(
-        function (response) {
-            console.log('response in confidential file delete');
-            console.log(response);
-            vm.getOpportunityMaster();
-        }).catch(function (error) {
-        console.log(error);
-    })
-}
-function dueDiligenceDelete(file) {
-    console.log('File for due diligence Deletion');
-    console.log(file);
-    return $http.delete('/api/due-diligence/' + file.id).then(
-        function (response) {
-            console.log('response in due diligence file delete');
-            console.log(response);
-            vm.getOpportunityMaster();
-        }).catch(function (error) {
-        console.log(error);
-    })
-}
+        function raFileDelete(file) {
+            console.log('File for ra Deletion');
+            console.log(file);
+            return $http.delete('/api/file-uploads/' + file.id).then(
+                function (response) {
+                    console.log('response in delete ra file');
+                    console.log(response);
+                    vm.getOpportunityMaster();
+                }).catch(function (error) {
+                console.log(error);
+            });
+        }
+
+        function externalFileDelete(file) {
+            console.log('File for external Deletion ');
+            console.log(file);
+            return $http.delete('/api/externalRA/' + file.id).then(
+                function (response) {
+                    console.log('response in delete external');
+                    console.log(response);
+                    vm.getOpportunityMaster();
+                }).catch(function (error) {
+                console.log(error);
+            });
+        }
+
+        function communicationFileDelete(file) {
+            console.log('File for communication Deletion');
+            console.log(file);
+            console.log(file.id);
+            return $http.delete('/api/communication-letter/' + file.id).then(
+                function (response) {
+                    console.log('response in communication file delete');
+                    console.log(response);
+                    vm.getOpportunityMaster();
+                }).catch(function (error) {
+                console.log(error);
+            });
+        }
+
+        function confidentialFileDelete(file) {
+            console.log('File for confidential Deletion');
+            console.log(file);
+            return $http.delete('/api/confidential-letter/' + file.id).then(
+                function (response) {
+                    console.log('response in confidential file delete');
+                    console.log(response);
+                    vm.getOpportunityMaster();
+                }).catch(function (error) {
+                console.log(error);
+            })
+        }
+
+        function dueDiligenceDelete(file) {
+            console.log('File for due diligence Deletion');
+            console.log(file);
+            return $http.delete('/api/due-diligence/' + file.id).then(
+                function (response) {
+                    console.log('response in due diligence file delete');
+                    console.log(response);
+                    vm.getOpportunityMaster();
+                }).catch(function (error) {
+                console.log(error);
+            })
+        }
+
+        $scope.getDataFromGSheet = function () {
+            vm.googleSheetData = [];
+            // vm.subHeading = [];
+            var jsonObj = {};
+            var gsID = vm.googleSheetLink;
+            // var gsID = document.getElementById('googleSheetLink').value;
+            gsID = gsID.match(/[-\w]{25,}/)[0];
+            var url = "https://spreadsheets.google.com/feeds/list/" + gsID + "/1/public/values?alt=json";
+            console.log('url -' + url);
+            var parse = function (entry) {
+                console.log('entry');
+                console.log(entry.content);
+                jsonObj = {}, vm.googleSheetHeading = [];
+                var gsColumns = Object.keys(entry).filter(function (columnValue) {
+                    return columnValue.indexOf("gsx$") === 0;
+                });
+                for (var i = 0; i < gsColumns.length; i++) {
+                    var value = gsColumns[i].split('gsx$')[1];
+                    // console.log('value -' + value);
+                    // if(!value.startsWith('_')){
+                    if (!vm.googleSheetHeading.includes(value)) {
+                        vm.googleSheetHeading.push(value);
+                    }
+                    // }
+
+                }
+                console.log('vm.googleSheetHeading');
+                console.log(vm.googleSheetHeading);
+
+                var length = vm.googleSheetHeading.length;
+                for (var i = 0; i < gsColumns.length; i++) {
+                    // console.log('value -' + entry[gsColumns[i]]['$t']);
+                    if (entry[gsColumns[i]]['$t']) {
+                        jsonObj[vm.googleSheetHeading[i]] = entry[gsColumns[i]]['$t'];
+                    } else {
+                        jsonObj[vm.googleSheetHeading[i]] = '';
+                    }
+
+                }
+                vm.googleSheetData.push(jsonObj);
+                // $scope.$apply();
+                // return jsonObj;
+            }
+
+            $.ajax({
+                url: url,
+                dataType: "jsonp",
+                success: function (data) {
+                    console.log('data in gs');
+                    var entries = data['feed']['entry'];
+                    for (var key in entries) {
+                        var content = entries[key];
+                        parse(content);
+
+                    }
+                    console.log("Length of sheet - " + vm.googleSheetData.length);
+                    for (var i = 0; i < vm.googleSheetHeading.length; i++) {
+                        console.log(' _ Available in heading ' + vm.googleSheetHeading[i].startsWith('_'));
+                        if (vm.googleSheetHeading[i].startsWith('_')) {
+                            // vm.subHeading = [];
+                            vm.subHeading = vm.googleSheetData[0];
+                            console.log('vm.subHeading');
+                            console.log(vm.subHeading);
+                            delete vm.googleSheetData[0];
+                            console.log('vm.googleSheetData');
+                            console.log(vm.googleSheetData);
+                            vm.googleSheetHeading = vm.subHeading;
+                            vm.googleHeading = true;
+                            break;
+                        } else {
+                            vm.googleHeading = false;
+                        }
+                    }
+                    $scope.$apply();
+                },
+                error: function (xhr, status, error) {
+                    console.log('error in gs');
+                    console.log(error);
+                    console.log(status);
+                    console.log(xhr);
+                    var currentLoc = $location.$$absUrl;
+                    console.log('currentLoc -');
+                    console.log(currentLoc);
+                    var win = window.open(url, " Need to login", 'width=600,height=600');
+                    function checkURL() {
+                        if(win.location==url){
+                            win.close();
+                        }else{
+                            setInterval(checkURL, 2000);
+                        }
+                    }
+                    if(win){
+                        console.log("inside if condition");
+                        console.log(win.location);
+                        if(win.location==url){
+                            win.close();
+                        }else{
+                            setInterval(checkURL, 2000);
+                        }
+                    }
 
 
+                   /** history.pushState({
+                        prevUrl: currentLoc
+                    }, 'Next page', url);
+                    history.go();
+                    if ($location.$$absUrl==url){
+                        var link = history.state.prevUrl;
+                        if (link) {
+                            console.log('user come from: ' + link)
+                        }
+
+                    }**/
+                }
+            });
+        }
+
+        $scope.GSV4 = function () {
+            vm.googleSheetData = [];
+            var jsonObj = {}, range = '';
+            var selectedOption = $("#selectedSheets option:selected");
+
+            function hasWhiteSpace(s) {
+                return /\s/g.test(s);
+            }
+
+            if (selectedOption.length > 0) {
+                for (var i = 0; i < selectedOption.length; i++) {
+                    var value = selectedOption[i].text;
+                    if (i == 0) {
+
+                        if (hasWhiteSpace(value)) {
+                            //                   console.log(' contains space');
+                            range = "ranges=" + encodeURIComponent(value) + "&";
+
+                        } else {
+                            //console.log(' not contains space');
+                            range = "ranges=" + value + "&";
+                        }
+                    } else {
+                        if (hasWhiteSpace(value)) {
+                            console.log(" contains space");
+                            range += "ranges=" + encodeURIComponent(value) + "&";
+
+                        } else {
+                            //console.log(" not contains space");
+                            range += "ranges=" + value + "&";
+                        }
+                    }
+
+                }
+
+                /*     console.log('range');
+                                     console.log(range);*/
+            }
+            var gsID = vm.googleSheetLink;
+            gsID = gsID.match(/[-\w]{25,}/)[0];
+            var url = "https://sheets.googleapis.com/v4/spreadsheets/" + gsID + "/values:batchGet?" + range + "key=AIzaSyDQ7P-C57y88QaUmifTpMupUOM-Vt34wAU";
+            console.log('url -' + url);
+            $.ajax({
+                url: url,
+                dataType: "jsonp",
+                success: function (data) {
+                    console.log('success in gs');
+                    console.log(data);
+                    var allSheets = data.valueRanges;
+                    for (var i = 0; i < allSheets.length; i++) {
+                        var sheet = {sheetName: '', values: []};
+                        var sheetName = allSheets[i].range;
+                        sheet.sheetName = sheetName.split('!')[0];
+                        sheet.values = allSheets[i].values;
+                        if (sheet.values) {
+                            sheet.heading = [];
+                            sheet.heading.push(sheet.values[0]);
+                            sheet.heading.push(sheet.values[1]);
+                            delete sheet.values[0];
+                            delete sheet.values[1];
+                        }
+
+                        /*     angular.forEach(sheet.values, function(value, index) {
+                             if (value.length < sheet.heading[1].length) {
+                                *//* sheet.values[index].fill(" ", value.length, sheet.heading[1].length);
+                            console.log(value);*//*
+
+                            var td = document.createElement('td'); // create a td node
+                                                        td.innerHTML =" "; // fill the td now with a piece of the data array
+                                                        document.getElementById("valuationSheet").appendChild(td);
+                        }
+                        });*/
 
 
-}
+                        vm.sheets.push(sheet);
+                    }
+                    console.log(vm.sheets);
+                    console.log(vm.sheets.length);
+                    $scope.$apply();
+                },
+                error: function (xhr, status, error) {
+                    console.log('error in gs');
+                    console.log(error);
+                    AlertService.error(error.message);
+                }
+            });
+
+        }
+        $scope.setTab = function (tabId) {
+            vm.tab = tabId;
+        };
+
+        $scope.isSet = function (tabId) {
+            return vm.tab === tabId;
+        };
+
+
+    }
 
 })();
 
