@@ -147,6 +147,9 @@ public class StrategyMasterResource {
 
 
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/strategy-masters");
+        System.out.println("Page");
+        System.out.println(page.getContent());
+
 
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 

@@ -84,6 +84,8 @@ public class ScheduledTasks {
 			NonFinancialSummaryData nonFinancialSummaryData=nonFinancialSummaryDataRepository.findByOpportunityMaster(calculation.getOpportunityMaster());
 			System.out.println(nonFinancialSummaryData);
 			List<OpportunitySummaryData> opportunitySummaryData=opportunitySummaryDataRepository.findByOpportunityMasterid(calculation.getOpportunityMaster());
+			System.out.println("Summ data");
+			System.out.println(opportunitySummaryData.get(0).toString());
 			if(calculation.getPrevClose()!=null){
 				System.out.println(calculation.getPrevClose()+"-----"+calculation.getOpportunityMaster().getId());
 				nonFinancialSummaryData.setCmp(calculation.getPrevClose());
