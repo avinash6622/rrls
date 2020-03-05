@@ -77,6 +77,10 @@ public class CacheConfiguration {
             cm.createCache(com.unify.rrls.domain.CommunicationLetters.class.getName(), jcacheConfiguration);
             cm.createCache(com.unify.rrls.domain.ConfidenctialLetters.class.getName(), jcacheConfiguration);
             cm.createCache(com.unify.rrls.domain.DueDiligence.class.getName(),jcacheConfiguration);
+            cm.createCache(com.unify.rrls.domain.PresentationFileUpload.class.getName(),jcacheConfiguration);
+            cm.createCache(com.unify.rrls.domain.PresentationStrategyMapping.class.getName(),jcacheConfiguration);
+
+
             // jhipster-needle-ehcache-add-entry
         };
     }
