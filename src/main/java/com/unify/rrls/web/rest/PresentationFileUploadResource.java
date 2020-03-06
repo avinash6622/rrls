@@ -2,31 +2,34 @@ package com.unify.rrls.web.rest;
 
 
 import com.codahale.metrics.annotation.Timed;
-import com.unify.rrls.domain.ConfidenctialLetters;
-import com.unify.rrls.domain.PresentationFileUpload;
-import com.unify.rrls.domain.PresentationStrategyMapping;
-import com.unify.rrls.domain.StrategyMaster;
+import com.unify.rrls.domain.*;
 import com.unify.rrls.repository.FileUploadRepository;
 import com.unify.rrls.repository.PresentationFileUploadRepository;
 import com.unify.rrls.repository.PresentationStrategyRepository;
 import com.unify.rrls.repository.StrategyMasterRepository;
 import com.unify.rrls.security.SecurityUtils;
 import com.unify.rrls.web.rest.util.HeaderUtil;
+import com.unify.rrls.web.rest.util.PaginationUtil;
+import io.swagger.annotations.ApiParam;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -96,7 +99,9 @@ public class PresentationFileUploadResource {
 
             presentationFileUpload.setFileName(uploadfileName);
             presentationFileUpload.setFileContentType(filetype);
+            presentationFileUpload.setFileDesc(fileDescription);
             presentationFileUpload.setCreatedBy(user);
+            presentationFileUpload.setCreatedDate(Instant.now());
             presentationFileUploadResult = presentationFileUploadRepository.save(presentationFileUpload);
             System.out.println("ssdsd"+presentationFileUploadResult.getId());
             System.out.println("dsdsdsd"+presentationFileUploadResult.getCreatedBy());
@@ -119,7 +124,70 @@ public class PresentationFileUploadResource {
             .body(presentationFileUploadResult);
     }
 
+    @GetMapping("/presentationList/viewByStrategy")
+    public ResponseEntity<List<PresentationStrategyMapping>> getPresentationByStrategyId(@RequestParam Long strategyId ,@ApiParam Pageable pageable) {
+        log.debug("REST request to get a page of Policies");
+        StrategyMaster strategyMaster = strategyMasterRepository.findById(strategyId);
 
+        Page<PresentationStrategyMapping> page = presentationStrategyRepository.findByStrategyMaster(strategyMaster,pageable);
+
+//        Page<PresentationFileUpload> page = presentationFileUploadRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/policies");
+
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/presentationList/getById")
+    public PresentationFileUpload getByPresentationId(@RequestParam(value ="id") Long id) {
+        log.debug("REST request to get a page of Policies");
+
+        PresentationFileUpload presentaionValue = presentationFileUploadRepository.findById(id);
+        return presentaionValue;
+
+//        Page<PresentationFileUpload> page = presentationFileUploadRepository.findAll(pageable);
+//        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(presentaionValue, "/api/policies");
+
+//        return new ResponseEntity<>(presentaionValue.getContent(), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/presentationCount/getByStrategyId")
+    public Integer getCountByStrategyId(@RequestParam(value ="id") Long id) {
+        log.debug("REST request to get a page of Policies");
+
+        Integer presentaionValue = presentationStrategyRepository.findCountOfPresentation(id);
+        return presentaionValue;
+
+//        Page<PresentationFileUpload> page = presentationFileUploadRepository.findAll(pageable);
+//        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(presentaionValue, "/api/policies");
+
+//        return new ResponseEntity<>(presentaionValue.getContent(), headers, HttpStatus.OK);
+    }
+
+    @PutMapping("/presentation/Update")
+    @Timed
+    public ResponseEntity<PresentationFileUpload> updateFileUpload(@Valid @RequestBody PresentationFileUpload presentationFileUpload) throws URISyntaxException {
+        log.debug("REST request to update FileUpload : {}", presentationFileUpload);
+        if (presentationFileUpload.getId() == null) {
+            //return createFileUpload(fileUpload);
+        }
+        String user = SecurityUtils.getCurrentUserLogin();
+
+        presentationFileUpload.setLastModifiedDate(Instant.now());
+        presentationFileUpload.setLastmodifiedBy(user);
+
+        PresentationFileUpload result = presentationFileUploadRepository.save(presentationFileUpload);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, presentationFileUpload.getId().toString()))
+            .body(result);
+    }
+
+//    @DeleteMapping("/presentationFile/delete{id}")
+//    @Timed
+//    public ResponseEntity<Void> deletePresentationFileUpload(@PathVariable Long id) {
+//        log.debug("REST request to delete FileUpload : {}", id);
+//        fileUploadRepository.delete(id);
+//        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+//    }
 
     public void writeFile(byte[] fileStream, File file) throws IOException {
         InputStream in;

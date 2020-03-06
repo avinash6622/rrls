@@ -8,5 +8,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PresentationFileUploadRepository extends JpaRepository<PresentationFileUpload, Long> {
 
+    PresentationFileUpload findById(Long id);
+
+
+
 }
 

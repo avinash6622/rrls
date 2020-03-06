@@ -6,6 +6,7 @@ import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.time.Instant;
 import java.time.LocalDate;
 
 @Entity
@@ -40,13 +41,13 @@ public class PresentationFileUpload {
     private String createdBy;
 
     @Column(name="created_date")
-    private LocalDate createdDate;
+    private Instant createdDate;
 
     @Column(name = "last_modified_by")
     private String lastmodifiedBy;
 
     @Column(name="last_modified_date")
-    private DateTime lastModifiedDate;
+    private Instant lastModifiedDate;
 
     public Long getId() {
         return id;
@@ -96,13 +97,7 @@ public class PresentationFileUpload {
         this.createdBy = createdBy;
     }
 
-    public LocalDate getCreatedDate() {
-        return createdDate;
-    }
 
-    public void setCreatedDate(LocalDate createdDate) {
-        this.createdDate = createdDate;
-    }
 
     public String getLastmodifiedBy() {
         return lastmodifiedBy;
@@ -112,13 +107,7 @@ public class PresentationFileUpload {
         this.lastmodifiedBy = lastmodifiedBy;
     }
 
-    public DateTime getLastModifiedDate() {
-        return lastModifiedDate;
-    }
 
-    public void setLastModifiedDate(DateTime lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
 
     public String getFileDesc() {
         return fileDesc;
@@ -126,5 +115,21 @@ public class PresentationFileUpload {
 
     public void setFileDesc(String fileDesc) {
         this.fileDesc = fileDesc;
+    }
+
+    public Instant getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Instant getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Instant lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 }
