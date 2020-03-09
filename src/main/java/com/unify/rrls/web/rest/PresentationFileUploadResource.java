@@ -181,13 +181,16 @@ public class PresentationFileUploadResource {
             .body(result);
     }
 
-//    @DeleteMapping("/presentationFile/delete{id}")
-//    @Timed
-//    public ResponseEntity<Void> deletePresentationFileUpload(@PathVariable Long id) {
-//        log.debug("REST request to delete FileUpload : {}", id);
-//        fileUploadRepository.delete(id);
-//        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-//    }
+    @DeleteMapping("/presentationFile/delete")
+    @Timed
+    public ResponseEntity<Void> deletePresentationFileUpload(@RequestParam(value ="strategyId") Long strategyId, @RequestParam (value ="presentationId") Long presentationId) {
+        log.debug("REST request to delete FileUpload : {}", presentationId,strategyId);
+        System.out.println("strategyId Presentaiotid"+strategyId +presentationId);
+        presentationStrategyRepository.deleteByPresentationIdAndStrategyId(presentationId,strategyId);
+        presentationFileUploadRepository.delete(presentationId);
+
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, presentationId.toString())).build();
+    }
 
     public void writeFile(byte[] fileStream, File file) throws IOException {
         InputStream in;
