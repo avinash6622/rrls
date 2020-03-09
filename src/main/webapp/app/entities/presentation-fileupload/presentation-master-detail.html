@@ -1,0 +1,352 @@
+<style>
+    div.scrollmenu {
+        overflow: auto;
+        white-space: nowrap;
+    }
+    .headborder {
+        background-color: #009688;
+    }
+
+    .padding-0 {
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    .well .test {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        padding-bottom: 10px !important;
+    }
+
+    .col-xs-3 .btn {
+        padding: 2px !important;
+    }
+    .page-header {
+        padding-bottom: 0px !important;
+        border-bottom: 0px !important;
+    }
+</style>
+<div>
+    <div class="well">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="col-md-3 pull-right">
+            <button
+                class="btn btn-md btn-warning pull-right"
+                type="button"
+                ui-sref="presentation-master-detail.upload"
+            >
+                <span class="glyphicon glyphicon-plus"></span>
+                <span>
+                    Upload Presentation / Brochure
+                </span>
+            </button>
+        </div>
+        <!-- <div class="test">
+        <div class="row">
+<div class="page-header" style="margin:0">
+    <div class="row">
+    <div class="col-md-6"><h4 style="margin-top:0;"><span><strong>{{vm.strategyvalues[0].strategyMasterId.strategyName}}</strong></span></h4></div>
+            <div class="pull-right">
+            <div class="col-xs-3">
+            <button type="submit"
+                    ui-sref="{{ vm.previousState }}"
+                    class="btn btn-info">
+                <span class="glyphicon glyphicon-arrow-left"></span><span> Back</span>
+            </button>
+             </div>
+            </div>
+</div>
+</div>
+
+
+
+    <dl class="dl-horizontal jh-entity-details">
+
+        <dt>
+            <span>AUM:</span>
+        </dt>
+
+        <dd>
+           {{vm.strategyvalues[0].strategyMasterId.aum}}
+        </dd>
+
+        <dt>
+            <span>Total Stocks:</span>
+        </dt>
+
+        <dd>
+            {{vm.strategyvalues[0].strategyMasterId.totalStocks}}
+
+        </dd>
+
+        <dt>
+            <span>Summary Data:</span></br>
+
+        </dt>
+
+        <dd>
+
+        </dd>
+        <div ng-show="vm.loader" ><img class="logo-img" src="content/images/spinner.gif" alt="logo" style="margin: 0px auto; display: block;"/></div>
+        <div class="scrollmenu" id="table-table"  ng-show="vm.strategyvalues" style="width: 100%; height: 65vh;visibility: hidden;" >
+        <table id="mytable1" class="table table-bordered fht-table">
+            <thead>
+
+            <tr class="headborder">
+
+                <th rowspan="2"  style="vertical-align: middle;">Opportunity</th>
+                 <th rowspan="2"  style="vertical-align: middle;">Status</th>
+                <th rowspan="2"  style="vertical-align: middle;">Weight</th>
+                <th rowspan="2"  style="vertical-align: middle;">Prev. close</th>
+                <th rowspan="2"  style="vertical-align: middle;">M.Cap</th>
+                <th scope="col" colspan="5" style="text-align: center">PAT</th>
+                <th scope="col" colspan="5" style="text-align: center">P/E</th>
+                <th scope="col" colspan="5" style="text-align: center">RoE</th>
+                <th scope="col" colspan="5" style="text-align: center">D/E</th>
+                <th scope="col" colspan="5" style="text-align: center">PAT Growth</th>
+                <th scope="col" colspan="5" style="text-align: center">Portfolio P/E</th>
+                <th scope="col" colspan="5" style="text-align: center">Earnings Gr</th>
+                <th rowspan="2" style="vertical-align: middle;">Wt. Avg Mcap</th>
+                <th rowspan="2" style="vertical-align: middle;">RoE</th>
+                <th scope="col" colspan="2" style="text-align: center">PEG - FY 18</th>
+
+            </tr>
+
+            <tr>
+
+                <th scope="col">FY {{prevYearBefore}}</th>
+                <th scope="col">FY {{prevYear}}</th>
+                <th scope="col">FY {{currentYear}}</th>
+                <th scope="col">FY {{nextYear}}</th>
+                <th scope="col">FY {{neYearNext}}</th>
+
+                <th scope="col">FY {{prevYearBefore}}</th>
+                <th scope="col">FY {{prevYear}}</th>
+                <th scope="col">FY {{currentYear}}</th>
+                <th scope="col">FY {{nextYear}}</th>
+                <th scope="col">FY {{neYearNext}}</th>
+
+                <th scope="col">FY {{prevYearBefore}}</th>
+                <th scope="col">FY {{prevYear}}</th>
+                <th scope="col">FY {{currentYear}}</th>
+                <th scope="col">FY {{nextYear}}</th>
+                <th scope="col">FY {{neYearNext}}</th>
+
+                <th scope="col">FY {{prevYearBefore}}</th>
+                <th scope="col">FY {{prevYear}}</th>
+                <th scope="col">FY {{currentYear}}</th>
+                <th scope="col">FY {{nextYear}}</th>
+                <th scope="col">FY {{neYearNext}}</th>
+
+
+                <th scope="col">FY {{prevYearBefore}}</th>
+                <th scope="col">FY {{prevYear}}</th>
+                <th scope="col">FY {{currentYear}}</th>
+                <th scope="col">FY {{nextYear}}</th>
+                <th scope="col">FY {{neYearNext}}</th>
+
+
+                <th scope="col">FY {{prevYearBefore}}</th>
+                <th scope="col">FY {{prevYear}}</th>
+                <th scope="col">FY {{currentYear}}</th>
+                <th scope="col">FY {{nextYear}}</th>
+                <th scope="col">FY {{neYearNext}}</th>
+                <th scope="col">FY {{prevYearBefore}}</th>
+                <th scope="col">FY {{prevYear}}</th>
+                <th scope="col">FY {{currentYear}}</th>
+                <th scope="col">FY {{nextYear}}</th>
+                <th scope="col">FY {{neYearNext}}</th>
+                <th scope="col">O / J</th>
+                <th scope="col">PEG</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="value in vm.strategyvalues | orderBy:predicate:reverse">
+                <td scope="col" style="text-align: left"><a ui-sref="opportunity-master-detail({id:value.opportunityMasterid.id})">{{value.opportunityMasterid.masterName.oppName}}</a></td>
+                      <td ng-class="value.opportunityMasterid.status == 'Open' ? 'text-success' : 'text-danger'" scope="col" style="text-align: left">{{value.opportunityMasterid.status}}</td>
+                      <td style="text-align: right">{{value.bWeight | number:0}}</td>
+                      <td style="text-align: right">{{value.cmp | number:0}}</td>
+                      <td style="text-align: right">{{value.marketCap | number:0}}</td>
+                      <td style="text-align: right">{{value.patFirstYear | number:0}}</td>
+                      <td style="text-align: right">{{value.patSecondYear | number:0}}</td>
+                      <td style="text-align: right">{{value.patThirdYear | number:0}}</td>
+                      <td style="text-align: right">{{value.patFourthYear | number:0}}</td>
+                      <td style="text-align: right">{{value.patFifthYear | number:0}}</td>
+                      <td style="text-align: right">{{value.peFirstYear | number:0}}</td>
+                      <td style="text-align: right">{{value.peSecondYear | number:0}}</td>
+                      <td style="text-align: right">{{value.peThirdYear | number:0}}</td>
+                      <td style="text-align: right">{{value.peFourthYear | number:0}}</td>
+                      <td style="text-align: right">{{value.peFifthYear | number:0}}</td>
+                      <td style="text-align: right">{{value.roeFirstYear | number:0}}</td>
+                      <td style="text-align: right">{{value.roeSecondYear | number:0}}</td>
+                      <td style="text-align: right">{{value.roeThirdYear | number:0}}</td>
+                      <td style="text-align: right">{{value.roeFourthYear | number:0}}</td>
+                      <td style="text-align: right">{{value.roeFifthYear | number:0}}</td>
+                      <td style="text-align: right">{{value.deFirstYear | number:0}}</td>
+                      <td style="text-align: right">{{value.deSecondYear | number:0}}</td>
+                      <td style="text-align: right">{{value.deThirdColour | number:0}}</td>
+                      <td style="text-align: right">{{value.deFourthYear | number:0}}</td>
+                      <td style="text-align: right">{{value.deFifthYear | number:0}}</td>
+                      <td style="text-align: right">{{value.patGrowthFirst | number:0}}</td>
+                      <td style="text-align: right">{{value.patGrowthSecond | number:0}}</td>
+                      <td style="text-align: right">{{value.patGrowthThird | number:0}}</td>
+                      <td style="text-align: right">{{value.patGrowthFourth | number:0}}</td>
+                      <td style="text-align: right">{{value.patGrowthFifth | number:0}}</td>
+                      <td style="text-align: right">{{value.portPeFirst | number:0}}</td>
+                      <td style="text-align: right">{{value.portPeSecond | number:0}}</td>
+                      <td style="text-align: right">{{value.portPeThird | number:0}}</td>
+                      <td style="text-align: right">{{value.portPeFourth | number:0}}</td>
+                      <td style="text-align: right">{{value.portPeFifth | number:0}}</td>
+                      <td style="text-align: right">{{value.earningsFirst | number:0}}</td>
+                      <td style="text-align: right">{{value.earningsSecond | number:0}}</td>
+                      <td style="text-align: right">{{value.earningsThird | number:0}}</td>
+                      <td style="text-align: right">{{value.earningsFourth | number:0}}</td>
+                      <td style="text-align: right">{{value.earningsFifth | number:0}}</td>
+                      <td style="text-align: right">{{value.wtAvgCap | number:0}}</td>
+                      <td style="text-align: right">{{value.roe | number:0}}</td>
+                      <td style="text-align: right">{{value.pegOj | number:0}}</td>
+                      <td style="text-align: right">{{value.pegYearPeg | number:0}}</td>
+
+
+            </tr>
+            </tbody>
+        </table>
+        </div>
+
+
+
+
+    </dl>
+
+
+</div>
+
+
+        </div>
+        <div class="text-center" style="margin-bottom: -5px">
+
+            <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"  item="vm.itemsValue"></jhi-item-count>
+            <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+        </div> -->
+
+        <div class="tabbable tabs-below" ng-init="selectedTab = 1;">
+            <ul class="nav nav-tabs nav-justified">
+                <li ng-class="{active: selectedTab == 1}">
+                    <a ng-click="selectedTab = 1;">Presentation</a>
+                </li>
+                <li ng-class="{active: selectedTab == 2}">
+                    <a ng-click="selectedTab = 2;">Brochure</a>
+                </li>
+            </ul>
+
+            <div class="tab-content" ng-show="selectedTab == 1">
+                <table class="jh-table table table-striped">
+                    <thead>
+                        <tr
+                            jh-sort="vm.predicate"
+                            ascending="vm.reverse"
+                            callback="vm.reset()"
+                        >
+                            <th jh-sort-by="strategyName">
+                                <span>Id</span>
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </th>
+                            <th jh-sort-by="aum">
+                                <span>File Name</span>
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </th>
+                            <th jh-sort-by="aum">
+                                <span>File Path</span>
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </th>
+                            <th jh-sort-by="totalStocks">
+                                <span>File Type</span>
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </th>
+                            <th jh-sort-by="totalStocks">
+                                <span>Status</span>
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </th>
+                            <th jh-sort-by="totalStocks">
+                                <span>Desc.</span>
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </th>
+                            <th jh-sort-by="totalStocks">
+                                <span>Created By</span>
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </th>
+                            <th jh-sort-by="totalStocks">
+                                <span>Created Date</span>
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </th>
+                            <th jh-sort-by="totalStocks">
+                                <span>Last Mod.By</span>
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </th>
+                            <th jh-sort-by="totalStocks">
+                                <span>Last Mod.Date</span>
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody
+                        infinite-scroll="vm.loadPage(vm.page + 1)"
+                        infinite-scroll-disabled="vm.page >= vm.links['last']"
+                    >
+                        <tr
+                            ng-repeat="strategyMaster in vm.presentationvalues track by strategyMaster.id"
+                        >
+                            <td>
+                                {{strategyMaster.presentationFileUpload.id}}
+                            </td>
+                            <td>
+                                {{strategyMaster.presentationFileUpload.fileName}}
+                            </td>
+                            <td style="width: 350px;">
+                                {{strategyMaster.presentationFileUpload.filePath}}
+                            </td>
+                            <td>
+                                {{strategyMaster.presentationFileUpload.fileContentType}}
+                            </td>
+                            <td>
+                                {{strategyMaster.presentationFileUpload.fileStatus}}
+                            </td>
+                            <td>
+                                {{strategyMaster.presentationFileUpload.fileDesc}}
+                            </td>
+                            <td>
+                                {{strategyMaster.presentationFileUpload.createdBy}}
+                            </td>
+                            <td>
+                                {{strategyMaster.presentationFileUpload.createdDate}}
+                            </td>
+                            <td>
+                                {{strategyMaster.presentationFileUpload.lastmodifiedBy}}
+                            </td>
+                            <td>
+                                {{strategyMaster.presentationFileUpload.lastModifiedDate}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tab-content" ng-show="selectedTab == 2">
+                2. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est
+                laborum.
+            </div>
+        </div>
+    </div>
+    <footer class="footer footer-dark" ng-cloak>
+        <p data-translate="footer" style="font-size: 12px;margin-left: 10px">
+            &copy;2018, All rights reserved.
+        </p>
+    </footer>
+</div>
