@@ -124,6 +124,55 @@ public class PresentationFileUploadResource {
             .body(presentationFileUploadResult);
     }
 
+    @RequestMapping(value = "/presentation/update/fileUploads", method =RequestMethod.PUT)
+    @Timed
+    public ResponseEntity<PresentationFileUpload> updatePresentationFile(@RequestParam MultipartFile fileUploads,
+                                                                   @RequestParam(value="filetype") String filetype,
+                                                                   @RequestParam(value="uploadfileName") String uploadfileName,
+                                                                   @RequestParam(value="Strategy") Long strategyId,
+                                                                   @RequestParam(value="fileDescription") String fileDescription,
+                                                                         @RequestParam(value="id") Long id) throws URISyntaxException, IOException, MissingServletRequestParameterException {
+        log.debug("REST request to save FileUpload : {}");
+        System.out.println("id "+strategyId);
+        String user;
+        String sFilesDirectory;
+
+        user = SecurityUtils.getCurrentUserLogin();
+        System.out.println("fileUploads "+fileUploads);
+        sFilesDirectory = "src/main/webapp/content/fileUpload/Presentation/" +  user + "-" + uploadfileName;
+        File dirFiles = new File(sFilesDirectory);
+        dirFiles.mkdirs();
+
+        PresentationFileUpload presentationFileUpload = new PresentationFileUpload();
+        PresentationFileUpload presentationFileUploadResult = new PresentationFileUpload();
+        PresentationStrategyMapping presentationStrategyMapping= new PresentationStrategyMapping();
+
+        setFileName(fileUploads.getOriginalFilename());
+        fileStream = IOUtils.toByteArray(fileUploads.getInputStream());
+
+        System.out.println("FILE NAME--->" + fileName);
+
+        File sFiles = new File(dirFiles, fileName);
+        writeFile(fileStream, sFiles);
+        presentationFileUpload.setFilePath(sFiles.toString());
+
+        presentationFileUpload.setFileName(uploadfileName);
+        presentationFileUpload.setFileContentType(filetype);
+        presentationFileUpload.setFileDesc(fileDescription);
+        presentationFileUpload.setLastmodifiedBy(user);
+        presentationFileUpload.setLastModifiedDate(Instant.now());
+        presentationFileUpload.setId(id);
+
+        presentationFileUploadResult = presentationFileUploadRepository.save(presentationFileUpload);
+
+
+
+        return ResponseEntity.created(new URI("/api/presentation-file-uploads/" + presentationFileUploadResult.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, presentationFileUploadResult.getId().toString()))
+            .body(presentationFileUploadResult);
+    }
+
+
     @GetMapping("/presentationList/viewByStrategy")
     public ResponseEntity<List<PresentationStrategyMapping>> getPresentationByStrategyId(@RequestParam Long strategyId ,@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Policies");

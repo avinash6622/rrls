@@ -79,7 +79,9 @@ public class CacheConfiguration {
             cm.createCache(com.unify.rrls.domain.DueDiligence.class.getName(),jcacheConfiguration);
             cm.createCache(com.unify.rrls.domain.PresentationFileUpload.class.getName(),jcacheConfiguration);
             cm.createCache(com.unify.rrls.domain.PresentationStrategyMapping.class.getName(),jcacheConfiguration);
-
+            cm.createCache(com.unify.rrls.domain.BrochureFileUpload.class.getName(),jcacheConfiguration);
+            cm.createCache(com.unify.rrls.domain.BrochureSupportingFiles.class.getName(),jcacheConfiguration);
+            cm.createCache(com.unify.rrls.domain.BrochureStrategyMapping.class.getName(),jcacheConfiguration);
 
             // jhipster-needle-ehcache-add-entry
         };
