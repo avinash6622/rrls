@@ -12,8 +12,9 @@
     "$timeout",
     "$scope",
     "$stateParams",
-    "$uibModalInstance",
-    "entity",
+    "$http",
+    //"entity",
+    "Upload",
     "PresentationMaster"
   ];
 
@@ -21,55 +22,30 @@
     $timeout,
     $scope,
     $stateParams,
-    $uibModalInstance,
-    entity,
+    $http,
+    // $uibModalInstance,
+    //entity,
+    Upload,
     PresentationMaster
   ) {
     var vm = this;
 
-    vm.presentationMaster = entity;
-    vm.clear = clear;
+    console.log("scope", $scope);
+    console.log("stateParams", $stateParams);
+    //vm.presentationMaster = entity;
+    //vm.clear = clear;
     vm.datePickerOpenStatus = {};
     vm.openCalendar = openCalendar;
-    vm.save = save;
+    // vm.save = save;
+    vm.selectFile = selectFile;
+    vm.upload = upload;
+    vm.presentationId = "";
+    vm.fileUploadSction = "";
+    getDataFromId();
 
     $timeout(function() {
       angular.element(".form-group:eq(1)>input").focus();
     });
-
-    function clear() {
-      $uibModalInstance.dismiss("cancel");
-    }
-
-    function save() {
-      vm.isSaving = true;
-      if (vm.presentationMaster.id !== null) {
-        PresentationMaster.update(
-          vm.presentationMaster,
-          onSaveSuccess,
-          onSaveError
-        );
-      } else {
-        PresentationMaster.save(
-          vm.presentationMaster,
-          onSaveSuccess,
-          onSaveError
-        );
-      }
-    }
-
-    function onSaveSuccess(result) {
-      $scope.$emit(
-        "researchRepositoryLearningSystemApp:presentationMasterUpdate",
-        result
-      );
-      $uibModalInstance.close(result);
-      vm.isSaving = false;
-    }
-
-    function onSaveError() {
-      vm.isSaving = false;
-    }
 
     vm.datePickerOpenStatus.dateActive = false;
     vm.datePickerOpenStatus.createdDate = false;
@@ -77,6 +53,88 @@
 
     function openCalendar(date) {
       vm.datePickerOpenStatus[date] = true;
+    }
+
+    function getDataFromId() {
+      console.log("getDataFromId");
+      return $http
+        .get("/api/presentationList/getById?id=" + $stateParams.pId)
+        .then(function(response) {
+          console.log("Get Api response", response);
+          // loadAll();
+          var _data = response;
+          var filepathStartIndex = _data.data.filePath;
+
+          console.log(
+            _data.data.filePath,
+            "fileName",
+            _data.data.fileName + "." + _data.data.fileContentType
+          );
+          // vm.fileUpload.name =
+          //   _data.data.fileName + "." + _data.data.fileContentType;
+          vm.fileUploadnamevalue =
+            _data.data.fileName + "." + _data.data.fileContentType;
+          vm.fileDescriptionValue = _data.data.fileDesc;
+          vm.uploadfileNameValue = _data.data.fileName;
+          vm.fileTypeName = _data.data.fileContentType;
+          vm.presentationId = _data.data.id;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
+
+    function upload() {
+      var selectitem = $scope.selitem;
+      vm.isSaving = true;
+
+      Upload.upload({
+        // url: "api/confidenctial-letters",
+        url: "/api/presentation/update/fileUploads",
+        method: "PUT",
+        data: { fileUploads: vm.fileUploadSction },
+        params: {
+          filetype: vm.fileTypeName,
+          uploadfileName: vm.uploadfileNameValue,
+          Strategy: $stateParams.id,
+          fileDescription: vm.fileDescriptionValue,
+          id: vm.presentationId
+        } // {oppCode: inputData.oppCode, oppName: inputData.oppName, oppDescription: inputData.oppDescription, strategyMasterId: inputData.strategyMasterId.id}
+      }).then(
+        function(resp) {
+          if (resp.status == 201) {
+          }
+        },
+        function(resp) {
+          console.log("resp", resp);
+        },
+        function(evt) {
+          console.log("evt", evt);
+        }
+      );
+    }
+
+    // PUT /api/presentation/Update
+
+    function selectFile(file) {
+      vm.fileUploadSction = file;
+      console.log("file", file);
+      var fileName = file.name;
+      console.log(
+        "ValueSlice",
+        fileName.slice(fileName.indexOf(".") + 1, fileName.length + 1),
+        fileName.slice(0, fileName.indexOf("."))
+      );
+      vm.fileTypeName = fileName.slice(
+        fileName.indexOf(".") + 1,
+        fileName.length + 1
+      );
+      vm.uploadfileNameValue = fileName.slice(0, fileName.indexOf("."));
+      // vm.fileTypeName = fileName.slice(
+      //   fileName.indexOf(".") + 1,
+      //   fileName.length + 1
+      // );
+      vm.fileUploadnamevalue = file.name;
     }
   }
 })();

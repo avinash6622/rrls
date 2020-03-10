@@ -72,8 +72,10 @@
 
       console.log(
         "vm.filetypeValue___",
-        vm.filetypeValue,
+        vm.fileTypeName,
+        "uploadfileNameValue___",
         vm.uploadfileNameValue,
+        "+++",
         vm.fileDescriptionValue,
         vm.fileUpload.name
       );
@@ -82,7 +84,7 @@
         url: "api/presentation-file-uploads",
         data: { fileUploads: vm.fileUpload },
         params: {
-          filetype: vm.filetypeValue,
+          filetype: vm.fileTypeName,
           uploadfileName: vm.uploadfileNameValue,
           Strategy: $state.params.id,
           fileDescription: vm.fileDescriptionValue
@@ -114,10 +116,10 @@
         fileName.length + 1
       );
       vm.uploadfileNameValue = fileName.slice(0, fileName.indexOf("."));
-      vm.fileTypeName = fileName.slice(
-        fileName.indexOf(".") + 1,
-        fileName.length + 1
-      );
+      // vm.fileTypeName = fileName.slice(
+      //   fileName.indexOf(".") + 1,
+      //   fileName.length + 1
+      // );
       vm.fileUpload = file;
     }
 

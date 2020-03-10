@@ -38,7 +38,7 @@
     PresentationMaster
   ) {
     var vm = this;
-
+    vm.strategyId = $scope.toStateParams.id;
     // vm.strategyMaster = entity;
     vm.previousState = previousState.name;
     vm.itemsPerPage = paginationConstants.itemsPerPage;
