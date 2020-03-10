@@ -106,6 +106,10 @@ public class BrochureFileUploadResource {
 
         StrategyMaster strategyMaster = strategyMasterRepository.findById(strategyId);
 
+        int totalBrochure = strategyMaster.getTotalBrochure();
+        strategyMaster.setTotalBrochure(totalBrochure + 1);
+        StrategyMaster strategyMaster1 = strategyMasterRepository.save(strategyMaster);
+
         System.out.println("dsdsdsd"+brochureFileUploadResult.getCreatedBy());
 
         brochureStrategyMapping.setBrochureFileUpload(brochureFileUploadResult);
@@ -180,6 +184,15 @@ public class BrochureFileUploadResource {
     public ResponseEntity<Void> deleteBrochureMainFileUpload(@RequestParam(value ="strategyId") Long strategyId, @RequestParam (value ="borchureId") Long brochureId) {
         log.debug("REST request to delete FileUpload : {}", brochureId,strategyId);
         System.out.println("strategyId Presentaiotid"+strategyId +brochureId);
+        StrategyMaster strategyMaster = strategyMasterRepository.findById(strategyId);
+        if (strategyMaster.getTotalBrochure() != 0) {
+            strategyMaster.setTotalBrochure(strategyMaster.getTotalBrochure() - 1);
+
+        } else {
+            strategyMaster.setTotalBrochure(0);
+
+        }
+        strategyMasterRepository.save(strategyMaster);
         borchureStrategyMappingRespository.deleteByBrochureIdAndStrategyId(brochureId,strategyId);
         brochureFileUploadRepository.delete(brochureId);
 

@@ -3,17 +3,13 @@ package com.unify.rrls.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.unify.rrls.domain.BrochureFileUpload;
-import com.unify.rrls.domain.BrochureStrategyMapping;
 import com.unify.rrls.domain.BrochureSupportingFiles;
-import com.unify.rrls.domain.StrategyMaster;
 import com.unify.rrls.repository.BorchureStrategyMappingRespository;
 import com.unify.rrls.repository.BrochureFileUploadRepository;
 import com.unify.rrls.repository.BrochureSupportedFileRepository;
 import com.unify.rrls.repository.StrategyMasterRepository;
 import com.unify.rrls.security.SecurityUtils;
 import com.unify.rrls.web.rest.util.HeaderUtil;
-import com.unify.rrls.web.rest.util.PaginationUtil;
-import io.swagger.annotations.ApiParam;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
