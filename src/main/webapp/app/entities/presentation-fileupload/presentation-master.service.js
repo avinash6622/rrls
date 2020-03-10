@@ -59,6 +59,19 @@
             return angular.toJson(copy);
           }
         },
+        delete: {
+          method: "DELETE",
+          transformRequest: function(data) {
+            var copy = angular.copy(data);
+            copy.dateActive = DateUtils.convertLocalDateToServer(
+              copy.dateActive
+            );
+            copy.createdDate = DateUtils.convertLocalDateToServer(
+              copy.createdDate
+            );
+            return angular.toJson(copy);
+          }
+        },
 
         getPresentationDetail: {
           url: "api/presentationList/viewByStrategy/?strategyId=:id",

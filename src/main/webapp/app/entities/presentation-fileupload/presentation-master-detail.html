@@ -256,7 +256,7 @@
                                 <span>File Name</span>
                                 <span class="glyphicon glyphicon-sort"></span>
                             </th>
-                            <th jh-sort-by="aum">
+                            <!-- <th jh-sort-by="aum">
                                 <span>File Path</span>
                                 <span class="glyphicon glyphicon-sort"></span>
                             </th>
@@ -267,7 +267,7 @@
                             <th jh-sort-by="totalStocks">
                                 <span>Status</span>
                                 <span class="glyphicon glyphicon-sort"></span>
-                            </th>
+                            </th> -->
                             <th jh-sort-by="totalStocks">
                                 <span>Desc.</span>
                                 <span class="glyphicon glyphicon-sort"></span>
@@ -288,6 +288,10 @@
                                 <span>Last Mod.Date</span>
                                 <span class="glyphicon glyphicon-sort"></span>
                             </th>
+                            <th jh-sort-by="totalStocks">
+                                <span>Action</span>
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </th>
                         </tr>
                     </thead>
                     <tbody
@@ -303,15 +307,15 @@
                             <td>
                                 {{strategyMaster.presentationFileUpload.fileName}}
                             </td>
-                            <td style="width: 350px;">
+                            <!-- <td style="width: 350px;">
                                 {{strategyMaster.presentationFileUpload.filePath}}
                             </td>
                             <td>
                                 {{strategyMaster.presentationFileUpload.fileContentType}}
-                            </td>
+                            </td> 
                             <td>
                                 {{strategyMaster.presentationFileUpload.fileStatus}}
-                            </td>
+                            </td>-->
                             <td>
                                 {{strategyMaster.presentationFileUpload.fileDesc}}
                             </td>
@@ -326,6 +330,32 @@
                             </td>
                             <td>
                                 {{strategyMaster.presentationFileUpload.lastModifiedDate}}
+                            </td>
+                            <td has-authority="">
+                                <button
+                                    type="button"
+                                    class="btn btn-primary btn-sm"
+                                    tooltip="delete"
+                                    tooltip-placement="bottom"
+                                    ng-click="deleteConfirm(strategyMaster.presentationFileUpload.id)"
+                                >
+                                    <span
+                                        class="glyphicon glyphicon-trash"
+                                    ></span>
+                                </button>
+                                <button
+                                    type="button"
+                                    ui-sref="presentation-master.edit({id:strategyMaster.id})"
+                                    class="btn btn-primary btn-sm"
+                                    tooltip="edit"
+                                    tooltip-placement="bottom"
+                                    has-any-authority="User"
+                                >
+                                    <span
+                                        class="glyphicon glyphicon-edit"
+                                    ></span>
+                                    <span class="hidden-sm-down"></span>
+                                </button>
                             </td>
                         </tr>
                     </tbody>

@@ -18,6 +18,7 @@
     "ParseLinks",
     "paginationConstants",
     "$state",
+    "$http",
     "$timeout",
     "PresentationMaster"
   ];
@@ -32,6 +33,7 @@
     ParseLinks,
     paginationConstants,
     $state,
+    $http,
     $timeout,
     PresentationMaster
   ) {
@@ -43,6 +45,7 @@
     vm.predicate = pagingParams.predicate;
     vm.reverse = true;
     vm.page = 1;
+    console.log("valueeee", $scope.toStateParams.id);
     //  vm.opportunitySummaryData = vm.strategyMaster.opportunitySummaryData;
 
     vm.itemsValue = "Opportunities";
@@ -80,8 +83,8 @@
     function getDecimalConfig() {}
 
     function loadAll() {
-      console.log($state.params);
-
+      console.log("urlValue", $state.params);
+      console.log("eqweqeqwqewe");
       PresentationMaster.getPresentationDetail(
         {
           page: pagingParams.page - 1,
@@ -92,6 +95,34 @@
         onError
       );
     }
+
+    $scope.deleteConfirm = function(_data) {
+      console.log("am calling", _data, "$scope.params.id");
+      var txt;
+      if (confirm("Do you want to delete it?")) {
+        txt = "You pressed OK!";
+        // console.log("confidential letter");
+        //console.log(confidentialLetter);
+        return $http
+          .delete(
+            "/api/presentationFile/delete?strategyId=" +
+              $scope.toStateParams.id +
+              "&presentationId=" +
+              _data
+          )
+          .then(function(response) {
+            console.log("response in delete");
+            console.log(response);
+            loadAll();
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      } else {
+        txt = "You pressed Cancel!";
+      }
+      // document.getElementById("demo").innerHTML = txt;
+    };
 
     function onSuccess(data, headers) {
       vm.links = ParseLinks.parse(headers("link"));

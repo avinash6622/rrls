@@ -198,54 +198,6 @@
           }
         ]
       })
-      /* .state("presentation-master.new", {
-        parent: "presentation-master",
-        url: "/new",
-        data: {
-          authorities: ["User"]
-        },
-        onEnter: [
-          "$stateParams",
-          "$state",
-          "$uibModal",
-          function($stateParams, $state, $uibModal) {
-            $uibModal
-              .open({
-                templateUrl:
-                  "app/entities/presentation-fileupload/presentation-master-dialog.html",
-                controller: "PresentationMasterDialogController",
-                controllerAs: "vm",
-                backdrop: "static",
-                size: "lg",
-                resolve: {
-                  entity: function() {
-                    return {
-                      presentationCode: null,
-                      presentationName: null,
-                      sStatus: null,
-                      dateActive: null,
-                      createdBy: null,
-                      updatedBy: null,
-                      createdDate: null,
-                      updatedDate: null,
-                      id: null
-                    };
-                  }
-                }
-              })
-              .result.then(
-                function() {
-                  $state.go("presentation-master", null, {
-                    reload: "presentation-master"
-                  });
-                },
-                function() {
-                  $state.go("presentation-master");
-                }
-              );
-          }
-        ]
-      }) */
       .state("presentation-master.edit", {
         parent: "presentation-master",
         url: "/{id}/edit",
@@ -288,11 +240,11 @@
           }
         ]
       })
-      .state("presentation-master.delete", {
-        parent: "presentation-master",
+      .state("presentation-master-detail.delete", {
+        parent: "presentation-master-detail",
         url: "/{id}/delete",
         data: {
-          authorities: ["Admin"]
+          authorities: ["User"]
         },
         onEnter: [
           "$stateParams",

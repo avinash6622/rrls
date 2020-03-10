@@ -29,40 +29,57 @@
                     <jhi-alert-error></jhi-alert-error>
 
                     <div class="form-group">
-                        <label>File Type</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="File type"
-                            id="field_strategyName"
-                            ng-model="vm.filetypeValue"
-                            placeholder="File type"
-                        />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>File Type</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="File type"
+                                    id="field_strategyName"
+                                    ng-model="vm.fileTypeName"
+                                    placeholder="File type"
+                                    disabled
+                                />
+                            </div>
+                            <div class="col-md-6">
+                                <label>File Name</label>
+                                <input
+                                    class="form-control ng-pristine ng-valid clearable"
+                                    ng-model="vm.uploadfileNameValue"
+                                    auto-complete="vm.autoCompleteOpportunity"
+                                    type="text"
+                                    placeholder="Select Opportunity Name"
+                                    disabled
+                                />
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label>File Name</label>
                         <input
                             class="form-control ng-pristine ng-valid clearable"
-                            ng-model="vm.name"
+                            ng-model="vm.uploadfileNameValue"
                             auto-complete="vm.autoCompleteOpportunity"
                             type="text"
                             placeholder="Select Opportunity Name"
+                            disabled
                         />
-                    </div>
+                    </div> -->
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label>Strategy Id</label>
                         <input
                             type="text"
                             class="form-control"
                             id="fileid"
                             name="fileid"
-                            ng-model="vm.uploadfileNameValue"
+                            ng-model=""
                             placeholder="File Name"
                             disabled
                         />
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <label>File Description</label>
                         <textarea

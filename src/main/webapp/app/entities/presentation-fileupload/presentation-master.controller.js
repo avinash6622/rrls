@@ -97,17 +97,17 @@
     }
   }
 
-  function PresentationDataGetter(communicationLetter) {
-    console.log("communicationLetter");
-    console.log(communicationLetter.id);
-    return $http
-      .get("/api/communication-letter/" + communicationLetter)
-      .then(function(response) {
-        console.log("response in delete");
-        console.log(response);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
+  // function PresentationDataGetter(communicationLetter) {
+  //   console.log("communicationLetter");
+  //   console.log(communicationLetter.id);
+  //   return $http
+  //     .get("/api/communication-letter/" + communicationLetter)
+  //     .then(function(response) {
+  //       console.log("response in delete");
+  //       console.log(response);
+  //     })
+  //     .catch(function(error) {
+  //       console.log(error);
+  //     });
+  // }
 })();

@@ -43,6 +43,7 @@
     vm.fileUpload = "";
     vm.loadAll = loadAll;
     vm.presentationMasterUpload;
+    vm.fileTypeName = "";
 
     vm.loadAll();
 
@@ -74,7 +75,7 @@
         vm.filetypeValue,
         vm.uploadfileNameValue,
         vm.fileDescriptionValue,
-        vm.fileUpload
+        vm.fileUpload.name
       );
       Upload.upload({
         // url: "api/confidenctial-letters",
@@ -83,7 +84,7 @@
         params: {
           filetype: vm.filetypeValue,
           uploadfileName: vm.uploadfileNameValue,
-          Strategy: 2,
+          Strategy: $state.params.id,
           fileDescription: vm.fileDescriptionValue
         } // {oppCode: inputData.oppCode, oppName: inputData.oppName, oppDescription: inputData.oppDescription, strategyMasterId: inputData.strategyMasterId.id}
       }).then(
@@ -102,6 +103,21 @@
 
     function selectFile(file) {
       console.log(file);
+      var fileName = file.name;
+      console.log(
+        "ValueSlice",
+        fileName.slice(fileName.indexOf(".") + 1, fileName.length + 1),
+        fileName.slice(0, fileName.indexOf("."))
+      );
+      vm.fileTypeName = fileName.slice(
+        fileName.indexOf(".") + 1,
+        fileName.length + 1
+      );
+      vm.uploadfileNameValue = fileName.slice(0, fileName.indexOf("."));
+      vm.fileTypeName = fileName.slice(
+        fileName.indexOf(".") + 1,
+        fileName.length + 1
+      );
       vm.fileUpload = file;
     }
 
