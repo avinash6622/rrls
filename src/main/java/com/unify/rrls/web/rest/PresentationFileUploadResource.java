@@ -189,10 +189,11 @@ public class PresentationFileUploadResource {
     }
 
     @GetMapping("/presentationList/getById")
-    public PresentationFileUpload getByPresentationId(@RequestParam(value = "id") Long id) {
+    public PresentationStrategyMapping getByPresentationId(@RequestParam(value = "id") Long id) {
         log.debug("REST request to get a page of Policies");
+        PresentationFileUpload presentationFileUpload = presentationFileUploadRepository.findById(id);
 
-        PresentationFileUpload presentaionValue = presentationFileUploadRepository.findById(id);
+        PresentationStrategyMapping presentaionValue = presentationStrategyRepository.findByPresentationFileUpload(presentationFileUpload);
         return presentaionValue;
 
 //        Page<PresentationFileUpload> page = presentationFileUploadRepository.findAll(pageable);

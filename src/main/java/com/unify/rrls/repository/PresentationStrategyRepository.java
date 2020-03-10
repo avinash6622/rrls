@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface PresentationStrategyRepository extends JpaRepository<PresentationStrategyMapping, Long>  {
 
-//    List<PresentationFileUpload> findByPresentationId(PresentationFileUpload presentationFileUpload);
+    PresentationStrategyMapping findByPresentationFileUpload(PresentationFileUpload presentationFileUpload);
 
     Page<PresentationStrategyMapping> findByStrategyMaster(StrategyMaster strategyMaster,Pageable pageable);
 
