@@ -103,9 +103,9 @@
           ]
         }
       })
-      .state("presentation-master-detail.upload", {
+      .state("presentation-master-detail.presentation-new", {
         parent: "presentation-master-detail",
-        url: "/new",
+        url: "/presentation-new",
         data: {
           authorities: ["User"],
           pageTitle: "Presentation Master"
@@ -157,46 +157,6 @@
             }
           ]
         }
-      })
-      .state("presentation-master-detail.edit", {
-        parent: "presentation-master-detail",
-        url: "/detail/edit",
-        data: {
-          authorities: ["User"]
-        },
-        onEnter: [
-          "$stateParams",
-          "$state",
-          "$uibModal",
-          function($stateParams, $state, $uibModal) {
-            $uibModal
-              .open({
-                templateUrl:
-                  "app/entities/presentation-fileupload/presentation-master-dialog.html",
-                controller: "PresentationMasterDialogController",
-                controllerAs: "vm",
-                backdrop: "static",
-                size: "t",
-                resolve: {
-                  entity: [
-                    "PresentationMaster",
-                    function(PresentationMaster) {
-                      return PresentationMaster.get({ id: $stateParams.id })
-                        .$promise;
-                    }
-                  ]
-                }
-              })
-              .result.then(
-                function() {
-                  $state.go("^", {}, { reload: false });
-                },
-                function() {
-                  $state.go("^");
-                }
-              );
-          }
-        ]
       })
       .state("presentation-master.edit", {
         parent: "presentation-master",
@@ -280,6 +240,60 @@
               );
           }
         ]
+      })
+      .state("presentation-master-detail.presentation-edit", {
+        parent: "presentation-master-detail",
+        url: "/presentation/{pId}/edit",
+        data: {
+          authorities: ["User"]
+        },
+        views: {
+          "content@": {
+            templateUrl:
+              "app/entities/presentation-fileupload/presentation-master-dialog.html",
+            controller: "PresentationMasterDialogController",
+            controllerAs: "vm"
+          }
+        },
+
+        params: {
+          page: {
+            value: "1",
+            squash: true
+          },
+          sort: {
+            value: "id,asc",
+            squash: true
+          }
+        },
+        resolve: {
+          /* entity: ['$stateParams', 'StrategyMaster', function($stateParams, StrategyMaster) {
+                    return StrategyMaster.get({id : $stateParams.id}).$promise;
+                }],*/
+          pagingParams: [
+            "$stateParams",
+            "PaginationUtil",
+            function($stateParams, PaginationUtil) {
+              return {
+                page: PaginationUtil.parsePage($stateParams.page),
+                sort: $stateParams.sort,
+                predicate: PaginationUtil.parsePredicate($stateParams.sort),
+                ascending: PaginationUtil.parseAscending($stateParams.sort)
+              };
+            }
+          ],
+          previousState: [
+            "$state",
+            function($state) {
+              var currentStateData = {
+                name: $state.current.name || "presentation-master",
+                params: $state.params,
+                url: $state.href($state.current.name, $state.params)
+              };
+              return currentStateData;
+            }
+          ]
+        }
       });
   }
 })();

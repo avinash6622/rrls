@@ -1,125 +1,118 @@
-<form
-    name="editForm"
-    role="form"
-    novalidate
-    ng-submit="vm.save()"
-    show-validation
->
-    <div class="modal-header">
-        <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-hidden="true"
-            ng-click="vm.clear()"
-        >
-            &times;
-        </button>
-        <h4 class="modal-title" id="myPresentationMasterLabel">
-            Strategy - Presentation & Brochure List
-        </h4>
-        <!-- <h4
-            class="modal-title"
-            id="myPresentationMasterLabel"
-            ng-show="!vm.presentationMaster.id"
-        >
-            Create Presentation
-        </h4>
-        <h4
-            class="modal-title"
-            id="myPresentationMasterLabel1"
-            ng-show="vm.presentationMaster.id"
-        >
-            Edit Presentation
-        </h4> -->
-    </div>
-    <div class="modal-body">
-        <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" ng-show="vm.presentationMaster.id">
-            <!-- <label for="id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                    ng-model="vm.strategyMaster.id" readonly />-->
-        </div>
+<div class="container">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="well wellDialog">
+            <div class="row">
+                <form
+                    name="editForm"
+                    role="form"
+                    novalidate
+                    ng-submit="vm.upload()"
+                >
+                    <div class="form-group">
+                        <div class="col-xs-3 pull-right">
+                            <button
+                                type="button"
+                                class="btn btn-info pull-right"
+                                ng-click="vm.clear()"
+                            >
+                                <span
+                                    class="glyphicon glyphicon-arrow-left"
+                                ></span
+                                ><span> Back</span>
+                            </button>
+                        </div>
+                        <h4 class="modal-title" id="myexternalResearchLabel">
+                            Upload Presentation / Brochure
+                        </h4>
+                    </div>
+                    <jhi-alert></jhi-alert>
+                    <jhi-alert-error></jhi-alert-error>
 
-        <div class="form-group">
-            <input
-                type="text"
-                class="form-control"
-                name="presentationName"
-                id="field_presentationName"
-                ng-model="vm.presentationMaster.presentationName"
-                required
-                ng-maxlength="40"
-                placeholder="Presentation Name"
-            />
-            <!--   <div ng-show="editForm.strategyName.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.strategyName.$error.required">
-                    This field is required.
-                </p>
-                <p class="help-block"
-                    ng-show="editForm.strategyName.$error.maxlength">
-                    This field cannot be longer than 40 characters.
-                </p>
-            </div>-->
-        </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>File Type</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="File type"
+                                    id="field_strategyName"
+                                    ng-model="vm.fileTypeName"
+                                    placeholder="File type"
+                                    disabled
+                                />
+                            </div>
+                            <div class="col-md-6">
+                                <label>File Name</label>
+                                <input
+                                    class="form-control ng-pristine ng-valid clearable"
+                                    ng-model="vm.uploadfileNameValue"
+                                    auto-complete="vm.autoCompleteOpportunity"
+                                    type="text"
+                                    placeholder="Select Opportunity Name"
+                                    disabled
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>File Description</label>
+                        <textarea
+                            type="text"
+                            class="form-control"
+                            id="fileid"
+                            name="fileid"
+                            ng-model="vm.fileDescriptionValue"
+                            placeholder="File Description"
+                        ></textarea>
+                    </div>
 
-        <div class="form-group" ng-show="vm.presentationMaster.id">
-            <input
-                type="text"
-                class="form-control"
-                name="Aum"
-                id="field_presentationAum"
-                ng-model="vm.presentationMaster.aum"
-                required
-                ng-maxlength="40"
-                placeholder="AUM"
-            />
-            <!--     <div ng-show="editForm.Aum.$invalid">
-                <p class="help-block"
-                   ng-show="editForm.Aum.$error.required">
-                    This field is required.
-                </p>
-                <p class="help-block"
-                   ng-show="editForm.Aum.$error.maxlength">
-                    This field cannot be longer than 40 characters.
-                </p>
-            </div>-->
-        </div>
+                    <div class="form-group">
+                        <label for="file_upload" class="btn btn-md btn-primary"
+                            >Choose File</label
+                        >
+                        {{vm.fileUploadnamevalue}}
+                        <input
+                            type="file"
+                            ngf-select="vm.selectFile($file)"
+                            name="file"
+                            style="display: none;"
+                            id="file_upload"
+                            ngf-pattern=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx,.docx,.doc,.log,.msg,.rtf,.txt,.csv,.dat,.pptx,.xml,.aif,.tif,.zip,.zipx,.rar,.pdf"
+                            accept=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx,.docx,.doc,.log,.msg,.rtf,.txt,.csv,.dat,.pptx,.xml,.aif,.tif,.zip,.zipx,.rar,.pdf"
+                            required=""
+                        />
+                    </div>
 
-        <!--   <div class="form-group" ng-show="vm.strategyMaster.id">
-
-            <input type="text" class="form-control" name="TotalStocks" id="field_strategyTotalStocks"
-                   ng-model="vm.strategyMaster.totalStocks"
-                   required ng-maxlength="40" placeholder="Total Stocks"/>
-           <div ng-show="editForm.TotalStocks.$invalid">
-                <p class="help-block"
-                   ng-show="editForm.TotalStocks.$error.required">
-                    This field is required.
-                </p>
-                <p class="help-block"
-                   ng-show="editForm.TotalStocks.$error.maxlength">
-                    This field cannot be longer than 40 characters.
-                </p>
+                    <div>
+                        <button
+                            type="button"
+                            class="btn btn-default"
+                            data-dismiss="modal"
+                            ng-click="vm.clear()"
+                            style="padding: 2px; padding-right:4px"
+                        >
+                            <span class="glyphicon glyphicon-ban-circle"></span
+                            >&nbsp;<span>Cancel</span>
+                        </button>
+                        <button
+                            type="submit"
+                            ng-disabled="editForm.$invalid || vm.isSaving"
+                            class="btn btn-primary"
+                            style="padding: 2px;padding-right:4px"
+                        >
+                            <span class="glyphicon glyphicon-save"></span
+                            >&nbsp;<span>Save</span>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
- -->
+        <footer class="footer footer-dark" ng-cloak>
+            <p data-translate="footer" style="font-size: 12px">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All
+                rights reserved.
+            </p>
+        </footer>
     </div>
-    <div class="modal-footer">
-        <button
-            type="button"
-            class="btn btn-default"
-            data-dismiss="modal"
-            ng-click="vm.clear()"
-        >
-            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
-                >Cancel</span
-            >
-        </button>
-        <button type="submit" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span
-                >Save</span
-            >
-        </button>
-    </div>
-</form>
+</div>

@@ -33,7 +33,7 @@
             <button
                 class="btn btn-md btn-warning pull-right"
                 type="button"
-                ui-sref="presentation-master-detail.upload"
+                ui-sref="presentation-master-detail.presentation-new"
             >
                 <span class="glyphicon glyphicon-plus"></span>
                 <span>
@@ -345,7 +345,7 @@
                                 </button>
                                 <button
                                     type="button"
-                                    ui-sref="presentation-master.edit({id:strategyMaster.id})"
+                                    ui-sref="presentation-master-detail.presentation-edit({id:strategyMaster.strategyMaster.id, pId: strategyMaster.presentationFileUpload.id})"
                                     class="btn btn-primary btn-sm"
                                     tooltip="edit"
                                     tooltip-placement="bottom"
