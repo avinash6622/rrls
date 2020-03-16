@@ -55,13 +55,15 @@ public class BrochureFileUploadResource {
     private final BrochureFileUploadRepository brochureFileUploadRepository;
     private final BorchureStrategyMappingRespository borchureStrategyMappingRespository;
     private final StrategyMasterRepository strategyMasterRepository;
+    private final NotificationServiceResource notificationServiceResource;
 
 
-    public BrochureFileUploadResource(BrochureFileUploadRepository brochureFileUploadRepository,BorchureStrategyMappingRespository borchureStrategyMappingRespository,StrategyMasterRepository strategyMasterRepository)
+    public BrochureFileUploadResource(BrochureFileUploadRepository brochureFileUploadRepository,BorchureStrategyMappingRespository borchureStrategyMappingRespository,StrategyMasterRepository strategyMasterRepository,NotificationServiceResource notificationServiceResource)
     {
         this.brochureFileUploadRepository=brochureFileUploadRepository;
         this.borchureStrategyMappingRespository=borchureStrategyMappingRespository;
         this.strategyMasterRepository=strategyMasterRepository;
+        this.notificationServiceResource=notificationServiceResource;
     }
 
     @RequestMapping(value = "/brochure/mainFileUploads", method = RequestMethod.POST)
@@ -72,6 +74,7 @@ public class BrochureFileUploadResource {
                                                                        @RequestParam(value="Strategy") Long strategyId,
                                                                        @RequestParam(value="fileDescription") String fileDescription) throws URISyntaxException, IOException, MissingServletRequestParameterException {
         log.debug("REST request to save FileUpload : {}");
+        String page="Brochure";
         System.out.println("id "+strategyId);
         String user;
         String sFilesDirectory;
@@ -118,6 +121,7 @@ public class BrochureFileUploadResource {
         borchureStrategyMappingRespository.save(brochureStrategyMapping);
 
 
+        notificationServiceResource.notificationHistorysave(brochureFileUploadResult.getFileName(), brochureFileUploadResult.getCreatedBy(), brochureFileUploadResult.getLastmodifiedBy(), brochureFileUploadResult.getCreatedDate(), "created", page, "", brochureFileUploadResult.getId(), Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
 
 
         return ResponseEntity.created(new URI("/api/brochure/mainFileUploads/" + brochureFileUploadResult.getId()))
@@ -165,6 +169,7 @@ public class BrochureFileUploadResource {
     @Timed
     public ResponseEntity<BrochureFileUpload> updateFileUpload(@Valid @RequestBody BrochureFileUpload brochureFileUpload) throws URISyntaxException {
         log.debug("REST request to update FileUpload : {}", brochureFileUpload);
+        String page="Brochure";
         if (brochureFileUpload.getId() == null) {
             //return createFileUpload(fileUpload);
         }
@@ -174,6 +179,8 @@ public class BrochureFileUploadResource {
         brochureFileUpload.setLastmodifiedBy(user);
 
         BrochureFileUpload result = brochureFileUploadRepository.save(brochureFileUpload);
+        notificationServiceResource.notificationHistorysave(result.getFileName(), result.getCreatedBy(), result.getLastmodifiedBy(), result.getCreatedDate(), "updated", page, "", result.getId(), Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
+
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, brochureFileUpload.getId().toString()))
             .body(result);

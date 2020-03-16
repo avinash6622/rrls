@@ -41,11 +41,13 @@ public class PresentationFileUploadResource {
     private final PresentationFileUploadRepository presentationFileUploadRepository;
     private final PresentationStrategyRepository presentationStrategyRepository;
     private final StrategyMasterRepository strategyMasterRepository;
+    private final NotificationServiceResource notificationServiceResource;
 
-    public PresentationFileUploadResource(PresentationFileUploadRepository presentationFileUploadRepository, PresentationStrategyRepository presentationStrategyRepository, StrategyMasterRepository strategyMasterRepository) {
+    public PresentationFileUploadResource(PresentationFileUploadRepository presentationFileUploadRepository, PresentationStrategyRepository presentationStrategyRepository, StrategyMasterRepository strategyMasterRepository,NotificationServiceResource notificationServiceResource) {
         this.presentationFileUploadRepository = presentationFileUploadRepository;
         this.presentationStrategyRepository = presentationStrategyRepository;
         this.strategyMasterRepository = strategyMasterRepository;
+        this.notificationServiceResource=notificationServiceResource;
     }
 
     private byte[] fileStream;
@@ -87,6 +89,8 @@ public class PresentationFileUploadResource {
                                                                    @RequestParam(value = "Strategy") Long strategyId,
                                                                    @RequestParam(value = "fileDescription") String fileDescription) throws URISyntaxException, IOException, MissingServletRequestParameterException {
         log.debug("REST request to save FileUpload : {}");
+        String page = "Presentation";
+
         System.out.println("id " + strategyId);
         String user;
         String sFilesDirectory;
@@ -132,8 +136,7 @@ public class PresentationFileUploadResource {
         presentationStrategyRepository.save(presentationStrategyMapping);
 
 
-        System.out.println("preserntation" + presentationFileUpload.getFileDesc());
-
+        notificationServiceResource.notificationHistorysave(presentationFileUploadResult.getFileName(), presentationFileUploadResult.getCreatedBy(), presentationFileUploadResult.getLastmodifiedBy(), presentationFileUpload.getCreatedDate(), "created", page, "", presentationFileUpload.getId(), Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
 
         return ResponseEntity.created(new URI("/api/presentation-file-uploads/" + presentationFileUploadResult.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, presentationFileUploadResult.getId().toString()))
@@ -151,7 +154,7 @@ public class PresentationFileUploadResource {
                                                                          @RequestParam(value = "id") Long id,
                                                                          @RequestParam(value = "filepath",required = false) String filePath) throws URISyntaxException, IOException, MissingServletRequestParameterException {
         log.debug("REST request to save FileUpload : {}");
-
+        String page="Presentation";
         String user;
         String sFilesDirectory;
 
@@ -188,6 +191,9 @@ public class PresentationFileUploadResource {
         presentationFileUpload.setId(id);
 
         presentationFileUploadResult = presentationFileUploadRepository.save(presentationFileUpload);
+
+
+        notificationServiceResource.notificationHistorysave(presentationFileUploadResult.getFileName(), presentationFileUploadResult.getCreatedBy(), presentationFileUploadResult.getLastmodifiedBy(), presentationFileUploadResult.getCreatedDate(), "updated", page, "", presentationFileUploadResult.getId(), Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
 
         System.out.println("presentationFileUploadResult"+presentationFileUploadResult.getFileDesc());
         return ResponseEntity.created(new URI("/api/presentation-file-uploads/" + presentationFileUploadResult.getId()))
@@ -249,6 +255,7 @@ public class PresentationFileUploadResource {
     @Timed
     public ResponseEntity<PresentationFileUpload> updateFileUpload(@Valid @RequestBody PresentationFileUpload presentationFileUpload) throws URISyntaxException {
         log.debug("REST request to update FileUpload : {}", presentationFileUpload);
+        String page="Presentation";
         if (presentationFileUpload.getId() == null) {
             //return createFileUpload(fileUpload);
         }
@@ -258,8 +265,11 @@ public class PresentationFileUploadResource {
         presentationFileUpload.setLastmodifiedBy(user);
 
         PresentationFileUpload result = presentationFileUploadRepository.save(presentationFileUpload);
+
+
+
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, presentationFileUpload.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -267,6 +277,7 @@ public class PresentationFileUploadResource {
     @Timed
     public ResponseEntity<Void> deletePresentationFileUpload(@RequestParam(value = "strategyId") Long strategyId, @RequestParam(value = "presentationId") Long presentationId) {
         log.debug("REST request to delete FileUpload : {}", presentationId, strategyId);
+        String page="Deleted";
         System.out.println("strategyId Presentaiotid" + strategyId + presentationId);
         StrategyMaster strategyMaster = strategyMasterRepository.findById(strategyId);
         if (strategyMaster.getTotalPresentation() != 0) {
@@ -279,6 +290,9 @@ public class PresentationFileUploadResource {
         strategyMasterRepository.save(strategyMaster);
         presentationStrategyRepository.deleteByPresentationIdAndStrategyId(presentationId, strategyId);
         presentationFileUploadRepository.delete(presentationId);
+
+//        notificationServiceResource.notificationHistorysave(presentationFileUploadResult.getFileName(), presentationFileUploadResult.getCreatedBy(), presentationFileUploadResult.getLastmodifiedBy(), presentationFileUpload.getCreatedDate(), "created", page, "", presentationFileUpload.getId(), Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
+
 
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, presentationId.toString())).build();
     }

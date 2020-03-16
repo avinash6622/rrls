@@ -56,16 +56,18 @@ public class BrochureSupportedFileUploadResource {
     @Autowired
     private final BrochureSupportedFileRepository brochureSupportedFileRepository;
     private final BrochureFileUploadRepository brochureFileUploadRepository;
+    private final NotificationServiceResource notificationServiceResource;
 
     private final BorchureStrategyMappingRespository borchureStrategyMappingRespository;
     private final StrategyMasterRepository strategyMasterRepository;
 
-    public BrochureSupportedFileUploadResource(BrochureSupportedFileRepository brochureSupportedFileRepository, BrochureFileUploadRepository brochureFileUploadRepository,BorchureStrategyMappingRespository borchureStrategyMappingRespository,StrategyMasterRepository strategyMasterRepository)
+    public BrochureSupportedFileUploadResource(BrochureSupportedFileRepository brochureSupportedFileRepository, BrochureFileUploadRepository brochureFileUploadRepository,BorchureStrategyMappingRespository borchureStrategyMappingRespository,StrategyMasterRepository strategyMasterRepository,NotificationServiceResource notificationServiceResource)
     {
         this.brochureSupportedFileRepository=brochureSupportedFileRepository;
         this.borchureStrategyMappingRespository=borchureStrategyMappingRespository;
         this.strategyMasterRepository=strategyMasterRepository;
         this.brochureFileUploadRepository=brochureFileUploadRepository;
+        this.notificationServiceResource=notificationServiceResource;
     }
 
     @RequestMapping(value = "/brochure/supportedFileUploads", method = RequestMethod.POST)
@@ -77,6 +79,7 @@ public class BrochureSupportedFileUploadResource {
                                                                             @RequestParam(value="fileDescription") String fileDescription,
                                                                             @RequestParam (value="brochure_id") Long borchureId) throws URISyntaxException, IOException, MissingServletRequestParameterException {
         log.debug("REST request to save FileUpload : {}");
+        String page="Brochure Support files";
         System.out.println("id "+borchureId);
         BrochureFileUpload brochureFileUpload = brochureFileUploadRepository.findById(borchureId);
 
@@ -122,6 +125,7 @@ public class BrochureSupportedFileUploadResource {
 //        borchureStrategyMappingRespository.save(brochureStrategyMapping);
 
 
+        notificationServiceResource.notificationHistorysave(brochureSupportingFilesResult.getFileName(), brochureSupportingFilesResult.getCreatedBy(), brochureSupportingFilesResult.getLastmodifiedBy(), brochureSupportingFilesResult.getCreatedDate(), "created", page, "", brochureSupportingFilesResult.getId(), Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
 
 
         return ResponseEntity.created(new URI("/api/brochure/mainFileUploads/" + brochureSupportingFilesResult.getId()))
@@ -158,6 +162,7 @@ public class BrochureSupportedFileUploadResource {
     @Timed
     public ResponseEntity<BrochureSupportingFiles> updateFileUpload(@Valid @RequestBody BrochureSupportingFiles brochureSupportingFiles) throws URISyntaxException {
         log.debug("REST request to update FileUpload : {}", brochureSupportingFiles);
+        String page="Brochure Support files";
         if (brochureSupportingFiles.getId() == null) {
             //return createFileUpload(fileUpload);
         }
@@ -167,6 +172,8 @@ public class BrochureSupportedFileUploadResource {
         brochureSupportingFiles.setLastmodifiedBy(user);
 
         BrochureSupportingFiles result = brochureSupportedFileRepository.save(brochureSupportingFiles);
+        notificationServiceResource.notificationHistorysave(result.getFileName(), result.getCreatedBy(), result.getLastmodifiedBy(), result.getCreatedDate(), "updated", page, "", result.getId(), Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
+
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, brochureSupportingFiles.getId().toString()))
             .body(result);
