@@ -190,6 +190,8 @@ public class BrochureFileUploadResource {
     @Timed
     public ResponseEntity<Void> deleteBrochureMainFileUpload(@RequestParam(value ="strategyId") Long strategyId, @RequestParam (value ="borchureId") Long brochureId) {
         log.debug("REST request to delete FileUpload : {}", brochureId,strategyId);
+        String page="Brochure";
+
         System.out.println("strategyId Presentaiotid"+strategyId +brochureId);
         StrategyMaster strategyMaster = strategyMasterRepository.findById(strategyId);
         if (strategyMaster.getTotalBrochure() != 0) {
@@ -199,9 +201,13 @@ public class BrochureFileUploadResource {
             strategyMaster.setTotalBrochure(0);
 
         }
+        BrochureFileUpload brochureFileUpload = brochureFileUploadRepository.findById(brochureId);
+
         strategyMasterRepository.save(strategyMaster);
         borchureStrategyMappingRespository.deleteByBrochureIdAndStrategyId(brochureId,strategyId);
         brochureFileUploadRepository.delete(brochureId);
+
+        notificationServiceResource.notificationHistorysave(brochureFileUpload.getFileName(), brochureFileUpload.getCreatedBy(), brochureFileUpload.getLastmodifiedBy(), brochureFileUpload.getCreatedDate(), "delegated", page, "", brochureFileUpload.getId(), Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
 
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, brochureId.toString())).build();
     }

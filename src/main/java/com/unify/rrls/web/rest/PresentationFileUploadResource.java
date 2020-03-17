@@ -277,7 +277,7 @@ public class PresentationFileUploadResource {
     @Timed
     public ResponseEntity<Void> deletePresentationFileUpload(@RequestParam(value = "strategyId") Long strategyId, @RequestParam(value = "presentationId") Long presentationId) {
         log.debug("REST request to delete FileUpload : {}", presentationId, strategyId);
-        String page="Deleted";
+        String page="Presentation";
         System.out.println("strategyId Presentaiotid" + strategyId + presentationId);
         StrategyMaster strategyMaster = strategyMasterRepository.findById(strategyId);
         if (strategyMaster.getTotalPresentation() != 0) {
@@ -287,11 +287,13 @@ public class PresentationFileUploadResource {
             strategyMaster.setTotalPresentation(0);
 
         }
+        PresentationFileUpload presentationFileUpload = presentationFileUploadRepository.findById(presentationId);
+
         strategyMasterRepository.save(strategyMaster);
         presentationStrategyRepository.deleteByPresentationIdAndStrategyId(presentationId, strategyId);
         presentationFileUploadRepository.delete(presentationId);
 
-//        notificationServiceResource.notificationHistorysave(presentationFileUploadResult.getFileName(), presentationFileUploadResult.getCreatedBy(), presentationFileUploadResult.getLastmodifiedBy(), presentationFileUpload.getCreatedDate(), "created", page, "", presentationFileUpload.getId(), Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
+        notificationServiceResource.notificationHistorysave(presentationFileUpload.getFileName(), presentationFileUpload.getCreatedBy(), presentationFileUpload.getLastmodifiedBy(), presentationFileUpload.getCreatedDate(), "delegated", page, "", presentationFileUpload.getId(), Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
 
 
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, presentationId.toString())).build();
