@@ -45,6 +45,9 @@
     vm.predicate = pagingParams.predicate;
     vm.reverse = true;
     vm.page = 1;
+    var data = new Date("2020-03-06T09:30:47Z");
+    console.log("date", data.toLocaleDateString());
+
     console.log("valueeee", $scope.toStateParams.id);
     //  vm.opportunitySummaryData = vm.strategyMaster.opportunitySummaryData;
 
@@ -65,15 +68,27 @@
     vm.links = {
       last: 0
     };
+    vm.PresentationFlag = true;
+    vm.BrochureFlag = false;
     vm.predicate = "id";
     vm.reset = reset;
     vm.reverse = true;
+    vm.getdate = "";
     vm.reverse = pagingParams.ascending;
     vm.predicate = pagingParams.predicate;
     vm.transition = transition;
     vm.presentationvalues = [];
     vm.loader = false;
-
+    vm.fixedCollapse = fixedCollapse;
+    vm.getBrochureData = getBrochureData;
+    vm.getBrochureDataValues = [];
+    vm.getBrochureDataValuesSupportFile = [];
+    vm.presentationFunRun = presentationFun;
+    vm.brochureFunRun = brochureFun;
+    vm.brochureFileUploadSupportData = {};
+    vm.getProperdate = getProperdateValue;
+    // vm.PresentationFlag = PresentationFlag;
+    // vm.BrochureFlag = BrochureFlag;
     loadAll();
 
     setTimeout(function() {
@@ -85,6 +100,7 @@
     function loadAll() {
       console.log("urlValue", $state.params);
       console.log("eqweqeqwqewe");
+      getBrochureData();
       PresentationMaster.getPresentationDetail(
         {
           page: pagingParams.page - 1,
@@ -94,6 +110,113 @@
         onSuccess,
         onError
       );
+    }
+
+    function fixedCollapse(index, state, val) {
+      console.log("Value in click");
+      vm.getBrochureDataValues.forEach(function(value, key) {
+        if (key === index) {
+          value.expanded = state;
+        } else {
+          value.expanded = false;
+        }
+      });
+      vm.edit = true;
+    }
+
+    // vm.getExactData = getExactData;
+
+    // function getExactData() {
+    //   return new Date("2015-03-25T12:00:00Z");
+    // }
+
+    function presentationFun() {
+      console.log("presentationFun");
+      vm.BrochureFlag = false;
+      vm.PresentationFlag = true;
+    }
+
+    function getProperdateValue() {
+      console.log("Heloooooooooooooooooooooooooooooooooooooooo");
+    }
+    // function getProperdateValue(_data) {
+    //   console.log("varen");
+    //   var data = new Date(_data);
+    //   // vm.getdate = data.toLocaleDateString();
+    //   return data.toLocaleDateString();
+    //   //console.log("getdate", vm.getdate);
+    // }
+    function brochureFun() {
+      console.log("brochureFun");
+      vm.PresentationFlag = false;
+      vm.BrochureFlag = true;
+    }
+
+    // var app = angular.module("myApp", []);
+
+    function getBrochureData() {
+      // var brochureFileUploadSupportData = [];
+      console.log("data");
+      return $http
+        .get(
+          "/api/brochureMainFileList/viewByStrategy?strategyId=" +
+            $scope.toStateParams.id
+        )
+        .then(function(response) {
+          //var data = [];
+          console.log("response in getBrochureData");
+          console.log("getBrochureDataList", response);
+          vm.getBrochureDataValues = response.data;
+          vm.getBrochureDataValues.forEach((data, index) => {
+            console.log(
+              "123",
+              data.brochureFileUpload.brochureSupportingFiles.length,
+              "index" + index
+            );
+
+            if (data.brochureFileUpload.brochureSupportingFiles.length == 0) {
+              vm.brochureFileUploadSupportData[index] = {};
+              console.log(
+                "vm.brochureFileUploadSupportData",
+                vm.brochureFileUploadSupportData,
+                "lenght",
+                vm.brochureFileUploadSupportData.length
+              );
+            } else if (
+              data.brochureFileUpload.brochureSupportingFiles.length != 0
+            ) {
+              vm.brochureFileUploadSupportData[index] = {};
+              data.brochureFileUpload.brochureSupportingFiles.forEach(
+                (data, ident) => {
+                  console.log("data", data);
+                  vm.brochureFileUploadSupportData[index] = data;
+                  console.log("vm.brochure", vm.brochureFileUploadSupportData);
+                }
+              );
+            }
+          });
+          console.log("getBrochureDataValues", vm.getBrochureDataValues);
+          // loadAll();
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
+
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+      console.log("acc", acc, "i", i);
+      acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        }
+      });
     }
 
     $scope.deleteConfirm = function(_data) {
@@ -108,6 +231,34 @@
             "/api/presentationFile/delete?strategyId=" +
               $scope.toStateParams.id +
               "&presentationId=" +
+              _data
+          )
+          .then(function(response) {
+            console.log("response in delete");
+            console.log(response);
+            loadAll();
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      } else {
+        txt = "You pressed Cancel!";
+      }
+      // document.getElementById("demo").innerHTML = txt;
+    };
+
+    $scope.deleteBrochureConfirm = function(_data) {
+      console.log("am calling brochure", _data, "$scope.params.id");
+      var txt;
+      if (confirm("Do you want to delete it?")) {
+        txt = "You pressed OK!";
+        // console.log("confidential letter");
+        //console.log(confidentialLetter);
+        return $http
+          .delete(
+            "/api/brochureMainFile/delete?strategyId=" +
+              $scope.toStateParams.id +
+              "&borchureId=" +
               _data
           )
           .then(function(response) {

@@ -4,11 +4,11 @@
   angular
     .module("researchRepositoryLearningSystemApp")
     .controller(
-      "PresentationMasterDialogController",
-      PresentationMasterDialogController
+      "PresentationBrochureMasterDialogController",
+      PresentationBrochureMasterDialogController
     );
 
-  PresentationMasterDialogController.$inject = [
+  PresentationBrochureMasterDialogController.$inject = [
     "$timeout",
     "$scope",
     "$stateParams",
@@ -18,7 +18,7 @@
     "PresentationMaster"
   ];
 
-  function PresentationMasterDialogController(
+  function PresentationBrochureMasterDialogController(
     $timeout,
     $scope,
     $stateParams,
@@ -39,7 +39,7 @@
     // vm.save = save;
     vm.selectFile = selectFile;
     vm.upload = upload;
-    vm.presentationId = "";
+    vm.brochureId = "";
     vm.fileUploadSction = "";
     getDataFromId();
 
@@ -58,7 +58,7 @@
     function getDataFromId() {
       console.log("getDataFromId");
       return $http
-        .get("/api/presentationList/getById?id=" + $stateParams.pId)
+        .get("/api/brochureMainFileList/getById?id=" + $stateParams.bId)
         .then(function(response) {
           console.log("Get Api response", response);
           // loadAll();
@@ -73,13 +73,11 @@
           // vm.fileUpload.name =
           //   _data.data.fileName + "." + _data.data.fileContentType;
           vm.fileUploadnamevalue =
-            _data.data.presentationFileUpload.fileName +
-            "." +
-            _data.data.presentationFileUpload.fileContentType;
-          vm.fileDescriptionValue = _data.data.presentationFileUpload.fileDesc;
-          vm.uploadfileNameValue = _data.data.presentationFileUpload.fileName;
-          vm.fileTypeName = _data.data.presentationFileUpload.fileContentType;
-          vm.presentationId = _data.data.presentationFileUpload.id;
+            _data.data.fileName + "." + _data.data.fileContentType;
+          vm.fileDescriptionValue = _data.data.fileDesc;
+          vm.uploadfileNameValue = _data.data.fileName;
+          vm.fileTypeName = _data.data.fileContentType;
+          vm.brochureId = _data.data.id;
         })
         .catch(function(error) {
           console.log(error);
@@ -92,16 +90,24 @@
 
       Upload.upload({
         // url: "api/confidenctial-letters",
-        url: "/api/presentation/update/fileUploads",
+        url: "/api/brochureMainFile/Update",
         method: "PUT",
-        data: { fileUploads: vm.fileUploadSction },
         params: {
-          filetype: vm.fileTypeName,
-          uploadfileName: vm.uploadfileNameValue,
-          Strategy: $stateParams.id,
-          fileDescription: vm.fileDescriptionValue,
-          id: vm.presentationId
-        } // {oppCode: inputData.oppCode, oppName: inputData.oppName, oppDescription: inputData.oppDescription, strategyMasterId: inputData.strategyMasterId.id}
+          brochureFileUpload: {
+            fileContentType: vm.fileTypeName,
+            fileName: vm.uploadfileNameValue,
+            fileDesc: vm.fileDescriptionValue,
+            id: vm.brochureId
+          }
+        }
+
+        // params: {
+        //   filetype: vm.fileTypeName,
+        //   uploadfileName: vm.uploadfileNameValue,
+        //   Strategy: $stateParams.id,
+        //   fileDescription: vm.fileDescriptionValue,
+        //   id: vm.brochureId
+        // }
       }).then(
         function(resp) {
           if (resp.status == 201) {

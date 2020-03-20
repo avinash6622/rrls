@@ -158,48 +158,212 @@
           ]
         }
       })
-      .state("presentation-master.edit", {
-        parent: "presentation-master",
-        url: "/{id}/edit",
+      .state("presentation-master-detail.brochure-new", {
+        parent: "presentation-master-detail",
+        url: "/brochure-new",
+        data: {
+          authorities: ["User"],
+          pageTitle: "Presentation Master"
+        },
+        views: {
+          "content@": {
+            templateUrl:
+              "app/entities/presentation-fileupload/brochure-master-upload.html",
+            controller: "PresentationBrochureMasterUploadController",
+            controllerAs: "vm"
+          }
+        },
+
+        params: {
+          page: {
+            value: "1",
+            squash: true
+          },
+          sort: {
+            value: "id,asc",
+            squash: true
+          }
+        },
+        resolve: {
+          /* entity: ['$stateParams', 'StrategyMaster', function($stateParams, StrategyMaster) {
+                    return StrategyMaster.get({id : $stateParams.id}).$promise;
+                }],*/
+          pagingParams: [
+            "$stateParams",
+            "PaginationUtil",
+            function($stateParams, PaginationUtil) {
+              return {
+                page: PaginationUtil.parsePage($stateParams.page),
+                sort: $stateParams.sort,
+                predicate: PaginationUtil.parsePredicate($stateParams.sort),
+                ascending: PaginationUtil.parseAscending($stateParams.sort)
+              };
+            }
+          ],
+          previousState: [
+            "$state",
+            function($state) {
+              var currentStateData = {
+                name: $state.current.name || "presentation-master",
+                params: $state.params,
+                url: $state.href($state.current.name, $state.params)
+              };
+              return currentStateData;
+            }
+          ]
+        }
+      })
+      .state("presentation-master-detail.brochuresupportfile-new", {
+        parent: "presentation-master-detail",
+        url: "/brochure-supportfile-new/{bId}/create",
         data: {
           authorities: ["User"]
         },
-        onEnter: [
-          "$stateParams",
-          "$state",
-          "$uibModal",
-          function($stateParams, $state, $uibModal) {
-            $uibModal
-              .open({
-                templateUrl:
-                  "app/entities/presentation-fileupload/presentation-master-dialog.html",
-                controller: "PresentationMasterDialogController",
-                controllerAs: "vm",
-                backdrop: "static",
-                size: "lg",
-                resolve: {
-                  entity: [
-                    "PresentationMaster",
-                    function(PresentationMaster) {
-                      return PresentationMaster.get({ id: $stateParams.id })
-                        .$promise;
-                    }
-                  ]
-                }
-              })
-              .result.then(
-                function() {
-                  $state.go("presentation-master", null, {
-                    reload: "presentation-master"
-                  });
-                },
-                function() {
-                  $state.go("^");
-                }
-              );
+        views: {
+          "content@": {
+            templateUrl:
+              "app/entities/presentation-fileupload/brochure-master-supportingfile-upload.html",
+            controller: "PresentationBrochureMasterSupportFileUploadController",
+            controllerAs: "vm"
           }
-        ]
+        },
+
+        params: {
+          page: {
+            value: "1",
+            squash: true
+          },
+          sort: {
+            value: "id,asc",
+            squash: true
+          }
+        },
+        resolve: {
+          /* entity: ['$stateParams', 'StrategyMaster', function($stateParams, StrategyMaster) {
+                    return StrategyMaster.get({id : $stateParams.id}).$promise;
+                }],*/
+          pagingParams: [
+            "$stateParams",
+            "PaginationUtil",
+            function($stateParams, PaginationUtil) {
+              return {
+                page: PaginationUtil.parsePage($stateParams.page),
+                sort: $stateParams.sort,
+                predicate: PaginationUtil.parsePredicate($stateParams.sort),
+                ascending: PaginationUtil.parseAscending($stateParams.sort)
+              };
+            }
+          ],
+          previousState: [
+            "$state",
+            function($state) {
+              var currentStateData = {
+                name: $state.current.name || "presentation-master",
+                params: $state.params,
+                url: $state.href($state.current.name, $state.params)
+              };
+              return currentStateData;
+            }
+          ]
+        }
       })
+      // .state("presentation-master.brochuresupportfile-new", {
+      //   parent: "presentation-master",
+      //   url: "/brochure-supportfile-new/{bid}/create",
+      //   data: {
+      //     authorities: ["User"],
+      //     pageTitle: "Presentation Master"
+      //   },
+      //   views: {
+      //     "content@": {
+      //       templateUrl:
+      //         "app/entities/presentation-fileupload/brochure-master-supportingfile-upload.html",
+      //       controller: "PresentationBrochureMasterSupportFileUploadController",
+      //       controllerAs: "vm"
+      //     }
+      //   },
+
+      //   params: {
+      //     page: {
+      //       value: "1",
+      //       squash: true
+      //     },
+      //     sort: {
+      //       value: "id,asc",
+      //       squash: true
+      //     }
+      //   },
+      //   resolve: {
+      //     /* entity: ['$stateParams', 'StrategyMaster', function($stateParams, StrategyMaster) {
+      //               return StrategyMaster.get({id : $stateParams.id}).$promise;
+      //           }],*/
+      //     pagingParams: [
+      //       "$stateParams",
+      //       "PaginationUtil",
+      //       function($stateParams, PaginationUtil) {
+      //         return {
+      //           page: PaginationUtil.parsePage($stateParams.page),
+      //           sort: $stateParams.sort,
+      //           predicate: PaginationUtil.parsePredicate($stateParams.sort),
+      //           ascending: PaginationUtil.parseAscending($stateParams.sort)
+      //         };
+      //       }
+      //     ],
+      //     previousState: [
+      //       "$state",
+      //       function($state) {
+      //         var currentStateData = {
+      //           name: $state.current.name || "presentation-master",
+      //           params: $state.params,
+      //           url: $state.href($state.current.name, $state.params)
+      //         };
+      //         return currentStateData;
+      //       }
+      //     ]
+      //   }
+      // })
+      // .state("presentation-master.edit", {
+      //   parent: "presentation-master",
+      //   url: "/{id}/edit",
+      //   data: {
+      //     authorities: ["User"]
+      //   },
+      //   onEnter: [
+      //     "$stateParams",
+      //     "$state",
+      //     "$uibModal",
+      //     function($stateParams, $state, $uibModal) {
+      //       $uibModal
+      //         .open({
+      //           templateUrl:
+      //             "app/entities/presentation-fileupload/presentation-master-dialog.html",
+      //           controller: "PresentationMasterDialogController",
+      //           controllerAs: "vm",
+      //           backdrop: "static",
+      //           size: "lg",
+      //           resolve: {
+      //             entity: [
+      //               "PresentationMaster",
+      //               function(PresentationMaster) {
+      //                 return PresentationMaster.get({ id: $stateParams.id })
+      //                   .$promise;
+      //               }
+      //             ]
+      //           }
+      //         })
+      //         .result.then(
+      //           function() {
+      //             $state.go("presentation-master", null, {
+      //               reload: "presentation-master"
+      //             });
+      //           },
+      //           function() {
+      //             $state.go("^");
+      //           }
+      //         );
+      //     }
+      //   ]
+      // })
       .state("presentation-master-detail.delete", {
         parent: "presentation-master-detail",
         url: "/{id}/delete",
@@ -252,6 +416,114 @@
             templateUrl:
               "app/entities/presentation-fileupload/presentation-master-dialog.html",
             controller: "PresentationMasterDialogController",
+            controllerAs: "vm"
+          }
+        },
+
+        params: {
+          page: {
+            value: "1",
+            squash: true
+          },
+          sort: {
+            value: "id,asc",
+            squash: true
+          }
+        },
+        resolve: {
+          /* entity: ['$stateParams', 'StrategyMaster', function($stateParams, StrategyMaster) {
+                    return StrategyMaster.get({id : $stateParams.id}).$promise;
+                }],*/
+          pagingParams: [
+            "$stateParams",
+            "PaginationUtil",
+            function($stateParams, PaginationUtil) {
+              return {
+                page: PaginationUtil.parsePage($stateParams.page),
+                sort: $stateParams.sort,
+                predicate: PaginationUtil.parsePredicate($stateParams.sort),
+                ascending: PaginationUtil.parseAscending($stateParams.sort)
+              };
+            }
+          ],
+          previousState: [
+            "$state",
+            function($state) {
+              var currentStateData = {
+                name: $state.current.name || "presentation-master",
+                params: $state.params,
+                url: $state.href($state.current.name, $state.params)
+              };
+              return currentStateData;
+            }
+          ]
+        }
+      })
+      .state("presentation-master-detail.brochure-edit", {
+        parent: "presentation-master-detail",
+        url: "/brochure/{bId}/edit",
+        data: {
+          authorities: ["User"]
+        },
+        views: {
+          "content@": {
+            templateUrl:
+              "app/entities/presentation-fileupload/brochure-master-dialog.html",
+            controller: "PresentationBrochureMasterDialogController",
+            controllerAs: "vm"
+          }
+        },
+
+        params: {
+          page: {
+            value: "1",
+            squash: true
+          },
+          sort: {
+            value: "id,asc",
+            squash: true
+          }
+        },
+        resolve: {
+          /* entity: ['$stateParams', 'StrategyMaster', function($stateParams, StrategyMaster) {
+                    return StrategyMaster.get({id : $stateParams.id}).$promise;
+                }],*/
+          pagingParams: [
+            "$stateParams",
+            "PaginationUtil",
+            function($stateParams, PaginationUtil) {
+              return {
+                page: PaginationUtil.parsePage($stateParams.page),
+                sort: $stateParams.sort,
+                predicate: PaginationUtil.parsePredicate($stateParams.sort),
+                ascending: PaginationUtil.parseAscending($stateParams.sort)
+              };
+            }
+          ],
+          previousState: [
+            "$state",
+            function($state) {
+              var currentStateData = {
+                name: $state.current.name || "presentation-master",
+                params: $state.params,
+                url: $state.href($state.current.name, $state.params)
+              };
+              return currentStateData;
+            }
+          ]
+        }
+      })
+      .state("presentation-master-detail.brochure-supportfile-edit", {
+        parent: "presentation-master-detail",
+        url: "/brochuresupportfile/{bId}/edit",
+        data: {
+          authorities: ["User"]
+        },
+        views: {
+          "content@": {
+            templateUrl:
+              "app/entities/presentation-fileupload/brochure-master-supportfileupdate-dialog.html",
+            controller: "PresentationBrochureSupportFileUpdateDialogController",
             controllerAs: "vm"
           }
         },

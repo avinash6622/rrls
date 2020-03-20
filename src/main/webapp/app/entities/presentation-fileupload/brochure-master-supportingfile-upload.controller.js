@@ -4,11 +4,11 @@
   angular
     .module("researchRepositoryLearningSystemApp")
     .controller(
-      "PresentationMasterUploadController",
-      PresentationMasterUploadController
+      "PresentationBrochureMasterSupportFileUploadController",
+      PresentationBrochureMasterSupportFileUploadController
     );
 
-  PresentationMasterUploadController.$inject = [
+  PresentationBrochureMasterSupportFileUploadController.$inject = [
     "OpportunityMaster",
     "Principal",
     "$state",
@@ -20,7 +20,7 @@
     "Upload"
   ];
 
-  function PresentationMasterUploadController(
+  function PresentationBrochureMasterSupportFileUploadController(
     OpportunityMaster,
     Principal,
     $state,
@@ -80,14 +80,15 @@
         vm.fileUpload.name
       );
       Upload.upload({
-        url: "api/presentation-file-uploads",
-        data: { file: vm.fileUpload },
+        url: "api/brochure/supportedFileUploads",
+        data: { fileUploads: vm.fileUpload },
         params: {
           filetype: vm.fileTypeName,
           uploadfileName: vm.uploadfileNameValue,
           Strategy: $state.params.id,
-          fileDescription: vm.fileDescriptionValue
-        }
+          fileDescription: vm.fileDescriptionValue,
+          brochure_id: $state.params.bId
+        } // {oppCode: inputData.oppCode, oppName: inputData.oppName, oppDescription: inputData.oppDescription, strategyMasterId: inputData.strategyMasterId.id}
       }).then(
         function(resp) {
           if (resp.status == 201) {
