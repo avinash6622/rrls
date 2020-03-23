@@ -40,6 +40,7 @@
     vm.selectFile = selectFile;
     vm.upload = upload;
     vm.brochureId = "";
+    vm.brochureSupportingFiles = {};
     vm.fileUploadSction = "";
     getDataFromId();
 
@@ -63,6 +64,7 @@
           console.log("Get Api response", response);
           // loadAll();
           var _data = response;
+
           var filepathStartIndex = _data.data.filePath;
 
           console.log(
@@ -85,42 +87,49 @@
     }
 
     function upload() {
-      var selectitem = $scope.selitem;
-      vm.isSaving = true;
-
-      Upload.upload({
-        // url: "api/confidenctial-letters",
-        url: "/api/brochureSupportingFile/Update",
-        method: "PUT",
-        params: {
-          brochureFileUpload: {
-            fileContentType: vm.fileTypeName,
-            fileName: vm.uploadfileNameValue,
-            fileDesc: vm.fileDescriptionValue,
-            id: vm.brochureId
-          }
-        }
-
-        // params: {
-        //   filetype: vm.fileTypeName,
-        //   uploadfileName: vm.uploadfileNameValue,
-        //   Strategy: $stateParams.id,
-        //   fileDescription: vm.fileDescriptionValue,
-        //   id: vm.brochureId
-        // }
-      }).then(
-        function(resp) {
-          if (resp.status == 201) {
-          }
-        },
-        function(resp) {
-          console.log("resp", resp);
-        },
-        function(evt) {
-          console.log("evt", evt);
-        }
-      );
+      console.log("upload");
+      vm.brochureFileUpload.fileDesc = vm.fileDescriptionValue;
+      return $http
+        .put("/api/brochureSupportingFile/Update", vm.brochureFileUpload)
+        .then(function(response) {
+          console.log("vm.brochureFileUpload Api response", response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
+
+    // function upload() {
+    //   var selectitem = $scope.selitem;
+    //   vm.isSaving = true;
+    //   // var brochureFileUpload = {};
+    //   vm.brochureFileUpload = {
+    //     fileContentType: vm.fileTypeName,
+    //     fileName: vm.uploadfileNameValue,
+    //     fileDesc: vm.fileDescriptionValue,
+    //     id: vm.brochureId,
+    //     brochureSupportingFiles: vm.brochureSupportingFiles
+    //   };
+
+    //   console.log("brochureFileUploaduploaddata", vm.brochureFileUpload);
+    //   Upload.upload({
+    //     url: "/api/brochureSupportingFile/Update",
+    //     method: "PUT",
+    //     body: vm.brochureFileUpload
+
+    //   }).then(
+    //     function(resp) {
+    //       if (resp.status == 201) {
+    //       }
+    //     },
+    //     function(resp) {
+    //       console.log("resp", resp);
+    //     },
+    //     function(evt) {
+    //       console.log("evt", evt);
+    //     }
+    //   );
+    // }
 
     // PUT /api/presentation/Update
 

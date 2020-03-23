@@ -54,7 +54,7 @@
         <jhi-alert-error></jhi-alert-error>
         <div class="col-md-3 pull-right">
             <button
-                *ngIf="PresentationFlag"
+                has-any-authority="Admin,Research,Master,Presentation_Brochure"
                 class="btn btn-md btn-warning pull-right"
                 type="button"
                 ui-sref="presentation-master-detail.presentation-new"
@@ -65,7 +65,7 @@
                 </span>
             </button>
             <button
-                *ngIf="BrochureFlag"
+                has-any-authority="Admin,Research,Master,Presentation_Brochure"
                 class="btn btn-md btn-warning pull-right"
                 type="button"
                 ui-sref="presentation-master-detail.brochure-new"

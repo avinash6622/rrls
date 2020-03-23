@@ -35,6 +35,7 @@
     //vm.presentationMaster = entity;
     //vm.clear = clear;
     vm.datePickerOpenStatus = {};
+    vm.brochureFileUpload = [];
     vm.openCalendar = openCalendar;
     // vm.save = save;
     vm.selectFile = selectFile;
@@ -63,8 +64,14 @@
           console.log("Get Api response", response);
           // loadAll();
           var _data = response;
+          vm.brochureFileUpload = response.data;
           var filepathStartIndex = _data.data.filePath;
-
+          console.log(
+            "brochureFileUpload",
+            vm.brochureFileUpload,
+            "_data",
+            _data
+          );
           console.log(
             _data.data.filePath,
             "fileName",
@@ -85,42 +92,45 @@
     }
 
     function upload() {
-      var selectitem = $scope.selitem;
-      vm.isSaving = true;
-
-      Upload.upload({
-        // url: "api/confidenctial-letters",
-        url: "/api/brochureMainFile/Update",
-        method: "PUT",
-        params: {
-          brochureFileUpload: {
-            fileContentType: vm.fileTypeName,
-            fileName: vm.uploadfileNameValue,
-            fileDesc: vm.fileDescriptionValue,
-            id: vm.brochureId
-          }
-        }
-
-        // params: {
-        //   filetype: vm.fileTypeName,
-        //   uploadfileName: vm.uploadfileNameValue,
-        //   Strategy: $stateParams.id,
-        //   fileDescription: vm.fileDescriptionValue,
-        //   id: vm.brochureId
-        // }
-      }).then(
-        function(resp) {
-          if (resp.status == 201) {
-          }
-        },
-        function(resp) {
-          console.log("resp", resp);
-        },
-        function(evt) {
-          console.log("evt", evt);
-        }
-      );
+      console.log("upload");
+      vm.brochureFileUpload.fileDesc = vm.fileDescriptionValue;
+      return $http
+        .put("/api/brochureMainFile/Update", vm.brochureFileUpload)
+        .then(function(response) {
+          console.log("vm.brochureFileUpload Api response", response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
+
+    // function upload() {
+    //   var selectitem = $scope.selitem;
+    //   vm.isSaving = true;
+
+    //   vm.brochureFileUpload.fileDesc = vm.fileDescriptionValue;
+
+    //   console.log("brochureFileUploaduploaddata", vm.brochureFileUpload);
+
+    //   Upload.upload({
+    //     // url: "api/confidenctial-letters",
+    //     url: "/api/brochureMainFile/Update",
+    //     method: "PUT",
+    //     data: vm.brochureFileUpload
+
+    //   }).then(
+    //     function(resp) {
+    //       if (resp.status == 201) {
+    //       }
+    //     },
+    //     function(resp) {
+    //       console.log("resp", resp);
+    //     },
+    //     function(evt) {
+    //       console.log("evt", evt);
+    //     }
+    //   );
+    // }
 
     // PUT /api/presentation/Update
 
