@@ -57,22 +57,23 @@
                 has-any-authority="Admin,Research,Master,Presentation_Brochure"
                 class="btn btn-md btn-warning pull-right"
                 type="button"
-                ui-sref="presentation-master-detail.presentation-new"
-            >
-                <span class="glyphicon glyphicon-plus"></span>
-                <span>
-                    Upload Presentation
-                </span>
-            </button>
-            <button
-                has-any-authority="Admin,Research,Master,Presentation_Brochure"
-                class="btn btn-md btn-warning pull-right"
-                type="button"
                 ui-sref="presentation-master-detail.brochure-new"
             >
                 <span class="glyphicon glyphicon-plus"></span>
                 <span>
                     Upload Brochure
+                </span>
+            </button>
+            <button
+                has-any-authority="Admin,Research,Master,Presentation_Brochure"
+                class="btn btn-md btn-success pull-right"
+                type="button"
+                ui-sref="presentation-master-detail.presentation-new"
+                style="margin-right: 5px;"
+            >
+                <span class="glyphicon glyphicon-plus"></span>
+                <span>
+                    Upload Presentation
                 </span>
             </button>
         </div>
@@ -252,7 +253,7 @@
                             <td>
                                 <button
                                     type="button"
-                                    ui-sref="presentation-master-detail.brochuresupportfile-new({bId: fixed.id})"
+                                    ui-sref="presentation-master-detail.brochuresupportfile-new({bId: fixed.brochureFileUpload.id})"
                                     class="btn btn-primary btn-sm"
                                     tooltip="Add Supporting  File"
                                     alt="Add Supporting  File"
@@ -300,14 +301,14 @@
                             style="background: blanchedalmond;"
                         >
                             <th style="color: blue;"></th>
-                            <th style="color: blue;">id</th>
-                            <th style="color: blue;">fileName</th>
-                            <th style="color: blue;">fileContentType</th>
-                            <th style="color: blue;">fileDesc</th>
-                            <th style="color: blue;">createdBy</th>
-                            <th style="color: blue;">createdDate</th>
-                            <th style="color: blue;">lastmodifiedBy</th>
-                            <th style="color: blue;">lastModifiedDate</th>
+                            <th style="color: blue;">Id</th>
+                            <th style="color: blue;">File Name</th>
+                            <th style="color: blue;">File Type</th>
+                            <th style="color: blue;">Description</th>
+                            <th style="color: blue;">Created By</th>
+                            <th style="color: blue;">Created Date</th>
+                            <th style="color: blue;">Lastmodified By</th>
+                            <th style="color: blue;">LastModified Date</th>
                             <th style="color: blue;">Action</th>
                         </tr>
 
