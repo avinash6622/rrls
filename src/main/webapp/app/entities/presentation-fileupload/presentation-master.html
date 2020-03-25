@@ -38,16 +38,16 @@
                             <span>Presentation Name</span>
                             <span class="glyphicon glyphicon-sort"></span>
                         </th>
-                        <!-- <th jh-sort-by="aum">
-                            <span>AUM</span>
+                        <th jh-sort-by="aum">
+                            <span>Latest Presentation</span>
                             <span class="glyphicon glyphicon-sort"></span>
-                        </th> -->
+                        </th>
                         <th jh-sort-by="aum">
                             <span>Presentation Count</span>
                             <span class="glyphicon glyphicon-sort"></span>
                         </th>
                         <th jh-sort-by="aum">
-                            <span>brochure Count</span>
+                            <span>Brochure Count</span>
                             <span class="glyphicon glyphicon-sort"></span>
                         </th>
 
@@ -55,7 +55,7 @@
                             <span>Total Stocks</span>
                             <span class="glyphicon glyphicon-sort"></span>
                         </th> -->
-                        <th>
+                        <!-- <th>
                             <div class="pull-right">
                                 <div class="col-xs-3">
                                     <button
@@ -70,7 +70,7 @@
                                     </button>
                                 </div>
                             </div>
-                        </th>
+                        </th> -->
                         <!-- <th has-authority="Admin">Action</th> -->
                     </tr>
                 </thead>
@@ -98,6 +98,18 @@
                                 >{{strategyMaster.strategyName}}</a
                             >
                         </td>
+                         <td>
+                            <button
+                                has-any-authority="Admin,Research,Master,Presentation_Brochure"
+                                class="btn btn-sm btn-success "
+                                type="button"
+                                ui-sref="presentation-master-detail.presentation-new({id: strategyMaster.id})"
+                            >
+                                <span class="glyphicon glyphicon-plus"></span>
+                                <span>
+                                    Add Presentation
+                                </span>
+                            </button>
                         <td>{{strategyMaster.totalPresentation}}</td>
                         <td>{{strategyMaster.totalBrochure}}</td>
                         <td></td>
