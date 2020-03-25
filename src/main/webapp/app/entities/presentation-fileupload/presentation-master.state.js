@@ -515,7 +515,7 @@
       })
       .state("presentation-master-detail.brochure-supportfile-edit", {
         parent: "presentation-master-detail",
-        url: "/brochuresupportfile/{bId}/edit",
+        url: "/brochuresupportfile/{bId}/edit/{bSID}/data",
         data: {
           authorities: ["User"]
         },
