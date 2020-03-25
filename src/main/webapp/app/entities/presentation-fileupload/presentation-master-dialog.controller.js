@@ -15,7 +15,8 @@
     "$http",
     //"entity",
     "Upload",
-    "PresentationMaster"
+    "PresentationMaster",
+    "previousState"
   ];
 
   function PresentationMasterDialogController(
@@ -26,12 +27,14 @@
     // $uibModalInstance,
     //entity,
     Upload,
-    PresentationMaster
+    PresentationMaster,
+    previousState
   ) {
     var vm = this;
 
     console.log("scope", $scope);
     console.log("stateParams", $stateParams);
+    vm.previousState = previousState.name;
     //vm.presentationMaster = entity;
     //vm.clear = clear;
     vm.datePickerOpenStatus = {};
