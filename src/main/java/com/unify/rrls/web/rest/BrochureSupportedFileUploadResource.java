@@ -14,10 +14,7 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +25,6 @@ import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Instant;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -87,7 +83,6 @@ public class BrochureSupportedFileUploadResource {
         String sFilesDirectory;
 
         user = SecurityUtils.getCurrentUserLogin();
-        System.out.println("fileUploads "+fileUploads);
         sFilesDirectory = "src/main/webapp/content/fileUpload/BrochureSupportedFile/" +  user + "-" + uploadfileName;
         File dirFiles = new File(sFilesDirectory);
         dirFiles.mkdirs();
@@ -99,7 +94,6 @@ public class BrochureSupportedFileUploadResource {
         setFileName(fileUploads.getOriginalFilename());
         fileStream = IOUtils.toByteArray(fileUploads.getInputStream());
 
-        System.out.println("FILE NAME--->" + fileName);
 
         File sFiles = new File(dirFiles, fileName);
         writeFile(fileStream, sFiles);
@@ -113,16 +107,10 @@ public class BrochureSupportedFileUploadResource {
         brochureSupportingFiles.setBrochureFileUpload(brochureFileUpload);
 
         brochureSupportingFilesResult =brochureSupportedFileRepository.save(brochureSupportingFiles);
-        System.out.println("ssdsd"+brochureSupportingFilesResult.getId());
-        System.out.println("dsdsdsd"+brochureSupportingFilesResult.getCreatedBy());
 
 
-        System.out.println("brochure name"+brochureFileUpload.getFileName());
 
-//        brochureStrategyMapping.setBrochureFileUpload(brochureSupportingFilesResult);
-//        brochureStrategyMapping.setStrategyMaster(strategyMaster);
-//
-//        borchureStrategyMappingRespository.save(brochureStrategyMapping);
+
 
 
         notificationServiceResource.notificationHistorysave(brochureSupportingFilesResult.getFileName(), brochureSupportingFilesResult.getCreatedBy(), brochureSupportingFilesResult.getLastmodifiedBy(), brochureSupportingFilesResult.getCreatedDate(), "created", page, "", brochureSupportingFilesResult.getId(), Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
@@ -145,18 +133,6 @@ public class BrochureSupportedFileUploadResource {
 
     }
 
-//    @GetMapping("/brochureSupportingFileList/viewByStrategyAndMainFile")
-//    public ResponseEntity<List<BrochureStrategyMapping>> getBrochureListByStrategyId(@RequestParam Long strategyId,@RequestParam Long borchureId , @ApiParam Pageable pageable) {
-//        log.debug("REST request to get a page of Policies");
-//        StrategyMaster strategyMaster = strategyMasterRepository.findById(strategyId);
-//        System.out.println("strategyMaster value"+strategyMaster.getStrategyName());
-//
-//        Page<BrochureStrategyMapping> page = borchureStrategyMappingRespository.findByStrategyMaster(strategyMaster,pageable);
-//        System.out.println("page"+page.getTotalElements());
-//        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/brochureMainFileList/viewByStrategy");
-//
-//        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-//    }
 
     @PutMapping("/brochureSupportingFile/Update")
     @Timed

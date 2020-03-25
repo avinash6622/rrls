@@ -75,12 +75,10 @@ public class BrochureFileUploadResource {
                                                                        @RequestParam(value="fileDescription") String fileDescription) throws URISyntaxException, IOException, MissingServletRequestParameterException {
         log.debug("REST request to save FileUpload : {}");
         String page="Brochure";
-        System.out.println("id "+strategyId);
         String user;
         String sFilesDirectory;
 
         user = SecurityUtils.getCurrentUserLogin();
-        System.out.println("fileUploads "+fileUploads);
         sFilesDirectory = "src/main/webapp/content/fileUpload/BrochureMainFile/" +  user + "-" + uploadfileName;
         File dirFiles = new File(sFilesDirectory);
         dirFiles.mkdirs();
@@ -92,7 +90,6 @@ public class BrochureFileUploadResource {
         setFileName(fileUploads.getOriginalFilename());
         fileStream = IOUtils.toByteArray(fileUploads.getInputStream());
 
-        System.out.println("FILE NAME--->" + fileName);
 
         File sFiles = new File(dirFiles, fileName);
         writeFile(fileStream, sFiles);
@@ -104,8 +101,7 @@ public class BrochureFileUploadResource {
         brochureFileUpload.setCreatedBy(user);
         brochureFileUpload.setCreatedDate(Instant.now());
         brochureFileUploadResult = brochureFileUploadRepository.save(brochureFileUpload);
-        System.out.println("ssdsd"+brochureFileUploadResult.getId());
-        System.out.println("dsdsdsd"+brochureFileUploadResult.getCreatedBy());
+
 
         StrategyMaster strategyMaster = strategyMasterRepository.findById(strategyId);
 
@@ -113,7 +109,6 @@ public class BrochureFileUploadResource {
         strategyMaster.setTotalBrochure(totalBrochure + 1);
         StrategyMaster strategyMaster1 = strategyMasterRepository.save(strategyMaster);
 
-        System.out.println("dsdsdsd"+brochureFileUploadResult.getCreatedBy());
 
         brochureStrategyMapping.setBrochureFileUpload(brochureFileUploadResult);
         brochureStrategyMapping.setStrategyMaster(strategyMaster);
@@ -133,9 +128,8 @@ public class BrochureFileUploadResource {
 
     @GetMapping("/brochureMainFileList/viewByStrategy")
     public ResponseEntity<List<BrochureStrategyMapping>> getBrochureListByStrategyId(@RequestParam Long strategyId , @ApiParam Pageable pageable) {
-        log.debug("REST request to get a page of Policies");
+        log.debug("REST request to get a page of brochureMainFile");
         StrategyMaster strategyMaster = strategyMasterRepository.findById(strategyId);
-        System.out.println("strategyMaster value"+strategyMaster.getStrategyName());
 
         Page<BrochureStrategyMapping> page = borchureStrategyMappingRespository.findByStrategyMaster(strategyMaster,pageable);
         System.out.println("page"+page.getTotalElements());
@@ -148,7 +142,7 @@ public class BrochureFileUploadResource {
 
     @GetMapping("/brochureMainFileList/getById")
     public BrochureFileUpload getByBrochureId(@RequestParam(value ="id") Long id) {
-        log.debug("REST request to get a page of Policies");
+        log.debug("REST request to get a page of brochureMainFile");
 
         BrochureFileUpload brochureFileUpload = brochureFileUploadRepository.findById(id);
         return brochureFileUpload;
@@ -158,7 +152,7 @@ public class BrochureFileUploadResource {
 
     @GetMapping("/brochureMainFile/Count/getByStrategyId")
     public Integer getCountByStrategyId(@RequestParam(value ="id") Long id) {
-        log.debug("REST request to get a page of Policies");
+        log.debug("REST request to get a page of brochureMainFile");
 
         Integer brochureValue = borchureStrategyMappingRespository.findCountOfBrochure(id);
         return brochureValue;
@@ -192,7 +186,6 @@ public class BrochureFileUploadResource {
         log.debug("REST request to delete FileUpload : {}", brochureId,strategyId);
         String page="Brochure";
 
-        System.out.println("strategyId Presentaiotid"+strategyId +brochureId);
         StrategyMaster strategyMaster = strategyMasterRepository.findById(strategyId);
         if (strategyMaster.getTotalBrochure() != 0) {
             strategyMaster.setTotalBrochure(strategyMaster.getTotalBrochure() - 1);
