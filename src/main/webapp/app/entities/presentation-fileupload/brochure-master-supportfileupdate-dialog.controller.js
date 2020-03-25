@@ -15,7 +15,8 @@
     "$http",
     //"entity",
     "Upload",
-    "PresentationMaster"
+    "PresentationMaster",
+    "previousState"
   ];
 
   function PresentationBrochureSupportFileUpdateDialogController(
@@ -24,12 +25,14 @@
     $stateParams,
     $http,
     Upload,
-    PresentationMaster
+    PresentationMaster,
+    previousState
   ) {
     var vm = this;
 
     console.log("scope", $scope);
     console.log("stateParams", $stateParams);
+    vm.previousState = previousState.name;
     vm.datePickerOpenStatus = {};
     vm.openCalendar = openCalendar;
     vm.selectFile = selectFile;
