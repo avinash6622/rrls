@@ -1,0 +1,375 @@
+<style>
+    div.scrollmenu {
+        overflow: auto;
+        white-space: nowrap;
+    }
+    .headborder {
+        background-color: #009688;
+    }
+
+    .padding-0 {
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    .well .test {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        padding-bottom: 10px !important;
+    }
+
+    .col-xs-3 .btn {
+        padding: 2px !important;
+    }
+    .page-header {
+        padding-bottom: 0px !important;
+        border-bottom: 0px !important;
+    }
+
+    * {
+        font-family: Arial;
+        font-size: 13px;
+        line-height: 140%;
+    }
+    h3.accordion {
+        margin: 0;
+    }
+    .accordion a {
+        padding: 10px;
+        background: #ddd;
+        color: #333;
+        text-decoration: none;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 1px;
+    }
+    .accordion-content {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin: 1px 0;
+    }
+</style>
+<div>
+    <div class="well">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="col-md-3 pull-right">
+            <button
+                has-any-authority="Admin,Research,Master,Presentation_Brochure"
+                class="btn btn-md btn-warning pull-right"
+                type="button"
+                ui-sref="presentation-master-detail.brochure-new"
+            >
+                <span class="glyphicon glyphicon-plus"></span>
+                <span>
+                    Upload Brochure
+                </span>
+            </button>
+            <button
+                has-any-authority="Admin,Research,Master,Presentation_Brochure"
+                class="btn btn-md btn-success pull-right"
+                type="button"
+                ui-sref="presentation-master-detail.presentation-new"
+                style="margin-right: 5px;"
+            >
+                <span class="glyphicon glyphicon-plus"></span>
+                <span>
+                    Upload Presentation
+                </span>
+            </button>
+        </div>
+
+        <div class="tabbable tabs-below" ng-init="selectedTab = 1;">
+            <ul class="nav nav-tabs nav-justified">
+                <li
+                    ng-class="{active: selectedTab == 1}"
+                    ng-click="presentationFunRun()"
+                >
+                    <a ng-click="selectedTab = 1;">Presentation</a>
+                </li>
+                <li
+                    ng-class="{active: selectedTab == 2}"
+                    ng-click="brochureFunRun()"
+                >
+                    <a ng-click="selectedTab = 2;">Brochure</a>
+                </li>
+            </ul>
+
+            <div class="tab-content" ng-show="selectedTab == 1">
+                <table class="jh-table table table-striped">
+                    <thead>
+                        <tr
+                            jh-sort="vm.predicate"
+                            ascending="vm.reverse"
+                            callback="vm.reset()"
+                        >
+                            <th jh-sort-by="strategyName">
+                                <span>Id</span>
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </th>
+                            <th jh-sort-by="aum">
+                                <span>File Name</span>
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </th>
+                            <th jh-sort-by="totalStocks">
+                                <span>Desc.</span>
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </th>
+                            <th jh-sort-by="totalStocks">
+                                <span>Created By</span>
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </th>
+                            <th jh-sort-by="totalStocks">
+                                <span>Created Date</span>
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </th>
+                            <th jh-sort-by="totalStocks">
+                                <span>Last Mod.By</span>
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </th>
+                            <th jh-sort-by="totalStocks">
+                                <span>Last Mod.Date</span>
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </th>
+                            <th jh-sort-by="totalStocks">
+                                <span>Action</span>
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody
+                        infinite-scroll="vm.loadPage(vm.page + 1)"
+                        infinite-scroll-disabled="vm.page >= vm.links['last']"
+                    >
+                        <tr
+                            ng-repeat="strategyMaster in vm.presentationvalues track by strategyMaster.id"
+                        >
+                            <td>
+                                {{strategyMaster.presentationFileUpload.id}}
+                            </td>
+                            <td>
+                                {{strategyMaster.presentationFileUpload.fileName}}
+                            </td>
+                            <td>
+                                {{strategyMaster.presentationFileUpload.fileDesc}}
+                            </td>
+                            <td>
+                                {{strategyMaster.presentationFileUpload.createdBy}}
+                            </td>
+                            <td>
+                                {{strategyMaster.presentationFileUpload.createdDate
+                                | date}}
+                            </td>
+                            <td>
+                                {{strategyMaster.presentationFileUpload.lastmodifiedBy}}
+                            </td>
+                            <td>
+                                {{strategyMaster.presentationFileUpload.lastModifiedDate
+                                | date}}
+                            </td>
+                            <td has-authority="">
+                                <button
+                                    type="button"
+                                    class="btn btn-primary btn-sm"
+                                    tooltip="delete"
+                                    tooltip-placement="bottom"
+                                    ng-click="deleteConfirm(strategyMaster.presentationFileUpload.id)"
+                                >
+                                    <span
+                                        class="glyphicon glyphicon-trash"
+                                    ></span>
+                                </button>
+                                <button
+                                    type="button"
+                                    ui-sref="presentation-master-detail.presentation-edit({id:strategyMaster.strategyMaster.id, pId: strategyMaster.presentationFileUpload.id})"
+                                    class="btn btn-primary btn-sm"
+                                    tooltip="edit"
+                                    tooltip-placement="bottom"
+                                    has-any-authority="User"
+                                >
+                                    <span
+                                        class="glyphicon glyphicon-edit"
+                                    ></span>
+                                    <span class="hidden-sm-down"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-content" ng-show="selectedTab == 2">
+                <table class="jh-table table table-striped">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <!-- <th><span>Learning - PMS</span></th> -->
+                            <th><span>Id</span></th>
+                            <th>File Name</th>
+                            <th>File Type</th>
+                            <th>Desc</th>
+                            <th>Created By</th>
+                            <th>Created Date</th>
+                            <th>Last Modified By</th>
+                            <th>Last Modified Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat-start="fixed in vm.getBrochureDataValues">
+                            <td
+                                ng-click="vm.fixedCollapse($index, !fixed.expanded,$event)"
+                            >
+                                <button
+                                    class="btn btn-md btn-primary"
+                                    ng-if="fixed.expanded"
+                                    ng-click="vm.fixedCollapse($index,fixed.expanded)"
+                                >
+                                    -
+                                </button>
+                                <button
+                                    class="btn btn-md btn-primary"
+                                    ng-if="!fixed.expanded"
+                                    ng-click="vm.fixedCollapse($index,fixed.expanded)"
+                                >
+                                    +
+                                </button>
+                            </td>
+                            <td>{{fixed.brochureFileUpload.id}}</td>
+                            <td>
+                                {{fixed.brochureFileUpload.fileName}}
+                            </td>
+                            <td>
+                                {{fixed.brochureFileUpload.fileContentType}}
+                            </td>
+                            <td>{{fixed.brochureFileUpload.fileDesc}}</td>
+                            <td>{{fixed.brochureFileUpload.createdBy}}</td>
+                            <td>
+                                {{fixed.brochureFileUpload.createdDate | date}}
+                            </td>
+                            <td>{{fixed.brochureFileUpload.lastmodifiedBy}}</td>
+                            <td>
+                                {{fixed.brochureFileUpload.lastModifiedDate |
+                                date}}
+                            </td>
+                            <td>
+                                <button
+                                    type="button"
+                                    ui-sref="presentation-master-detail.brochuresupportfile-new({bId: fixed.brochureFileUpload.id})"
+                                    class="btn btn-primary btn-sm"
+                                    tooltip="Add Supporting  File"
+                                    alt="Add Supporting  File"
+                                    tooltip-placement="bottom"
+                                    has-any-authority="User"
+                                >
+                                    <span
+                                        class="glyphicon glyphicon-plus"
+                                    ></span>
+                                    <span class="hidden-sm-down"></span>
+                                </button>
+                                <button
+                                    type="button"
+                                    ui-sref="presentation-master-detail.brochure-edit({id:fixed.strategyMaster.id, bId: fixed.id})"
+                                    class="btn btn-primary btn-sm"
+                                    tooltip="edit"
+                                    tooltip-placement="bottom"
+                                    has-any-authority="User"
+                                >
+                                    <span
+                                        class="glyphicon glyphicon-edit"
+                                    ></span>
+                                    <span class="hidden-sm-down"></span>
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn btn-primary btn-sm"
+                                    tooltip="delete"
+                                    tooltip-placement="bottom"
+                                    ng-click="deleteBrochureConfirm(fixed.brochureFileUpload.id)"
+                                >
+                                    <span
+                                        class="glyphicon glyphicon-trash"
+                                    ></span>
+                                </button>
+                            </td>
+                            <td
+                                ng-click="vm.fixedCollapse($index, !fixed.expanded,$event)"
+                            >
+                                <a><strong>{{fixed.subject}}</strong></a>
+                            </td>
+                        </tr>
+                        <tr
+                            ng-if="fixed.expanded"
+                            style="background: blanchedalmond;"
+                        >
+                            <th style="color: blue;"></th>
+                            <th style="color: blue;">Id</th>
+                            <th style="color: blue;">File Name</th>
+                            <th style="color: blue;">File Type</th>
+                            <th style="color: blue;">Description</th>
+                            <th style="color: blue;">Created By</th>
+                            <th style="color: blue;">Created Date</th>
+                            <th style="color: blue;">Lastmodified By</th>
+                            <th style="color: blue;">LastModified Date</th>
+                            <th style="color: blue;">Action</th>
+                        </tr>
+
+                        <tr
+                            ng-repeat-end=""
+                            ng-if="fixed.expanded"
+                            ng-repeat-start="bfus in fixed.brochureFileUpload.brochureSupportingFiles;"
+                        >
+                            <ng-content *ngIf="bfus.id != 0">
+                                <td style="background-color: #fff;"></td>
+                                <td style="background-color: #fff;">
+                                    {{bfus.id}}
+                                </td>
+                                <td style="background-color: #fff;">
+                                    {{bfus.fileName}}
+                                </td>
+                                <td style="background-color: #fff;">
+                                    {{bfus.fileContentType}}
+                                </td>
+                                <td style="background-color: #fff;">
+                                    {{bfus.fileDesc}}
+                                </td>
+                                <td style="background-color: #fff;">
+                                    {{bfus.createdBy}}
+                                </td>
+                                <td style="background-color: #fff;">
+                                    {{bfus.createdDate | date}}
+                                </td>
+                                <td style="background-color: #fff;">
+                                    {{bfus.lastmodifiedBy}}
+                                </td>
+                                <td style="background-color: #fff;">
+                                    {{bfus.lastModifiedDate | date}}
+                                </td>
+                                <td style="background-color: #fff;">
+                                    <button
+                                        type="button"
+                                        ui-sref="presentation-master-detail.brochure-supportfile-edit({bId: bfus.id, bSID: fixed.brochureFileUpload.id})"
+                                        class="btn btn-primary btn-sm"
+                                        tooltip="edit"
+                                        tooltip-placement="bottom"
+                                        has-any-authority="User"
+                                    >
+                                        <span
+                                            class="glyphicon glyphicon-edit"
+                                        ></span>
+                                        <span class="hidden-sm-down"></span>
+                                    </button>
+                                </td>
+                            </ng-content>
+                            <ng-content *ngIf="bfus.id != 0"> </ng-content>
+                        </tr>
+                        <tr ng-if="fixed.expanded" ng-repeat-end=""></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <footer class="footer footer-dark" ng-cloak>
+        <p data-translate="footer" style="font-size: 12px;margin-left: 10px">
+            &copy;2018, All rights reserved.
+        </p>
+    </footer>
+</div>

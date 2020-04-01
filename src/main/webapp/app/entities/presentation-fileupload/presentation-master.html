@@ -1,0 +1,150 @@
+<style>
+    .col-xs-3 .btn {
+        padding: 0px !important;
+    }
+
+    .col-xs-3 {
+        padding-right: 0px !important;
+    }
+</style>
+
+<div>
+    <div class="well">
+        <jhi-alert></jhi-alert>
+
+        <div>
+            <div class="row">
+                <!--            <div class="col-xs-2">
+                                <button class="btn btn-primary" ui-sref="strategy-master.new" >
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                    <span>
+                                        Create New Strategy
+                                    </span>
+                                </button>
+                            </div>-->
+            </div>
+        </div>
+        <!-- <div style="margin-bottom: 5px"></div>-->
+
+        <div class="table-responsive">
+            <table class="jh-table table table-striped">
+                <thead>
+                    <tr
+                        jh-sort="vm.predicate"
+                        ascending="vm.reverse"
+                        callback="vm.reset()"
+                    >
+                        <th jh-sort-by="strategyName">
+                            <span>Presentation Name</span>
+                            <span class="glyphicon glyphicon-sort"></span>
+                        </th>
+                        <th jh-sort-by="aum">
+                            <span>Latest Presentation</span>
+                            <span class="glyphicon glyphicon-sort"></span>
+                        </th>
+                        <th jh-sort-by="aum">
+                            <span>Presentation Count</span>
+                            <span class="glyphicon glyphicon-sort"></span>
+                        </th>
+                        <th jh-sort-by="aum">
+                            <span>Brochure Count</span>
+                            <span class="glyphicon glyphicon-sort"></span>
+                        </th>
+
+                        <!-- <th jh-sort-by="totalStocks">
+                            <span>Total Stocks</span>
+                            <span class="glyphicon glyphicon-sort"></span>
+                        </th> -->
+                        <!-- <th>
+                            <div class="pull-right">
+                                <div class="col-xs-3">
+                                    <button
+                                        class="btn btn-primary"
+                                        ui-sref="strategy-master.new"
+                                        has-any-authority="Research,Master,Presentation_Brochure"
+                                    >
+                                        <span></span>
+                                        <span style="padding: 10px"
+                                            >Create New Presentation</span
+                                        >
+                                    </button>
+                                </div>
+                            </div>
+                        </th> -->
+                        <!-- <th has-authority="Admin">Action</th> -->
+                    </tr>
+                </thead>
+                <tbody
+                    infinite-scroll="vm.loadPage(vm.page + 1)"
+                    infinite-scroll-disabled="vm.page >= vm.links['last']"
+                >
+                    <tr
+                        ng-repeat="strategyMaster in vm.presentationMasters track by strategyMaster.id"
+                    >
+                        <td>
+                            <!-- <button
+                                type="submit"
+                                ui-sref="presentation-master.edit({id:strategyMaster.id})"
+                                class="btn btn-primary btn-sm"
+                                tooltip="edit"
+                                tooltip-placement="bottom"
+                                has-any-authority="User"
+                            >
+                                <span class="glyphicon glyphicon-edit"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button> -->
+                            <a
+                                ui-sref="presentation-master-detail({id:strategyMaster.id})"
+                                >{{strategyMaster.strategyName}}</a
+                            >
+                        </td>
+                         <td>
+                            <button
+                                has-any-authority="Admin,Research,Master,Presentation_Brochure"
+                                class="btn btn-sm btn-success "
+                                type="button"
+                                ui-sref="presentation-master-detail.presentation-new({id: strategyMaster.id})"
+                            >
+                                <span class="glyphicon glyphicon-plus"></span>
+                                <span>
+                                    Add Presentation
+                                </span>
+                            </button>
+                        <td>{{strategyMaster.totalPresentation}}</td>
+                        <td>{{strategyMaster.totalBrochure}}</td>
+                        <td></td>
+
+                        <!-- <td has-authority="Admin">
+                            <button
+                                type="submit"
+                                ui-sref="presentation-master.delete({id:strategyMaster.id})"
+                                class="btn btn-primary btn-sm"
+                                tooltip="delete"
+                                tooltip-placement="bottom"
+                            >
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </td> -->
+                    </tr>
+                    <!-- <tr>
+                        <td>
+                            <span style="font-weight: bold; ">Total AUM</span>
+                        </td>
+                        <td>
+                            <span style="font-weight: bold;"
+                                >{{getTotal()}}</span
+                            >
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <footer class="footer footer-dark" ng-cloak>
+        <p data-translate="footer" style="font-size: 12px">
+            &nbsp;&nbsp;&nbsp;&nbsp;&copy;{{currentYear}}, All rights reserved.
+        </p>
+    </footer>
+</div>

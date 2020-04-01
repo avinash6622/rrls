@@ -53,6 +53,12 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
     @Column(name="Total_stocks")
     private Double totalStocks;
 
+    @Column(name="Total_presentation")
+    private int totalPresentation;
+
+    @Column(name="Total_borchure")
+    private int totalBrochure;
+
     @Transient
     @JsonProperty
     private List<OpportunitySummaryData> opportunitySummaryData;
@@ -142,8 +148,22 @@ public class StrategyMaster extends AbstractAuditingEntity implements Serializab
         this.totalStocks = totalStocks;
     }
 
+    public int getTotalPresentation() {
+        return totalPresentation;
+    }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    public void setTotalPresentation(int totalPresentation) {
+        this.totalPresentation = totalPresentation;
+    }
+
+    public int getTotalBrochure() {
+        return totalBrochure;
+    }
+
+    public void setTotalBrochure(int totalBrochure) {
+        this.totalBrochure = totalBrochure;
+    }
+// jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
