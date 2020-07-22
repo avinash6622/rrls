@@ -147,7 +147,7 @@
                                 {{strategyMaster.presentationFileUpload.id}}
                             </td>
                             <td>
-                                {{strategyMaster.presentationFileUpload.fileName}}
+                                <a ng-click="vm.downloadPresentation(strategyMaster.presentationFileUpload.filePath)">{{strategyMaster.presentationFileUpload.fileName}}</a>
                             </td>
                             <td>
                                 {{strategyMaster.presentationFileUpload.fileDesc}}
@@ -235,7 +235,7 @@
                             </td>
                             <td>{{fixed.brochureFileUpload.id}}</td>
                             <td>
-                                {{fixed.brochureFileUpload.fileName}}
+                                <a ng-click="vm.downloadPresentation(fixed.brochureFileUpload.filePath)">{{fixed.brochureFileUpload.fileName}}</a>
                             </td>
                             <td>
                                 {{fixed.brochureFileUpload.fileContentType}}
@@ -323,7 +323,7 @@
                                     {{bfus.id}}
                                 </td>
                                 <td style="background-color: #fff;">
-                                    {{bfus.fileName}}
+                                    <a ng-click="vm.downloadPresentation(bfus.filePath)">{{bfus.fileName}}</a>
                                 </td>
                                 <td style="background-color: #fff;">
                                     {{bfus.fileContentType}}

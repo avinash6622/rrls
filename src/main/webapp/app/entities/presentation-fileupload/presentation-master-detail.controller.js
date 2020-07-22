@@ -4,9 +4,7 @@
   angular
     .module("researchRepositoryLearningSystemApp")
     .controller(
-      "PresentationMasterDetailController",
-      PresentationMasterDetailController
-    );
+      "PresentationMasterDetailController",PresentationMasterDetailController);
 
   PresentationMasterDetailController.$inject = [
     "$scope",
@@ -80,6 +78,8 @@
     vm.presentationvalues = [];
     vm.loader = false;
     vm.fixedCollapse = fixedCollapse;
+    vm.downlaodFile = downlaodFile;
+    vm.downloadPresentation = downloadPresentation;
     vm.getBrochureData = getBrochureData;
     vm.getBrochureDataValues = [];
     vm.getBrochureDataValuesSupportFile = [];
@@ -124,6 +124,49 @@
       vm.edit = true;
     }
 
+    function downloadPresentation(fileName) {
+      console.log(typeof fileName);
+      //var url = "/download/presentationAndBorchure?fileID="+fileName+"&flag="+"P";
+      //window.open(url, "_blank");
+
+      var data = fileName;
+      data = data.replace(/\\/g, "/");
+      console.log('After slash replace - ' + data);
+
+      let urlValues = data.split('/');
+      for (var i = 0; i < urlValues.length; i++) {
+          if (urlValues[i].endsWith('.')) {
+              urlValues[i] = urlValues[i].slice(0, -1);
+          }
+      }
+      console.log(urlValues);
+      data = urlValues.join('/');
+      console.log('After dot replace - ' + data);
+      var url = window.location.origin + data.split('webapp')[1];
+      console.log("url -" + url);
+      window.open(url, '_blank');
+    }
+
+
+    function downlaodFile(_data1,_data2) {
+      console.log("downlaodFile");
+      console.log("_data1", _data1, "_data2", _data2);
+      var data = {
+        fileID: _data2,
+        flag: "P"
+      };
+      return $http
+        .post("/download/presentationAndBorchure?fileID="+_data2+"&flag="+"P")
+        .then(function(response) {
+          console.log("download Api response", response);
+          //var FileSaver = require('file-saver');
+          //var blob = new Blob(response, {type: "text/plain;charset=utf-8"});
+          //FileSaver.saveAs(response, "download.pdf");
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
     // vm.getExactData = getExactData;
 
     // function getExactData() {
