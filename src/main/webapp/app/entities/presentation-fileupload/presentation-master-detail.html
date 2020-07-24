@@ -52,7 +52,7 @@
 <div>
     <div class="well">
         <jhi-alert-error></jhi-alert-error>
-        <div class="col-md-3 pull-right">
+        <div class="col-md-3 pull-right" has-any-authority="Admin,Presentation_Brochure">
             <button
                 has-any-authority="Admin,Research,Master,Presentation_Brochure"
                 class="btn btn-md btn-warning pull-right"
@@ -130,7 +130,8 @@
                                 <span>Last Mod.Date</span>
                                 <span class="glyphicon glyphicon-sort"></span>
                             </th>
-                            <th jh-sort-by="totalStocks">
+                            <th jh-sort-by="totalStocks" 
+                            has-any-authority="Admin,Presentation_Brochure">
                                 <span>Action</span>
                                 <span class="glyphicon glyphicon-sort"></span>
                             </th>
@@ -166,7 +167,7 @@
                                 {{strategyMaster.presentationFileUpload.lastModifiedDate
                                 | date}}
                             </td>
-                            <td has-authority="">
+                            <td has-any-authority="Admin,Presentation_Brochure">
                                 <button
                                     type="button"
                                     class="btn btn-primary btn-sm"
@@ -210,7 +211,7 @@
                             <th>Created Date</th>
                             <th>Last Modified By</th>
                             <th>Last Modified Date</th>
-                            <th>Action</th>
+                            <th has-any-authority="Admin,Presentation_Brochure">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -250,7 +251,7 @@
                                 {{fixed.brochureFileUpload.lastModifiedDate |
                                 date}}
                             </td>
-                            <td>
+                            <td has-any-authority="Admin,Presentation_Brochure">
                                 <button
                                     type="button"
                                     ui-sref="presentation-master-detail.brochuresupportfile-new({bId: fixed.brochureFileUpload.id})"
@@ -309,7 +310,7 @@
                             <th style="color: blue;">Created Date</th>
                             <th style="color: blue;">Lastmodified By</th>
                             <th style="color: blue;">LastModified Date</th>
-                            <th style="color: blue;">Action</th>
+                            <th style="color: blue;" has-any-authority="Admin,Presentation_Brochure">Action</th>
                         </tr>
 
                         <tr
@@ -343,7 +344,7 @@
                                 <td style="background-color: #fff;">
                                     {{bfus.lastModifiedDate | date}}
                                 </td>
-                                <td style="background-color: #fff;">
+                                <td style="background-color: #fff;" has-any-authority="Admin,Presentation_Brochure">
                                     <button
                                         type="button"
                                         ui-sref="presentation-master-detail.brochure-supportfile-edit({bId: bfus.id, bSID: fixed.brochureFileUpload.id})"

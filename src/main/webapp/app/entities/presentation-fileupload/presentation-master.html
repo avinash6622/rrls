@@ -38,7 +38,7 @@
                             <span>Presentation Name</span>
                             <span class="glyphicon glyphicon-sort"></span>
                         </th>
-                        <th jh-sort-by="aum">
+                        <th jh-sort-by="aum" has-any-authority="Admin,Presentation_Brochure">
                             <span>Latest Presentation</span>
                             <span class="glyphicon glyphicon-sort"></span>
                         </th>
@@ -98,7 +98,7 @@
                                 >{{strategyMaster.strategyName}}</a
                             >
                         </td>
-                         <td>
+                         <td has-any-authority="Admin,Presentation_Brochure">
                             <button
                                 has-any-authority="Admin,Research,Master,Presentation_Brochure"
                                 class="btn btn-sm btn-success "
