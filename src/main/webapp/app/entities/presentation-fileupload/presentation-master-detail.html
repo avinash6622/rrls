@@ -50,7 +50,14 @@
     }
 </style>
 <div>
+    
+    
     <div class="well">
+        <div class="row" style="padding: 14px;">
+            <button type="button" class="btn btn-info pull-right" ui-sref="{{vm.previousState}}">
+                <span class="glyphicon glyphicon-arrow-left"></span><span> Back</span>
+            </button>
+        </div>
         <jhi-alert-error></jhi-alert-error>
         <div class="col-md-3 pull-right" has-any-authority="Admin,Presentation_Brochure">
             <button
@@ -102,10 +109,14 @@
                             ascending="vm.reverse"
                             callback="vm.reset()"
                         >
-                            <th jh-sort-by="strategyName">
+                            <th>
+                                <span>Si.No</span>
+                                <!-- <span class="glyphicon glyphicon-sort"></span> -->
+                            </th>
+                            <!-- <th jh-sort-by="strategyName">
                                 <span>Id</span>
                                 <span class="glyphicon glyphicon-sort"></span>
-                            </th>
+                            </th> -->
                             <th jh-sort-by="aum">
                                 <span>File Name</span>
                                 <span class="glyphicon glyphicon-sort"></span>
@@ -144,9 +155,10 @@
                         <tr
                             ng-repeat="strategyMaster in vm.presentationvalues track by strategyMaster.id"
                         >
-                            <td>
+                            <td>{{$index + 1}}</td>
+                            <!-- <td>
                                 {{strategyMaster.presentationFileUpload.id}}
-                            </td>
+                            </td> -->
                             <td>
                                 <a ng-click="vm.downloadPresentation(strategyMaster.presentationFileUpload.filePath)">{{strategyMaster.presentationFileUpload.fileName}}</a>
                             </td>
@@ -202,8 +214,8 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <!-- <th><span>Learning - PMS</span></th> -->
-                            <th><span>Id</span></th>
+                            <th><span>Si.No</span></th>
+                            <!-- <th><span>Id</span></th> -->
                             <th>File Name</th>
                             <th>File Type</th>
                             <th>Desc</th>
@@ -224,17 +236,18 @@
                                     ng-if="fixed.expanded"
                                     ng-click="vm.fixedCollapse($index,fixed.expanded)"
                                 >
-                                    -
+                                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
                                 </button>
                                 <button
                                     class="btn btn-md btn-primary"
                                     ng-if="!fixed.expanded"
                                     ng-click="vm.fixedCollapse($index,fixed.expanded)"
                                 >
-                                    +
+                                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                 </button>
                             </td>
-                            <td>{{fixed.brochureFileUpload.id}}</td>
+                            <td>{{$index + 1}}</td>
+                            <!-- <td>{{fixed.brochureFileUpload.id}}</td> -->
                             <td>
                                 <a ng-click="vm.downloadPresentation(fixed.brochureFileUpload.filePath)">{{fixed.brochureFileUpload.fileName}}</a>
                             </td>
@@ -302,7 +315,8 @@
                             style="background: blanchedalmond;"
                         >
                             <th style="color: blue;"></th>
-                            <th style="color: blue;">Id</th>
+                            <th style="color: blue;">Si.No</th>
+                            <!-- <th style="color: blue;">Id</th> -->
                             <th style="color: blue;">File Name</th>
                             <th style="color: blue;">File Type</th>
                             <th style="color: blue;">Description</th>
@@ -320,9 +334,10 @@
                         >
                             <ng-content *ngIf="bfus.id != 0">
                                 <td style="background-color: #fff;"></td>
-                                <td style="background-color: #fff;">
+                                <td style="background-color: #fff;">{{$index + 1}}</td>
+                                <!-- <td style="background-color: #fff;">
                                     {{bfus.id}}
-                                </td>
+                                </td> -->
                                 <td style="background-color: #fff;">
                                     <a ng-click="vm.downloadPresentation(bfus.filePath)">{{bfus.fileName}}</a>
                                 </td>
@@ -348,7 +363,7 @@
                                     <button
                                         type="button"
                                         ui-sref="presentation-master-detail.brochure-supportfile-edit({bId: bfus.id, bSID: fixed.brochureFileUpload.id})"
-                                        class="btn btn-primary btn-sm"
+                                        class="btn btn-info btn-sm"
                                         tooltip="edit"
                                         tooltip-placement="bottom"
                                         has-any-authority="User"
@@ -358,6 +373,17 @@
                                         ></span>
                                         <span class="hidden-sm-down"></span>
                                     </button>
+                                    <button
+                                    type="button"
+                                    class="btn btn-info btn-sm"
+                                    tooltip="delete"
+                                    tooltip-placement="bottom"
+                                    ng-click="deleteSupportingBrochureConfirm(bfus.id)"
+                                >
+                                    <span
+                                        class="glyphicon glyphicon-trash"
+                                    ></span>
+                                </button>
                                 </td>
                             </ng-content>
                             <ng-content *ngIf="bfus.id != 0"> </ng-content>
@@ -368,6 +394,7 @@
             </div>
         </div>
     </div>
+    
     <footer class="footer footer-dark" ng-cloak>
         <p data-translate="footer" style="font-size: 12px;margin-left: 10px">
             &copy;2018, All rights reserved.

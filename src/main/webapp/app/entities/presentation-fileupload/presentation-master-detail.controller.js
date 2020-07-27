@@ -43,6 +43,7 @@
     vm.predicate = pagingParams.predicate;
     vm.reverse = true;
     vm.page = 1;
+    vm.clear = clear;
     var data = new Date("2020-03-06T09:30:47Z");
     console.log("date", data.toLocaleDateString());
 
@@ -109,6 +110,17 @@
         },
         onSuccess,
         onError
+      );
+    }
+
+
+    function clear() {
+      $state.go(
+        $state.current.parent,
+        {},
+        {
+          reload: true
+        }
       );
     }
 
@@ -304,6 +316,30 @@
               "&borchureId=" +
               _data
           )
+          .then(function(response) {
+            console.log("response in delete");
+            console.log(response);
+            loadAll();
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      } else {
+        txt = "You pressed Cancel!";
+      }
+      // document.getElementById("demo").innerHTML = txt;
+    };
+
+
+    $scope.deleteSupportingBrochureConfirm = function(_data) {
+      console.log("am calling brochuresuppoting", _data, "$scope.params.id");
+      var txt;
+      if (confirm("Do you want to delete it?")) {
+        txt = "You pressed OK!";
+        // console.log("confidential letter");
+        //console.log(confidentialLetter);
+        return $http
+          .delete("/api/brochureSupportingFile/delete?borchureSupportingId="+_data)
           .then(function(response) {
             console.log("response in delete");
             console.log(response);
