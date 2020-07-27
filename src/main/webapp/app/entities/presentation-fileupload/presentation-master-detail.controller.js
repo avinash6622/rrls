@@ -38,7 +38,8 @@
     var vm = this;
     vm.strategyId = $scope.toStateParams.id;
     // vm.strategyMaster = entity;
-    vm.previousState = previousState.name;
+    vm.previousState = "presentation-master";
+    console.log("vm.previousState", vm.previousState,"previousState.name", previousState.name)
     vm.itemsPerPage = paginationConstants.itemsPerPage;
     vm.predicate = pagingParams.predicate;
     vm.reverse = true;
