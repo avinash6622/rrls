@@ -4,6 +4,7 @@ package com.unify.rrls.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.unify.rrls.domain.BrochureFileUpload;
 import com.unify.rrls.domain.BrochureSupportingFiles;
+import com.unify.rrls.domain.StrategyMaster;
 import com.unify.rrls.repository.BorchureStrategyMappingRespository;
 import com.unify.rrls.repository.BrochureFileUploadRepository;
 import com.unify.rrls.repository.BrochureSupportedFileRepository;
@@ -153,6 +154,22 @@ public class BrochureSupportedFileUploadResource {
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, brochureSupportingFiles.getId().toString()))
             .body(result);
+    }
+
+
+    @DeleteMapping("/brochureSupportingFile/delete")
+    @Timed
+    public ResponseEntity<Void> deleteBrochureSupportingFileUpload(@RequestParam (value ="borchureSupportingId") Long brochureSupporingId) {
+        String page="Brochure Support files";
+
+        BrochureSupportingFiles brochureSupportingFiles = brochureSupportedFileRepository.findById(brochureSupporingId);
+
+
+        brochureSupportedFileRepository.delete(brochureSupporingId);
+
+        notificationServiceResource.notificationHistorysave(brochureSupportingFiles.getFileName(), brochureSupportingFiles.getCreatedBy(), brochureSupportingFiles.getLastmodifiedBy(), brochureSupportingFiles.getCreatedDate(), "delegated", page, "", brochureSupportingFiles.getId(), Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
+
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, brochureSupporingId.toString())).build();
     }
 
 
