@@ -246,7 +246,7 @@ public void scheduleTaskWithNotification() {
 private void runSchedulerNotification() {
 	 Calendar now = Calendar.getInstance();
 	 now.add(Calendar.DATE, -1);    	
-     now.set(Calendar.MINUTE, 35);
+     now.set(Calendar.MINUTE, 42);
      now.set(Calendar.SECOND, 0);        
      now.set(Calendar.HOUR_OF_DAY,17 );
     
