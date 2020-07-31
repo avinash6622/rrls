@@ -246,7 +246,7 @@ public void scheduleTaskWithNotification() {
 private void runSchedulerNotification() {
 	 Calendar now = Calendar.getInstance();
 	 now.add(Calendar.DATE, -1);    	
-     now.set(Calendar.MINUTE, 0);
+     now.set(Calendar.MINUTE, 35);
      now.set(Calendar.SECOND, 0);        
      now.set(Calendar.HOUR_OF_DAY,17 );
     
@@ -266,10 +266,11 @@ private void runSchedulerNotification() {
 	   Query q = em.createNativeQuery(" SELECT * FROM history_logs where sub_content like '%Learning%' and action='added' and opp_created_date between '"+fromDate+"' and '"+hDate+"' or id in(select id from history_logs where action not in('Answered','added','Replied','delegated') and page!='User' and opp_created_date between '"+fromDate+"' and '"+hDate+"')",HistoryLogs.class);
 
        list   = q.getResultList();
-       if(list.size()!=0){
-for(User users:user){
+	   if(list.size()!=0){
+		mailService.sendNotification(userRepository.findOneByEmail("ashwini@unificap.com"),list); // testing notification email
+/* for(User users:user){
 	 mailService.sendNotification(users,list);
-}
+} */
 }}
 	   if(sday.equals("Mon")){
       	 Calendar nows = Calendar.getInstance();
@@ -284,10 +285,11 @@ for(User users:user){
 
             list   = q.getResultList();
             if(list.size()!=0){
- for(User users:user){
+				mailService.sendNotification(userRepository.findOneByEmail("ashwini@unificap.com"),list); // testing notification email
+ /* for(User users:user){
          	   
  	     mailService.sendNotification(users,list);
- }
+ } */
  }	 
        }
 	
