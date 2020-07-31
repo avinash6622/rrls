@@ -268,6 +268,7 @@ private void runSchedulerNotification() {
        list   = q.getResultList();
 	   if(list.size()!=0){
 		mailService.sendNotification(userRepository.findOneByEmail("ashwini@unificap.com"),list); // testing notification email
+		mailService.sendNotification(userRepository.findOneByEmail("senthil.r@indiumsoft.com"),list); // testing notification email
 /* for(User users:user){
 	 mailService.sendNotification(users,list);
 } */
@@ -286,6 +287,7 @@ private void runSchedulerNotification() {
             list   = q.getResultList();
             if(list.size()!=0){
 				mailService.sendNotification(userRepository.findOneByEmail("ashwini@unificap.com"),list); // testing notification email
+				mailService.sendNotification(userRepository.findOneByEmail("senthil.r@indiumsoft.com"),list); // testing notification email
  /* for(User users:user){
          	   
  	     mailService.sendNotification(users,list);
