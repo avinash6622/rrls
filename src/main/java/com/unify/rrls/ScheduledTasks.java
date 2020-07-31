@@ -246,9 +246,9 @@ public void scheduleTaskWithNotification() {
 private void runSchedulerNotification() {
 	 Calendar now = Calendar.getInstance();
 	 now.add(Calendar.DATE, -1);    	
-     now.set(Calendar.MINUTE, 42);
+     now.set(Calendar.MINUTE, 45);
      now.set(Calendar.SECOND, 0);        
-     now.set(Calendar.HOUR_OF_DAY,17 );
+     now.set(Calendar.HOUR_OF_DAY,17);
     
 	DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");    
 	Date date = new Date();
