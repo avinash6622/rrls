@@ -16,7 +16,7 @@
      
        <a th:href="@{|${baseUrl}/#/home/${noti.createdBy}|}" th:text="${#strings.capitalize(noti.createdBy)}"></a><span th:text="' '+${noti.action}+' '"></span>
        <span th:if="noti.fileNamecontent"><b th:text="${noti.fileNamecontent} +' '"></b></span>
-       <span th:text="${noti.page}+' '"></span><a th:href="@{|${baseUrl}/#/${{noti.page == 'Strategy' ? 'strategy-master/strategy-master/'+noti.oppId : noti.page == 'Opportunity' ? 'opportunity-master/opportunity-master/'+noti.oppId : 'user-management/'+ noti.oppname}}|}" th:text="${noti.oppname}"></a><span th:text="${' '+#dates.format(noti.createdDate,'MMM d, y h:mm:ss a')}"></span> <hr></hr> </td>   
+       <span th:text="${noti.page}+' '"></span><a th:href="@{|${baseUrl}/#/${{noti.page == 'Strategy' ? 'strategy-master/strategy-master/'+noti.oppId : noti.page == 'Opportunity' ? 'opportunity-master/opportunity-master/'+noti.oppId : noti.page == 'Presentation' || noti.page == 'Brochure' || noti.page == 'Brochure Support files' ? '' : 'presentation-master/presentation-master/'+ noti.oppId}}|}" th:text="${noti.oppname}"></a><span th:text="${' '+#dates.format(noti.createdDate,'MMM d, y h:mm:ss a')}"></span> <hr></hr> </td>   
        
         <td th:if="${noti.action != 'delegated' and noti.page == 'Opportunity Name'}">      
         <a th:href="@{|${baseUrl}/#/home/${noti.createdBy}|}" th:text="${#strings.capitalize(noti.createdBy)}"></a><span th:text="' '+${noti.action}+' '"></span>

@@ -136,7 +136,7 @@ public class PresentationFileUploadResource {
         presentationStrategyRepository.save(presentationStrategyMapping);
 
 
-        notificationServiceResource.notificationHistorysave(presentationFileUploadResult.getFileName(), presentationFileUploadResult.getCreatedBy(), presentationFileUploadResult.getLastmodifiedBy(), presentationFileUpload.getCreatedDate(), "created", page, "", presentationFileUpload.getId(), Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
+        notificationServiceResource.notificationHistorysave(presentationFileUploadResult.getFileName(), presentationFileUploadResult.getCreatedBy(), presentationFileUploadResult.getLastmodifiedBy(), presentationFileUpload.getCreatedDate(), "created", page, "", strategyId, Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
 
         return ResponseEntity.created(new URI("/api/presentation-file-uploads/" + presentationFileUploadResult.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, presentationFileUploadResult.getId().toString()))
@@ -193,7 +193,7 @@ public class PresentationFileUploadResource {
         presentationFileUploadResult = presentationFileUploadRepository.save(presentationFileUpload);
 
 
-        notificationServiceResource.notificationHistorysave(presentationFileUploadResult.getFileName(), presentationFileUploadResult.getCreatedBy(), presentationFileUploadResult.getLastmodifiedBy(), presentationFileUploadResult.getCreatedDate(), "updated", page, "", presentationFileUploadResult.getId(), Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
+        notificationServiceResource.notificationHistorysave(presentationFileUploadResult.getFileName(), presentationFileUploadResult.getCreatedBy(), presentationFileUploadResult.getLastmodifiedBy(), presentationFileUploadResult.getCreatedDate(), "updated", page, "", strategyId, Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
 
         System.out.println("presentationFileUploadResult"+presentationFileUploadResult.getFileDesc());
         return ResponseEntity.created(new URI("/api/presentation-file-uploads/" + presentationFileUploadResult.getId()))
@@ -293,7 +293,7 @@ public class PresentationFileUploadResource {
         presentationStrategyRepository.deleteByPresentationIdAndStrategyId(presentationId, strategyId);
         presentationFileUploadRepository.delete(presentationId);
 
-        notificationServiceResource.notificationHistorysave(presentationFileUpload.getFileName(), presentationFileUpload.getCreatedBy(), presentationFileUpload.getLastmodifiedBy(), presentationFileUpload.getCreatedDate(), "delegated", page, "", presentationFileUpload.getId(), Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
+        notificationServiceResource.notificationHistorysave(presentationFileUpload.getFileName(), presentationFileUpload.getCreatedBy(), presentationFileUpload.getLastmodifiedBy(), presentationFileUpload.getCreatedDate(), "delegated", page, "", strategyId, Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
 
 
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, presentationId.toString())).build();

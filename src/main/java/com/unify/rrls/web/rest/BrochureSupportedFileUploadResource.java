@@ -114,7 +114,7 @@ public class BrochureSupportedFileUploadResource {
 
 
 
-        notificationServiceResource.notificationHistorysave(brochureSupportingFilesResult.getFileName(), brochureSupportingFilesResult.getCreatedBy(), brochureSupportingFilesResult.getLastmodifiedBy(), brochureSupportingFilesResult.getCreatedDate(), "created", page, "", brochureSupportingFilesResult.getId(), Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
+        notificationServiceResource.notificationHistorysave(brochureSupportingFilesResult.getFileName(), brochureSupportingFilesResult.getCreatedBy(), brochureSupportingFilesResult.getLastmodifiedBy(), brochureSupportingFilesResult.getCreatedDate(), "created", page, "", strategyId, Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
 
 
         return ResponseEntity.created(new URI("/api/brochure/mainFileUploads/" + brochureSupportingFilesResult.getId()))

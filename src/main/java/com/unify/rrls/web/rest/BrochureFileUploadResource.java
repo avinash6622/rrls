@@ -116,7 +116,7 @@ public class BrochureFileUploadResource {
         borchureStrategyMappingRespository.save(brochureStrategyMapping);
 
 
-        notificationServiceResource.notificationHistorysave(brochureFileUploadResult.getFileName(), brochureFileUploadResult.getCreatedBy(), brochureFileUploadResult.getLastmodifiedBy(), brochureFileUploadResult.getCreatedDate(), "created", page, "", brochureFileUploadResult.getId(), Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
+        notificationServiceResource.notificationHistorysave(brochureFileUploadResult.getFileName(), brochureFileUploadResult.getCreatedBy(), brochureFileUploadResult.getLastmodifiedBy(), brochureFileUploadResult.getCreatedDate(), "created", page, "", strategyId, Long.parseLong("0"), Long.parseLong("0"), Long.parseLong("0"));
 
 
         return ResponseEntity.created(new URI("/api/brochure/mainFileUploads/" + brochureFileUploadResult.getId()))
