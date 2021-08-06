@@ -51,6 +51,7 @@
         vm.externalFileDelete = externalFileDelete;
         vm.raFileDelete = raFileDelete;
         vm.getOpportunityMaster = getOpportunityMaster;
+        vm.getConfidentialFile = getConfidentialFile;
         vm.popUpURL = '';
         vm.tab = 1;
 //vm.setTab=setTab;
@@ -933,6 +934,18 @@
                 console.log(error);
             })
         }
+        function getConfidentialFile(file) {
+                    console.log('File for confidential get');
+                    console.log(file);
+                    return $http.get('/api/ur/confidential-letter/fileDownload/' + file.id).then(
+                        function (response) {
+                            console.log('response in confidential file get');
+                            console.log(response.config.url);
+                            window.location.href = response.config.url;
+                        }).catch(function (error) {
+                        console.log(error);
+                    })
+                }
 
         function dueDiligenceDelete(file) {
             console.log('File for due diligence Deletion');

@@ -48,8 +48,14 @@ import com.unify.rrls.web.rest.util.PaginationUtil;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import org.springframework.http.MediaType;
+import org.springframework.core.io.FileSystemResource;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+
 @RestController
-@RequestMapping("/api")
+//@RequestMapping("/api")
 
 public class ConfidenctialLettersResource {
     private final Logger log = LoggerFactory.getLogger(ConfidenctialLettersResource.class);
@@ -88,7 +94,7 @@ public class ConfidenctialLettersResource {
     @PersistenceContext
     EntityManager em;
 
-    @RequestMapping(value = "/confidenctial-letters", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/confidenctial-letters", method = RequestMethod.POST)
     @Timed
     public ResponseEntity<ConfidenctialLetters> createConfidenctialLetters(@RequestParam(value = "oppId") Long oppId,
                                                                            @RequestParam(value = "fileUploads") MultipartFile[] fileUploads, @RequestParam(value = "filetype") String filetype,
@@ -137,7 +143,7 @@ public class ConfidenctialLettersResource {
             .body(result);
     }
 
-    @GetMapping("/confidenctial-letters")
+    @GetMapping("/api/confidenctial-letters")
     @Timed
     public ResponseEntity<List<ConfidenctialLetters>> getAllConfidenctialLetters(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of ConfidenctialLetters");
@@ -150,7 +156,7 @@ public class ConfidenctialLettersResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
-    @GetMapping("/confidenctial-letters/opportunity")
+    @GetMapping("/api/confidenctial-letters/opportunity")
     @Timed
     public ResponseEntity<List<OpportunityName>> getAllOpportunityMastersforauto() {
         log.debug("REST request to get a page of OpportunityMasters");
@@ -163,7 +169,7 @@ public class ConfidenctialLettersResource {
 
     }
 
-    @PostMapping("/confidenctial-letters/search-opp")
+    @PostMapping("/api/confidenctial-letters/search-opp")
     @Timed
     public ResponseEntity<List<ConfidenctialLetters>> searchOpportunities(@RequestBody OpportunityName opportunityName, Pageable pageable) throws URISyntaxException {
         OpportunityMaster opportunityMaster = opportunityMasterRepository.findByMasterName(opportunityName);
@@ -172,7 +178,7 @@ public class ConfidenctialLettersResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
-    @GetMapping("/confidenctial-letters/subject")
+    @GetMapping("/api/confidenctial-letters/subject")
     @Timed
     public ResponseEntity<List<ConfidenctialLetters>> getAllSubjectforauto() {
         log.debug("REST request to get a page of OpportunityMasters");
@@ -185,7 +191,7 @@ public class ConfidenctialLettersResource {
 
     }
 
-    @PostMapping("/confidenctial-letter/search-sub")
+    @PostMapping("/api/confidenctial-letter/search-sub")
     @Timed
     public ResponseEntity<List<ConfidenctialLetters>> searchSubject(@RequestBody ConfidenctialLetters confidenctialLetters, Pageable pageable) throws URISyntaxException {
 
@@ -212,7 +218,7 @@ public class ConfidenctialLettersResource {
     }
 
 
-    @DeleteMapping("/confidential-letter/{id}")
+    @DeleteMapping("/api/confidential-letter/{id}")
     @Timed
     public ResponseEntity<Void> deleteConfidentialLetter(@PathVariable Long id) {
         log.debug("REST request to delete confidential letter: {}", id);
@@ -221,6 +227,32 @@ public class ConfidenctialLettersResource {
         System.out.println(confidentialLetter);
         confidenctialLettersRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createAlert("A confidential letter is deleted with identifier " + id, id.toString())).build();
+    }
+
+    @GetMapping("/api/ur/confidential-letter/fileDownload/{id}")
+    @Timed
+    public ResponseEntity getFile(@PathVariable("id") String id) throws IOException {
+        System.out.println("id"+id);
+        ConfidenctialLetters confidentialLetter = confidenctialLettersRepository.findByid(Long.valueOf(id));
+        System.out.println("confidentialLetter");
+        System.out.println(confidentialLetter);
+        System.out.println(confidentialLetter.getFileData());
+        if (confidentialLetter != null) {
+            File file = new File(confidentialLetter.getFileData());
+            System.out.println("file"+file.getName() + file.exists());
+            System.out.println(file);
+            if (file.exists()) {
+                return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=" + confidentialLetter.getFileData())
+                    .contentLength(file.length())
+                    .lastModified(file.lastModified())
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(new FileSystemResource(file));
+            } else {
+                return ResponseEntity.ok().body("file not found");
+            }
+        }
+        return null;
     }
 
 }

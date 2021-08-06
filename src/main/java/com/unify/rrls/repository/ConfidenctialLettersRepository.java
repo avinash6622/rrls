@@ -12,7 +12,8 @@ import com.unify.rrls.domain.OpportunityMaster;
 	@Repository
 	public interface ConfidenctialLettersRepository extends JpaRepository<ConfidenctialLetters, Long> {
 		List<ConfidenctialLetters> findByOpportunityMasterId(OpportunityMaster opportunityMaster);
+        ConfidenctialLetters findByid(Long id);
 		Page<ConfidenctialLetters> findByOpportunityMasterId(OpportunityMaster opportunityName,Pageable pageable);
 	    Page<ConfidenctialLetters> findBySubject(String subject,Pageable pageable);
 	}
-	
+

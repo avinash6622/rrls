@@ -111,7 +111,7 @@
         width: 14.2% !important;
     }
 
-    
+
 </style>
 <div>
 
@@ -416,7 +416,8 @@
                             <div style="height: 182px; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
                                 <div class="panel-body"
                                     ng-repeat="fileUploads in vm.opportunityMaster.confidenctialLetters | orderBy: '-createdDate'">
-                                    <a ng-click="vm.loadFilePreview(fileUploads.fileData)">{{fileUploads.fileName}}</a>
+<!--                                    <a ng-click="vm.loadFilePreview(fileUploads.fileData)">{{fileUploads.fileName}}</a>-->
+                                    <a ng-click="vm.getConfidentialFile(fileUploads)">- {{fileUploads.fileName}}</a>
                                     <button class="btn btn-warning btn-circle btn-sm"
                                         ng-click="vm.confidentialFileDelete(fileUploads)" type="button">
                                         <span class="glyphicon glyphicon-remove glyph_icon"></span>
