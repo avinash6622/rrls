@@ -16,5 +16,5 @@ public interface CommunicationLettersRepository extends JpaRepository<Communicat
 	List<CommunicationLetters> findByOpportunityMasterId(OpportunityMaster opportunityMaster);
 	Page<CommunicationLetters> findByOpportunityMasterId(OpportunityMaster opportunityName,Pageable pageable);
 	Page<CommunicationLetters> findBySubject(String subject,Pageable pageable);
-
+    CommunicationLetters findById(Long id);
 }

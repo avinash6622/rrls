@@ -19,4 +19,13 @@ public class ApplicationProperties {
 		this.mailFromName = mailFromName;
 	}
 
+    public String datafolder;
+
+    public String getDatafolder() {
+        return datafolder;
+    }
+
+    public void setDatafolder(String datafolder) {
+        this.datafolder = datafolder;
+    }
 }

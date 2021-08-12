@@ -79,8 +79,8 @@ jhipster:
         #allow-credentials: true
         #max-age: 1800
     mail:
-        from: ResearchRepositoryLearningSystem@localhost       
-       
+        from: ResearchRepositoryLearningSystem@localhost
+
     swagger:
         default-include-pattern: /api/.*
         title: ResearchRepositoryLearningSystem API
@@ -105,3 +105,4 @@ jhipster:
 # ===================================================================
 
 application:
+    datafolder: "src/main/webapp/content/fileUpload"
