@@ -28,6 +28,12 @@ import java.net.URISyntaxException;
 import java.time.Instant;
 import java.util.List;
 
+import com.unify.rrls.config.ApplicationProperties;
+import org.springframework.http.MediaType;
+import org.springframework.core.io.FileSystemResource;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+
 @RestController
 @RequestMapping("/api")
 public class BrochureFileUploadResource {
@@ -56,14 +62,16 @@ public class BrochureFileUploadResource {
     private final BorchureStrategyMappingRespository borchureStrategyMappingRespository;
     private final StrategyMasterRepository strategyMasterRepository;
     private final NotificationServiceResource notificationServiceResource;
+    private final ApplicationProperties applicationProperties;
 
 
-    public BrochureFileUploadResource(BrochureFileUploadRepository brochureFileUploadRepository,BorchureStrategyMappingRespository borchureStrategyMappingRespository,StrategyMasterRepository strategyMasterRepository,NotificationServiceResource notificationServiceResource)
+    public BrochureFileUploadResource(BrochureFileUploadRepository brochureFileUploadRepository,BorchureStrategyMappingRespository borchureStrategyMappingRespository,StrategyMasterRepository strategyMasterRepository,NotificationServiceResource notificationServiceResource, ApplicationProperties applicationProperties)
     {
         this.brochureFileUploadRepository=brochureFileUploadRepository;
         this.borchureStrategyMappingRespository=borchureStrategyMappingRespository;
         this.strategyMasterRepository=strategyMasterRepository;
         this.notificationServiceResource=notificationServiceResource;
+        this.applicationProperties = applicationProperties;
     }
 
     @RequestMapping(value = "/brochure/mainFileUploads", method = RequestMethod.POST)
@@ -79,7 +87,7 @@ public class BrochureFileUploadResource {
         String sFilesDirectory;
 
         user = SecurityUtils.getCurrentUserLogin();
-        sFilesDirectory = "src/main/webapp/content/fileUpload/BrochureMainFile/" +  user + "-" + uploadfileName;
+        sFilesDirectory = applicationProperties.getDatafolder() + "/BrochureMainFile/" +  user + "-" + uploadfileName;
         File dirFiles = new File(sFilesDirectory);
         dirFiles.mkdirs();
 
@@ -93,7 +101,11 @@ public class BrochureFileUploadResource {
 
         File sFiles = new File(dirFiles, fileName);
         writeFile(fileStream, sFiles);
-        brochureFileUpload.setFilePath(sFiles.toString());
+        System.out.println("sFiles "+ sFiles);
+        String filePath = sFiles.toString();
+        String[] paths = filePath.split("fileUpload");
+        System.out.println("path"+paths[1]);
+        brochureFileUpload.setFilePath(paths[1]);
 
         brochureFileUpload.setFileName(uploadfileName);
         brochureFileUpload.setFileContentType(filetype);
@@ -221,5 +233,29 @@ public class BrochureFileUploadResource {
         out.flush();
         out.close();
         System.out.println("File Uploading is Completed");
+    }
+
+    @GetMapping("/ur/brochureMainFile/fileDownload/{id}")
+    @Timed
+    public ResponseEntity getFile(@PathVariable("id") Long id) throws IOException {
+        System.out.println("id"+id);
+        BrochureFileUpload brochureFileUpload = brochureFileUploadRepository.findById(Long.valueOf(id));
+        if (brochureFileUpload != null) {
+            String path= applicationProperties.getDatafolder()+brochureFileUpload.getFilePath();
+            File file = new File(path);
+            System.out.println("file"+file.getName() + file.exists());
+            System.out.println(file);
+            if (file.exists()) {
+                return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=" + path)
+                    .contentLength(file.length())
+                    .lastModified(file.lastModified())
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(new FileSystemResource(file));
+            } else {
+                return ResponseEntity.ok().body("file not found");
+            }
+        }
+        return null;
     }
 }

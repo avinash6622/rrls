@@ -28,6 +28,12 @@ import java.net.URISyntaxException;
 import java.time.Instant;
 import java.util.List;
 
+import com.unify.rrls.config.ApplicationProperties;
+import org.springframework.http.MediaType;
+import org.springframework.core.io.FileSystemResource;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+
 /**
  *
  */
@@ -42,12 +48,14 @@ public class PresentationFileUploadResource {
     private final PresentationStrategyRepository presentationStrategyRepository;
     private final StrategyMasterRepository strategyMasterRepository;
     private final NotificationServiceResource notificationServiceResource;
+    private final ApplicationProperties applicationProperties;
 
-    public PresentationFileUploadResource(PresentationFileUploadRepository presentationFileUploadRepository, PresentationStrategyRepository presentationStrategyRepository, StrategyMasterRepository strategyMasterRepository,NotificationServiceResource notificationServiceResource) {
+    public PresentationFileUploadResource(PresentationFileUploadRepository presentationFileUploadRepository, PresentationStrategyRepository presentationStrategyRepository, StrategyMasterRepository strategyMasterRepository,NotificationServiceResource notificationServiceResource, ApplicationProperties applicationProperties) {
         this.presentationFileUploadRepository = presentationFileUploadRepository;
         this.presentationStrategyRepository = presentationStrategyRepository;
         this.strategyMasterRepository = strategyMasterRepository;
         this.notificationServiceResource=notificationServiceResource;
+        this.applicationProperties = applicationProperties;
     }
 
     private byte[] fileStream;
@@ -97,7 +105,7 @@ public class PresentationFileUploadResource {
 
         user = SecurityUtils.getCurrentUserLogin();
         System.out.println("fileUploads " + fileUploads);
-        sFilesDirectory = "src/main/webapp/content/fileUpload/Presentation/" + user + "-" + uploadfileName;
+        sFilesDirectory = applicationProperties.getDatafolder() + "/Presentation/" + user + "-" + uploadfileName;
         File dirFiles = new File(sFilesDirectory);
         dirFiles.mkdirs();
 
@@ -112,7 +120,11 @@ public class PresentationFileUploadResource {
 
         File sFiles = new File(dirFiles, fileName);
         writeFile(fileStream, sFiles);
-        presentationFileUpload.setFilePath(sFiles.toString());
+        System.out.println("sFiles "+ sFiles);
+        String filePath = sFiles.toString();
+        String[] paths = filePath.split("fileUpload");
+        System.out.println("path"+paths[1]);
+        presentationFileUpload.setFilePath(paths[1]);
 
         presentationFileUpload.setFileName(uploadfileName);
         presentationFileUpload.setFileContentType(filetype);
@@ -159,7 +171,7 @@ public class PresentationFileUploadResource {
         String sFilesDirectory;
 
         user = SecurityUtils.getCurrentUserLogin();
-        sFilesDirectory = "src/main/webapp/content/fileUpload/Presentation/" + user + "-" + uploadfileName;
+        sFilesDirectory = applicationProperties.getDatafolder() + "/Presentation/" + user + "-" + uploadfileName;
         File dirFiles = new File(sFilesDirectory);
         dirFiles.mkdirs();
 
@@ -173,11 +185,16 @@ public class PresentationFileUploadResource {
             System.out.println("FILE NAME--->" + fileName);
             File sFiles = new File(dirFiles, fileName);
             writeFile(fileStream, sFiles);
-            presentationFileUpload.setFilePath(sFiles.toString());
+            System.out.println("sFiles "+ sFiles);
+            String filePath1 = sFiles.toString();
+            String[] paths = filePath1.split("fileUpload");
+            System.out.println("path"+paths[1]);
+            presentationFileUpload.setFilePath(paths[1]);
         }
         else
         {
             PresentationFileUpload presentationFileUpload1 = presentationFileUploadRepository.findById(id);
+            System.out.println("update"+ presentationFileUpload1.getFilePath());
             presentationFileUpload.setFilePath(presentationFileUpload1.getFilePath());
             presentationFileUpload.setCreatedBy(presentationFileUpload1.getCreatedBy());
             presentationFileUpload.setCreatedDate(presentationFileUpload1.getCreatedDate());
@@ -314,6 +331,30 @@ public class PresentationFileUploadResource {
         out.flush();
         out.close();
         System.out.println("File Uploading is Completed");
+    }
+
+    @GetMapping("/ur/presentationFile/fileDownload/{id}")
+    @Timed
+    public ResponseEntity getFile(@PathVariable("id") Long id) throws IOException {
+        System.out.println("id"+id);
+        PresentationFileUpload presentationFileUpload = presentationFileUploadRepository.findById(Long.valueOf(id));
+        if (presentationFileUpload != null) {
+            String path= applicationProperties.getDatafolder()+presentationFileUpload.getFilePath();
+            File file = new File(path);
+            System.out.println("file"+file.getName() + file.exists());
+            System.out.println(file);
+            if (file.exists()) {
+                return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=" + path)
+                    .contentLength(file.length())
+                    .lastModified(file.lastModified())
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(new FileSystemResource(file));
+            } else {
+                return ResponseEntity.ok().body("file not found");
+            }
+        }
+        return null;
     }
 
 

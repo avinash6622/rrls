@@ -50,8 +50,8 @@
     }
 </style>
 <div>
-    
-    
+
+
     <div class="well">
         <div class="row" style="padding: 14px;">
             <button type="button" class="btn btn-info pull-right" ui-sref="{{vm.previousState}}">
@@ -141,7 +141,7 @@
                                 <span>Last Mod.Date</span>
                                 <span class="glyphicon glyphicon-sort"></span>
                             </th>
-                            <th jh-sort-by="totalStocks" 
+                            <th jh-sort-by="totalStocks"
                             has-any-authority="Admin,Presentation_Brochure">
                                 <span>Action</span>
                                 <span class="glyphicon glyphicon-sort"></span>
@@ -160,7 +160,8 @@
                                 {{strategyMaster.presentationFileUpload.id}}
                             </td> -->
                             <td>
-                                <a ng-click="vm.downloadPresentation(strategyMaster.presentationFileUpload.filePath)">{{strategyMaster.presentationFileUpload.fileName}}</a>
+                                <!-- <a ng-click="vm.downloadPresentation(strategyMaster.presentationFileUpload.filePath)">{{strategyMaster.presentationFileUpload.fileName}}</a> -->
+                                <a ng-click="vm.getPresentationFile(strategyMaster.presentationFileUpload)">{{strategyMaster.presentationFileUpload.fileName}}</a>
                             </td>
                             <td>
                                 {{strategyMaster.presentationFileUpload.fileDesc}}
@@ -249,7 +250,8 @@
                             <td>{{$index + 1}}</td>
                             <!-- <td>{{fixed.brochureFileUpload.id}}</td> -->
                             <td>
-                                <a ng-click="vm.downloadPresentation(fixed.brochureFileUpload.filePath)">{{fixed.brochureFileUpload.fileName}}</a>
+                                <!-- <a ng-click="vm.downloadPresentation(fixed.brochureFileUpload.filePath)">{{fixed.brochureFileUpload.fileName}}</a> -->
+                                <a ng-click="vm.getBrochureFile(fixed.brochureFileUpload)">-{{fixed.brochureFileUpload.fileName}}</a>
                             </td>
                             <td>
                                 {{fixed.brochureFileUpload.fileContentType}}
@@ -339,7 +341,8 @@
                                     {{bfus.id}}
                                 </td> -->
                                 <td style="background-color: #fff;">
-                                    <a ng-click="vm.downloadPresentation(bfus.filePath)">{{bfus.fileName}}</a>
+                                    <a ng-click="vm.getBrochureSupportFile(bfus)">{{bfus.fileName}}</a>
+                                    <!-- <a ng-click="vm.downloadPresentation(bfus.filePath)">--{{bfus.fileName}}</a> -->
                                 </td>
                                 <td style="background-color: #fff;">
                                     {{bfus.fileContentType}}
@@ -394,7 +397,7 @@
             </div>
         </div>
     </div>
-    
+
     <footer class="footer footer-dark" ng-cloak>
         <p data-translate="footer" style="font-size: 12px;margin-left: 10px">
             &copy;2018, All rights reserved.

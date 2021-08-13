@@ -49,6 +49,13 @@ import com.unify.rrls.web.rest.util.PaginationUtil;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.unify.rrls.config.ApplicationProperties;
+import org.springframework.http.MediaType;
+import org.springframework.core.io.FileSystemResource;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+
 @RestController
 @RequestMapping("/api")
 public class DueDiligenceResource {
@@ -58,11 +65,13 @@ public class DueDiligenceResource {
     @Autowired
     private final DueDiligenceRepository dueDiligenceRepository;
     private final OpportunityMasterRepository opportunityMasterRepository;
+    private final ApplicationProperties applicationProperties;
 
     public DueDiligenceResource(DueDiligenceRepository dueDiligenceRepository,
-                                        OpportunityMasterRepository opportunityMasterRepository) {
+                                        OpportunityMasterRepository opportunityMasterRepository, ApplicationProperties applicationProperties) {
         this.dueDiligenceRepository = dueDiligenceRepository;
         this.opportunityMasterRepository = opportunityMasterRepository;
+        this.applicationProperties = applicationProperties;
     }
 
     private byte[] fileStream;
@@ -91,7 +100,7 @@ public class DueDiligenceResource {
 
         OpportunityMaster opp = opportunityMasterRepository.findOne(oppId);
         String user = SecurityUtils.getCurrentUserLogin();
-        String sFilesDirectory = "src/main/webapp/content/fileUpload/DueDiligence/" + opp.getMasterName().getOppName() + "/" + user + "-" + uploadfileName;
+        String sFilesDirectory = applicationProperties.getDatafolder() + "/DueDiligence/" + opp.getMasterName().getOppName() + "/" + user + "-" + uploadfileName;
         File dirFiles = new File(sFilesDirectory);
         dirFiles.mkdirs();
         DueDiligence fileUploaded = new DueDiligence();
@@ -104,7 +113,11 @@ public class DueDiligenceResource {
 //            System.out.println("FILE NAME--->" + fileName);
             File sFiles = new File(dirFiles, fileName);
             writeFile(fileStream, sFiles);
-            fileUploaded.setFileData(sFiles.toString());
+            System.out.println("sFiles "+ sFiles);
+            String filePath = sFiles.toString();
+            String[] paths = filePath.split("fileUpload");
+            System.out.println("path"+paths[1]);
+            fileUploaded.setFileData(paths[1]);
             int idxOfDot = sFile.getOriginalFilename().lastIndexOf('.');   //Get the last index of . to separate extension
             extension = sFile.getOriginalFilename().substring(idxOfDot + 1).toLowerCase();
             name = sFile.getOriginalFilename().substring(0, idxOfDot);
@@ -197,6 +210,30 @@ public class DueDiligenceResource {
         out.flush();
         out.close();
 //        System.out.println("File Uploading is Completed");
+    }
+
+    @GetMapping("/ur/due-diligence/fileDownload/{id}")
+    @Timed
+    public ResponseEntity getFile(@PathVariable("id") String id) throws IOException {
+        System.out.println("id"+id);
+        DueDiligence dueDiligence = dueDiligenceRepository.findById(Long.valueOf(id));
+        if (dueDiligence != null) {
+            String path= applicationProperties.getDatafolder()+dueDiligence.getFileData();
+            File file = new File(path);
+            System.out.println("file"+file.getName() + file.exists());
+            System.out.println(file);
+            if (file.exists()) {
+                return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=" + path)
+                    .contentLength(file.length())
+                    .lastModified(file.lastModified())
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(new FileSystemResource(file));
+            } else {
+                return ResponseEntity.ok().body("file not found");
+            }
+        }
+        return null;
     }
 
 

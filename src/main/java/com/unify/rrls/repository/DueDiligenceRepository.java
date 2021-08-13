@@ -16,5 +16,6 @@ public interface DueDiligenceRepository extends JpaRepository<DueDiligence, Long
     List<DueDiligence> findByOpportunityMasterId(OpportunityMaster opportunityMaster);
     Page<DueDiligence> findByOpportunityMasterId(OpportunityMaster opportunityName,Pageable pageable);
     Page<DueDiligence> findBySubject(String subject,Pageable pageable);
+    DueDiligence findById(Long id);
 }
 

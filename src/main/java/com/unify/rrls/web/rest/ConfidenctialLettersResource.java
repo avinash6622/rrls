@@ -48,6 +48,7 @@ import com.unify.rrls.web.rest.util.PaginationUtil;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.unify.rrls.config.ApplicationProperties;
 import org.springframework.http.MediaType;
 import org.springframework.core.io.FileSystemResource;
 
@@ -65,11 +66,13 @@ public class ConfidenctialLettersResource {
     @Autowired
     private final ConfidenctialLettersRepository confidenctialLettersRepository;
     private final OpportunityMasterRepository opportunityMasterRepository;
+    private final ApplicationProperties applicationProperties;
 
     public ConfidenctialLettersResource(ConfidenctialLettersRepository confidenctialLettersRepository,
-                                        OpportunityMasterRepository opportunityMasterRepository) {
+                                        OpportunityMasterRepository opportunityMasterRepository, ApplicationProperties applicationProperties) {
         this.confidenctialLettersRepository = confidenctialLettersRepository;
         this.opportunityMasterRepository = opportunityMasterRepository;
+        this.applicationProperties = applicationProperties;
     }
 
     private byte[] fileStream;
@@ -103,7 +106,7 @@ public class ConfidenctialLettersResource {
         OpportunityMaster opp = opportunityMasterRepository.findOne(oppId);
 
         String user = SecurityUtils.getCurrentUserLogin();
-        String sFilesDirectory = "src/main/webapp/content/fileUpload/Confidential/" + opp.getMasterName().getOppName() + "/" + user + "-" + uploadfileName;
+        String sFilesDirectory =  applicationProperties.getDatafolder() + "/Confidential/" + opp.getMasterName().getOppName() + "/" + user + "-" + uploadfileName;
 
         File dirFiles = new File(sFilesDirectory);
         dirFiles.mkdirs();
@@ -123,7 +126,11 @@ public class ConfidenctialLettersResource {
 
             File sFiles = new File(dirFiles, fileName);
             writeFile(fileStream, sFiles);
-            fileUploaded.setFileData(sFiles.toString());
+            System.out.println("sFiles "+ sFiles);
+            String filePath = sFiles.toString();
+            String[] paths = filePath.split("fileUpload");
+            System.out.println("path"+paths[1]);
+            fileUploaded.setFileData(paths[1]);
 
             int idxOfDot = sFile.getOriginalFilename().lastIndexOf('.');   //Get the last index of . to separate extension
             extension = sFile.getOriginalFilename().substring(idxOfDot + 1).toLowerCase();
@@ -234,16 +241,16 @@ public class ConfidenctialLettersResource {
     public ResponseEntity getFile(@PathVariable("id") String id) throws IOException {
         System.out.println("id"+id);
         ConfidenctialLetters confidentialLetter = confidenctialLettersRepository.findByid(Long.valueOf(id));
-        System.out.println("confidentialLetter");
-        System.out.println(confidentialLetter);
+        System.out.println("confidentialLetter getFileData");
         System.out.println(confidentialLetter.getFileData());
+        String path= applicationProperties.getDatafolder()+confidentialLetter.getFileData();
         if (confidentialLetter != null) {
-            File file = new File(confidentialLetter.getFileData());
+            File file = new File(path);
             System.out.println("file"+file.getName() + file.exists());
             System.out.println(file);
             if (file.exists()) {
                 return ResponseEntity.ok()
-                    .header("Content-Disposition", "attachment; filename=" + confidentialLetter.getFileData())
+                    .header("Content-Disposition", "attachment; filename=" + path)
                     .contentLength(file.length())
                     .lastModified(file.lastModified())
                     .contentType(MediaType.APPLICATION_OCTET_STREAM)

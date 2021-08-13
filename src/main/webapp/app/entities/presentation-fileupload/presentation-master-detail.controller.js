@@ -82,6 +82,7 @@
     vm.fixedCollapse = fixedCollapse;
     vm.downlaodFile = downlaodFile;
     vm.downloadPresentation = downloadPresentation;
+    vm.getPresentationFile = getPresentationFile;
     vm.getBrochureData = getBrochureData;
     vm.getBrochureDataValues = [];
     vm.getBrochureDataValuesSupportFile = [];
@@ -89,6 +90,8 @@
     vm.brochureFunRun = brochureFun;
     vm.brochureFileUploadSupportData = {};
     vm.getProperdate = getProperdateValue;
+    vm.getBrochureFile = getBrochureFile;
+    vm.getBrochureSupportFile = getBrochureSupportFile;
     // vm.PresentationFlag = PresentationFlag;
     // vm.BrochureFlag = BrochureFlag;
     loadAll();
@@ -135,6 +138,36 @@
         }
       });
       vm.edit = true;
+    }
+    function getPresentationFile(file) {
+      console.log('getPresentationFile', file);
+      return $http.get('/api/ur/presentationFile/fileDownload/' + file.id).then(
+        function (response) {
+          console.log(response.config.url);
+          window.location.href = response.config.url;
+        }).catch(function (error) {
+          console.log(error);
+        })
+    }
+    function getBrochureFile(file) {
+      console.log('getBrochureFile', file);
+      return $http.get('/api/ur/brochureMainFile/fileDownload/' + file.id).then(
+        function (response) {
+          console.log(response.config.url);
+          window.location.href = response.config.url;
+        }).catch(function (error) {
+          console.log(error);
+        })
+    }
+    function getBrochureSupportFile(file) {
+      console.log('getBrochureSupportFile', file);
+      return $http.get('/api/ur/brochureSupportingFile/fileDownload/' + file.id).then(
+        function (response) {
+          console.log(response.config.url);
+          window.location.href = response.config.url;
+        }).catch(function (error) {
+          console.log(error);
+        })
     }
 
     function downloadPresentation(fileName) {

@@ -113,6 +113,13 @@ import com.unify.rrls.web.rest.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
 
+import org.springframework.http.MediaType;
+import org.springframework.core.io.FileSystemResource;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import com.unify.rrls.config.ApplicationProperties;
+
 /**
  * REST controller for managing OpportunityMaster.
  */
@@ -178,6 +185,7 @@ public class OpportunityMasterResource {
     private final CommunicationLettersRepository communicationLettersRepository;
     private final ConfidenctialLettersRepository confidenctialLettersRepository;
     private final DueDiligenceRepository dueDiligenceRepository;
+    private final ApplicationProperties applicationProperties;
 
     @Autowired
     NotificationServiceResource notificationServiceResource;
@@ -207,7 +215,7 @@ public class OpportunityMasterResource {
                                      OpportunityLearningAIFRepository opportunityLearningAIFRepository, LearningAIFRepository learningAIFRepository,
                                      LearningsAIFMappingRepository learningsAIFMappingRepository, ExternalRAFileUploadRepository externalRAFileUploadRepository,
                                      CommunicationLettersRepository communicationLettersRepository, ConfidenctialLettersRepository confidenctialLettersRepository,
-    DueDiligenceRepository dueDiligenceRepository) {
+    DueDiligenceRepository dueDiligenceRepository, ApplicationProperties applicationProperties) {
         this.opportunityMasterRepository = opportunityMasterRepository;
         this.fileUploadRepository = fileUploadRepository;
         this.fileUploadCommentsRepository = fileUploadCommentsRepository;
@@ -235,6 +243,7 @@ public class OpportunityMasterResource {
         this.communicationLettersRepository = communicationLettersRepository;
         this.confidenctialLettersRepository = confidenctialLettersRepository;
         this.dueDiligenceRepository=dueDiligenceRepository;
+        this.applicationProperties = applicationProperties;
     }
 
     /**
@@ -781,7 +790,7 @@ public class OpportunityMasterResource {
         String sFilesDirectory = "";
         String user = SecurityUtils.getCurrentUserLogin();
 //        sFilesDirectory = "src/main/resources/" + documentCreationBean.getOppName() + "/" + user + "/docx/";
-        sFilesDirectory = "src/main/webapp/content/fileUpload/" + documentCreationBean.getOppName() + "/" + user + "/docx/";
+        sFilesDirectory = applicationProperties.getDatafolder() + "/" + documentCreationBean.getOppName() + "/" + user + "/docx/";
         String sFile = documentCreationBean.getFileName() + ".docx";
         String extension = "";
         String name = "";
