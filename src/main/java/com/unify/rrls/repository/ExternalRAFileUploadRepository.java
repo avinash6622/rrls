@@ -14,5 +14,6 @@ import com.unify.rrls.domain.OpportunityMaster;
 public interface ExternalRAFileUploadRepository extends JpaRepository<ExternalRAFileUpload, Long> {
 	List<ExternalRAFileUpload> findByExternalResearchAnalyst(ExternalResearchAnalyst externalResearchAnalyst);
 	List<ExternalRAFileUpload> findByOpportunityMasterId(OpportunityMaster opportunityMaster);
+    ExternalRAFileUpload findById(Long id);
 
 }

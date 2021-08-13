@@ -54,7 +54,8 @@
                        infinite-scroll-disabled="vm.page >= vm.links['last']">
                 <tr ng-repeat="policiesFileUpload in vm.policiesFileUpload track by policiesFileUpload.id">
                     <td>
-                        <a ng-click="vm.loadPolicyPreview(policiesFileUpload.fileData)">{{policiesFileUpload.policyName}}</a>
+                        <a ng-click="vm.getPolicyFile(policiesFileUpload)">{{policiesFileUpload.policyName}}</a>
+                        <!-- <a ng-click="vm.loadPolicyPreview(policiesFileUpload.fileData)">{{policiesFileUpload.policyName}}</a> -->
                         </span>
                     </td>
 

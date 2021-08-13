@@ -25,6 +25,7 @@
         vm.deletePolicy=deletePolicy;
         vm.previewFileExtension = '';
         vm.loadPolicyPreview=loadPolicyPreview;
+        vm.getPolicyFile = getPolicyFile;
 
         vm.loadAll();
 
@@ -32,6 +33,17 @@
         var myDate=new Date();
 
         $scope.currentYear = $filter('date')(myDate,'yyyy');
+
+        function getPolicyFile(file) {
+            console.log('getPolicyFile', file);
+            return $http.get('/api/ur/policies/fileDownload/' + file.id).then(
+                function (response) {
+                    console.log(response.config.url);
+                    window.location.href = response.config.url;
+                }).catch(function (error) {
+                    console.log(error);
+                })
+        }
 
         function loadAll () {
             PoliciesFileUpload.query({

@@ -46,6 +46,13 @@ import com.unify.rrls.web.rest.util.PaginationUtil;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.unify.rrls.config.ApplicationProperties;
+import org.springframework.http.MediaType;
+import org.springframework.core.io.FileSystemResource;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+
 
 import io.swagger.annotations.ApiParam;
 
@@ -60,11 +67,13 @@ public class CommunicationLettersResource {
     @Autowired
     private final CommunicationLettersRepository communicationLettersRepository;
     private final OpportunityMasterRepository opportunityMasterRepository;
+    private final ApplicationProperties applicationProperties;
 
     public CommunicationLettersResource(CommunicationLettersRepository communicationLettersRepository,
-                                        OpportunityMasterRepository opportunityMasterRepository) {
+                                        OpportunityMasterRepository opportunityMasterRepository, ApplicationProperties applicationProperties) {
         this.communicationLettersRepository = communicationLettersRepository;
         this.opportunityMasterRepository = opportunityMasterRepository;
+        this.applicationProperties = applicationProperties;
     }
 
     private byte[] fileStream;
@@ -98,7 +107,7 @@ public class CommunicationLettersResource {
         OpportunityMaster opp = opportunityMasterRepository.findOne(oppId);
 
         String user = SecurityUtils.getCurrentUserLogin();
-        String sFilesDirectory = "src/main/webapp/content/fileUpload/Communication/" + opp.getMasterName().getOppName() + "/" + user + "-" + uploadfileName;
+        String sFilesDirectory =  applicationProperties.getDatafolder() + "/Communication/" + opp.getMasterName().getOppName() + "/" + user + "-" + uploadfileName;
 
         File dirFiles = new File(sFilesDirectory);
         dirFiles.mkdirs();
@@ -118,7 +127,11 @@ public class CommunicationLettersResource {
 
             File sFiles = new File(dirFiles, fileName);
             writeFile(fileStream, sFiles);
-            fileUploaded.setFileData(sFiles.toString());
+            System.out.println("sFiles "+ sFiles);
+            String filePath = sFiles.toString();
+            String[] paths = filePath.split("fileUpload");
+            System.out.println("path"+paths[1]);
+            fileUploaded.setFileData(paths[1]);
 
             int idxOfDot = sFile.getOriginalFilename().lastIndexOf('.');   //Get the last index of . to separate extension
             extension = sFile.getOriginalFilename().substring(idxOfDot + 1).toLowerCase();
@@ -232,6 +245,31 @@ public class CommunicationLettersResource {
         System.out.println(communicationLetter);
         communicationLettersRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createAlert("A communication letter is deleted with identifier " + id, id.toString())).build();
+    }
+
+    @GetMapping("/ur/communication-letter/fileDownload/{id}")
+    @Timed
+    public ResponseEntity getFile(@PathVariable("id") String id) throws IOException {
+        System.out.println("id"+id);
+        CommunicationLetters communicationLetter = communicationLettersRepository.findById(Long.valueOf(id));
+        if (communicationLetter != null) {
+            String path= applicationProperties.getDatafolder()+communicationLetter.getFileData();
+            System.out.println(path);
+            File file = new File(path);
+            System.out.println("file"+file.getName() + file.exists());
+            System.out.println(file);
+            if (file.exists()) {
+                return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename="+ path)
+                    .contentLength(file.length())
+                    .lastModified(file.lastModified())
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(new FileSystemResource(file));
+            } else {
+                return ResponseEntity.ok().body("file not found");
+            }
+        }
+        return null;
     }
 
 }

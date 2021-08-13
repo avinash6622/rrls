@@ -27,6 +27,13 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.MediaType;
+import org.springframework.core.io.FileSystemResource;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import com.unify.rrls.config.ApplicationProperties;
+
 @RestController
 @RequestMapping("/api")
 public class PoliciesFileUploadResource {
@@ -36,9 +43,11 @@ public class PoliciesFileUploadResource {
 
     @Autowired
     private final PoliciesFileUploadRepository policiesFileUploadRepository;
+    private final ApplicationProperties applicationProperties;
 
-    public PoliciesFileUploadResource(PoliciesFileUploadRepository policiesFileUploadRepository) {
+    public PoliciesFileUploadResource(PoliciesFileUploadRepository policiesFileUploadRepository, ApplicationProperties applicationProperties) {
         this.policiesFileUploadRepository = policiesFileUploadRepository;
+        this.applicationProperties = applicationProperties;
     }
 
     private byte[] fileStream;
@@ -73,7 +82,7 @@ public class PoliciesFileUploadResource {
         System.out.println("fileName" + fileName);
 
         String user = SecurityUtils.getCurrentUserLogin();
-        String sFilesDirectory = "src/main/webapp/content/fileUpload/Policies/" + "/" + user + "-" + uploadfileName;
+        String sFilesDirectory = applicationProperties.getDatafolder()+"/Policies/" + "/" + user + "-" + uploadfileName;
 
 
         File dirFiles = new File(sFilesDirectory);
@@ -93,7 +102,11 @@ public class PoliciesFileUploadResource {
 
         File sFiles = new File(dirFiles, fileName);
         writeFile(fileStream, sFiles);
-        fileUploaded.setFileData(sFiles.toString());
+        System.out.println("sFiles "+ sFiles);
+        String filePath = sFiles.toString();
+        String[] paths = filePath.split("fileUpload");
+        System.out.println("path"+paths[1]);
+        fileUploaded.setFileData(paths[1]);
 
         int idxOfDot = fileUploads.getOriginalFilename().lastIndexOf('.');
         extension = fileUploads.getOriginalFilename().substring(idxOfDot + 1).toLowerCase();
@@ -154,5 +167,29 @@ public class PoliciesFileUploadResource {
         log.debug("REST request to get Policies: {}", id);
         PoliciesFileUpload policies3 = policiesFileUploadRepository.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(policies3));
+    }
+
+    @GetMapping("/ur/policies/fileDownload/{id}")
+    @Timed
+    public ResponseEntity getFile(@PathVariable("id") String id) throws IOException {
+        System.out.println("id"+id);
+        PoliciesFileUpload policies3 = policiesFileUploadRepository.findById(Integer.valueOf(id));
+        if (policies3 != null) {
+            String path= applicationProperties.getDatafolder()+policies3.getFileData();
+            File file = new File(path);
+            System.out.println("file"+file.getName() + file.exists());
+            System.out.println(file);
+            if (file.exists()) {
+                return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=" + path)
+                    .contentLength(file.length())
+                    .lastModified(file.lastModified())
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(new FileSystemResource(file));
+            } else {
+                return ResponseEntity.ok().body("file not found");
+            }
+        }
+        return null;
     }
 }

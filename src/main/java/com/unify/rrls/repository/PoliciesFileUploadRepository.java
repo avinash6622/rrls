@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PoliciesFileUploadRepository extends JpaRepository<PoliciesFileUpload, Integer> {
 //    List<PoliciesFileUpload> findByPolicies(Policies policies);
+    PoliciesFileUpload findById(Integer id);
 }

@@ -61,6 +61,12 @@ import com.unify.rrls.web.rest.util.PaginationUtil;
 
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
+import org.springframework.http.MediaType;
+import org.springframework.core.io.FileSystemResource;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import com.unify.rrls.config.ApplicationProperties;
 
 /**
  * REST controller for managing FileUpload.
@@ -80,6 +86,7 @@ public class FileUploadResource {
     private final NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository;
     private final OpportunitySummaryDataRepository opportunitySummaryDataRepository;
     private final StrategyMappingRepository strategyMappingRepository;
+    private final ApplicationProperties applicationProperties;
 
     @Autowired
     NotificationServiceResource notificationServiceResource;
@@ -110,13 +117,14 @@ public class FileUploadResource {
 
 	  public FileUploadResource(FileUploadRepository fileUploadRepository, OpportunityMasterRepository opportunityMasterRepository,
 	    		FinancialSummaryDataRepository financialSummaryDataRepository,NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository,
-	    		OpportunitySummaryDataRepository opportunitySummaryDataRepository,StrategyMappingRepository strategyMappingRepository) {
+	    		OpportunitySummaryDataRepository opportunitySummaryDataRepository,StrategyMappingRepository strategyMappingRepository, ApplicationProperties applicationProperties) {
 	        this.fileUploadRepository = fileUploadRepository;
 	        this.opportunityMasterRepository = opportunityMasterRepository;
 	        this.financialSummaryDataRepository=financialSummaryDataRepository;
 	        this.nonFinancialSummaryDataRepository=nonFinancialSummaryDataRepository;
 	        this.opportunitySummaryDataRepository=opportunitySummaryDataRepository;
 	        this.strategyMappingRepository=strategyMappingRepository;
+            this.applicationProperties = applicationProperties;
 	    }
     /**
      * POST  /file-uploads : Create a new fileUpload.
@@ -141,7 +149,7 @@ public class FileUploadResource {
         }*/
         String user= SecurityUtils.getCurrentUserLogin();
 //        String  sFilesDirectory =  "C:/RRLS_Backup/RRLS/"+opp.getMasterName().getOppName()+"/"+user;
-        String  sFilesDirectory =  "src/main/webapp/content/fileUpload/"+opp.getMasterName().getOppName()+"/"+user;
+        String  sFilesDirectory =  applicationProperties.getDatafolder()+"/"+opp.getMasterName().getOppName()+"/"+user;
         //String  sFilesDirectory =  "src/webapp/content/"+opp.getMasterName().getOppName()+"/"+user;
       File dirFiles = new File(sFilesDirectory);
       dirFiles.mkdirs();
@@ -167,7 +175,11 @@ public class FileUploadResource {
           {*/
               File sFiles = new File(dirFiles, fileName);
               writeFile(fileStream, sFiles);
-              fileUploaded.setFileData(sFiles.toString());
+              System.out.println("sFiles "+ sFiles);
+              String filePath = sFiles.toString();
+              String[] paths = filePath.split("fileUpload");
+              System.out.println("path"+paths[1]);
+              fileUploaded.setFileData(paths[1]);
       //    }
 
     /*  else{
@@ -228,7 +240,8 @@ public class FileUploadResource {
 
         String user= SecurityUtils.getCurrentUserLogin();
 //        String  sFilesDirectory =  "src/main/resources/"+opportunityMaster.getMasterName().getOppName()+"/summary/"+user;
-        String  sFilesDirectory =  "src/main/webapp/content/fileUpload/"+opportunityMaster.getMasterName().getOppName()+"/summary/"+user;
+
+        String  sFilesDirectory =  applicationProperties.getDatafolder() + "/"+opportunityMaster.getMasterName().getOppName()+"/summary/"+user;
 
       File dirFiles = new File(sFilesDirectory);
       dirFiles.mkdirs();
@@ -244,7 +257,11 @@ public class FileUploadResource {
 
               File sFiles = new File(dirFiles, fileName);
               writeFile(fileStream, sFiles);
-              fileUploaded.setFileData(sFiles.toString());
+          System.out.println("sFiles "+ sFiles);
+          String filePath = sFiles.toString();
+          String[] paths = filePath.split("fileUpload");
+          System.out.println("path"+paths[1]);
+          fileUploaded.setFileData(paths[1]);
               if(opportunityMaster.getMasterName().getSegment().equals("Finance")){
                   try {
                   	FinancialSummaryData finance=financialSummaryDataRepository.findByOpportunityMasterId(opportunityMaster);
@@ -1279,5 +1296,30 @@ public class FileUploadResource {
 		out.close();
 		System.out.println("File Uploading is Completed");
 	}
+
+    @GetMapping("/ur/file-uploads/fileDownload/{id}")
+    @Timed
+    public ResponseEntity getFile(@PathVariable("id") String id) throws IOException {
+        System.out.println("id"+id);
+        FileUpload fileUpload = fileUploadRepository.findById(Long.valueOf(id));
+        if (fileUpload != null) {
+            String path= applicationProperties.getDatafolder()+fileUpload.getFileData();
+            File file = new File(path);
+            System.out.println("file"+file.getName() + file.exists());
+            System.out.println(file);
+            if (file.exists()) {
+                return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=" + path)
+                    .contentLength(file.length())
+                    .lastModified(file.lastModified())
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(new FileSystemResource(file));
+            } else {
+                return ResponseEntity.ok().body("file not found");
+            }
+        }
+        return null;
+    }
+
 }
 

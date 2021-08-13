@@ -52,6 +52,10 @@
         vm.raFileDelete = raFileDelete;
         vm.getOpportunityMaster = getOpportunityMaster;
         vm.getConfidentialFile = getConfidentialFile;
+        vm.getRAFileUpload = getRAFileUpload;
+        vm.getExternalRAFileUpload = getExternalRAFileUpload;
+        vm.getCommunicationLetterFile = getCommunicationLetterFile;
+        vm.getDueDiligenceFile = getDueDiligenceFile;
         vm.popUpURL = '';
         vm.tab = 1;
 //vm.setTab=setTab;
@@ -935,17 +939,59 @@
             })
         }
         function getConfidentialFile(file) {
-                    console.log('File for confidential get');
-                    console.log(file);
-                    return $http.get('/api/ur/confidential-letter/fileDownload/' + file.id).then(
-                        function (response) {
-                            console.log('response in confidential file get');
-                            console.log(response.config.url);
-                            window.location.href = response.config.url;
-                        }).catch(function (error) {
-                        console.log(error);
-                    })
-                }
+            console.log('File for confidential get');
+            console.log(file);
+            return $http.get('/api/ur/confidential-letter/fileDownload/' + file.id).then(
+                function (response) {
+                    console.log('response in confidential file get');
+                    console.log(response.config.url);
+                    window.location.href = response.config.url;
+                }).catch(function (error) {
+                    console.log(error);
+                })
+        }
+        function getRAFileUpload(file) {
+            console.log(file);
+            return $http.get('/api/ur/file-uploads/fileDownload/' + file.id).then(
+                function (response) {
+                    console.log(response.config.url);
+                    window.location.href = response.config.url;
+                }).catch(function (error) {
+                    console.log(error);
+                })
+        }
+
+        function getExternalRAFileUpload(file) {
+            console.log(file);
+            return $http.get('/api/ur/externalRA/fileDownload/' + file.id).then(
+                function (response) {
+                    console.log(response.config.url);
+                    window.location.href = response.config.url;
+                }).catch(function (error) {
+                    console.log(error);
+                })
+        }
+        function getCommunicationLetterFile(file) {
+            console.log(file);
+            return $http.get('/api/ur/communication-letter/fileDownload/' + file.id).then(
+                function (response) {
+                    console.log(response.config.url);
+                    window.location.href = response.config.url;
+                }).catch(function (error) {
+                    console.log(error);
+                })
+        }
+
+        function getDueDiligenceFile(file) {
+            console.log(file);
+            return $http.get('/api/ur/due-diligence/fileDownload/' + file.id).then(
+                function (response) {
+                    console.log(response.config.url);
+                    window.location.href = response.config.url;
+                }).catch(function (error) {
+                    console.log(error);
+                })
+        }
 
         function dueDiligenceDelete(file) {
             console.log('File for due diligence Deletion');
@@ -956,8 +1002,8 @@
                     console.log(response);
                     vm.getOpportunityMaster();
                 }).catch(function (error) {
-                console.log(error);
-            })
+                    console.log(error);
+                })
         }
 
         $scope.getDataFromGSheet = function () {
