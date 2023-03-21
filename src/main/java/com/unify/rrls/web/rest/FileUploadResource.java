@@ -129,7 +129,7 @@ public class FileUploadResource {
     /**
      * POST  /file-uploads : Create a new fileUpload.
      *
-     * @param fileUpload the fileUpload to create
+     // * @param  the fileUpload to create
      * @return the ResponseEntity with status 201 (Created) and with body the new fileUpload, or with status 400 (Bad Request) if the fileUpload has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      * @throws IOException
@@ -149,6 +149,7 @@ public class FileUploadResource {
         }*/
         String user= SecurityUtils.getCurrentUserLogin();
 //        String  sFilesDirectory =  "C:/RRLS_Backup/RRLS/"+opp.getMasterName().getOppName()+"/"+user;
+        System.out.println("Pathcheck "+ applicationProperties.getDatafolder());
         String  sFilesDirectory =  applicationProperties.getDatafolder()+"/"+opp.getMasterName().getOppName()+"/"+user;
         //String  sFilesDirectory =  "src/webapp/content/"+opp.getMasterName().getOppName()+"/"+user;
       File dirFiles = new File(sFilesDirectory);
@@ -179,7 +180,8 @@ public class FileUploadResource {
               String filePath = sFiles.toString();
               String[] paths = filePath.split("fileUpload");
               System.out.println("path"+paths[1]);
-              fileUploaded.setFileData(paths[1]);
+//              fileUploaded.setFileData(paths[1]);
+              fileUploaded.setFileData(filePath);
       //    }
 
     /*  else{
@@ -1303,13 +1305,16 @@ public class FileUploadResource {
         System.out.println("id"+id);
         FileUpload fileUpload = fileUploadRepository.findById(Long.valueOf(id));
         if (fileUpload != null) {
-            String path= applicationProperties.getDatafolder()+fileUpload.getFileData();
+             //String path= applicationProperties.getDatafolder()+fileUpload.getFileData();
+            String path= fileUpload.getFileData();
+            System.out.println(path +"%%%%%%%%");
+            String[] items= path.split("\\\\");
             File file = new File(path);
             System.out.println("file"+file.getName() + file.exists());
             System.out.println(file);
             if (file.exists()) {
                 return ResponseEntity.ok()
-                    .header("Content-Disposition", "attachment; filename=" + path)
+                    .header("Content-Disposition", "attachment; filename=" + file.getName())
                     .contentLength(file.length())
                     .lastModified(file.lastModified())
                     .contentType(MediaType.APPLICATION_OCTET_STREAM)

@@ -28,7 +28,7 @@ spring:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:mysql://localhost:3306/unify_rrls?useUnicode=true&characterEncoding=utf8&useSSL=false
         username: root
-        password: 
+        password: root
         hikari:
             data-source-properties:
                 cachePrepStmts: true
@@ -48,25 +48,25 @@ spring:
     mail:
         host: smtp.gmail.com
         port: 587
-        username: unifi.research@unificap.com
-        password: 1234office1234
+        username: unifirrnls@gmail.com
+        password: nswwvqlvivtshkir
         protocol: smtp
         tls: true
-        properties.mail.smtp:           
+        properties.mail.smtp:
             auth: true
             starttls.enable: true
             ssl.trust: smtp.gmail.com
             connectiontimeout: 180000
             timeout: 180000
-        
+
     messages:
         cache-seconds: 1
     thymeleaf:
         cache: false
     http:
-      multipart:
-        max-file-size: 100Mb
-        max-request-size: 100Mb
+        multipart:
+            max-file-size: 100Mb
+            max-request-size: 100Mb
 
 liquibase:
     contexts: dev
@@ -120,8 +120,8 @@ jhipster:
                 token-validity-in-seconds: 86400
                 token-validity-in-seconds-for-remember-me: 2592000
     mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: unifi.research@unificap.com
-        base-url: http://rrnls.unificap.com:8080
+        from:  unifirrnls@gmail.com
+        base-url: http://10.10.20.47:8080
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
         graphite: # Use the "graphite" Maven profile to have the Graphite dependencies

@@ -253,14 +253,14 @@ public class CommunicationLettersResource {
         System.out.println("id"+id);
         CommunicationLetters communicationLetter = communicationLettersRepository.findById(Long.valueOf(id));
         if (communicationLetter != null) {
-            String path= applicationProperties.getDatafolder()+communicationLetter.getFileData();
+            String path= communicationLetter.getFileData();
             System.out.println(path);
             File file = new File(path);
             System.out.println("file"+file.getName() + file.exists());
             System.out.println(file);
             if (file.exists()) {
                 return ResponseEntity.ok()
-                    .header("Content-Disposition", "attachment; filename="+ path)
+                    .header("Content-Disposition", "attachment; filename="+ file.getName())
                     .contentLength(file.length())
                     .lastModified(file.lastModified())
                     .contentType(MediaType.APPLICATION_OCTET_STREAM)

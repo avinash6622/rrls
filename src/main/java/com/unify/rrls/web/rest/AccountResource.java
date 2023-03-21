@@ -21,6 +21,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.*;
@@ -173,12 +176,76 @@ public class AccountResource {
     @PostMapping(path = "/account/reset-password/init",
         produces = MediaType.TEXT_PLAIN_VALUE)
     @Timed
-    public ResponseEntity requestPasswordReset(@RequestBody String mail) {
+    public ResponseEntity requestPasswordReset(@RequestBody String mail) throws MessagingException {
         return userService.requestPasswordReset(mail)
             .map(user -> {
                 mailService.sendPasswordResetMail(user);
+                try {
+                    mailService.sendPasswordReset(user);
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
                 return new ResponseEntity<>("email was sent", HttpStatus.OK);
             }).orElse(new ResponseEntity<>("email address not registered", HttpStatus.BAD_REQUEST));
+
+//        // email ID of Recipient.
+//        String recipient = "harisoft89@gmail.com";
+//
+//        // email ID of  Sender.
+//        String sender = "passwordreset@unificap.com";
+//
+//        // using host as localhost
+//        String host = "smtp.gmail.com";
+//        String pass ="Unifi@2022";
+//
+//        // Getting system properties
+//        Properties properties = System.getProperties();
+//
+//        // Setting up mail server
+//        properties.setProperty("mail.smtp.host", host);
+//        properties.put("mail.smtp.port", 587);
+//        properties.put("mail.smtp.starttls.enable", true);
+//        properties.put("mail.smtp.user", sender);
+//        properties.put("mail.smtp.auth", "true");
+//        properties.put("mail.debug", "false");
+//        properties.put("mail.smtp.password", pass);
+//
+//
+//
+//
+//        // creating session object to get properties
+//        Session session = Session.getInstance(properties, new javax.mail.Authenticator(){
+//            protected PasswordAuthentication getPasswordAuthentication() {
+//                return new PasswordAuthentication(
+//                    "passwordreset@unificap.com", "Unifi@2022");// Specify the Username and the PassWord
+//            }
+//        });
+//
+//        try
+//        {
+//            // MimeMessage object.
+//            MimeMessage message = new MimeMessage(session);
+//
+//            // Set From Field: adding senders email to from field.
+//            message.setFrom(new InternetAddress(sender));
+//
+//            // Set To Field: adding recipient's email to from field.
+//            message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+//
+//            // Set Subject: subject of the email
+//            message.setSubject("This is Subject");
+//
+//            // set body of the email.
+//            message.setText("This is a test mail");
+//
+//            // Send email.
+//            Transport.send(message);
+//            System.out.println("Mail successfully sent");
+//        }
+//        catch (MessagingException mex)
+//        {
+//            mex.printStackTrace();
+//        }
     }
 
     /**
