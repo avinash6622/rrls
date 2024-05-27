@@ -1,17 +1,15 @@
 package com.unify.rrls.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-
 import com.unify.rrls.domain.User;
 import com.unify.rrls.repository.UserRepository;
 import com.unify.rrls.security.SecurityUtils;
 import com.unify.rrls.service.MailService;
 import com.unify.rrls.service.UserService;
 import com.unify.rrls.service.dto.UserDTO;
+import com.unify.rrls.web.rest.util.HeaderUtil;
 import com.unify.rrls.web.rest.vm.KeyAndPasswordVM;
 import com.unify.rrls.web.rest.vm.ManagedUserVM;
-import com.unify.rrls.web.rest.util.HeaderUtil;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,12 +19,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Optional;
 
 /**
  * REST controller for managing the current user's account.

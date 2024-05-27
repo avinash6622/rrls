@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bond Information</title>
+    <style>
+        /* Add some basic styling for better visibility */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        /* Style the buttons */
+        button {
+            margin: 5px;
+            padding: 8px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        /* Green Save button */
+        button.save {
+            background-color: #4CAF50;
+            color: white;
+            width: 100px;
+            font-size: 15px;
+        }
+
+        label.choose-file-btn {
+            width: 75px;
+            /* Adjust the width as needed */
+            text-align: center;
+            /* Center the text within the button */
+            display: inline-block;
+            /* Ensure the label behaves as a block element */
+            margin: 0;
+            background-color: #e7e7e7;
+            color: black;
+        }
+
+        /* Blue Clear button */
+        button.upload-btn {
+            background-color: #008CBA !important;
+            color: white !important;
+        }
+
+        /* Black Add row button */
+        button.add-row {
+            background-color: #555555;
+            color: white;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<table id="bondTable">
+    <thead>
+    <tr>
+        <th>ISIN</th>
+        <th>Company Name</th>
+        <th>Maturity Date</th>
+        <th>Term Sheet Attachment</th>
+        <th>Action</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Existing rows -->
+    <tr ng-repeat="strategyMaster in vm.filteredStrategyMastersHyf track by $index" class="bond-row">
+        <!-- Existing row content -->
+        <td><input type="text" name="isin" ng-model="strategyMaster.isin"></td>
+        <td>
+            <select name="companyName" ng-model="vm.selectedCompany" ng-options="company for company in vm.companyNames" ng-change="vm.filterByCompany()">
+                <option value="">Select a Company</option>
+            </select>
+        </td>
+
+
+
+        <td>
+            <div class="input-group" style="width: 150px;">
+                <input type="text" class="form-control" uib-datepicker-popup="dd MMM yyyy"
+                       ng-model="strategyMaster.maturityDate" is-open="vm.datepickers[$index]"
+                       datepicker-options="vm.dateOptions" ng-required="true" close-text="Close"
+                       ng-value="(strategyMaster.maturityDate | date:'dd MMM yyyy')" />
+
+                <span class="input-group-btn">
+        <button type="button" class="btn btn-default" style="min-width: 30px;" ng-click="vm.openDatePicker($event, $index)">
+            <i class="glyphicon glyphicon-calendar"></i>
+        </button>
+    </span>
+            </div>
+
+        </td>
+        <td>
+            <div>
+                <label class="btn btn-md btn-primary col-md-1 choose-file-btn"
+                       ng-attr-for="file_upload_{{$index}}">Choose File</label>
+                <a class="col-md-4"
+                   ng-click="vm.getHyfFileUpload(strategyMaster.termSheetFileName)">{{strategyMaster.termSheetFileName}}</a>
+            </div>
+
+            <input
+                accept=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx,.docx,.doc,.log,.msg,.rtf,.txt,.csv,.dat,.pptx,.xml,.aif,.tif,.zip,.zipx,.rar,.pdf,audio/*,video/*"
+                id="file_upload_{{$index}}" name="file"
+                ngf-pattern=".xls,.xlsx,.png,.jpg,.jpeg,.gif,.pptx,.docx,.doc,.log,.msg,.rtf,.txt,.csv,.dat,.pptx,.xml,.aif,.tif,.zip,.zipx,.rar,.pdf,audio/*,video/*"
+                ngf-select="vm.selectFile($file, strategyMaster)" required="" style="display: none;"
+                type="file">
+            <br />
+            <button style="background-color: #008CBA; color: white;"
+                    class="btn btn-default fileUpload upload-btn" ng-click="vm.upload()" type="button">Upload</button>
+        </td>
+        <td>
+            <!-- Clear button for each row -->
+            <button class="btn btn-danger" ng-click="vm.clearRow($index)">
+                <i class="glyphicon glyphicon-remove"></i> Clear
+            </button>
+        </td>
+        <td>
+            <button class="btn btn-success" ng-click="vm.addRowAfter($index)">
+                <i class="fas fa-plus"></i> Add Row
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<button class="save" ng-click="vm.save()">Save</button>
+<script>
+    <!-- The rest of your script -->
+</script>
+
+</body>
+
+</html>

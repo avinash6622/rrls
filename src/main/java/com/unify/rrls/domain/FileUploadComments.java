@@ -26,13 +26,13 @@ public class FileUploadComments extends AbstractAuditingEntity implements Serial
 
     @Size(max = 400)
     @Column(name = "opportunity_comments", length = 400)
-    private String opportunityComments;  
+    private String opportunityComments;
 
     @ManyToOne
     @JoinColumn(name="opportunity_master_id")
     private OpportunityMaster opportunityMaster;
 
-    
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -99,7 +99,7 @@ public class FileUploadComments extends AbstractAuditingEntity implements Serial
     public String toString() {
         return "FileUploadComments{" +
             "id=" + getId() +
-            ", opportunityComments='" + getOpportunityComments() + "'" +           
+            ", opportunityComments='" + getOpportunityComments() + "'" +
             "}";
     }
 }

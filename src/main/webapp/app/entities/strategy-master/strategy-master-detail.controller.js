@@ -114,7 +114,7 @@
 
     function StrategyMasterDetailController($scope, $rootScope, $stateParams, previousState, StrategyMaster,$filter,pagingParams,ParseLinks,paginationConstants,$state,$timeout) {
         var vm = this;
-
+        vm.sortTable = sortTable;
        // vm.strategyMaster = entity;
         vm.previousState = previousState.name;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
@@ -169,17 +169,27 @@
 
         }
 
+function sort() {
+            var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
+            console.log(vm.predicate);
+            if (vm.predicate !== 'id') {
+                result.push('id');
+            }
+            console.log('strategy-master --->', result);
+            return result;
+        }
 
 
         function loadAll(){
-            console.log($state.params);
+            console.log('loadALL Data -->', $state.params);
 
 
 
               StrategyMaster.getStrategyDetail({
                     page: pagingParams.page - 1,
                     size: vm.itemsPerPage,
-                    id: $stateParams.id
+                    id: $stateParams.id,
+                    sort: sort()
                 },onSuccess, onError)
 
 
@@ -187,7 +197,6 @@
 
 
         function onSuccess(data, headers) {
-
 
             vm.links = ParseLinks.parse(headers('link'));
             vm.totalItems = headers('X-Total-Count');
@@ -231,6 +240,45 @@
 
 
         }
+
+  function sortTable(n) {
+      var table, rows, switching, i, x, y, shouldSwitch;
+      table = document.getElementById("mytable1");
+      switching = true;
+      // Set the sorting direction to ascending:
+      var dir = "asc";
+      /* Make a loop that will continue until
+      no switching has been done: */
+      while (switching) {
+          // Start by saying: no switching is done:
+          switching = false;
+          rows = table.rows;
+          /* Loop through all table rows (except the
+          first, which contains table headers): */
+          for (i = 1; i < (rows.length - 1); i++) {
+              // Start by assuming no switching is needed:
+              shouldSwitch = false;
+              /* Get the two elements you want to compare,
+              one from the current row and one from the next: */
+              x = rows[i].getElementsByTagName("TD")[n];
+              y = rows[i + 1].getElementsByTagName("TD")[n];
+              /* Check if the two rows should switch place,
+              based on the direction, which is always ascending: */
+              if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                  // If so, mark as a switch and break the loop:
+                  shouldSwitch = true;
+                  break;
+              }
+          }
+          if (shouldSwitch) {
+              /* If a switch has been marked, make the switch
+              and mark that a switch has been done: */
+              rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+              switching = true;
+          }
+      }
+  }
+
 
 
         function sort() {

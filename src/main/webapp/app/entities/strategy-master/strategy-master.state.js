@@ -93,6 +93,54 @@
                 }]
             }
         })
+        .state('strategy-master-hyf', {
+                    parent: 'strategy-master',
+                    url: '/strategy-master-hyf',
+                    data: {
+                        authorities: ['User'],
+                        pageTitle: 'Strategy Master High Yield Fund'
+                    },
+                    views: {
+                        'content@': {
+                            templateUrl: 'app/entities/strategy-master/strategy-master-hyf.html',
+                            controller: 'StrategyMasterHyfController',
+                            controllerAs: 'vm'
+                        }
+                    },
+
+                    params: {
+                        page: {
+                            value: '1',
+                            squash: true
+                        },
+                        sort: {
+                            value: 'id,asc',
+                            squash: true
+                        }
+
+                    },
+                    resolve: {
+                       /* entity: ['$stateParams', 'StrategyMaster', function($stateParams, StrategyMaster) {
+                            return StrategyMaster.get({id : $stateParams.id}).$promise;
+                        }],*/
+                        pagingParams: ['$stateParams', 'PaginationUtil', function ($stateParams, PaginationUtil) {
+                            return {
+                                page: PaginationUtil.parsePage($stateParams.page),
+                                sort: $stateParams.sort,
+                                predicate: PaginationUtil.parsePredicate($stateParams.sort),
+                                ascending: PaginationUtil.parseAscending($stateParams.sort)
+                            };
+                        }],
+                        previousState: ["$state", function ($state) {
+                            var currentStateData = {
+                                name: $state.current.name || 'strategy-master-hyf',
+                                params: $state.params,
+                                url: $state.href($state.current.name, $state.params)
+                            };
+                            return currentStateData;
+                        }]
+                    }
+                })
         .state('strategy-master-detail.edit', {
             parent: 'strategy-master-detail',
             url: '/detail/edit',

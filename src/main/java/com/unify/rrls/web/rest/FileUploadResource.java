@@ -1,21 +1,14 @@
 package com.unify.rrls.web.rest;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-
-import javax.validation.Valid;
-
+import com.codahale.metrics.annotation.Timed;
+import com.unify.rrls.config.ApplicationProperties;
+import com.unify.rrls.domain.*;
+import com.unify.rrls.repository.*;
+import com.unify.rrls.security.SecurityUtils;
+import com.unify.rrls.web.rest.util.HeaderUtil;
+import com.unify.rrls.web.rest.util.PaginationUtil;
+import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -25,48 +18,28 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.codahale.metrics.annotation.Timed;
-import com.unify.rrls.domain.FileUpload;
-import com.unify.rrls.domain.FinancialSummaryData;
-import com.unify.rrls.domain.NonFinancialSummaryData;
-import com.unify.rrls.domain.OpportunityMaster;
-import com.unify.rrls.domain.OpportunitySummaryData;
-import com.unify.rrls.domain.StrategyMapping;
-import com.unify.rrls.repository.FileUploadRepository;
-import com.unify.rrls.repository.FinancialSummaryDataRepository;
-import com.unify.rrls.repository.NonFinancialSummaryDataRepository;
-import com.unify.rrls.repository.OpportunityMasterRepository;
-import com.unify.rrls.repository.OpportunitySummaryDataRepository;
-import com.unify.rrls.repository.StrategyMappingRepository;
-import com.unify.rrls.security.SecurityUtils;
-import com.unify.rrls.web.rest.util.HeaderUtil;
-import com.unify.rrls.web.rest.util.PaginationUtil;
-
-import io.github.jhipster.web.util.ResponseUtil;
-import io.swagger.annotations.ApiParam;
-import org.springframework.http.MediaType;
-import org.springframework.core.io.FileSystemResource;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import com.unify.rrls.config.ApplicationProperties;
+import javax.validation.Valid;
+import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing FileUpload.
@@ -87,6 +60,7 @@ public class FileUploadResource {
     private final OpportunitySummaryDataRepository opportunitySummaryDataRepository;
     private final StrategyMappingRepository strategyMappingRepository;
     private final ApplicationProperties applicationProperties;
+    private final HyfBondRepository hyfBondRepository;
 
     @Autowired
     NotificationServiceResource notificationServiceResource;
@@ -116,8 +90,8 @@ public class FileUploadResource {
 
 
 	  public FileUploadResource(FileUploadRepository fileUploadRepository, OpportunityMasterRepository opportunityMasterRepository,
-	    		FinancialSummaryDataRepository financialSummaryDataRepository,NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository,
-	    		OpportunitySummaryDataRepository opportunitySummaryDataRepository,StrategyMappingRepository strategyMappingRepository, ApplicationProperties applicationProperties) {
+                                FinancialSummaryDataRepository financialSummaryDataRepository, NonFinancialSummaryDataRepository nonFinancialSummaryDataRepository,
+                                OpportunitySummaryDataRepository opportunitySummaryDataRepository, StrategyMappingRepository strategyMappingRepository, ApplicationProperties applicationProperties, HyfBondRepository hyfBondRepository) {
 	        this.fileUploadRepository = fileUploadRepository;
 	        this.opportunityMasterRepository = opportunityMasterRepository;
 	        this.financialSummaryDataRepository=financialSummaryDataRepository;
@@ -125,7 +99,96 @@ public class FileUploadResource {
 	        this.opportunitySummaryDataRepository=opportunitySummaryDataRepository;
 	        this.strategyMappingRepository=strategyMappingRepository;
             this.applicationProperties = applicationProperties;
-	    }
+            this.hyfBondRepository = hyfBondRepository;
+      }
+    @PostMapping("/hyf-uploads")
+    public ResponseEntity<UploadResponse> saveBondData(@RequestBody List<HyfBondData> bondDataList) {
+        try {
+              hyfBondRepository.deleteAll();
+            for (HyfBondData bondData : bondDataList) {
+                System.out.println("Received data: " + bondData.toString());
+                HyfBondData bd = new HyfBondData();
+                bd.setIsin(bondData.getIsin());
+                bd.setCompanyName(bondData.getCompanyName());
+                bd.setMaturityDate(bondData.getMaturityDate());
+                bd.setTermSheetFileName(bondData.getTermSheetFileName());
+                hyfBondRepository.save(bd);
+            }
+
+            return new ResponseEntity<>(new UploadResponse("Data saved successfully"), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new UploadResponse("Data not saved"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/companies")
+    public List<String> getAllCompanyNames() {
+        List<HyfBondData> dataList = hyfBondRepository.findAll();
+        List<String> companyNames = new ArrayList<>();
+        for (HyfBondData data : dataList) {
+            companyNames.add(data.getCompanyName());
+        }
+        System.out.println(companyNames +" CompanyNames");
+        return companyNames;
+    }
+
+//    @PostMapping("/clear")
+//    public String clearTable() {
+//        hyfBondRepository.deleteAll();
+//        return "Table cleared successfully!";
+//    }
+
+
+    @PostMapping("/upload-hyf")
+    public ResponseEntity<UploadResponse> handleFileUpload(@RequestParam("files") MultipartFile[] files) {
+        String uploadDirectory = "D:\\rrls-unifi\\fileUpload\\HYF-TermSheet";
+
+        if (files != null && files.length > 0) {
+            for (MultipartFile file : files) {
+                if (!file.isEmpty()) {
+                    try {
+                        Path directoryPath = Paths.get(uploadDirectory);
+                        if (!Files.exists(directoryPath)) {
+                            Files.createDirectories(directoryPath);
+                        }
+
+                        String originalFilename = file.getOriginalFilename();
+                        Path filePath = Paths.get(uploadDirectory, originalFilename);
+
+                        Files.write(filePath, file.getBytes());
+
+
+                        FileUpload fileUploaded = new FileUpload();
+
+                        String[] parts = originalFilename.split("\\.");
+                        String firstPart = parts[0];
+                        System.out.println("First part: " + firstPart);
+
+                        fileUploaded.setFileName(firstPart);
+                        fileUploaded.setFileData(filePath.toString());
+                        fileUploaded.setFiletype("High yield fund");
+                        fileUploadRepository.save(fileUploaded);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return new ResponseEntity<>(new UploadResponse("File upload failed"), HttpStatus.INTERNAL_SERVER_ERROR);
+                    }
+                }
+            }
+            return new ResponseEntity<>(new UploadResponse("Files uploaded successfully"), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new UploadResponse("No files were selected for upload"), HttpStatus.BAD_REQUEST);
+    }
+
+
+    @GetMapping("/hyf-uploads")
+    @Timed
+    public ResponseEntity<List<HyfBondData>> getAllHyfTermSheetUploads(@ApiParam Pageable pageable) {
+        log.debug("REST request to get a page of FileUploads");
+        Page<HyfBondData> page = hyfBondRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/strategy-master/strategy-master-hyf");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+
     /**
      * POST  /file-uploads : Create a new fileUpload.
      *
@@ -1308,7 +1371,6 @@ public class FileUploadResource {
              //String path= applicationProperties.getDatafolder()+fileUpload.getFileData();
             String path= fileUpload.getFileData();
             System.out.println(path +"%%%%%%%%");
-            String[] items= path.split("\\\\");
             File file = new File(path);
             System.out.println("file"+file.getName() + file.exists());
             System.out.println(file);
@@ -1325,6 +1387,58 @@ public class FileUploadResource {
         }
         return null;
     }
+    @GetMapping("/hyf/termSheetDownload/{fileName}")
+    @Timed
+    public ResponseEntity getFileHyf(@PathVariable("fileName") String fileName) throws IOException {
+        try {
+//            String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString());
+            FileUpload fileUpload = fileUploadRepository.findByFileName(fileName);
+            if (fileUpload != null) {
+                String path = fileUpload.getFileData();
+                File file = new File(path);
+                if (file.exists()) {
+                    return ResponseEntity.ok()
+                        .header("Content-Disposition", "attachment; filename=" + file.getName())
+                        .contentLength(file.length())
+                        .lastModified(file.lastModified())
+                        .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                        .body(new FileSystemResource(file));
+                } else {
+                    return ResponseEntity.notFound().build();
+                }
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            // Handle exceptions, log, or return an error response
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during file download");
+        }
+    }
+//    @GetMapping("/term-sheet/fileDownload/{id}")
+//    @Timed
+//    public ResponseEntity getHyfFile(@PathVariable("id") String id) throws IOException {
+//        System.out.println("id"+id);
+//        HyfBondData fileUpload = hyfBondRepository.findById(Long.valueOf(id));
+//        if (fileUpload != null) {
+//            //String path= applicationProperties.getDatafolder()+fileUpload.getFileData();
+//            String path= fileUpload.getTermSheetFileName();
+//            System.out.println(path +"%%%%%%%%");
+//            File file = new File(path);
+//            System.out.println("file"+file.getAbsolutePath() + file.exists());
+//            System.out.println(file);
+//            if (file.exists()) {
+//                return ResponseEntity.ok()
+//                    .header("Content-Disposition", "attachment; filename=" + file.getName())
+//                    .contentLength(file.length())
+//                    .lastModified(file.lastModified())
+//                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+//                    .body(new FileSystemResource(file));
+//            } else {
+//                return ResponseEntity.ok().body("file not found");
+//            }
+//        }
+//        return null;
+//    }
 
 }
 

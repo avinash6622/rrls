@@ -52,7 +52,7 @@ public class FileUpload extends AbstractAuditingEntity implements Serializable {
 
     @Column(name="file_format_type")
     private String filetype;
-  
+
     @Transient
 	@JsonProperty
 	private String htmlContent;
@@ -150,7 +150,7 @@ public class FileUpload extends AbstractAuditingEntity implements Serializable {
     public void setAddFileFlag(Integer addFileFlag) {
         this.addFileFlag = addFileFlag;
     }
-  
+
     public String getHtmlContent() {
 		return htmlContent;
 	}

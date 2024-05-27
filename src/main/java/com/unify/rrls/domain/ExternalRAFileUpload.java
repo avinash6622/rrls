@@ -24,11 +24,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Table(name = "external_file_upload")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class ExternalRAFileUpload extends AbstractAuditingEntity implements Serializable {
-	
+
 	   	@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Long id;
-	   
+
 	    @Column(name = "file_name")
 	    private String fileName;
 
@@ -37,16 +37,16 @@ public class ExternalRAFileUpload extends AbstractAuditingEntity implements Seri
 
 	    @Column(name="file_format_type")
 	    private String filetype;
-	  
+
 	    @ManyToOne
 	    @JoinColumn(name = "opportunity_master_id")
 	    private OpportunityMaster opportunityMasterId;
-	    
+
 	    @ManyToOne
 	    @JoinColumn(name = "external_ra_id")
 	    private ExternalResearchAnalyst externalResearchAnalyst;
-	    
-	    
+
+
 		public Long getId() {
 			return id;
 		}
@@ -94,6 +94,6 @@ public class ExternalRAFileUpload extends AbstractAuditingEntity implements Seri
 		public void setExternalResearchAnalyst(ExternalResearchAnalyst externalResearchAnalyst) {
 			this.externalResearchAnalyst = externalResearchAnalyst;
 		}
-	
+
 
 }

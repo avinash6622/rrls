@@ -54,7 +54,10 @@ server:
     session:
         cookie:
             http-only: true
-
+    tomcat:
+        methods:
+            trace: false
+            track: false
 info:
     project:
         version: #project.version#

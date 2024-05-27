@@ -36,7 +36,7 @@ background-color: #009688;}
         <div class="row">
 <div class="page-header" style="margin:0">
     <div class="row">
-    <div class="col-md-6"><h4 style="margin-top:0;"><span><strong>{{vm.strategyvalues[0].strategyMasterId.strategyName}}</strong></span></h4></div>
+    <div class="col-md-6"><h4 style="margin-top:0;"><span><strong>{{vm.strategyvalues[0].strategyMasterId.strategyName}}</strong>&nbsp;<a ui-sref="strategy-master-hyf" ng-if="vm.strategyvalues[0].strategyMasterId.strategyName=='High Yield Fund'"> Term sheet view by ISIN</a></span></h4></div>
             <div class="pull-right">
             <div class="col-xs-3">
             <button type="submit"
@@ -85,8 +85,10 @@ background-color: #009688;}
 
             <tr class="headborder">
 
-                <th rowspan="2"  style="vertical-align: middle;">Opportunity</th>
-                 <th rowspan="2"  style="vertical-align: middle;">Status</th>
+                <th rowspan="2" style="vertical-align: middle; cursor: pointer;" ng-click="vm.sortTable(0)">Opportunity<span
+                    class="glyphicon glyphicon-sort"></span></th>
+
+                <th rowspan="2"  style="vertical-align: middle;">Status</th>
                 <th rowspan="2"  style="vertical-align: middle;">Weight</th>
                 <th rowspan="2"  style="vertical-align: middle;">Prev. close</th>
                 <th rowspan="2"  style="vertical-align: middle;">M.Cap</th>
