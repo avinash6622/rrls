@@ -15,8 +15,7 @@
         vm.loadAllCompanies = loadAllCompanies;
         vm.fileUpload = "";
         vm.upload = upload;
-        vm.addRow = addRow;
-        vm.clearFilter = clearFilter;  // Added the clearFilter function
+        vm.addRow = addRow; // Added the addRow function
         vm.getHyfFileUpload = getHyfFileUpload;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
         vm.page = 0;
@@ -25,13 +24,10 @@
         vm.reverse = true;
         vm.save = save;
         vm.selectFile = selectFile;
-        vm.selectedCompany = '';
-        vm.filteredStrategyMastersHyf = [];
-        vm.filterByCompany = filterByCompany;
-
         loadAll();
         loadAllCompanies();
 
+        // Datepicker options
         vm.dateOptions = { formatYear: 'yyyy', startingDay: 1 };
         vm.datepickers = [];
         vm.openDatePicker = function($event, index) {
@@ -46,8 +42,9 @@
             function onSuccess(data, headers) {
                 vm.links = ParseLinks.parse(headers('link'));
                 vm.totalItems = headers('X-Total-Count');
-                vm.strategyMastersHyf = data;
-                vm.filteredStrategyMastersHyf = angular.copy(vm.strategyMastersHyf);  // Initialize filtered array
+                for (var i = 0; i < data.length; i++) {
+                    vm.strategyMastersHyf.push(data[i]);
+                }
             }
 
             function onError(error) {
@@ -57,6 +54,7 @@
 
         function loadAllCompanies() {
             CompanyService.query(function(data) {
+            console.log(data);
                 vm.companyNames = data;
             });
         }
@@ -119,29 +117,11 @@
         function addRow() {
             var newRow = { isin: '', companyName: '', maturityDate: '', termSheetFileName: '' };
             vm.strategyMastersHyf.push(newRow);
-            filterByCompany();
         }
 
         vm.addRowAfter = function(index) {
             var newRow = { isin: '', companyName: '', maturityDate: '', termSheetFileName: '' };
             vm.strategyMastersHyf.splice(index + 1, 0, newRow);
-            filterByCompany();
         };
-
-        function filterByCompany() {
-            if (!vm.selectedCompany) {
-                vm.filteredStrategyMastersHyf = angular.copy(vm.strategyMastersHyf);
-            } else {
-                vm.filteredStrategyMastersHyf = vm.strategyMastersHyf.filter(function(item) {
-                    return item.companyName === vm.selectedCompany;
-                });
-            }
-        }
-
-        // Add this function to clear the filter
-        function clearFilter() {
-            vm.selectedCompany = '';
-            vm.filteredStrategyMastersHyf = angular.copy(vm.strategyMastersHyf);
-        }
     }
 })();

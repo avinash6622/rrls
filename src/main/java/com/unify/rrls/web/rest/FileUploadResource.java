@@ -104,15 +104,27 @@ public class FileUploadResource {
     @PostMapping("/hyf-uploads")
     public ResponseEntity<UploadResponse> saveBondData(@RequestBody List<HyfBondData> bondDataList) {
         try {
-              hyfBondRepository.deleteAll();
             for (HyfBondData bondData : bondDataList) {
                 System.out.println("Received data: " + bondData.toString());
-                HyfBondData bd = new HyfBondData();
-                bd.setIsin(bondData.getIsin());
-                bd.setCompanyName(bondData.getCompanyName());
-                bd.setMaturityDate(bondData.getMaturityDate());
-                bd.setTermSheetFileName(bondData.getTermSheetFileName());
-                hyfBondRepository.save(bd);
+
+                Optional<HyfBondData> existingBondData = hyfBondRepository.findByCompanyNameAndTermSheetFileName(bondData.getCompanyName(), bondData.getTermSheetFileName());
+
+                if (existingBondData.isPresent()) {
+                    // Update the existing bond data
+                    HyfBondData bd = existingBondData.get();
+                    bd.setIsin(bondData.getIsin());
+                    bd.setMaturityDate(bondData.getMaturityDate());
+                    hyfBondRepository.save(bd);
+                    System.out.println("Updated data for companyName: " + bondData.getCompanyName() + " and termSheetFileName: " + bondData.getTermSheetFileName());
+                } else {
+
+                    HyfBondData bd = new HyfBondData();
+                    bd.setIsin(bondData.getIsin());
+                    bd.setCompanyName(bondData.getCompanyName());
+                    bd.setMaturityDate(bondData.getMaturityDate());
+                    bd.setTermSheetFileName(bondData.getTermSheetFileName());
+                    hyfBondRepository.save(bd);
+                }
             }
 
             return new ResponseEntity<>(new UploadResponse("Data saved successfully"), HttpStatus.OK);
@@ -120,6 +132,8 @@ public class FileUploadResource {
             return new ResponseEntity<>(new UploadResponse("Data not saved"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
     @GetMapping("/companies")
     public List<String> getAllCompanyNames() {
         List<HyfBondData> dataList = hyfBondRepository.findAll();

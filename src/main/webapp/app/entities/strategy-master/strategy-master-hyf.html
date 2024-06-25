@@ -79,17 +79,10 @@
     </thead>
     <tbody>
     <!-- Existing rows -->
-    <tr ng-repeat="strategyMaster in vm.filteredStrategyMastersHyf track by $index" class="bond-row">
+    <tr ng-repeat="strategyMaster in vm.strategyMastersHyf track by $index" class="bond-row">
         <!-- Existing row content -->
         <td><input type="text" name="isin" ng-model="strategyMaster.isin"></td>
-        <td>
-            <select name="companyName" ng-model="vm.selectedCompany" ng-options="company for company in vm.companyNames" ng-change="vm.filterByCompany()">
-                <option value="">Select a Company</option>
-            </select>
-        </td>
-
-
-
+        <td><input type="text" name="companyName" ng-model="strategyMaster.companyName"></td>
         <td>
             <div class="input-group" style="width: 150px;">
                 <input type="text" class="form-control" uib-datepicker-popup="dd MMM yyyy"
